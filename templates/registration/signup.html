@@ -1,0 +1,79 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h2>Sign up</h2>
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {% for field in signup_form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    <label>{{ field.label_tag }}</label>
+                    <p>{{ field }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="col">
+
+                <div class="form-group">
+                    <h4>Choose your trainer!</h4>
+                    {% for field in trainer_form %}
+                    {{ field.errors }}
+                    <div class="container-sm" style="width:500px; margin-left:0;">
+                        {% for choice in field.field.choices %}
+                        {% if forloop.counter0|divisibleby:"5" %}
+                        <div class="row">
+                        {% endif %}
+                            <input type="radio" class="radio_item" value="{{ choice.0 }}" name="trainer" id="id_{{ choice.0 }}">
+                            <label class="col-sm select-card label_item" for="id_{{ choice.0 }}">
+                                <img class="select-card-img" src="{% get_static_prefix %}{{ asset_paths.player_sprite }}\{{choice.0}}.png">
+                            </label>
+                        {% if forloop.counter|divisibleby:"5" %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <h4>Choose a starter!</h4>
+                    {% for field in starter_form %}
+                    {{ field.errors }}
+                    <div class="container-sm" style="width:500px; margin-left:0;">
+                        {% for choice in field.field.choices %}
+                        {% if forloop.counter0|divisibleby:"3" %}
+                        <div class="row">
+                        {% endif %}
+                            <input type="radio" class="radio_item" value="{{ choice.0 }}" name="pokemon" id="id_{{ choice.0 }}">
+                            <label class="col-sm select-card label_item" for="id_{{ choice.0 }}">
+                                <img class="select-card-bg" src="{% get_static_prefix %}{{ asset_paths.art }}\{{choice.0}}.png">
+                                <img class="select-icon" src="{% get_static_prefix %}{{ asset_paths.icon }}\{{choice.0}}.gif">
+                                <p>{{ choice.1 }}</p>
+                            </label>
+                        {% if forloop.counter|divisibleby:"3" %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <br>
+
+            </div>
+            <div class="col">.</div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Sign up</button>
+</form>
+<div>
+  <a href="{% url 'login' %}">Already a member? Login</a>
+</div>
+{% endblock %}

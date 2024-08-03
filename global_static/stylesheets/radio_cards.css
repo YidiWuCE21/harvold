@@ -1,0 +1,50 @@
+.select-card {
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    margin: 5px;
+    height: 50px;
+    position: relative;
+    transition: 0.2s;
+    box-shadow: inset 1px 3px 6px var(--shadow);
+    cursor: pointer;
+}
+
+.select-card:hover {
+    background-color: var(--hover);
+}
+
+.select-card-bg {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+}
+
+.select-card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.select-card > p {
+    position: absolute;
+    top: 10px;
+    left: 40px;
+    font-size: 20px;
+}
+
+.select-icon {
+    position: absolute;
+    left: 5px;
+    top: 6px;
+}
+
+.radio_item{
+    display: none !important;
+}
+
+.radio_item:checked + label {
+    background-color: var(--hover);
+}

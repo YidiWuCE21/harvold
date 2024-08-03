@@ -1,0 +1,87 @@
+# Constants for account registration
+import os
+import json
+from django.utils.safestring import mark_safe
+from django.templatetags.static import static
+from pokemon import utils
+from harvoldsite import settings
+
+# Large files
+ASSETS_PATH = os.path.join(settings.BASE_DIR, "global_static")
+with open(os.path.join(ASSETS_PATH, "data", "learnsets.json")) as learnset_file:
+    LEARNSETS = json.load(learnset_file)
+with open(os.path.join(ASSETS_PATH, "data", "pokemon.json")) as pokemon_file:
+    POKEMON = json.load(pokemon_file)
+
+# Login-related choices
+STARTER_CHOICES = [
+    # Kanto
+    ("001", "Bulbasaur"),
+    ("004", "Charmander"),
+    ("007", "Squirtle"),
+    # Johto
+    ("152", "Chikorita"),
+    ("155", "Cyndaquil"),
+    ("158", "Totodile"),
+    #"152", "155", "158",
+    # Hoenn
+    #"252", "255", "258",
+    # Sinnoh
+    #"387", "390", "393",
+    # Unova
+    #"495", "498", "501"
+]
+
+TRAINER_CHOICES = [
+    ("01", "01"),
+    ("02", "02"),
+    ("03", "03"),
+    ("04", "04"),
+    ("05", "05"),
+    ("06", "06"),
+    ("07", "07"),
+    ("08", "08"),
+    ("09", "09"),
+    ("10", "10"),
+    ("11", "11"),
+    ("12", "12"),
+    ("13", "13"),
+    ("14", "14"),
+    ("15", "15"),
+]
+
+# Asset paths
+ASSET_PATHS = {
+    "icon": os.path.join("assets", "pokemon", "icon"),
+    "art": os.path.join("assets", "pokemon", "art"),
+    "player_sprite": os.path.join("assets", "player", "sprite")
+}
+
+STATS = {"hp", "atk", "def", "spa", "spd", "spe"}
+NATURES = {
+    "adamant": {"atk": 1.1, "spa": 0.9},
+    "lonely": {"atk": 1.1, "def": 0.9},
+    "brave": {"atk": 1.1, "spe": 0.9},
+    "naughty": {"atk": 1.1, "spd": 0.9},
+    "modest": {"spa": 1.1, "atk": 0.9},
+    "mild": {"spa": 1.1, "def": 0.9},
+    "rash": {"spa": 1.1, "spd": 0.9},
+    "quiet": {"spa": 1.1, "spe": 0.9},
+    "timid": {"spe": 1.1, "atk": 0.9},
+    "jolly": {"spe": 1.1, "spa": 0.9},
+    "hasty": {"spe": 1.1, "def": 0.9},
+    "naive": {"spe": 1.1, "spd": 0.9},
+    "bold": {"def": 1.1, "atk": 0.9},
+    "impish": {"def": 1.1, "spa": 0.9},
+    "lax": {"def": 1.1, "spd": 0.9},
+    "relaxed": {"def": 1.1, "spe": 0.9},
+    "calm": {"spd": 1.1, "atk": 0.9},
+    "careful": {"spd": 1.1, "spa": 0.9},
+    "gentle": {"spd": 1.1, "def": 0.9},
+    "sassy": {"spd": 1.1, "spe": 0.9},
+    "serious": {},
+    "docile": {},
+    "bashful": {},
+    "hardy": {},
+    "quirky": {},
+}
