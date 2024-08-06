@@ -1,6 +1,7 @@
 import os
 import math
 import random
+from datetime import datetime
 
 from django.db import models
 from accounts.models import Profile
@@ -8,21 +9,34 @@ from harvoldsite import consts
 
 
 # Helper functions for level calculations
-def get_xp_for_level(max_xp, level):
+def get_xp_for_level(level, growth):
     if level < 1:
         raise ValueError("Pokemon level cannot be lower than 1!")
-    return math.floor((max_xp / 1000000) * level ** 3)
+    return consts.EXP_CURVES[growth][str(level)]
 
 
-def get_progress_to_next_level(max_xp, level, xp):
+def get_levelups(level, xp, growth):
+    if xp < 0:
+        raise ValueError("Pokemon XP cannot be lower than 0!")
+    current_level = level
+    while current_level < 100:
+        xp_needed = get_xp_for_level(current_level + 1, growth)
+        if xp >= xp_needed:
+            current_level += 1
+        else:
+            break
+    return current_level - level
+
+
+def get_progress_to_next_level(level, xp, growth):
     if level < 1:
         raise ValueError("Pokemon level cannot be lower than 1!")
     if xp < 0:
         raise ValueError("Pokemon XP cannot be lower than 0!")
     if level == 100:
         return 0
-    start_xp = get_xp_for_level(max_xp, level)
-    end_xp = get_xp_for_level(max_xp, level + 1)
+    start_xp = get_xp_for_level(level, growth)
+    end_xp = get_xp_for_level(level + 1, growth)
     return (xp - start_xp) / (end_xp - start_xp) * 100
 
 
@@ -55,7 +69,7 @@ def get_nature_multiplier(nature, stat):
     """
     Get the nature multiplier for a given stat, default to 1.0 if no effect
     """
-    return consts.NATURES[nature].get(stat, default=1.0)
+    return consts.NATURES[nature].get(stat, 1.0)
 
 
 def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=False, iv_override=None,
@@ -73,27 +87,19 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
     abilities = consts.POKEMON[dex_number]["abilities"]
     if ability_override:
         ability = ability_override
-    elif len(abilities) == 1:
-        # Assign ability
-        ability = abilities[0]
-    elif len(abilities) == 2:
-        # Roll abilities equally
-        ability = abilities[0] if random.randrange(100) < 50 else abilities[1]
-    elif len(abilities) == 3:
-        # Roll for HA chance first
-        ability = abilities[3] if random.randrange(100) < 20 else \
-            abilities[0] if random.randrange(100) < 50 else abilities[1]
     else:
-        raise ValueError("Pokemon cannot have more than 3 abilities!")
+        ability = random.choice(abilities)
 
     # Get the moveset
     moves = populate_moveset(dex_number, level)
+    moves = [(move, consts.MOVES[move]["pp"]) for move in moves]
+    moves += [None] * (4 - len(moves))
 
     # Create the pokemon object
     pkmn = Pokemon(
         dex_number=dex_number,
         level=level,
-        xp=get_xp_for_level(consts.POKEMON[dex_number]["experience_growth"], level),
+        experience=get_xp_for_level(level, consts.POKEMON[dex_number]["experience_growth"]),
         sex=sex,
         nature=nature,
         shiny=shiny,
@@ -111,11 +117,24 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
         spe_iv=ivs["spe"],
         spe_ev=evs["spe"],
         held_item=held_item,
+        traded=traded,
         happiness=consts.POKEMON[dex_number]["base_happiness"],
-
+        location="box",
+        move1=moves[0][0],
+        move1_pp=moves[0][1],
+        move2=moves[1][0] if moves[1] is not None else None,
+        move2_pp=moves[1][1] if moves[1] is not None else None,
+        move3=moves[2][0] if moves[2] is not None else None,
+        move3_pp=moves[2][1] if moves[2] is not None else None,
+        move4=moves[3][0] if moves[3] is not None else None,
+        move4_pp=moves[3][1] if moves[3] is not None else None,
     )
 
     # Generate the stats
+    pkmn.recalculate_stats(skip_save=True)
+    # Full heal
+    pkmn.restore_hp(skip_save=True)
+    pkmn.save()
 
 
 # Create a pokemon template; this can be used for a wild battle before getting passed into the Pokemon model
@@ -130,6 +149,7 @@ class Pokemon(models.Model):
         on_delete=models.SET_NULL
     )
     original_trainer = models.IntegerField(null=True, blank=True)
+    caught_date = models.DateTimeField(auto_now_add=True)
     # General info
     dex_number = models.IntegerField()
     level = models.IntegerField()
@@ -178,38 +198,103 @@ class Pokemon(models.Model):
     move4 = models.CharField(max_length=20, null=True, blank=True)
     move4_pp = models.IntegerField(null=True)
 
-    def assign_trainer(self, trainer, ball=None):
-        raise NotImplementedError()
+    def assign_trainer(self, trainer, ball):
+        self.trainer = trainer
+        if self.original_trainer is None:
+            self.oriqinal_trainer = trainer
+        self.ball = ball
+        self.save(update_fields=["trainer", "original_trainer", "ball"])
 
-    def recalculate_stats(self):
+    def recalculate_stats(self, skip_save=False):
         """
         Recalculate base stats given pokemon's IVs, EVs, level, and nature. Uses gen 3+ calculation
         """
         base_stats = get_base_stats(self.dex_number)
 
         # HP has separate calculation
-        self.hp_stat = (2 * base_stats["hp"] + self.hp_iv + self.hp_ev / 4) * self.level / 100 + self.level + 10
+        self.hp_stat = int((2 * base_stats["hp"] + self.hp_iv + self.hp_ev / 4) * self.level / 100) + self.level + 10
+        # Calculation for all other stats
+        self.atk_stat = int((int((2 * base_stats["atk"] + self.atk_iv + self.atk_ev / 4) * self.level / 100) + 5) \
+                        * get_nature_multiplier(self.nature, "atk"))
+        self.def_stat = int((int((2 * base_stats["def"] + self.def_iv + self.def_ev / 4) * self.level / 100) + 5) \
+                        * get_nature_multiplier(self.nature, "def"))
+        self.spa_stat = int((int((2 * base_stats["spa"] + self.spa_iv + self.spa_ev / 4) * self.level / 100) + 5) \
+                        * get_nature_multiplier(self.nature, "spa"))
+        self.spd_stat = int((int((2 * base_stats["spd"] + self.spd_iv + self.spd_ev / 4) * self.level / 100) + 5) \
+                        * get_nature_multiplier(self.nature, "spd"))
+        self.spe_stat = int((int((2 * base_stats["spe"] + self.spe_iv + self.spe_ev / 4) * self.level / 100) + 5) \
+                        * get_nature_multiplier(self.nature, "spe"))
 
-        raise NotImplementedError()
+        if not skip_save:
+            self.save(update_fields=["hp_stat", "atk_stat", "def_stat", "spa_stat", "spd_stat", "spe_stat"])
 
-    def restore_hp(self):
-        raise NotImplementedError()
+    def restore_hp(self, skip_save=False):
+        self.current_hp = self.hp_stat
+        if not skip_save:
+            self.save(update_fields=["current_hp"])
 
-    def restore_pp(self, move=None):
+    def restore_pp(self, move_no=None, restore_by=None, skip_save=False):
         """
-        Restores PP to pokemon moves. If move is not specified, restore to all applicable moves.
+        Restores PP to pokemon moves. If move number is not specified, restore to all applicable moves.
         If pokemon doesn't have chosen move, do nothing.
         """
-        raise NotImplementedError()
+        move_mapping = {
+            1: (self.move1, self.move1_pp),
+            2: (self.move2, self.move2_pp),
+            3: (self.move3, self.move3_pp),
+            4: (self.move4, self.move4_pp)
+        }
+        moves = [move_no] if move_no else [1, 2, 3, 4]
+        for move in moves:
+            move_name = move_mapping[move][0]
+            move_pp = move_mapping[move][1]
+            if move_name is None:
+                continue
+            move_cap = consts.MOVES[move_name]["pp"]
+            if restore_by is None:
+                move_pp = move_cap
+            else:
+                move_pp = min(move_cap, move_pp + restore_by)
+        if not skip_save:
+            self.save(update_fields=["move1_pp", "move2_pp", "move3_pp", "move4_pp"])
 
-    def cure_status(self):
-        raise NotImplementedError()
+    def cure_status(self, skip_save=False):
+        self.status = ""
+        if not skip_save:
+            self.save(update_fields=["status"])
 
-    def add_xp(self):
-        raise NotImplementedError()
+    def add_xp(self, xp, recalculate=False):
+        """
+        Adds experience and levels if applicable. Does not change movesets or prompt evolutions.
 
-    def add_evs(self):
-        raise NotImplementedError()
+        Recalculate flag should be used for rare candy leveling, battle xp handled separately
+        """
+        self.experience = models.F("experience") + xp
+        extra_levels = get_levelups(self.level, xp, consts.POKEMON[self.dex_number]["experience_growth"])
+        self.level = models.F("level") + extra_levels
+
+        # Save fields in one go
+        if recalculate:
+            self.recalculate_stats(skip_save=True)
+            self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
+                                     "def_stat", "spa_stat", "spd_stat", "spe_stat"])
+
+    def add_evs(self, evs, recalculate=False):
+        """
+        Adds EVs and recalculates stats.
+
+        Recalculate flag should be used for EV juicing, battle EVs handled separately.
+        """
+        self.hp_ev = models.F("hp_ev") + evs["hp"]
+        self.atk_ev = models.F("atk_ev") + evs["atk"]
+        self.def_ev = models.F("def_ev") + evs["def"]
+        self.spa_ev = models.F("spa_ev") + evs["spa"]
+        self.spd_ev = models.F("spd_ev") + evs["spd"]
+        self.spe_ev = models.F("spe_ev") + evs["spe"]
+        if recalculate:
+            self.recalculate_stats(skip_save=True)
+            self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
+                                     "def_stat", "spa_stat", "spd_stat", "spe_stat"])
 
     def evolve(self):
         raise NotImplementedError()
