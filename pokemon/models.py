@@ -135,20 +135,27 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
     # Full heal
     pkmn.restore_hp(skip_save=True)
     pkmn.save()
+    return pkmn
 
 
 # Create a pokemon template; this can be used for a wild battle before getting passed into the Pokemon model
 #def create_pokemon(dex_number, shiny, level, sex=None)
 class Pokemon(models.Model):
     # Administrative fields
-    pkmn_id = models.IntegerField(primary_key=True)
     trainer = models.ForeignKey(
         Profile,
         null=True,
         blank=True,
-        on_delete=models.SET_NULL
+        on_delete=models.SET_NULL,
+        related_name="trainer"
     )
-    original_trainer = models.IntegerField(null=True, blank=True)
+    original_trainer = models.ForeignKey(
+        Profile,
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="original_trainer"
+    )
     caught_date = models.DateTimeField(auto_now_add=True)
     # General info
     dex_number = models.IntegerField()
@@ -198,12 +205,58 @@ class Pokemon(models.Model):
     move4 = models.CharField(max_length=20, null=True, blank=True)
     move4_pp = models.IntegerField(null=True)
 
-    def assign_trainer(self, trainer, ball):
+    def assign_trainer(self, trainer, ball=None):
         self.trainer = trainer
         if self.original_trainer is None:
-            self.oriqinal_trainer = trainer
-        self.ball = ball
+            self.original_trainer = trainer
+        if ball is not None:
+            self.ball = ball
         self.save(update_fields=["trainer", "original_trainer", "ball"])
+
+    def add_xp(self, xp, recalculate=False):
+        """
+        Adds experience and levels if applicable. Does not change movesets or prompt evolutions.
+
+        Recalculate flag should be used for rare candy leveling, battle xp handled separately
+        """
+        self.experience += xp
+        extra_levels = get_levelups(self.level, self.experience, consts.POKEMON[self.dex_number]["experience_growth"])
+        self.level += extra_levels
+
+        # Save fields in one go
+        if recalculate:
+            self.recalculate_stats(skip_save=True)
+            self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
+                                     "def_stat", "spa_stat", "spd_stat", "spe_stat"])
+
+    def add_evs(self, evs, recalculate=False):
+        """
+        Adds EVs and recalculates stats.
+
+        Recalculate flag should be used for EV juicing, battle EVs handled separately.
+        """
+        ev_map = {
+            "hp": self.hp_ev,
+            "atk": self.atk_ev,
+            "def": self.def_ev,
+            "spa": self.spa_ev,
+            "spd": self.spd_ev,
+            "spe": self.spe_ev
+        }
+        for stat in consts.STATS:
+            total = sum(ev_map.values())
+            current_val = ev_map[stat]
+            to_add = evs[stat]
+            # Ensure individual EV does not exceed 252 and total does not exceed 510
+            max_gain = min(252 - current_val, 510 - total, to_add)
+            # Ensure individual EV does not dip below 0 for EV reducers
+            max_gain = max(-1 * current_val, max_gain)
+            ev_map[stat] += max_gain
+            setattr(self, "{}_ev".format(stat), ev_map[stat])
+
+        if recalculate:
+            self.recalculate_stats(skip_save=True)
+            self.save(update_fields=["experience", "level", "{}_stat".format(stat)])
 
     def recalculate_stats(self, skip_save=False):
         """
@@ -263,39 +316,6 @@ class Pokemon(models.Model):
         if not skip_save:
             self.save(update_fields=["status"])
 
-    def add_xp(self, xp, recalculate=False):
-        """
-        Adds experience and levels if applicable. Does not change movesets or prompt evolutions.
-
-        Recalculate flag should be used for rare candy leveling, battle xp handled separately
-        """
-        self.experience = models.F("experience") + xp
-        extra_levels = get_levelups(self.level, xp, consts.POKEMON[self.dex_number]["experience_growth"])
-        self.level = models.F("level") + extra_levels
-
-        # Save fields in one go
-        if recalculate:
-            self.recalculate_stats(skip_save=True)
-            self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
-                                     "def_stat", "spa_stat", "spd_stat", "spe_stat"])
-
-    def add_evs(self, evs, recalculate=False):
-        """
-        Adds EVs and recalculates stats.
-
-        Recalculate flag should be used for EV juicing, battle EVs handled separately.
-        """
-        self.hp_ev = models.F("hp_ev") + evs["hp"]
-        self.atk_ev = models.F("atk_ev") + evs["atk"]
-        self.def_ev = models.F("def_ev") + evs["def"]
-        self.spa_ev = models.F("spa_ev") + evs["spa"]
-        self.spd_ev = models.F("spd_ev") + evs["spd"]
-        self.spe_ev = models.F("spe_ev") + evs["spe"]
-        if recalculate:
-            self.recalculate_stats(skip_save=True)
-            self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
-                                     "def_stat", "spa_stat", "spd_stat", "spe_stat"])
-
     def evolve(self):
         raise NotImplementedError()
 
@@ -310,7 +330,6 @@ class Pokemon(models.Model):
 
 
 class Party(models.Model):
-    party_id = models.IntegerField(primary_key=True)
     trainer = models.OneToOneField(Profile, on_delete=models.CASCADE)
     slot_1 = models.ForeignKey(Pokemon, related_name="slot_1", null=True, on_delete=models.SET_NULL)
     slot_2 = models.ForeignKey(Pokemon, related_name="slot_2", null=True, on_delete=models.SET_NULL)

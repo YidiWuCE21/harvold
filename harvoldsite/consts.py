@@ -61,7 +61,7 @@ ASSET_PATHS = {
     "player_sprite": os.path.join("assets", "player", "sprite")
 }
 
-STATS = {"hp", "atk", "def", "spa", "spd", "spe"}
+STATS = ["hp", "atk", "def", "spa", "spd", "spe"]
 NATURES = {
     "adamant": {"atk": 1.1, "spa": 0.9},
     "lonely": {"atk": 1.1, "def": 0.9},

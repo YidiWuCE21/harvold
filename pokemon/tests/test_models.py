@@ -1,5 +1,8 @@
 from django.test import TestCase
+from django.contrib.auth.models import User
 from pokemon import models
+from accounts.models import Profile
+from harvoldsite import consts
 
 
 class TestGetXpForLevel(TestCase):
@@ -177,9 +180,9 @@ class TestCreatePokemon(TestCase):
     def test_create_starter(self):
         ret = models.create_pokemon("001", 5, "m")
         # Check moves
-        self.assertEqual("Tackle", ret.move1)
+        self.assertEqual("tackle", ret.move1)
         self.assertEqual(35, ret.move1_pp)
-        self.assertEqual("Growl", ret.move2)
+        self.assertEqual("growl", ret.move2)
         self.assertEqual(40, ret.move2_pp)
 
         # Check HP
@@ -198,12 +201,138 @@ class TestCreatePokemon(TestCase):
 
 
 class TestAssignTrainer(TestCase):
+    def setUp(self):
+        self.pkmn1 = models.create_pokemon("001", 5, "m")
+        self.pkmn2 = models.create_pokemon("001", 5, "m")
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.user2 = User(username="test2", password="test2", email="test2@test.com")
+        self.user2.save()
+        self.trainer1 = Profile(character="01", user=self.user1)
+        self.trainer1.save()
+        self.trainer2 = Profile(character="02", user=self.user2)
+        self.trainer2.save()
+
+
     def test_assign_trainer(self):
-        self.assertFalse(True)
+        self.pkmn1.assign_trainer(self.trainer1, "pokeball")
+        self.assertEqual(self.pkmn1.trainer, self.trainer1)
+
+
+    def test_assign_trainer_ot(self):
+        self.pkmn2.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn2.assign_trainer(self.trainer2)
+        self.assertEqual(self.pkmn2.trainer, self.trainer2)
+        self.assertEqual(self.pkmn2.original_trainer, self.trainer1)
+
+
+class TestAddXp(TestCase):
+    def test_levelup(self):
+        self.pkmn = models.create_pokemon("001", 5, "m")
+        self.pkmn.add_xp(110)
+        self.assertEqual(7, self.pkmn.level)
+
+
+    def test_no_level(self):
+        self.pkmn = models.create_pokemon("001", 5, "m")
+        self.pkmn.add_xp(40)
+        self.assertEqual(5, self.pkmn.level)
+
+
+class TestAddEvs(TestCase):
+    def test_add_evs_new(self):
+        self.pkmn = models.create_pokemon("001", 5, "m")
+        self.pkmn.add_evs({
+            "hp": 200,
+            "atk": 0,
+            "def": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0})
+        self.assertEqual(200, self.pkmn.hp_ev)
+
+
+    def test_add_evs_existing(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
+            "hp": 200, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
+        })
+        self.pkmn.add_evs({
+            "hp": 10,
+            "atk": 0,
+            "def": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0})
+        self.assertEqual(210, self.pkmn.hp_ev)
+
+
+    def test_add_evs_stat_cap(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
+            "hp": 250, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
+        })
+        self.pkmn.add_evs({
+            "hp": 10,
+            "atk": 0,
+            "def": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0})
+        self.assertEqual(252, self.pkmn.hp_ev)
+
+
+    def test_add_evs_total_cap(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
+            "hp": 0, "atk": 252, "def": 252, "spa": 0, "spd": 0, "spe": 0
+        })
+        self.pkmn.add_evs({
+            "hp": 10,
+            "atk": 0,
+            "def": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0})
+        self.assertEqual(6, self.pkmn.hp_ev)
+
+
+    def test_add_evs_reduce(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
+            "hp": 5, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
+        })
+        self.pkmn.add_evs({
+            "hp": -10,
+            "atk": 0,
+            "def": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0})
+        self.assertEqual(0, self.pkmn.hp_ev)
+
+
+    def test_add_evs_overflow(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
+            "hp": 250, "atk": 250, "def": 0, "spa": 0, "spd": 0, "spe": 0
+        })
+        self.pkmn.add_evs({
+            "hp": 10,
+            "atk": 2,
+            "def": 10,
+            "spa": 10,
+            "spd": 10,
+            "spe": 10})
+        self.assertEqual(252, self.pkmn.hp_ev)
+        self.assertEqual(252, self.pkmn.atk_ev)
+        self.assertEqual(6, self.pkmn.def_ev)
+        self.assertEqual(0, self.pkmn.spa_ev)
+        self.assertEqual(0, self.pkmn.spd_ev)
+        self.assertEqual(0, self.pkmn.spe_ev)
 
 
 class TestRecalculateStats(TestCase):
-    def test_recalculate_stats(self):
+    def test_levelup(self):
+        ivs = {stat: 31 for stat in consts.STATS}
+        nature = "adamant"
+        pkmn = models.create_pokemon("001", 5, "m", iv_override=ivs, nature_override=nature)
+
         self.assertFalse(True)
 
 

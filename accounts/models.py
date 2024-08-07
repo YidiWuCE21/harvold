@@ -5,7 +5,6 @@ from django.utils import timezone
 # Create your models here.
 class Profile(models.Model):
     # Administrative fields
-    trainer_id = models.IntegerField(primary_key=True)
     user = models.OneToOneField(
         get_user_model(),
         on_delete=models.CASCADE,
