@@ -296,7 +296,7 @@
     "type": "Normal",
     "name": "Thrash"
   },
-  "double-edge": {
+  "doubleedge": {
     "accuracy": 100,
     "id": 38,
     "power": 120,
@@ -968,7 +968,7 @@
     "type": "Fighting",
     "name": "Mirror Move"
   },
-  "self-destruct": {
+  "selfdestruct": {
     "accuracy": 100,
     "id": 120,
     "power": 200,
@@ -1089,7 +1089,7 @@
     "type": "Psychic",
     "name": "Kinesis"
   },
-  "soft-boiled": {
+  "softboiled": {
     "accuracy": null,
     "id": 135,
     "power": null,
@@ -1530,7 +1530,7 @@
     "type": "Poison",
     "name": "Sludge Bomb"
   },
-  "mud-slap": {
+  "mudslap": {
     "accuracy": 100,
     "id": 189,
     "power": 20,
@@ -1610,7 +1610,7 @@
     "type": "Ground",
     "name": "Bone Rush"
   },
-  "lock-on": {
+  "lockon": {
     "accuracy": null,
     "id": 199,
     "power": null,
@@ -2123,7 +2123,7 @@
     "type": "Dark",
     "name": "Flatter"
   },
-  "will-o-wisp": {
+  "willowisp": {
     "accuracy": 85,
     "id": 261,
     "power": null,
@@ -2911,7 +2911,7 @@
     "type": "Psychic",
     "name": "Miracle Eye"
   },
-  "wake-upslap": {
+  "wakeupslap": {
     "accuracy": 100,
     "id": 358,
     "power": 70,
@@ -3000,7 +3000,7 @@
     "type": "Steel",
     "name": "Metal Burst"
   },
-  "u-turn": {
+  "uturn": {
     "accuracy": 100,
     "id": 369,
     "power": 70,
@@ -3287,7 +3287,7 @@
     "type": "Fighting",
     "name": "Air Slash"
   },
-  "x-scissor": {
+  "xscissor": {
     "accuracy": 100,
     "id": 404,
     "power": 80,
@@ -4543,7 +4543,7 @@
     "type": "Ice",
     "name": "Icicle Crash"
   },
-  "v-create": {
+  "vcreate": {
     "accuracy": 95,
     "id": 557,
     "power": 180,
@@ -4623,7 +4623,7 @@
     "type": "Ghost",
     "name": "Phantom Force"
   },
-  "trick-or-treat": {
+  "trickortreat": {
     "accuracy": 100,
     "id": 567,
     "power": null,
@@ -4671,7 +4671,7 @@
     "type": "Grass",
     "name": "Petal Blizzard"
   },
-  "freeze-dry": {
+  "freezedry": {
     "accuracy": 100,
     "id": 573,
     "power": 70,
@@ -4695,7 +4695,7 @@
     "type": "Dark",
     "name": "Parting Shot"
   },
-  "topsy-turvy": {
+  "topsyturvy": {
     "accuracy": 100,
     "id": 576,
     "power": null,
@@ -4921,7 +4921,7 @@
     "type": "Normal",
     "name": "Celebration"
   },
-  "baby-dolleyes": {
+  "babydolleyes": {
     "accuracy": 100,
     "id": 608,
     "power": null,
@@ -4946,7 +4946,7 @@
     "type": "Bug",
     "name": "Infestation"
   },
-  "power-uppunch": {
+  "poweruppunch": {
     "accuracy": 100,
     "id": 612,
     "power": 40,

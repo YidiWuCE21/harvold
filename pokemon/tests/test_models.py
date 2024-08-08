@@ -328,24 +328,170 @@ class TestAddEvs(TestCase):
 
 
 class TestRecalculateStats(TestCase):
-    def test_levelup(self):
-        ivs = {stat: 31 for stat in consts.STATS}
+    def test_new_pokemon(self):
+        ivs = {
+            "hp": 24,
+            "atk": 12,
+            "def": 30,
+            "spa": 16,
+            "spd": 23,
+            "spe": 5
+        }
+        evs = {
+            "hp": 74,
+            "atk": 190,
+            "def": 91,
+            "spa": 48,
+            "spd": 84,
+            "spe": 23
+        }
         nature = "adamant"
+        pkmn = models.create_pokemon("445", 78, "m", iv_override=ivs, ev_override=evs, nature_override=nature)
+
+        self.assertEqual(289, pkmn.hp_stat)
+        self.assertEqual(278, pkmn.atk_stat)
+        self.assertEqual(193, pkmn.def_stat)
+        self.assertEqual(135, pkmn.spa_stat)
+        self.assertEqual(171, pkmn.spd_stat)
+        self.assertEqual(171, pkmn.spe_stat)
+
+
+    def test_levelup(self):
+        ivs = {
+            stat: 31 for stat in consts.STATS
+        }
+        nature = "serious"
         pkmn = models.create_pokemon("001", 5, "m", iv_override=ivs, nature_override=nature)
 
-        self.assertFalse(True)
+        self.assertEqual(21, pkmn.hp_stat)
+        self.assertEqual(11, pkmn.atk_stat)
+        self.assertEqual(11, pkmn.def_stat)
+        self.assertEqual(13, pkmn.spa_stat)
+        self.assertEqual(13, pkmn.spd_stat)
+        self.assertEqual(11, pkmn.spe_stat)
+
+        pkmn.level = 6
+        pkmn.recalculate_stats(skip_save=True)
+
+        self.assertEqual(23, pkmn.hp_stat)
+        self.assertEqual(12, pkmn.atk_stat)
+        self.assertEqual(12, pkmn.def_stat)
+        self.assertEqual(14, pkmn.spa_stat)
+        self.assertEqual(14, pkmn.spd_stat)
+        self.assertEqual(12, pkmn.spe_stat)
+
+
+    def test_ev_gain(self):
+        ivs = {
+            stat: 31 for stat in consts.STATS
+        }
+        nature = "serious"
+        pkmn = models.create_pokemon("001", 5, "m", iv_override=ivs, nature_override=nature)
+
+        self.assertEqual(21, pkmn.hp_stat)
+        self.assertEqual(11, pkmn.atk_stat)
+        self.assertEqual(11, pkmn.def_stat)
+        self.assertEqual(13, pkmn.spa_stat)
+        self.assertEqual(13, pkmn.spd_stat)
+        self.assertEqual(11, pkmn.spe_stat)
+
+        pkmn.hp_ev = 252
+        pkmn.recalculate_stats(skip_save=True)
+
+        self.assertEqual(24, pkmn.hp_stat)
+
+
+    def test_evolve(self):
+        ivs = {
+            stat: 31 for stat in consts.STATS
+        }
+        nature = "serious"
+        pkmn = models.create_pokemon("001", 16, "m", iv_override=ivs, nature_override=nature)
+
+        self.assertEqual(45, pkmn.hp_stat)
+        self.assertEqual(25, pkmn.atk_stat)
+        self.assertEqual(25, pkmn.def_stat)
+        self.assertEqual(30, pkmn.spa_stat)
+        self.assertEqual(30, pkmn.spd_stat)
+        self.assertEqual(24, pkmn.spe_stat)
+
+        pkmn.dex_number = "002"
+        pkmn.recalculate_stats(skip_save=True)
+
+        self.assertEqual(50, pkmn.hp_stat)
+        self.assertEqual(29, pkmn.atk_stat)
+        self.assertEqual(30, pkmn.def_stat)
+        self.assertEqual(35, pkmn.spa_stat)
+        self.assertEqual(35, pkmn.spd_stat)
+        self.assertEqual(29, pkmn.spe_stat)
 
 
 class TestRestoreHp(TestCase):
     def test_restore_hp(self):
-        self.assertFalse(True)
+        ivs = {
+            stat: 31 for stat in consts.STATS
+        }
+        pkmn = models.create_pokemon("001", 16, "m", iv_override=ivs)
+        pkmn.current_hp = 0
+        pkmn.restore_hp(skip_save=True)
+        self.assertEqual(45, pkmn.current_hp)
+
+
+    def test_restore_no_hp(self):
+        ivs = {
+            stat: 31 for stat in consts.STATS
+        }
+        pkmn = models.create_pokemon("001", 16, "m", iv_override=ivs)
+        pkmn.current_hp = 45
+        pkmn.restore_hp(skip_save=True)
+        self.assertEqual(45, pkmn.current_hp)
 
 
 class TestRestorePp(TestCase):
-    def test_restore_pp(self):
-        self.assertFalse(True)
+    def test_restore_pp_one_count(self):
+        pkmn = models.create_pokemon("003", 50, "m")
+        pkmn.move1_pp = 0
+        pkmn.restore_pp(1, 5)
+        self.assertEqual(pkmn.move1_pp, 5)
+
+
+    def test_restore_pp_overflow(self):
+        pkmn = models.create_pokemon("003", 50, "m")
+        pkmn.move1_pp = 12
+        pkmn.restore_pp(1, 5)
+        self.assertEqual(pkmn.move1_pp, 15)
+
+
+    def test_restore_pp_reset(self):
+        pkmn = models.create_pokemon("003", 50, "m")
+        pkmn.move1_pp = 19
+        pkmn.restore_pp(1, 5)
+        self.assertEqual(pkmn.move1_pp, 15)
+
+
+    def test_restore_pp_full(self):
+        pkmn = models.create_pokemon("003", 50, "m")
+        pkmn.move1_pp = 0
+        pkmn.restore_pp(1)
+        self.assertEqual(pkmn.move1_pp, 15)
+
+
+    def test_restore_pp_all(self):
+        pkmn = models.create_pokemon("003", 50, "m")
+        pkmn.move1_pp = 0
+        pkmn.move2_pp = 0
+        pkmn.move3_pp = 0
+        pkmn.move4_pp = 0
+        pkmn.restore_pp()
+        self.assertEqual(pkmn.move1_pp, 15)
+        self.assertEqual(pkmn.move2_pp, 10)
+        self.assertEqual(pkmn.move3_pp, 5)
+        self.assertEqual(pkmn.move4_pp, 15)
 
 
 class TestCureStatus(TestCase):
     def test_no_status(self):
-        self.assertFalse(True)
+        pkmn = models.create_pokemon("001", 16, "m")
+        pkmn.status = "poison"
+        pkmn.cure_status(skip_save=True)
+        self.assertEqual("", pkmn.status)

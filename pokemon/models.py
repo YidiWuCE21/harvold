@@ -79,7 +79,8 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
     Instantiate a pokemon with no current assigned trainer
     """
     # Randomly generate nature, IVs, and ability
-    nature = random.choice(list(consts.NATURES.keys()))
+    nature = nature_override if nature_override is not None else \
+        random.choice(list(consts.NATURES.keys()))
     ivs = iv_override if iv_override is not None else \
         {stat: max([random.randint(0, 31)] * iv_advantage) for stat in consts.STATS}
     evs = ev_override if ev_override is not None else \
@@ -265,17 +266,17 @@ class Pokemon(models.Model):
         base_stats = get_base_stats(self.dex_number)
 
         # HP has separate calculation
-        self.hp_stat = int((2 * base_stats["hp"] + self.hp_iv + self.hp_ev / 4) * self.level / 100) + self.level + 10
+        self.hp_stat = int((2 * base_stats["hp"] + self.hp_iv + int(self.hp_ev / 4)) * self.level / 100) + self.level + 10
         # Calculation for all other stats
-        self.atk_stat = int((int((2 * base_stats["atk"] + self.atk_iv + self.atk_ev / 4) * self.level / 100) + 5) \
+        self.atk_stat = int((int((2 * base_stats["atk"] + self.atk_iv + int(self.atk_ev / 4)) * self.level / 100) + 5) \
                         * get_nature_multiplier(self.nature, "atk"))
-        self.def_stat = int((int((2 * base_stats["def"] + self.def_iv + self.def_ev / 4) * self.level / 100) + 5) \
+        self.def_stat = int((int((2 * base_stats["def"] + self.def_iv + int(self.def_ev / 4)) * self.level / 100) + 5) \
                         * get_nature_multiplier(self.nature, "def"))
-        self.spa_stat = int((int((2 * base_stats["spa"] + self.spa_iv + self.spa_ev / 4) * self.level / 100) + 5) \
+        self.spa_stat = int((int((2 * base_stats["spa"] + self.spa_iv + int(self.spa_ev / 4)) * self.level / 100) + 5) \
                         * get_nature_multiplier(self.nature, "spa"))
-        self.spd_stat = int((int((2 * base_stats["spd"] + self.spd_iv + self.spd_ev / 4) * self.level / 100) + 5) \
+        self.spd_stat = int((int((2 * base_stats["spd"] + self.spd_iv + int(self.spd_ev / 4)) * self.level / 100) + 5) \
                         * get_nature_multiplier(self.nature, "spd"))
-        self.spe_stat = int((int((2 * base_stats["spe"] + self.spe_iv + self.spe_ev / 4) * self.level / 100) + 5) \
+        self.spe_stat = int((int((2 * base_stats["spe"] + self.spe_iv + int(self.spe_ev / 4)) * self.level / 100) + 5) \
                         * get_nature_multiplier(self.nature, "spe"))
 
         if not skip_save:
@@ -292,22 +293,23 @@ class Pokemon(models.Model):
         If pokemon doesn't have chosen move, do nothing.
         """
         move_mapping = {
-            1: (self.move1, self.move1_pp),
-            2: (self.move2, self.move2_pp),
-            3: (self.move3, self.move3_pp),
-            4: (self.move4, self.move4_pp)
+            1: (self.move1, self.move1_pp, "move1_pp"),
+            2: (self.move2, self.move2_pp, "move2_pp"),
+            3: (self.move3, self.move3_pp, "move3_pp"),
+            4: (self.move4, self.move4_pp, "move4_pp")
         }
         moves = [move_no] if move_no else [1, 2, 3, 4]
         for move in moves:
             move_name = move_mapping[move][0]
             move_pp = move_mapping[move][1]
+            move_pp_attr = move_mapping[move][2]
             if move_name is None:
                 continue
             move_cap = consts.MOVES[move_name]["pp"]
             if restore_by is None:
-                move_pp = move_cap
+                setattr(self, move_pp_attr, move_cap)
             else:
-                move_pp = min(move_cap, move_pp + restore_by)
+                setattr(self, move_pp_attr, min(move_cap, move_pp + restore_by))
         if not skip_save:
             self.save(update_fields=["move1_pp", "move2_pp", "move3_pp", "move4_pp"])
 
