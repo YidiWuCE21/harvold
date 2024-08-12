@@ -194,7 +194,7 @@ class Pokemon(models.Model):
     status = models.CharField(max_length=20, null=True, blank=True)
     traded = models.BooleanField(default=False)
     happiness = models.IntegerField(default=200)
-    location = models.CharField(max_length=10, null=True, blank=True)
+    location = models.CharField(max_length=10, null=True, blank=True, default="box")
 
     # Move info
     move1 = models.CharField(max_length=20) # Pokemon must know at least one move
@@ -212,7 +212,17 @@ class Pokemon(models.Model):
             self.original_trainer = trainer
         if ball is not None:
             self.ball = ball
+        self.location = "box"
         self.save(update_fields=["trainer", "original_trainer", "ball"])
+
+    def release(self):
+        """
+        Releases a Pokemon and saves.
+        """
+        if self.location != "box":
+            return "Only box pokemon can be released."
+        self.location = "released"
+        self.save()
 
     def add_xp(self, xp, recalculate=False):
         """
@@ -282,8 +292,13 @@ class Pokemon(models.Model):
         if not skip_save:
             self.save(update_fields=["hp_stat", "atk_stat", "def_stat", "spa_stat", "spd_stat", "spe_stat"])
 
-    def restore_hp(self, skip_save=False):
-        self.current_hp = self.hp_stat
+    def restore_hp(self, amount=None, percent=None, skip_save=False):
+        if amount is not None:
+            self.current_hp = max(self.current_hp, self.hp_stat + amount)
+        if percent is not None:
+            self.current_hp = max(self.current_hp, self.hp_stat + percent * self.current_hp)
+        else:
+            self.current_hp = self.hp_stat
         if not skip_save:
             self.save(update_fields=["current_hp"])
 
@@ -313,7 +328,9 @@ class Pokemon(models.Model):
         if not skip_save:
             self.save(update_fields=["move1_pp", "move2_pp", "move3_pp", "move4_pp"])
 
-    def cure_status(self, skip_save=False):
+    def cure_status(self, target_status=None, skip_save=False):
+        if target_status is not None and self.status != target_status:
+            return
         self.status = ""
         if not skip_save:
             self.save(update_fields=["status"])
@@ -322,12 +339,6 @@ class Pokemon(models.Model):
         raise NotImplementedError()
 
     def change_nature(self):
-        raise NotImplementedError()
-
-    def move_to_party(self):
-        raise NotImplementedError()
-
-    def move_to_box(self):
         raise NotImplementedError()
 
 

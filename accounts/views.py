@@ -1,8 +1,11 @@
+import random
+
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.db import IntegrityError, transaction
+
 from .forms import UserCreateForm, StarterChoiceForm, TrainerSelectForm
 from .models import Profile
-from pokemon.models import Pokemon
+from pokemon.models import create_pokemon
 from harvoldsite import consts
 
 
@@ -16,17 +19,31 @@ def signup(request):
         starter_form = StarterChoiceForm(request.POST)
         trainer_form = TrainerSelectForm(request.POST)
         if signup_form.is_valid() and starter_form.is_valid() and trainer_form.is_valid():
-            new_user = signup_form.save()
-            new_user = authenticate(
-                username=signup_form.cleaned_data["username"],
-                password=signup_form.cleaned_data["password"],
-            )
-            login(request, new_user)
-            # Handle profile setup
-            chosen_trainer = trainer_form.cleaned_data["trainer"]
-            chosen_starter = starter_form.cleaned_data["pokemon"]
-            # Handle starter select
-            return redirect("home")
+            try:
+                with transaction.atomic():
+                    new_user = signup_form.save()
+
+                    # Handle profile setup and starter selection
+                    chosen_trainer = trainer_form.cleaned_data["trainer"]
+                    chosen_starter = starter_form.cleaned_data["pokemon"]
+
+                    user_profile = Profile(user=new_user, character=chosen_trainer)
+                    user_profile.save()
+
+                    user_starter = create_pokemon(dex_number=chosen_starter, level=5, sex=random.choice(["m", "f"]), iv_advantage=2)
+                    user_starter.assign_trainer(user_profile)
+                    user_starter.save()
+
+                    # Add the starter to the user's party
+                    error_msg = user_profile.add_to_party(user_starter)
+
+                    # This situation shouldn't ever happen but if it does, cancel signup
+                    if error_msg is not None:
+                        raise IntegrityError("ruh roh raggy")
+
+                    return redirect("login")
+            except IntegrityError:
+                return redirect("signup")
     else:
         # Initialize the signup forms for a fresh page
         signup_form = UserCreateForm()
