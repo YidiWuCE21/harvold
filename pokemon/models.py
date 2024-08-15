@@ -40,14 +40,22 @@ def get_progress_to_next_level(level, xp, growth):
     return (xp - start_xp) / (end_xp - start_xp) * 100
 
 
-def populate_moveset(dex_number, level):
+def populate_moveset(dex_number, level, last_four=True, tms=False, tutor=False):
     """
     Get up to 4 moves that the Pokemon knows based on level
     """
+    if last_four and (tms or tutor):
+        return "Cannot show TMs and move tutor moves when constructing moveset"
     learnset = consts.LEARNSETS[dex_number]["level"]
     learnable_moves = [move for level_req, move in learnset if int(level) >= int(level_req)]
-
-    return learnable_moves[-4:]
+    if tms:
+        learnset += consts.LEARNSETS[dex_number]["tm"]
+    if tutor:
+        learnset += consts.LEARNSETS[dex_number]["egg"]
+        learnset += consts.LEARNSETS[dex_number]["tutor"]
+    if last_four:
+        return learnable_moves[-4:]
+    return learnable_moves
 
 
 def get_base_stats(dex_number):
@@ -335,6 +343,29 @@ class Pokemon(models.Model):
         if not skip_save:
             self.save(update_fields=["status"])
 
+
+    def delete_move(self, move):
+        learnset = populate_moveset(self.dex_number, self.level, last_four=False)
+        if move not in learnset:
+            return "Cannot learn this move!"
+        for slot in ["move1", "move2", "move3", "move4"]:
+            if getattr(self, slot) is None:
+                setattr(self, slot, move)
+                setattr(self, "{}_pp".format(move), consts.MOVES[move]["pp"])
+
+
+    def learn_move(self, move):
+        """
+        Learn a move. Flags to enable TM amd movetutor moves
+        """
+        learnset = populate_moveset(self.dex_number, self.level, last_four=False)
+        if move not in learnset:
+            return "Cannot learn this move!"
+        for slot in ["move1", "move2", "move3", "move4"]:
+            if getattr(self, slot) is None:
+                setattr(self, slot, move)
+                setattr(self, "{}_pp".format(move), consts.MOVES[move]["pp"])
+
     def evolve(self):
         raise NotImplementedError()
 
@@ -352,4 +383,26 @@ class Party(models.Model):
     slot_6 = models.ForeignKey(Pokemon, related_name="slot_6", null=True, on_delete=models.SET_NULL)
 
     def swap(self, slot1, slot2):
+        """
+        Swap the position of two pokemon and save the party atomically.
+
+        If one of the slots is empty, cancel
+        """
         raise NotImplementedError()
+
+    def party_to_json(self):
+        """
+        Function to convert relevant party info to JSON for display purposes
+        """
+        ret_obj = []
+        for slot in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            pokemon = getattr(self, slot)
+            if pokemon is None:
+                continue
+            ret_obj.append({
+                "dex_number": pokemon.dex_number,
+                "current_hp": float(pokemon.current_hp) / pokemon.total_hp,
+                "status": pokemon.status,
+                "shiny": pokemon.shiny
+            })
+        return ret_obj

@@ -1,4 +1,4 @@
-{% extends 'base_layout.html' %}
+{% extends 'login_layout.html' %}
 {% load static %}
 
 {% block header %}
@@ -7,21 +7,42 @@
 
 {% block content %}
 
-<h2>Sign up</h2>
+
 <form method="POST">
     {% csrf_token %}
     <div class="container">
+        <div class="header">
+            <h4>Sign up</h4>
+        </div>
         <div class="row">
-            <div class="col">
-                {% for field in signup_form %}
-                <div class="form-group">
-                    {{ field.errors }}
-                    <label>{{ field.label_tag }}</label>
-                    <p>{{ field }}</p>
+            <div class="col content-card">
+                <div class="trainer-card">
+                    <div class="trainer-card-header">&nbsp;POKEMON LEAGUE TRAINER CARD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <br>
+                    <table>
+                    {% for field in signup_form %}
+                        <tr>
+
+                            <td>
+                                {{ field.errors }}
+                                <label>{{ field.label_tag }}</label>
+                            </td>
+                            <td>
+                                {{ field }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
                 </div>
-                {% endfor %}
+
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Sign up</button>
+                <div>
+                    <a href="{% url 'login' %}">Already a member? Login</a>
+                </div>
             </div>
-            <div class="col">
+            <div class="col content-card">
 
                 <div class="form-group">
                     <h4>Choose your trainer!</h4>
@@ -62,6 +83,7 @@
                         {% endfor %}
                     </div>
                     {% endfor %}
+
                 </div>
                 <br>
 
@@ -71,9 +93,7 @@
     </div>
 
 
-    <button type="submit" class="btn btn-primary">Sign up</button>
+
 </form>
-<div>
-  <a href="{% url 'login' %}">Already a member? Login</a>
-</div>
+
 {% endblock %}

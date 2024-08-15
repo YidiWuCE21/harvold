@@ -1,15 +1,31 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from harvoldsite import consts
 
 
 class UserCreateForm(UserCreationForm):
-    email = forms.EmailField(required=True, label="Email", error_messages={"exists": "This already exists!"})
+    email = forms.EmailField(required=True, label="EMAIL", error_messages={"exists": "Email already in use!"})
+    password1 = forms.CharField(
+        label='PASSWORD',
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+        help_text=_('Enter the same password as before, for verification.'),
+    )
+    password2 = forms.CharField(
+        label='CONFIRM PW',
+        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        strip=False,
+        help_text=_('Enter the same password as before, for verification.'),
+    )
 
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
+        labels = {
+            "username": "USERNAME",
+        }
 
     def save(self, commit=True):
         user = super(UserCreateForm, self).save(commit=False)
