@@ -1,34 +1,35 @@
-<div class="stat-box" style="min-width: 260px">
+{% load stat_tags %}
+<div>
     <table>
         <tr>
             <th>HP</th>
             <td>{{ hp }}</td>
-            <td>{% include 'common/statbar.html' with stat=hp %}</td>
+            <td>{% include 'common/statbar.html' with stat=hp max_stat=max_stat width=width %}</td>
         </tr>
         <tr>
             <th>Attack</th>
             <td>{{ atk }}</td>
-            <td>{% include 'common/statbar.html' with stat=atk %}</td>
+            <td>{% include 'common/statbar.html' with stat=atk max_stat=max_stat width=width %}</td>
         </tr>
         <tr>
             <th>Defense</th>
             <td>{{ def }}</td>
-            <td>{% include 'common/statbar.html' with stat=def %}</td>
+            <td>{% include 'common/statbar.html' with stat=def max_stat=max_stat width=width %}</td>
         </tr>
         <tr>
             <th>Sp. Attack</th>
             <td>{{ spa }}</td>
-            <td>{% include 'common/statbar.html' with stat=spa %}</td>
+            <td>{% include 'common/statbar.html' with stat=spa max_stat=max_stat width=width %}</td>
         </tr>
         <tr>
             <th>Sp. Defense</th>
             <td>{{ spd }}</td>
-            <td>{% include 'common/statbar.html' with stat=spd %}</td>
+            <td>{% include 'common/statbar.html' with stat=spd max_stat=max_stat width=width %}</td>
         </tr>
         <tr>
             <th>Speed</th>
             <td>{{ spe }}</td>
-            <td>{% include 'common/statbar.html' with stat=spe %}</td>
+            <td>{% include 'common/statbar.html' with stat=spe max_stat=max_stat width=width %}</td>
         </tr>
     </table>
 </div>

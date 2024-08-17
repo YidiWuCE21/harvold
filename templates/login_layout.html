@@ -16,6 +16,7 @@
             <div class="container">
                 <img src="{% static 'harvold_logo.png' %}" style="width:400px">
             </div>
+            {% include 'common/navbar.html' %}
             <div class="container main-content">
                 {% block content %}{% endblock content %}
             </div>

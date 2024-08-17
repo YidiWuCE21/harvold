@@ -58,21 +58,8 @@ body {
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0px 2px 4px var(--shadow);
-}
-
-.stat-box {
-    display: inline-block;
-    background-color: var(--content);
-    border: 1px solid var(--border);
-    padding: 5px;
-    border-radius: 10px;
     font-family: Aldrich;
     font-size: 12px;
-}
-.stat-box th, td {
-    font-family: Aldrich;
-    font-size: 12px;
-    padding-right: 5px;
 }
 
 /* Generic helpers */

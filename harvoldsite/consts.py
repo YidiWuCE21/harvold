@@ -23,23 +23,15 @@ STARTER_CHOICES = [
     ("001", "Bulbasaur"),
     ("004", "Charmander"),
     ("007", "Squirtle"),
-    # Johto
     ("152", "Chikorita"),
     ("155", "Cyndaquil"),
     ("158", "Totodile"),
-    #"152", "155", "158",
-    # Hoenn
-    #"252", "255", "258",
     ("252", "Treecko"),
     ("255", "Torchic"),
     ("258", "Mudkip"),
-    # Sinnoh
-    #"387", "390", "393",
     ("387", "Turtwig"),
     ("390", "Chimchar"),
     ("393", "Piplup"),
-    # Unova
-    #"495", "498", "501"
     ("495", "Snivy"),
     ("498", "Tepig"),
     ("501", "Oshawott"),

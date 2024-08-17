@@ -89,7 +89,7 @@
                             <h4></h4>
                         </div>
                         {% for pokemon, data in pokemon_data.items %}
-                        <div class="starter-tab" id="starter_{{ pokemon }}" style="display:none;">
+                        <div class="starter-tab" id="starter_{{ pokemon }}" style="display:none">
                             <h4>{{ data.name }}</h4>
                             <img src="{% get_static_prefix %}{{ asset_paths.art }}\{{ pokemon }}.png" class="center">
                             <div class="center">
@@ -97,7 +97,8 @@
                                 <td><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png"></td>
                                 {% endfor %}
                             </div>
-                            {% include 'common/stats.html' with hp=data.hp atk=data.attack def=data.defense spa=data.sp_attack spd=data.sp_defense spe=data.speed %}
+                            <br>
+                            {% include 'common/stats.html' with max_stat=1 width=220 hp=data.hp atk=data.attack def=data.defense spa=data.sp_attack spd=data.sp_defense spe=data.speed %}
                         </div>
                         {% endfor %}
 
