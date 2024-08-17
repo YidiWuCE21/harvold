@@ -30,10 +30,19 @@ STARTER_CHOICES = [
     #"152", "155", "158",
     # Hoenn
     #"252", "255", "258",
+    ("252", "Treecko"),
+    ("255", "Torchic"),
+    ("258", "Mudkip"),
     # Sinnoh
     #"387", "390", "393",
+    ("387", "Turtwig"),
+    ("390", "Chimchar"),
+    ("393", "Piplup"),
     # Unova
     #"495", "498", "501"
+    ("495", "Snivy"),
+    ("498", "Tepig"),
+    ("501", "Oshawott"),
 ]
 
 TRAINER_CHOICES = [
@@ -58,7 +67,10 @@ TRAINER_CHOICES = [
 ASSET_PATHS = {
     "icon": os.path.join("assets", "pokemon", "icon"),
     "art": os.path.join("assets", "pokemon", "art"),
-    "player_sprite": os.path.join("assets", "player", "sprite")
+    "front": os.path.join("assets", "pokemon", "front"),
+    "player_sprite": os.path.join("assets", "player", "sprite"),
+    "player_art": os.path.join("assets", "player", "art"),
+    "typing": os.path.join("assets", "pokemon", "type"),
 }
 
 STATS = ["hp", "atk", "def", "spa", "spd", "spe"]

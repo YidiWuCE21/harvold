@@ -4,7 +4,8 @@
     --main: rgba(247, 252, 255, 1);
     --header: rgba(227, 232, 255, 1);
     --border: rgba(135, 185, 235, 1);
-    --hover: rgba(136, 194, 255, 0.8);
+    --content: rgba(150, 225, 255, 1);
+    --hover: rgba(210, 219, 224, 0.8);
     --shadow: rgba(0, 0, 0, 0.2);
     /* trainer card */
     --card-stripes: rgba(190, 248, 226, 1);
@@ -36,10 +37,11 @@ body {
 
 .main-content {
     background-color: var(--main);
-    padding: 10px 25px;
+    padding: 25px 35px;
     min-height: 80vh;
     border-radius: 10px;
     box-shadow: 0px 2px 4px var(--shadow);
+    min-width: 720px;
 }
 
 .header {
@@ -47,7 +49,53 @@ body {
     margin-bottom: 10px;
 }
 
+.generic-content {
+    min-width: 600px;
+}
+
+.content-box {
+    background-color: var(--bg);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px var(--shadow);
+}
+
+.stat-box {
+    display: inline-block;
+    background-color: var(--content);
+    border: 1px solid var(--border);
+    padding: 5px;
+    border-radius: 10px;
+    font-family: Aldrich;
+    font-size: 12px;
+}
+.stat-box th, td {
+    font-family: Aldrich;
+    font-size: 12px;
+    padding-right: 5px;
+}
+
+/* Generic helpers */
+.center {
+    margin: auto;
+}
+
+/* Invisi-scroll */
+
+.invisi-scroll::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari and Opera */
+}
+
+.invisi-scroll {
+    border-top: 1px solid var(--shadow);
+    border-bottom: 1px solid var(--shadow);
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Trainer card */
 .trainer-card {
+    margin: auto;
     background-image: linear-gradient(
         0deg,
         var(--card-stripes) 25%,
@@ -65,7 +113,7 @@ body {
     box-shadow: 0px 2px 4px var(--shadow);
     color: var(--card-input);
     font-family: Aldrich;
-    min-width: 320px;
+    width: 410px;
     font-size: 12px;
     padding: 10px;
 }
@@ -91,4 +139,9 @@ body {
     color: var(--card-text);
     text-decoration: underline;
     font-family: Aldrich;
+}
+
+.trainer-card-img {
+    background-image: url("../trainer_card.png");
+    border-radius: 20px;
 }

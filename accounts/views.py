@@ -27,6 +27,7 @@ def signup(request):
                     chosen_trainer = trainer_form.cleaned_data["trainer"]
                     chosen_starter = starter_form.cleaned_data["pokemon"]
 
+
                     user_profile = Profile(user=new_user, character=chosen_trainer)
                     user_profile.save()
 
@@ -54,7 +55,8 @@ def signup(request):
         "signup_form": signup_form,
         "starter_form": starter_form,
         "trainer_form": trainer_form,
-        "asset_paths": consts.ASSET_PATHS
+        "asset_paths": consts.ASSET_PATHS,
+        "pokemon_data": {starter[0]: consts.POKEMON[starter[0]] for starter in consts.STARTER_CHOICES}
     }
 
     return render(request, "registration/signup.html", html_render_variables)

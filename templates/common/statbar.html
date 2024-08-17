@@ -1,0 +1,4 @@
+{% widthratio stat 1 -3 as negstat %}
+{% widthratio stat 1 -1 as negstat2 %}
+{% widthratio stat 1 3 as doublestat %}
+<div style="margin-bottom:5px;background-color:rgba({{ 510|add:negstat }}, {{ doublestat }}, 0, 0.5); height: 12px; width:{{stat}}px;border-radius:2px;border:1px solid rgba({{ 255|add:negstat2 }}, {{ stat }}, 0, 0.5);"></div>
