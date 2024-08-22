@@ -171,6 +171,40 @@ class TestRemoveFromParty(TestCase):
         self.trainer.state = "idle"
 
 
+class TestGetBox(TestCase):
+    def setUp(self):
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = models.Profile(character="1", user=self.user1)
+        self.trainer1.save()
+        self.user2 = User(username="test2", password="test2", email="test2@test.com")
+        self.user2.save()
+        self.trainer2 = models.Profile(character="1", user=self.user2)
+        self.trainer2.save()
+        self.pkmn1 = create_pokemon("001", 5, "m", iv_override={stat: 31 for stat in consts.STATS})
+        self.pkmn1.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn2 = create_pokemon("004", 11, "f", iv_override={stat: 22 for stat in consts.STATS})
+        self.pkmn2.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn3 = create_pokemon("007", 6, "m", iv_override={stat: 7 for stat in consts.STATS})
+        self.pkmn3.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn4 = create_pokemon("111", 23, "m", iv_override={stat: 21 for stat in consts.STATS})
+        self.pkmn4.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn5 = create_pokemon("444", 23, "f", iv_override={stat: 11 for stat in consts.STATS})
+        self.pkmn5.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn6 = create_pokemon("333", 77, "m", iv_override={stat: 2 for stat in consts.STATS})
+        self.pkmn6.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn7 = create_pokemon("111", 100, "f", iv_override={stat: 11 for stat in consts.STATS})
+        self.pkmn7.assign_trainer(self.trainer1, "pokeball")
+        self.pkmn8 = create_pokemon("112", 91, "f", iv_override={stat: 27 for stat in consts.STATS})
+        self.pkmn8.assign_trainer(self.trainer1, "pokeball")
+
+
+    def test_get_box(self):
+        box = self.trainer1.get_box()
+
+
+
+
 class TestSortParty(TestCase):
     def setUp(self):
         self.user = User(username="test1", password="test1", email="test1@test.com")

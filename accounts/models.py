@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db import IntegrityError, transaction
+from pokemon.models import Pokemon
 
 # Create your models here.
 class Profile(models.Model):
@@ -112,6 +113,29 @@ class Profile(models.Model):
                 pokemon.save()
         except IntegrityError:
             return "Failed to remove Pokemon from party, please try again in a few moments."
+
+
+    def get_box(self, page_size=25, to_json=True, order_by="caught_date", descending=False, filter_by=None):
+        """
+        Function to get a user's box, splitting Pokemon into pages.
+
+
+        """
+        filters = {
+            "trainer": self
+        }
+        valid_filters = {
+            "tag": ["star", "circle", "square", "diamond"]
+        }
+        for field, value in filter_by.items():
+            if field in valid_filters:
+                filters[field] = value
+        if order_by not in ["caught_date", "dex_number", "level", "held_item"]:
+            return "Cannot order by field {}!".format(order_by)
+        if descending:
+            order_by = "-{}".format(order_by)
+        box = Pokemon.objects.filter(filters).order_by(order_by)
+        return box
 
     def _sort_party(self):
         """

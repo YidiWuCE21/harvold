@@ -1,0 +1,131 @@
+{% extends 'layouts/top_bar.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="container">
+        <div class="header">
+            <h2>Sign up</h2>
+        </div>
+        <br>
+        <div class="d-flex">
+            <div class="p-2 flex-fill">
+                <div class="trainer-card">
+                    <div class="trainer-card-header">&nbsp;POKEMON LEAGUE TRAINER CARD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <br>
+                    <table style="display:inline-block;">
+                    {% for field in signup_form %}
+                        <tr>
+
+                            <td>
+                                {{ field.errors }}
+                                <label>{{ field.label_tag }}</label>
+                            </td>
+                            <td>
+                                {{ field }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                    <div style="display:inline-block;vertical-align:top;margin:10px;height:100px;width:100px;position:relative;"
+                         class="trainer-card-img">
+                        <img id="trainer_card_char" src="{% get_static_prefix %}{{ asset_paths.player_sprite }}\00.png"
+                             style="position:absolute;top:0;">
+                        <img id="trainer_card_pokemon" src="{% get_static_prefix %}{{ asset_paths.front }}\000.png"
+                             style="position:absolute;top:10px;left:20px;">
+                    </div>
+                </div>
+                <br><br>
+                <div class="form-group" style="">
+                    <h4>Choose your trainer!</h4>
+                    {% for field in trainer_form %}
+                    {{ field.errors }}
+                    <div style="width:600px;">
+                        {% for choice in field.field.choices %}
+                        {% if forloop.counter0|divisibleby:"5" %}
+                        <div class="row">
+                        {% endif %}
+                            <input type="radio" class="radio_item" value="{{ choice.0 }}" name="trainer" id="id_{{ choice.0 }}">
+                            <label class="col-sm select-card label_item" for="id_{{ choice.0 }}"
+                                   style="height:80px;"
+                                   data-img="{% get_static_prefix %}{{ asset_paths.player_sprite }}\{{choice.0}}.png"
+                                   onclick="document.getElementById('trainer_card_char').src = this.dataset.img">
+                                <img class="select-card-img" src="{% get_static_prefix %}{{ asset_paths.player_art }}\{{choice.0}}.png">
+                            </label>
+                        {% if forloop.counter|divisibleby:"5" %}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                    <br><br>
+                    <h4>Choose a starter!</h4>
+                    {% for field in starter_form %}
+                    {{ field.errors }}
+                    <div style="width:600px;">
+                        <div class="row">
+                            <div class="col invisi-scroll" style="height:320px;overflow:auto;">
+                                {% for choice in field.field.choices %}
+                                <input type="radio" class="radio_item" value="{{ choice.0 }}" name="pokemon" id="id_{{ choice.0 }}">
+                                <label class="col-sm select-card label_item" for="id_{{ choice.0 }}"
+                                       style="height:60px;width:180px;"
+                                       data-img="{% get_static_prefix %}{{ asset_paths.front }}\{{choice.0}}.png"
+                                       onclick="document.getElementById('trainer_card_pokemon').src = this.dataset.img;
+                                                openTab('starter-tab', 'starter_{{ choice.0 }}');">
+                                    <img class="select-card-bg" src="{% get_static_prefix %}{{ asset_paths.art }}\{{ choice.0 }}.png">
+                                    <img class="select-icon" src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ choice.0 }}.gif">
+                                    <p>{{ choice.1 }}</p>
+                                </label>
+                                {% endfor %}
+                            </div>
+                            <div class="col-7 content-box">
+                                <div class="starter-tab">
+                                <h4></h4>
+                                </div>
+                                {% for pokemon, data in pokemon_data.items %}
+                                <div class="starter-tab" id="starter_{{ pokemon }}" style="display:none;text-align:center;">
+
+                                        <h4>{{ data.name }}</h4>
+                                        <img src="{% get_static_prefix %}{{ asset_paths.art }}\{{ pokemon }}.png">
+                                        <div style="margin-top:5px">
+                                            {% for type in data.typing %}
+                                            <td><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png"></td>
+                                            {% endfor %}
+                                        </div>
+                                        <br>
+                                        {% include 'common/stats.html' with max_stat=1 width=220 hp=data.hp atk=data.attack def=data.defense spa=data.sp_attack spd=data.sp_defense spe=data.speed %}
+
+
+                                </div>
+                                {% endfor %}
+
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="p-2 flex-fill">
+
+                <button type="submit" class="btn btn-primary">Sign up</button>
+                <div>
+                    <a href="{% url 'login' %}">Already a member? Login</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</form>
+
+{% endblock %}

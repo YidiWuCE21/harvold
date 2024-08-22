@@ -4,7 +4,6 @@ import random
 from datetime import datetime
 
 from django.db import models
-from accounts.models import Profile
 from harvoldsite import consts
 
 
@@ -49,10 +48,10 @@ def populate_moveset(dex_number, level, last_four=True, tms=False, tutor=False):
     learnset = consts.LEARNSETS[dex_number]["level"]
     learnable_moves = [move for level_req, move in learnset if int(level) >= int(level_req)]
     if tms:
-        learnset += consts.LEARNSETS[dex_number]["tm"]
+        learnable_moves += consts.LEARNSETS[dex_number]["tm"]
     if tutor:
-        learnset += consts.LEARNSETS[dex_number]["egg"]
-        learnset += consts.LEARNSETS[dex_number]["tutor"]
+        learnable_moves += consts.LEARNSETS[dex_number]["egg"]
+        learnable_moves += consts.LEARNSETS[dex_number]["tutor"]
     if last_four:
         return learnable_moves[-4:]
     return learnable_moves
@@ -125,6 +124,8 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
         spd_ev=evs["spd"],
         spe_iv=ivs["spe"],
         spe_ev=evs["spe"],
+        iv_total=sum(ivs.values()),
+        bst=sum(get_base_stats(dex_number).values()),
         held_item=held_item,
         traded=traded,
         happiness=consts.POKEMON[dex_number]["base_happiness"],
@@ -152,14 +153,14 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
 class Pokemon(models.Model):
     # Administrative fields
     trainer = models.ForeignKey(
-        Profile,
+        "accounts.Profile",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name="trainer"
     )
     original_trainer = models.ForeignKey(
-        Profile,
+        "accounts.Profile",
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
@@ -175,6 +176,7 @@ class Pokemon(models.Model):
     nature = models.CharField(max_length=10)
     shiny = models.BooleanField(default=False)
     ability = models.CharField(max_length=20, null=True, blank=True)
+    box_tag = models.CharField(max_length=20, null=True, blank=True)
 
     # Stats
     hp_stat = models.IntegerField(default=1)
@@ -196,6 +198,10 @@ class Pokemon(models.Model):
     spe_iv = models.IntegerField()
     spe_ev = models.IntegerField(default=0)
 
+    # For sorting
+    iv_total = models.IntegerField(default=0)
+    bst = models.IntegerField(default=0)
+
     # Status
     held_item = models.CharField(max_length=20, null=True, blank=True)
     current_hp = models.IntegerField()
@@ -214,6 +220,7 @@ class Pokemon(models.Model):
     move4 = models.CharField(max_length=20, null=True, blank=True)
     move4_pp = models.IntegerField(null=True)
 
+
     def assign_trainer(self, trainer, ball=None):
         self.trainer = trainer
         if self.original_trainer is None:
@@ -223,13 +230,16 @@ class Pokemon(models.Model):
         self.location = "box"
         self.save(update_fields=["trainer", "original_trainer", "ball"])
 
-    def release(self):
+    def release(self, trainer):
         """
         Releases a Pokemon and saves.
         """
+        if self.trainer != trainer:
+            return "Cannot release Pokemon you don't own!"
         if self.location != "box":
             return "Only box pokemon can be released."
         self.location = "released"
+        self.trainer = None
         self.save()
 
     def add_xp(self, xp, recalculate=False):
@@ -344,27 +354,26 @@ class Pokemon(models.Model):
             self.save(update_fields=["status"])
 
 
-    def delete_move(self, move):
-        learnset = populate_moveset(self.dex_number, self.level, last_four=False)
-        if move not in learnset:
-            return "Cannot learn this move!"
-        for slot in ["move1", "move2", "move3", "move4"]:
-            if getattr(self, slot) is None:
-                setattr(self, slot, move)
-                setattr(self, "{}_pp".format(move), consts.MOVES[move]["pp"])
-
-
-    def learn_move(self, move):
+    def learn_move(self, move, slot, tms=False, tutor=False, skip_save=False):
         """
         Learn a move. Flags to enable TM amd movetutor moves
         """
-        learnset = populate_moveset(self.dex_number, self.level, last_four=False)
+        # Check if slot is valid
+        move_slots = ["move1", "move2", "move3", "move4"]
+        if slot not in move_slots:
+            return "Not a valid slot to save."
+        # Check if move is already known
+        for current_slot in move_slots:
+            current_move = getattr(self, current_slot)
+            if move == current_move:
+                return "Move is already known!"
+        learnset = populate_moveset(self.dex_number, self.level, last_four=False, tms=tms, tutor=tutor)
         if move not in learnset:
             return "Cannot learn this move!"
-        for slot in ["move1", "move2", "move3", "move4"]:
-            if getattr(self, slot) is None:
-                setattr(self, slot, move)
-                setattr(self, "{}_pp".format(move), consts.MOVES[move]["pp"])
+        setattr(self, slot, move)
+        setattr(self, "{}_pp".format(slot), consts.MOVES[move]["pp"])
+        if not skip_save:
+            self.save(update_fields=[slot, "{}_pp".format(slot)])
 
     def evolve(self):
         raise NotImplementedError()
@@ -372,37 +381,3 @@ class Pokemon(models.Model):
     def change_nature(self):
         raise NotImplementedError()
 
-
-class Party(models.Model):
-    trainer = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    slot_1 = models.ForeignKey(Pokemon, related_name="slot_1", null=True, on_delete=models.SET_NULL)
-    slot_2 = models.ForeignKey(Pokemon, related_name="slot_2", null=True, on_delete=models.SET_NULL)
-    slot_3 = models.ForeignKey(Pokemon, related_name="slot_3", null=True, on_delete=models.SET_NULL)
-    slot_4 = models.ForeignKey(Pokemon, related_name="slot_4", null=True, on_delete=models.SET_NULL)
-    slot_5 = models.ForeignKey(Pokemon, related_name="slot_5", null=True, on_delete=models.SET_NULL)
-    slot_6 = models.ForeignKey(Pokemon, related_name="slot_6", null=True, on_delete=models.SET_NULL)
-
-    def swap(self, slot1, slot2):
-        """
-        Swap the position of two pokemon and save the party atomically.
-
-        If one of the slots is empty, cancel
-        """
-        raise NotImplementedError()
-
-    def party_to_json(self):
-        """
-        Function to convert relevant party info to JSON for display purposes
-        """
-        ret_obj = []
-        for slot in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
-            pokemon = getattr(self, slot)
-            if pokemon is None:
-                continue
-            ret_obj.append({
-                "dex_number": pokemon.dex_number,
-                "current_hp": float(pokemon.current_hp) / pokemon.total_hp,
-                "status": pokemon.status,
-                "shiny": pokemon.shiny
-            })
-        return ret_obj

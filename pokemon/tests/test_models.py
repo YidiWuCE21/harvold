@@ -200,6 +200,7 @@ class TestCreatePokemon(TestCase):
         self.assertIsNone(ret.original_trainer)
 
 
+
 class TestAssignTrainer(TestCase):
     def setUp(self):
         self.pkmn1 = models.create_pokemon("001", 5, "m")
@@ -224,6 +225,43 @@ class TestAssignTrainer(TestCase):
         self.pkmn2.assign_trainer(self.trainer2)
         self.assertEqual(self.pkmn2.trainer, self.trainer2)
         self.assertEqual(self.pkmn2.original_trainer, self.trainer1)
+
+
+class TestRelease(TestCase):
+    def setUp(self):
+        self.pkmn1 = models.create_pokemon("001", 5, "m")
+        self.pkmn2 = models.create_pokemon("001", 5, "m")
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = Profile(character="01", user=self.user1)
+        self.trainer1.save()
+        self.pkmn1.assign_trainer(self.trainer1)
+        self.pkmn2.assign_trainer(self.trainer1)
+
+
+    def test_release_standard(self):
+        self.assertIsNotNone(self.pkmn1.trainer)
+        self.pkmn1.release(self.trainer1)
+        self.assertIsNone(self.pkmn1.trainer)
+        self.assertEqual("released", self.pkmn1.location)
+
+
+    def test_release_not_in_box(self):
+        self.assertIsNotNone(self.pkmn2.trainer)
+        self.trainer1.add_to_party(self.pkmn2)
+        ret = self.pkmn2.release(self.trainer1)
+        self.assertIsNotNone(self.pkmn2.trainer)
+        self.assertEqual("party", self.pkmn2.location)
+        self.assertEqual("Only box pokemon can be released.", ret)
+
+
+    def test_release_not_owned(self):
+        self.assertIsNotNone(self.pkmn2.trainer)
+        self.trainer1.add_to_party(self.pkmn2)
+        ret = self.pkmn2.release("not trainer")
+        self.assertIsNotNone(self.pkmn2.trainer)
+        self.assertEqual("party", self.pkmn2.location)
+        self.assertEqual("Cannot release Pokemon you don't own!", ret)
 
 
 class TestAddXp(TestCase):
@@ -495,3 +533,40 @@ class TestCureStatus(TestCase):
         pkmn.status = "poison"
         pkmn.cure_status(skip_save=True)
         self.assertEqual("", pkmn.status)
+
+
+class TestLearnMove(TestCase):
+    def setUp(self):
+        self.pkmn = models.create_pokemon("003", 50, "m")
+
+
+    def test_learn_move_standard(self):
+        self.pkmn.learn_move("vinewhip", "move4")
+        self.assertEqual("vinewhip", self.pkmn.move4)
+        self.assertEqual(25, self.pkmn.move4_pp)
+
+
+    def test_learn_move_known(self):
+        ret = self.pkmn.learn_move("doubleedge", "move4")
+        self.assertNotEqual("doubleedge", self.pkmn.move4)
+        self.assertEqual("Move is already known!", ret)
+
+
+    def test_learn_move_overlevel(self):
+        ret = self.pkmn.learn_move("solarbeam", "move4")
+        self.assertNotEqual("solarbeam", self.pkmn.move4)
+        self.assertEqual("Cannot learn this move!", ret)
+
+
+    def test_learn_move_tm_tutor(self):
+        ret = self.pkmn.learn_move("earthquake", "move4")
+        self.assertNotEqual("earthquake", self.pkmn.move4)
+        self.assertEqual("Cannot learn this move!", ret)
+        self.pkmn.learn_move("earthquake", "move4", tms=True)
+        self.assertEqual("earthquake", self.pkmn.move4)
+        self.assertEqual(10, self.pkmn.move4_pp)
+
+
+    def test_learn_move_invalid_slot(self):
+        ret = self.pkmn.learn_move("tackle", "status")
+        self.assertEqual("Not a valid slot to save.", ret)
