@@ -1,4 +1,4 @@
-{% extends 'login_layout.html' %}
+{% extends 'base_layout.html' %}
 {% load static %}
 
 {% block header %}
@@ -33,7 +33,7 @@
                 </tr>
             {% endfor %}
             </table>
-            <div style="display:inline-block;vertical-align:top;margin:10px;height:100px;width:100px;position:relative;"
+            <div style="display:inline-block;vertical-align:top;margin:20px;height:100px;width:100px;position:relative;"
                  class="trainer-card-img">
                 <img id="trainer_card_char" src="{% get_static_prefix %}{{ asset_paths.player_sprite }}\00.png"
                      style="position:absolute;top:0;">

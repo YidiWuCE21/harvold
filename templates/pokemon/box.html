@@ -1,0 +1,31 @@
+{% load static %}
+{% for page in box %}
+    <div class="box-page">
+        <table class="center">
+            {% for pokemon in page %}
+            {% if forloop.counter0|divisibleby:"5" %}
+            <tr>
+            {% endif %}
+                {% if pokemon is None %}
+                <td>
+                    <div class="box-cell select-card">
+
+                    </div>
+                </td>
+                {% else %}
+                <td>
+                    <div class="box-cell select-card">
+                        <h1>{{ pokemon.name }}</h1>
+                        Level {{ pokemon.level }}{% if pokemon.sex == "m" %}   <span style="color:blue;">&male;</span>{% elif pokemon.sex == "f" %}   <span style="color:magenta;">&female;</span>{% endif %}
+                        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{pokemon.dex}}{% if pokemon.shiny %}-s{% endif %}.png">
+
+                    </div>
+                </td>
+                {% endif %}
+            {% if forloop.counter|divisibleby:"5" %}
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+{% endfor %}

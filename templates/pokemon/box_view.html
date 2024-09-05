@@ -1,0 +1,46 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+<link rel="stylesheet" href="{% static 'stylesheets/box.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script>
+var imgPath = "{% get_static_prefix %}assets/pokemon/front/";
+var boxData = {{ box|safe }};
+</script>
+<script src="{% static 'scripts/box.js' %}"></script>
+{% endblock %}
+
+{% block title %}Box{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div id="box">
+
+    </div>
+    <!--div id="box-reorganizer">
+        <button onclick="ajaxToHtml('/pokemon/refreshbox', ['order_by', 'descending'], 'box')">Refresh</button>
+        <select name="order_by" id="order_by">
+            <option value="caught_date" selected>Caught Date</option>
+            <option value="level">Level</option>
+            <option value="dex_number">Pokedex Number</option>
+            <option value="iv_total">IV total</option>
+            <option value="bst">Base stat total</option>
+        </select>
+        <select name="descending" id="descending">
+            <option value="False" selected>Ascending</option>
+            <option value="True">Descending</option>
+        </select>
+    </div>
+    <div id="box2">
+        {% include "pokemon/box.html" %}
+    </div-->
+</div>
+
+
+
+{% endblock %}

@@ -1,6 +1,6 @@
 .select-card {
     background-color: var(--bg);
-    margin: 2px;d
+    margin: 2px;
     position: relative;
     transition: 0.2s;
     border: 1px solid var(--main);
@@ -17,6 +17,14 @@
     filter: none;
     -webkit-filter: grayscale(0%);
     background-color: var(--hover);
+}
+
+.select-card.shiny {
+    background-color: var(--shiny);
+}
+
+.select-card.shiny:hover {
+    background-color: var(--shiny-hover);
 }
 
 .select-card-bg {

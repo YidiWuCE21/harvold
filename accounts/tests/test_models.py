@@ -199,8 +199,49 @@ class TestGetBox(TestCase):
         self.pkmn8.assign_trainer(self.trainer1, "pokeball")
 
 
-    def test_get_box(self):
+
+    def test_get_box_standard(self):
         box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+    def test_get_box_page_size(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_locked(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_tagged(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_dex(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_level(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_bst(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_iv(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
+
+
+    def test_get_box_filter_order(self):
+        box = self.trainer1.get_box()
+        self.assertTrue(False)
 
 
 

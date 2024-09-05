@@ -55,7 +55,6 @@ def signup(request):
         "signup_form": signup_form,
         "starter_form": starter_form,
         "trainer_form": trainer_form,
-        "asset_paths": consts.ASSET_PATHS,
         "pokemon_data": {starter[0]: consts.POKEMON[starter[0]] for starter in consts.STARTER_CHOICES}
     }
 

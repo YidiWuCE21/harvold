@@ -1,0 +1,26 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+<link rel="stylesheet" href="{% static 'stylesheets/box.css' %}">
+{% endblock %}
+
+{% block title %}Box{% endblock %}
+
+{% block content %}
+{% if make %}
+Success!!!
+{% endif %}
+<form method="GET">
+    {% csrf_token %}
+    Dex
+    <input name="dex" type="text">
+    Level
+    <input name="level" type="text">
+    Sex
+    <input name="sex" type="text">
+    <button type="submit" class="btn btn-primary">Sign up</button>
+</form>
+
+{% endblock %}

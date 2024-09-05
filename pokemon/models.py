@@ -177,6 +177,7 @@ class Pokemon(models.Model):
     shiny = models.BooleanField(default=False)
     ability = models.CharField(max_length=20, null=True, blank=True)
     box_tag = models.CharField(max_length=20, null=True, blank=True)
+    locked = models.BooleanField(default=False)
 
     # Stats
     hp_stat = models.IntegerField(default=1)
@@ -375,9 +376,81 @@ class Pokemon(models.Model):
         if not skip_save:
             self.save(update_fields=[slot, "{}_pp".format(slot)])
 
+
+    @property
+    def name(self):
+        pkmn = consts.POKEMON[str(self.dex)]
+        return pkmn["name"]
+
+
+    @property
+    def dex(self):
+        return str(self.dex_number).zfill(3)
+
     def evolve(self):
         raise NotImplementedError()
 
     def change_nature(self):
         raise NotImplementedError()
+
+
+    def get_info(self):
+        """
+        Function to return generic Pokemon info in a dict format
+        """
+        pokemon_info = {
+            "Dex": self.dex_number,
+            "Level": self.level,
+            "Experience": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex_number]["experience_growth"]),
+            "Sex": self.sex,
+            "Ability": self.ability,
+            "Happiness": self.happiness,
+            "Held Item": self.held_item,
+            "Status": self.status,
+            "Current HP": self.current_hp
+        }
+        return pokemon_info
+
+
+    def get_metadata(self):
+        """
+        Function to return Pokemon metadata in a dict format
+        """
+        metadata = {
+            "Owner": self.trainer.user.username,
+            "Original Trainer": self.original_trainer.user.username,
+            "Date Caught": self.caught_date,
+            "Location": self.location,
+            "Tag": self.box_tag,
+            "Locked": self.locked
+        }
+        return metadata
+
+
+    def get_stats(self):
+        """
+        Function to return Pokemon info in a dict format
+        """
+        stats = {
+            "HP": (self.hp_stat, self.hp_iv, self.hp_ev),
+            "Attack": (self.atk_stat, self.atk_iv, self.atk_ev),
+            "Defense": (self.def_stat, self.def_iv, self.def_ev),
+            "Special Attack": (self.spa_stat, self.spa_iv, self.spa_ev),
+            "Special Defense": (self.spd_stat, self.spd_iv, self.spd_ev),
+            "Speed": (self.spe_stat, self.spe_iv, self.spe_ev)
+        }
+        return stats
+
+
+    def get_moves(self):
+        """
+        Function to return Pokemon info in a dict format
+        """
+        moveset = {
+            "move1": self.move1,
+            "move2": self.move2,
+            "move3": self.move3,
+            "move4": self.move4,
+        }
+        return moveset
 

@@ -17,7 +17,7 @@ with open(os.path.join(ASSETS_PATH, "data", "moves.json")) as pokemon_file:
 with open(os.path.join(ASSETS_PATH, "data", "exp_curves.json")) as pokemon_file:
     EXP_CURVES = json.load(pokemon_file)
 
-# Login-related choices
+# Login-related choicesf
 STARTER_CHOICES = [
     # Kanto
     ("001", "Bulbasaur"),
@@ -93,3 +93,5 @@ NATURES = {
     "hardy": {},
     "quirky": {},
 }
+
+TAGS = ["circle", "star", "square", "diamond"]

@@ -115,26 +115,35 @@ class Profile(models.Model):
             return "Failed to remove Pokemon from party, please try again in a few moments."
 
 
-    def get_box(self, page_size=25, to_json=True, order_by="caught_date", descending=False, filter_by=None):
+    def get_pokemon(self, order_by="caught_date", descending=False, filter_by=None):
         """
         Function to get a user's box, splitting Pokemon into pages.
-
-
         """
+        if isinstance(descending, str):
+            descending = descending == "True"
         filters = {
-            "trainer": self
         }
-        valid_filters = {
-            "tag": ["star", "circle", "square", "diamond"]
-        }
-        for field, value in filter_by.items():
-            if field in valid_filters:
-                filters[field] = value
-        if order_by not in ["caught_date", "dex_number", "level", "held_item"]:
+        valid_filters = ["tag", "trainer", "location"]
+        if filter_by is not None:
+            for field, value in filter_by.items():
+                if field in valid_filters:
+                    filters[field] = value
+        if order_by not in ["caught_date", "dex_number", "level", "iv_total", "bst"]:
             return "Cannot order by field {}!".format(order_by)
         if descending:
             order_by = "-{}".format(order_by)
-        box = Pokemon.objects.filter(filters).order_by(order_by)
+        box = list(Pokemon.objects.filter(**filters).order_by(order_by))
+        # Convert to dict and save names
+        names = [pkmn.name for pkmn in box]
+        box = [pkmn.__dict__ for pkmn in box]
+        for i, pkmn in enumerate(box):
+            pkmn["name"] = names[i]
+        # Convert datetime
+        for pkmn in box:
+            pkmn["caught_date"] = pkmn["caught_date"].timestamp()
+            pkmn["dex_number"] = str(pkmn["dex_number"]).zfill(3)
+            del pkmn["_state"]
+        # Convert to JSON if needed
         return box
 
     def _sort_party(self):

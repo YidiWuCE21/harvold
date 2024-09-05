@@ -7,6 +7,8 @@
     --content: rgba(150, 225, 255, 1);
     --hover: rgba(210, 219, 224, 0.8);
     --shadow: rgba(0, 0, 0, 0.2);
+    --shiny: rgba(237, 231, 197, 1);
+    --shiny-hover: rgba(211, 184, 132, 1);
     /* trainer card */
     --card-stripes: rgba(190, 248, 226, 1);
     --card-bg: rgba(250, 249, 243, 1);
@@ -49,6 +51,13 @@ body {
     margin-bottom: 10px;
 }
 
+h5 {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 5px;
+    font-family: Aldrich;
+    font-size: 12px;
+}
+
 .generic-content {
     min-width: 600px;
 }
@@ -62,9 +71,44 @@ body {
     font-size: 12px;
 }
 
+.control-box {
+    background-color: var(--bg);
+    padding: 20px;
+    border-radius: 0px;
+    box-shadow: 0px 2px 4px var(--shadow);
+    font-size: 16px;
+}
+
+.page-select {
+    background-color: var(--main);
+    margin: 0px 4px;
+    border: 0px;
+    font-family: Aldrich;
+}
+
+.page-select:hover {
+    background-color: var(--hover);
+}
+
+.portrait {
+    background-color: var(--main);
+    border: 1px solid var(--shadow);
+    margin-bottom: 6px;
+}
+
 /* Generic helpers */
 .center {
     margin: auto;
+}
+
+.left {
+    margin-left: 0px;
+    margin-right: auto;
+}
+
+.right {
+    margin-left: auto;
+    margin-right: 0px;
 }
 
 /* Invisi-scroll */
@@ -78,6 +122,17 @@ body {
     border-bottom: 1px solid var(--shadow);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+/* Input styling */
+input, select {
+    margin: 0 4px;
+    padding: 4px;
+    border: 2px solid var(--shadow);
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+    outline: none;
 }
 
 /* Trainer card */
@@ -100,7 +155,7 @@ body {
     box-shadow: 0px 2px 4px var(--shadow);
     color: var(--card-input);
     font-family: Aldrich;
-    width: 410px;
+    width: 480px;
     font-size: 12px;
     padding: 10px;
 }
