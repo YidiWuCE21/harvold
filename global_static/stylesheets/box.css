@@ -5,6 +5,8 @@
     -webkit-filter: grayscale(0%);
     font-size: 10px;
     text-align: center;
+    text-decoration: none;
+    text-color: black;
 }
 
 .box-cell img {

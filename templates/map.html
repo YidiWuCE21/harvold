@@ -1,0 +1,15 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+Map stuff here
+<canvas></canvas>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'data/maps/oak_village/collisions.js' %}"></script>
+<script src="{% static 'scripts/map_classes.js' %}"></script>
+<script src="{% static 'scripts/map.js' %}"></script>
+{% endblock %}

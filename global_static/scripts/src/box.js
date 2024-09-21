@@ -1,5 +1,7 @@
 
 
+
+
 function listToMatrix(list, elementsPerSubArray) {
     var matrix = [], i, k;
     if (list.length < 1) {
@@ -22,7 +24,7 @@ function Box({ pokemonList }) {
 
     // Set the state variables
     const [rowCount, setRows] = React.useState(5);
-    //const [pokemon, setPokemon] = React.useState(pokemonList)
+
     // Init states for sorting and filtering
     const [sortField, setSortField] = React.useState("caught_date");
     const [sortOrder, setSortOrder] = React.useState("asc");
@@ -31,9 +33,13 @@ function Box({ pokemonList }) {
 
     // For Pokemon selection
     const [selectedPokemon, setSelectedPokemon] = React.useState({id: null});
+    const [displayedPokemon, displayPokemon] = React.useState({id: null});
+
+    // Context menu handling
+    const { clicked, setClicked, coords, setCoords } = useContextMenu();
 
     console.log(selectedPokemon);
-
+    console.log(displayedPokemon);
     // Apply the relevant filters
     var tempList = structuredClone(pokemonList);
     if (filterTag) {
@@ -59,20 +65,24 @@ function Box({ pokemonList }) {
 
     return (
         <div className="container">
+            {clicked && (
+                <ContextMenu top={coords.y} left={coords.x} displayPokemon={displayPokemon} selectedPokemon={selectedPokemon}/>
+            )}
             <div className="row">
                 <div className="col-3">
-                    <PokemonDisplay selectedPokemon={selectedPokemon} />
+                    <PokemonDisplay selectedPokemon={displayedPokemon} />
                 </div>
                 <div className="col-6">
                     <BoxTabs pokemonPages={pokemonPages}
-                        selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}/>
+                        selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
+                        setClicked={setClicked} setCoords={setCoords}/>
                 </div>
                 <div className="col-3">
                     <BoxControls rowCount={rowCount} setRows={setRows}
                         sortField={sortField} setSortField={setSortField}
                         sortOrder={sortOrder} setSortOrder={setSortOrder}
                         filterTag={filterTag} setFilterTag={setFilterTag}
-                        searchWord={searchWord} setSearchWord={setSearchWord} />
+                        searchWord={searchWord} setSearchWord={setSearchWord}/>
                 </div>
             </div>
         </div>
@@ -83,8 +93,6 @@ function PokemonDisplay({ selectedPokemon }) {
     if (selectedPokemon["id"] === null) {
         return (<div></div>);
     } else {
-        console.log(selectedPokemon["id"]);
-        console.log(selectedPokemon["id"] === null);
         var styling = {width: '100%', display: 'block', textAlign: 'center'};
         var textStyle = {marginBottom: '2px'}
         // Get the image
@@ -145,12 +153,6 @@ function PokemonDisplay({ selectedPokemon }) {
                         </tr>
                     </tbody>
                     </table>
-                    <button>Details</button>
-                    <button>Add to Party</button>
-                    <button>View in Pokedex</button>
-                    <button>Add Tag</button>
-                    <button>Lock</button>
-                    <button>Release</button>
                 </div>
             </div>
         )
@@ -233,13 +235,14 @@ function BoxControls({ rowCount, setRows, sortField, setSortField, sortOrder, se
     )
 }
 
-function BoxTabs({ pokemonPages, selectedPokemon, setSelectedPokemon }) {
+function BoxTabs({ pokemonPages, selectedPokemon, setSelectedPokemon, setClicked, setCoords }) {
     // Logic for handling tab opening and closing
     const [currentTab, newTab] = React.useState(0);
     const pokemonTabs = pokemonPages.map((page, index) => {
         return (
             <div key={"page" + index} style={(index == currentTab ? {} : {display:'none'})}>
-                <BoxPage page={page} idx={index} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />
+                <BoxPage page={page} idx={index} selectedPokemon={selectedPokemon}
+                    setSelectedPokemon={setSelectedPokemon} setClicked={setClicked} setCoords={setCoords} />
             </div>
         );
     });
@@ -255,9 +258,10 @@ function BoxTabs({ pokemonPages, selectedPokemon, setSelectedPokemon }) {
     )
 }
 
-function BoxPage({ page, idx, selectedPokemon, setSelectedPokemon }) {
+function BoxPage({ page, idx, selectedPokemon, setSelectedPokemon, setClicked, setCoords }) {
     const pokemonRows = listToMatrix(page, 6).map((row, index) => {
-        return <BoxRow row={row} key={"row" + index} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />;
+        return <BoxRow row={row} key={"row" + index} selectedPokemon={selectedPokemon}
+            setSelectedPokemon={setSelectedPokemon} setClicked={setClicked} setCoords={setCoords} />;
     });
 
     return (
@@ -271,9 +275,10 @@ function BoxPage({ page, idx, selectedPokemon, setSelectedPokemon }) {
 
 }
 
-function BoxRow({ row, selectedPokemon, setSelectedPokemon }) {
+function BoxRow({ row, selectedPokemon, setSelectedPokemon, setClicked, setCoords }) {
     const pokemonCells = row.map((cell, index) => {
-        return <BoxCell cell={cell} key={"cell"+index} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon} />;
+        return <BoxCell cell={cell} key={"cell"+index} selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
+            setClicked={setClicked} setCoords={setCoords} />;
     });
     return (
         <tr>
@@ -282,7 +287,7 @@ function BoxRow({ row, selectedPokemon, setSelectedPokemon }) {
     )
 }
 
-function BoxCell({ cell, selectedPokemon, setSelectedPokemon }) {
+function BoxCell({ cell, selectedPokemon, setSelectedPokemon, setClicked, setCoords }) {
     if (cell) {
         // Get the image
         var fileName = cell["dex_number"];
@@ -290,7 +295,12 @@ function BoxCell({ cell, selectedPokemon, setSelectedPokemon }) {
         var filePath = imgPath + fileName + ".png"
         // Highlight if selected
         if (selectedPokemon["id"] == cell["id"]) {
-            var styling = {backgroundColor: 'rgba(210, 219, 224, 0.8)'}
+            if (cell["shiny"]) {
+                var styling = {backgroundColor: 'rgba(230, 208, 163, 0.8)'}
+            } else {
+                var styling = {backgroundColor: 'rgba(210, 219, 224, 0.8)'}
+            }
+
         } else {
             var styling = {};
         }
@@ -302,11 +312,22 @@ function BoxCell({ cell, selectedPokemon, setSelectedPokemon }) {
             gender = (<span style={{color:'magenta'}}>&#9792;</span>);
         }
         var cellRender = (
-            <div className={"box-cell select-card".concat(cell["shiny"] ? " shiny": "")} onClick={() => setSelectedPokemon(cell)} style={styling}>
+            <a href="https://stackoverflow.com/questions/796087/make-a-div-into-a-link">
+            <div className={"box-cell select-card".concat(cell["shiny"] ? " shiny": "")}
+                //onClick={() => setSelectedPokemon(cell)}
+                onContextMenu={(e) => {
+                    e.preventDefault();
+                    setClicked(true);
+                    setSelectedPokemon(cell);
+                    setCoords({x: e.pageX, y: e.pageY })
+                }}
+                style={styling}>
+
                 <h1>{cell["name"]}</h1>
                 Level {cell["level"]} {gender}
                 <img src={filePath}/>
             </div>
+            </a>
         );
     } else {
         var cellRender = <div className="box-cell select-card"></div>;
@@ -316,6 +337,42 @@ function BoxCell({ cell, selectedPokemon, setSelectedPokemon }) {
             {cellRender}
         </td>
     )
+}
+
+function ContextMenu({ top, left, displayPokemon, selectedPokemon }: {top: number, left: number}) {
+    var positioner = {top: top + "px", left: left + "px"}
+    return (
+        <div className="menu-container" style={positioner}>
+            <div className="menu-option" onClick={() => displayPokemon(selectedPokemon)}>Details</div>
+            <div className="menu-option">Add to Party</div>
+            <div className="menu-option">Create Trade</div>
+            <div className="menu-option">Add Tag</div>
+            <div className="menu-option">Release</div>
+        </div>
+    )
+}
+
+function useContextMenu() {
+    const [clicked, setClicked] = React.useState(false);
+    const [coords, setCoords] = React.useState({
+        x: 0,
+        y: 0
+    });
+
+    React.useEffect(() => {
+        const handleClick = () => {setClicked(false)}
+        document.addEventListener("click", handleClick);
+        return () => {
+            document.removeElementListener("click", handleClick)
+        }
+    }, [])
+
+    return {
+        clicked,
+        setClicked,
+        coords,
+        setCoords
+    }
 }
 
 const domNode = document.getElementById('box');
