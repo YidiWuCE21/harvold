@@ -11,10 +11,10 @@ from harvoldsite import consts
 
 @login_required
 def map(request):
-    box = request.user.profile.get_pokemon(filter_by={"trainer": request.user.profile, "location": "box"})
+    map = request.POST.get("map", "oak_village")
+    # Check for map access permission
     # Convert to JSON
-    box = [json.dumps(pkmn) for pkmn in box]
     html_render_variables = {
-        "box": box
+        "map": map
     }
     return render(request, "map.html", html_render_variables)

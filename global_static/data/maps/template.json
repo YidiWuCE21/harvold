@@ -1,0 +1,13 @@
+{
+  "mapWidth": 36,
+  "mapHeight": 36,
+  "maplinkKey": {
+    "1": {"map": "putty_cave", "forcedOffset": {"x": -1, "y": -1}},
+    "2": {"map": "oak_village", "forcedOffset": {"x": -272, "y": 192}}
+  },
+  "default_offset": {"x": 0, "y": 0},
+  "collisions": [],
+  "battles": [],
+  "water": [],
+  "maplink": []
+}

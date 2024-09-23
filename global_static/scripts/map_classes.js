@@ -1,13 +1,14 @@
 class Boundary {
-    constructor({position}) {
+    constructor({position, width = tile_width, height = tile_width, value = null}) {
         this.position = position;
-        this.width = tile_width;
-        this.height = tile_width;
-        this.offset = {x: 0, y: 0}
+        this.width = width;
+        this.height = height;
+        this.offset = {x: 0, y: 0};
+        this.value = value;
     }
 
     draw() {
-        c.fillStyle = 'rgba(255, 0, 0, 0.1)';
+        c.fillStyle = 'rgba(255, 0, 0, 0.5)';
         c.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }

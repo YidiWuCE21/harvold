@@ -9,7 +9,11 @@ Map stuff here
 {% endblock %}
 
 {% block scripts %}
-<script src="{% static 'data/maps/oak_village/collisions.js' %}"></script>
+<script>
+    const mapName = '{{ map }}';
+    const playerNum = '15';
+    const jsonPath = '{% get_static_prefix %}data/maps/'
+</script>
 <script src="{% static 'scripts/map_classes.js' %}"></script>
 <script src="{% static 'scripts/map.js' %}"></script>
 {% endblock %}
