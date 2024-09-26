@@ -7,7 +7,7 @@ canvas.width = 496;
 canvas.height = 400;
 
 // Consts to plug in
-const movespeed = 4;
+const movespeed = 2;
 const tile_width = 16;
 
 // Variables loaded from JSON
@@ -37,6 +37,12 @@ let southBound = null;
 let westBound = null;
 let eastBound = null;
 
+// Camera boxes
+let northCamBound = null;
+let southCamBound = null;
+let westCamBound = null;
+let eastCamBound = null;
+
 // Render variables
 let mapImage = new Image();
 let mapForeground = new Image();
@@ -44,7 +50,14 @@ let background = null;
 let foreground = null;
 
 let movables = [];
+let statics = [];
 let stopTravel = false;
+
+let mapLoad = true;
+let travelDir = null;
+// move surfing out for early access
+let surfing = false;
+
 
 // Player sprite constants
 const playerImage = new Image();
@@ -56,8 +69,8 @@ surferImage.src = '/static/assets/player/overworld/' + playerNum + 's.png';
 
 const player = new Sprite({
     position: {
-        x: canvas.width / 2 - (64 / 4) / 2,
-        y: canvas.height / 2 - (96 / 4) / 2,
+        x: 0,
+        y: 0,
     },
     frames: {max: 4},
     rows: {max: 4},
@@ -67,10 +80,19 @@ const player = new Sprite({
     offset: {x: 3, y: 12}
 })
 
+const camera = new Boundary({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    width: 0,
+    height: 0
+})
+
 const surf = new Sprite({
     position: {
-        x: (canvas.width / 2 - (124 / 4) / 2) + 1,
-        y: (canvas.height / 2 - (128 / 4) / 2),
+        x: 0,
+        y: 0,
     },
     frames: {max: 4},
     rows: {max: 4},
@@ -79,154 +101,186 @@ const surf = new Sprite({
 
 const surfer = new Sprite({
     position: {
-        x: canvas.width / 2 - (64 / 4) / 2,
-        y: canvas.height / 2 - (96 / 4) / 2 - 8,
+        x: 0,
+        y: 0,
     },
     frames: {max: 4},
     rows: {max: 4},
-    image: surferImage,
+    image: surferImage
 })
 
+statics = [player, surf, surfer];
+
+
 function mapSetup({map, forcedOffset = {}}) {
-    console.log("Setting up map with parameters")
-    console.log(map)
-    console.log(forcedOffset)
-    // Reset relevant vars
-    boundaries = [];
-    waterMap = [];
-    waterTiles = [];
-    maplinkMap = [];
-    maplinkTiles = [];
-    movables = [];
+    mapLoad = true;
+    // Reset statics
+    console.log("")
 
     // Retrieve relevant info from JSON
-    console.log(jsonPath + map + '.json')
-    $.ajax({
-        url: jsonPath + map + '.json',
-        async: false,
-        dataType: 'json',
-        success: function (response) {
-            currentData = response;
+    $.ajax(
+    {
+        type: "GET",
+        url: jsonUrl,
+        data: {
+            "payload": {"map": map}
         }
-    })
+    }).done(function( response ) {
+        console.log(response);
+        console.log("=================");
+        if (!(Object.keys(response).length === 0))
+            currentData = response
+        // Reset relevant vars
+        boundaries = [];
+        waterMap = [];
+        waterTiles = [];
+        maplinkMap = [];
+        maplinkTiles = [];
+        movables = [];
 
-    collisions = currentData.collisions;
-    water = currentData.water;
-    battles = currentData.battles;
-    if (battles == "all")
-        battles = new Array(mapWidth * mapHeight).fill(1)
-    maplink = currentData.maplink;
+        collisions = currentData.collisions;
+        water = currentData.water;
+        battles = currentData.battles;
+        if (battles == "all")
+            battles = new Array(mapWidth * mapHeight).fill(1)
+        maplink = currentData.maplink;
 
-    mapHeight = currentData.mapHeight;
-    mapWidth = currentData.mapWidth;
-    default_offset = currentData.default_offset;
-    if (Object.keys(forcedOffset).length === 0) {
-        offset = default_offset;
-    } else {
-        offset = forcedOffset;
-    }
-    offset.x = offset.x * tile_width;
-    offset.y = offset.y * tile_width;
-    maplinkKey = currentData.maplinkKey;
+        mapHeight = currentData.mapHeight;
+        mapWidth = currentData.mapWidth;
+        default_offset = currentData.default_offset;
+        if (Object.keys(forcedOffset).length === 0) {
+            offset = default_offset;
+        } else {
+            offset = forcedOffset;
+        }
+        offset.x = offset.x * tile_width;
+        offset.y = offset.y * tile_width;
+        maplinkKey = currentData.maplinkKey;
 
-    // Create collision objects
-    collisionsMap = [];
-    for (let i = 0; i < collisions.length; i += mapWidth) {
-        collisionsMap.push(collisions.slice(i, i + mapWidth));
-    }
-
-    collisionsMap.forEach((row, i) => {
-        row.forEach((col, j) => {
-            if (col != 0)
-                boundaries.push(new Boundary({position: {
-                    x: j * tile_width + offset.x,
-                    y: i * tile_width + offset.y
-                }}))
+        // Set the statics new positions
+        statics = [player, surfer, surf, camera];
+        statics.forEach((static) => {
+            static.position.x = offset.x;
+            static.position.y = offset.y;
         })
-    })
-    // Create bounding box
-    northBound = new Boundary({
-        position: {
-            x: -16 + offset.x,
-            y: -16 + offset.y
-        },
-        width: (mapWidth + 2) * tile_width
-    });
-    boundaries.push(northBound);
-    southBound = new Boundary({
-        position: {
-            x: -16 + offset.x,
-            y: mapHeight * tile_width + offset.y
-        },
-        width: (mapWidth + 2) * tile_width
-    });
-    boundaries.push(southBound);
-    westBound = new Boundary({
-        position: {
-            x: -16 + offset.x,
-            y: -16 + offset.y
-        },
-        height: (mapWidth + 2) * tile_width
-    });
-    boundaries.push(westBound);
-    eastBound = new Boundary({
-        position: {
-            x: mapWidth * tile_width + offset.x,
-            y: -16 + offset.y
-        },
-        height: (mapWidth + 2) * tile_width
-    });
-    boundaries.push(eastBound);
 
-    // Create water objects
-    for (let i = 0; i < water.length; i += mapWidth) {
-        waterMap.push(water.slice(i, i + mapWidth));
-    }
+        // Move the surf object right
+        surf.position.x -= 6
+        surf.position.y -= 6
+        // Move the surfer object up
+        surfer.position.y -= 8
 
-    waterMap.forEach((row, i) => {
-        row.forEach((col, j) => {
-            if (col != 0)
-                waterTiles.push(new Boundary({position: {
-                    x: j * tile_width + offset.x,
-                    y: i * tile_width + offset.y
-                }}))
+        // Move the camera further up by 1/2 the screen
+        camera.position.x -= canvas.width / 2;
+        camera.position.y -= canvas.height / 2;
+
+        // Create collision objects
+        collisionsMap = [];
+        for (let i = 0; i < collisions.length; i += mapWidth) {
+            collisionsMap.push(collisions.slice(i, i + mapWidth));
+        }
+
+        collisionsMap.forEach((row, i) => {
+            row.forEach((col, j) => {
+                if (col != 0)
+                    boundaries.push(new Boundary({position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    }}))
+            })
         })
-    })
 
-    // Create maplink objects
-    for (let i = 0; i < maplink.length; i += mapWidth) {
-        maplinkMap.push(maplink.slice(i, i + mapWidth));
-    }
+        // Create bounding box
+        northBound = new Boundary({
+            position: {
+                x: -16,
+                y: -16
+            },
+            width: (mapWidth + 2) * tile_width
+        });
+        boundaries.push(northBound);
+        southBound = new Boundary({
+            position: {
+                x: -16,
+                y: mapHeight * tile_width
+            },
+            width: (mapWidth + 2) * tile_width
+        });
+        boundaries.push(southBound);
+        westBound = new Boundary({
+            position: {
+                x: -16,
+                y: -16
+            },
+            height: (mapWidth + 2) * tile_width
+        });
+        boundaries.push(westBound);
+        eastBound = new Boundary({
+            position: {
+                x: mapWidth * tile_width,
+                y: -16
+            },
+            height: (mapWidth + 2) * tile_width
+        });
+        boundaries.push(eastBound);
 
-    maplinkMap.forEach((row, i) => {
-        row.forEach((col, j) => {
-            if (col != 0)
-                maplinkTiles.push(new Boundary({
-                    position: {
-                        x: j * tile_width + offset.x,
-                        y: i * tile_width + offset.y
-                    },
-                    value: col
-                }))
+        // Create water objects
+        for (let i = 0; i < water.length; i += mapWidth) {
+            waterMap.push(water.slice(i, i + mapWidth));
+        }
+
+        waterMap.forEach((row, i) => {
+            row.forEach((col, j) => {
+                if (col != 0)
+                    waterTiles.push(new Boundary({position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    }}))
+            })
         })
-    })
-    // Rendered map
-    mapImage = new Image();
-    mapImage.src = '/static/assets/maps/' + map + '/background.png';
-    mapForeground = new Image();
-    mapForeground.src = '/static/assets/maps/' + map + '/foreground.png';
 
-    background = new Sprite({
-        position: {x: offset.x, y: offset.y},
-        image: mapImage
+        // Create maplink objects
+        for (let i = 0; i < maplink.length; i += mapWidth) {
+            maplinkMap.push(maplink.slice(i, i + mapWidth));
+        }
+
+        maplinkMap.forEach((row, i) => {
+            row.forEach((col, j) => {
+                if (col != 0)
+                    maplinkTiles.push(new Boundary({
+                        position: {
+                            x: j * tile_width,
+                            y: i * tile_width
+                        },
+                        value: col,
+                        direction: maplinkKey[col]["direction"]
+                    }))
+            })
+        })
+        // Rendered map
+        mapImage = new Image();
+        mapImage.src = '/static/assets/maps/' + map + '/background.png';
+        mapForeground = new Image();
+        mapForeground.src = '/static/assets/maps/' + map + '/foreground.png';
+
+        background = new Sprite({
+            position: {x: 0, y: 0},
+            image: mapImage
+        });
+
+        foreground = new Sprite({
+            position: {x: 0, y: 0},
+            image: mapForeground
+        });
+        // Create movables
+        movables = [background, foreground, ...boundaries, ...waterTiles, ...maplinkTiles];
+        mapLoad = false;
+    }).fail(function() {
+        alert("This map is not valid! Returning to world map...");
+        window.location.href = worldMapUrl;
     });
 
-    foreground = new Sprite({
-        position: {x: offset.x, y: offset.y},
-        image: mapForeground
-    });
-    // Create movables
-    movables = [background, foreground, ...boundaries, ...waterTiles, ...maplinkTiles];
+
 
 }
 
@@ -251,7 +305,6 @@ const keys = {
 };
 
 
-
 function rectangularCollision({rectangle1, rectangle2}) {
     return (
         rectangle1.position.x + rectangle1.offset.x + rectangle1.width >= rectangle2.position.x + rectangle2.offset.x &&
@@ -267,27 +320,71 @@ function pointCollision({rectangle1, rectangle2}) {
         rectangle1.position.y + rectangle1.height / 2 + rectangle1.offset.y >= rectangle2.position.y + rectangle2.offset.y &&
         rectangle1.position.y + rectangle1.height / 2 + rectangle1.offset.y <= rectangle2.position.y + rectangle2.offset.y + rectangle2.height
     )
+
 }
 
 function animate(looped = true) {
+    // Get camera
+    let cappedCamera = {
+        x: Math.min(Math.max(camera.position.x, 0), mapWidth * tile_width - canvas.width),
+        y: Math.min(Math.max(camera.position.y, 0), mapHeight * tile_width - canvas.height)
+    }
+    // Check for loop
     if (looped)
         window.requestAnimationFrame(animate);
+    // Check for map transition
+    if (mapLoad) {
+        player.moving = true;
+        if (background)
+            background.draw(cappedCamera);
+        if (surfing) {
+            surf.draw(cappedCamera);
+            surfer.draw(cappedCamera);
+        } else {
+            player.draw(cappedCamera);
+        }
+        console.log("Load, skipping animation");
+        console.log(player.moving)
+        switch(travelDir) {
+            case "in":
+                player.rows.val = 2;
+                surf.rows.val = 3;
+                surfer.rows.val = 2;
+                break;
+            case "north":
+                statics.forEach(movable => {movable.position.y -= movespeed});
+                player.rows.val = 2;
+                surf.rows.val = 3;
+                surfer.rows.val = 2;
+                break;
+            case "south":
+                statics.forEach(movable => {movable.position.y += movespeed});
+                player.rows.val = 0;
+                surf.rows.val = 0;
+                surfer.rows.val = 0;
+                break;
+            case "east":
+                statics.forEach(movable => {movable.position.x += movespeed});
+                player.rows.val = 3;
+                surf.rows.val = 2;
+                surfer.rows.val = 3;
+                break;
+            case "west":
+                statics.forEach(movable => {movable.position.x -= movespeed});
+                player.rows.val = 1;
+                surf.rows.val = 1;
+                surfer.rows.val = 1;
+                break;
+        }
+        console.log(travelDir)
+        return;
+    }
+    console.log("frame")
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
-    background.draw();
-
-    /*boundaries.forEach((boundary) => {
-        boundary.draw();
-    })
-    waterTiles.forEach((boundary) => {
-        boundary.draw();
-    })
-    maplinkTiles.forEach((boundary) => {
-        boundary.draw();
-    })*/
-
+    background.draw(cappedCamera);
     // Detect if on water
-    let surfing = false;
+    surfing = false;
     for (let i = 0; i < waterTiles.length; i++) {
         const waterTile = waterTiles[i];
         if (
@@ -306,12 +403,12 @@ function animate(looped = true) {
     // Detect if on battle
 
     if (surfing) {
-        surf.draw();
-        surfer.draw();
+        surf.draw(cappedCamera);
+        surfer.draw(cappedCamera);
     } else {
-        player.draw();
+        player.draw(cappedCamera);
     }
-    foreground.draw();
+    foreground.draw(cappedCamera);
 
     // Manage enter events
     if (keys.enter.pressed) {
@@ -328,9 +425,10 @@ function animate(looped = true) {
                         }}
                     })
                 ) {
-                    const newMap = maplinkKey[maplinkTile.value]
-                    console.log(newMap)
-                    mapSetup(newMap)
+                    const newMap = maplinkKey[maplinkTile.value];
+                    player.moving = true;
+                    travelDir = maplinkTile.direction;
+                    mapSetup(newMap);
                     stopTravel = true;
                 }
             }
@@ -338,7 +436,6 @@ function animate(looped = true) {
 
     }
 
-    // Manage movement
     let moving = true;
     player.moving = false;
     surf.moving = true;
@@ -363,8 +460,9 @@ function animate(looped = true) {
                 break;
             }
         }
-        if (moving)
-            movables.forEach(movable => {movable.position.y += movespeed});
+        if (moving) {
+            statics.forEach(movable => {movable.position.y -= movespeed});
+        }
     } else if (keys.a.pressed && (lastKey === 'a' || !keys[lastKey].pressed)) {
         player.moving = true
         player.rows.val = 1;
@@ -385,8 +483,9 @@ function animate(looped = true) {
                 break;
             }
         }
-        if (moving)
-            movables.forEach(movable => {movable.position.x += movespeed});
+        if (moving) {
+            statics.forEach(movable => {movable.position.x -= movespeed});
+        }
     } else if (keys.s.pressed && (lastKey === 's' || !keys[lastKey].pressed)) {
         player.moving = true
         player.rows.val = 0;
@@ -407,8 +506,9 @@ function animate(looped = true) {
                 break;
             }
         }
-        if (moving)
-            movables.forEach(movable => {movable.position.y -= movespeed});
+        if (moving) {
+            statics.forEach(movable => {movable.position.y += movespeed});
+        }
     } else if (keys.d.pressed && (lastKey === 'd' || !keys[lastKey].pressed)) {
         player.moving = true
         player.rows.val = 3;
@@ -429,8 +529,9 @@ function animate(looped = true) {
                 break;
             }
         }
-        if (moving)
-            movables.forEach(movable => {movable.position.x -= movespeed});
+        if (moving) {
+            statics.forEach(movable => {movable.position.x += movespeed});
+        }
     }
 }
 

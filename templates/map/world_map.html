@@ -1,0 +1,11 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Explore{% endblock %}
+
+{% block content %}
+Map list
+{% for map in maps %}
+<a href="{% url 'map' %}?map={{ map }}">{{ map }}</a>
+{% endfor %}
+{% endblock %}

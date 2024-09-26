@@ -11,8 +11,10 @@ Map stuff here
 {% block scripts %}
 <script>
     const mapName = '{{ map }}';
-    const playerNum = '15';
+    const playerNum = '01';
     const jsonPath = '{% get_static_prefix %}data/maps/'
+    const jsonUrl = '{% url 'map_data' %}'
+    const worldMapUrl = '{% url 'world_map' %}'
 </script>
 <script src="{% static 'scripts/map_classes.js' %}"></script>
 <script src="{% static 'scripts/map.js' %}"></script>

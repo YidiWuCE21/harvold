@@ -1,15 +1,17 @@
 class Boundary {
-    constructor({position, width = tile_width, height = tile_width, value = null}) {
+    constructor({position, width = tile_width, height = tile_width, value = null, direction = null}) {
         this.position = position;
         this.width = width;
         this.height = height;
         this.offset = {x: 0, y: 0};
         this.value = value;
+        this.direction = direction;
+        this.logicPos = position;
     }
 
-    draw() {
+    draw(cameraPosition) {
         c.fillStyle = 'rgba(255, 0, 0, 0.5)';
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.fillRect(this.position.x - cameraPosition.x, this.position.y - cameraPosition.y, this.width, this.height)
     }
 }
 
@@ -29,17 +31,16 @@ class Sprite {
         this.moving = false;
     }
 
-    draw() {
+    draw(cameraPosition) {
         c.drawImage(
             this.image,
             this.frames.val * this.image.width / this.frames.max,
-            //this.crop.y
             this.rows.val * this.image.height / this.rows.max + this.crop.y,
 
             this.image.width / this.frames.max - this.crop.x,
             this.image.height / this.rows.max - this.crop.y,
-            this.position.x,
-            this.position.y,
+            this.position.x - cameraPosition.x,
+            this.position.y - cameraPosition.y,
             this.image.width / this.frames.max - this.crop.x,
             this.image.height / this.rows.max - this.crop.y
         );

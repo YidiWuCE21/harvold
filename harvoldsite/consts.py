@@ -95,3 +95,17 @@ NATURES = {
 }
 
 TAGS = ["circle", "star", "square", "diamond"]
+
+MAPS = [
+    "oak_village",
+    "kaguya_town",
+    "synecdoche_city",
+    "route_1",
+    "route_2",
+    "route_3",
+    "route_4",
+    "route_5",
+    "route_6",
+    "route_7",
+    "vitur_forest",
+]
