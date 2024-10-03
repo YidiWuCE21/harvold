@@ -201,7 +201,7 @@ class TestGetBox(TestCase):
 
 
     def test_get_box_standard(self):
-        box = self.trainer1.get_box()
+        box = self.trainer1.pokemon()
         self.assertTrue(False)
 
     def test_get_box_page_size(self):
@@ -371,3 +371,56 @@ class TestCheckPartyValid(TestCase):
         ret = self.trainer1._check_party_valid()
         self.assertTrue(ret[0])
         self.assertEqual("", ret[1])
+
+
+class TestPurchaseItem(TestCase):
+    def setUp(self):
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = models.Profile(character="1", user=self.user1)
+        self.trainer1.save()
+
+
+    def test_no_shop(self):
+        self.trainer1.money = 10000
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.purchase_item("pokeball", 1, "mart1")
+        exp = "No such shop!"
+        self.assertFalse(ret[0])
+        self.assertEqual(exp, ret[1])
+
+
+    def test_no_item(self):
+        self.trainer1.money = 10000
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.purchase_item("pokeball1", 1, "mart")
+        exp = "No such item in the shop!"
+        self.assertFalse(ret[0])
+        self.assertEqual(exp, ret[1])
+
+
+    def test_no_money(self):
+        self.trainer1.money = 10000
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.purchase_item("pokeball", 9999, "mart")
+        exp = "Not enough money!"
+        self.assertFalse(ret[0])
+        self.assertEqual(exp, ret[1])
+
+
+    def test_success(self):
+        self.trainer1.money = 10000
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.purchase_item("pokeball", 1, "mart")
+        self.assertTrue(ret[0])
+        self.assertEqual(self.trainer1.money, 9800)
+        self.assertEqual(self.trainer1.bag["ball"]["pokeball"], 6)
+
+
+    def test_success_new(self):
+        self.trainer1.money = 10000
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.purchase_item("great_ball", 1, "mart")
+        self.assertTrue(ret[0])
+        self.assertEqual(self.trainer1.money, 9400)
+        self.assertEqual(self.trainer1.bag["ball"]["great_ball"], 1)

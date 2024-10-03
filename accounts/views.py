@@ -59,3 +59,4 @@ def signup(request):
     }
 
     return render(request, "registration/signup.html", html_render_variables)
+

@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     "daphne",
     "accounts",
     "battle",
-    "items",
     "map",
     "pokemon",
     "trade",

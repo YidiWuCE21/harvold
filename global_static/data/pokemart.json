@@ -1,0 +1,19 @@
+{
+  "mart": {
+    "pokeball": {"price": 200, "type": "ball"},
+    "great_ball": {"price": 600, "type": "ball"},
+    "ultra": {"price": 1200, "type": "ball"},
+    "potion": {"price": 300, "type": "battle"},
+    "super_potion": {"price": 700, "type": "battle"},
+    "hyper_potion": {"price": 1200, "type": "battle"},
+    "max_potion": {"price": 2500, "type": "battle"},
+    "full_restore": {"price": 3000, "type": "battle"},
+    "revive": {"price": 1500, "type": "battle"},
+    "antidote": {"price": 100, "type": "battle"},
+    "paralyze_heal": {"price": 200, "type": "battle"},
+    "awakening": {"price": 250, "type": "battle"},
+    "burn_heal": {"price": 250, "type": "battle"},
+    "ice_heal": {"price": 250, "type": "battle"},
+    "full_heal": {"price": 600, "type": "battle"}
+  }
+}

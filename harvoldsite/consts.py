@@ -16,6 +16,10 @@ with open(os.path.join(ASSETS_PATH, "data", "moves.json")) as pokemon_file:
     MOVES = json.load(pokemon_file)
 with open(os.path.join(ASSETS_PATH, "data", "exp_curves.json")) as pokemon_file:
     EXP_CURVES = json.load(pokemon_file)
+with open(os.path.join(ASSETS_PATH, "data", "pokemart.json")) as mart:
+    MART = json.load(mart)
+with open(os.path.join(ASSETS_PATH, "data", "trainers.json")) as trainers:
+    TRAINERS = json.load(trainers)
 
 # Login-related choicesf
 STARTER_CHOICES = [

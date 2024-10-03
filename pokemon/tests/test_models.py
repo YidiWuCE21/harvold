@@ -200,6 +200,52 @@ class TestCreatePokemon(TestCase):
         self.assertIsNone(ret.original_trainer)
 
 
+class TestGetBattleInfo(TestCase):
+    def test_get_battle_info_standard(self):
+        self.pkmn = models.create_pokemon("001", 5, "m", ability_override="Chlorophyll", iv_override={stat: 0 for stat in consts.STATS}, nature_override="bashful")
+        ret = self.pkmn.get_battle_info()
+        exp = {
+            "ability": "Chlorophyll",
+            "status": None,
+            "current_hp": 19,
+            "happiness": 70,
+            "held_item": None,
+            "moves": [
+                {"move": "tackle", "pp": 35},
+                {"move": "growl", "pp": 40},
+                {"move": None, "pp": None},
+                {"move": None, "pp": None}
+            ],
+            "stats": {"atk": 9, "def": 9, "hp": 19, "spa": 11, "spd": 11, "spe": 9},
+            "dex_number": "001",
+            "level": 5,
+            "shiny": False,
+            "id": self.pkmn.pk
+        }
+        self.assertDictEqual(exp, ret)
+
+
+class TestSetBattleInfo(TestCase):
+    def test_set_battle_info_standard(self):
+        self.pkmn = models.create_pokemon("001", 5, "m")
+        battle_info = {
+            "current_hp": 0,
+            "status": "brn",
+            "moves": [
+                {"move": "tackle", "pp": 0},
+                {"move": "growl", "pp": 2},
+                {"move": None, "pp": None},
+                {"move": None, "pp": None}
+            ]
+        }
+        self.pkmn.set_battle_info(battle_info)
+        self.assertEqual(0, self.pkmn.current_hp)
+        self.assertEqual("brn", self.pkmn.status)
+        self.assertEqual(0, self.pkmn.move1_pp)
+        self.assertEqual(2, self.pkmn.move2_pp)
+        self.assertEqual(None, self.pkmn.move3_pp)
+        self.assertEqual(None, self.pkmn.move4_pp)
+
 
 class TestAssignTrainer(TestCase):
     def setUp(self):
@@ -495,23 +541,23 @@ class TestRestorePp(TestCase):
 
     def test_restore_pp_overflow(self):
         pkmn = models.create_pokemon("003", 50, "m")
-        pkmn.move1_pp = 12
+        pkmn.move1_pp = 9
         pkmn.restore_pp(1, 5)
-        self.assertEqual(pkmn.move1_pp, 15)
+        self.assertEqual(pkmn.move1_pp, 10)
 
 
     def test_restore_pp_reset(self):
         pkmn = models.create_pokemon("003", 50, "m")
         pkmn.move1_pp = 19
         pkmn.restore_pp(1, 5)
-        self.assertEqual(pkmn.move1_pp, 15)
+        self.assertEqual(pkmn.move1_pp, 10)
 
 
     def test_restore_pp_full(self):
         pkmn = models.create_pokemon("003", 50, "m")
         pkmn.move1_pp = 0
         pkmn.restore_pp(1)
-        self.assertEqual(pkmn.move1_pp, 15)
+        self.assertEqual(pkmn.move1_pp, 10)
 
 
     def test_restore_pp_all(self):
@@ -521,7 +567,7 @@ class TestRestorePp(TestCase):
         pkmn.move3_pp = 0
         pkmn.move4_pp = 0
         pkmn.restore_pp()
-        self.assertEqual(pkmn.move1_pp, 15)
+        self.assertEqual(pkmn.move1_pp, 10)
         self.assertEqual(pkmn.move2_pp, 10)
         self.assertEqual(pkmn.move3_pp, 5)
         self.assertEqual(pkmn.move4_pp, 15)
@@ -547,8 +593,8 @@ class TestLearnMove(TestCase):
 
 
     def test_learn_move_known(self):
-        ret = self.pkmn.learn_move("doubleedge", "move4")
-        self.assertNotEqual("doubleedge", self.pkmn.move4)
+        ret = self.pkmn.learn_move("petaldance", "move4")
+        self.assertNotEqual("petaldance", self.pkmn.move4)
         self.assertEqual("Move is already known!", ret)
 
 

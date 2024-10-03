@@ -222,6 +222,47 @@ class Pokemon(models.Model):
     move4_pp = models.IntegerField(null=True)
 
 
+    def get_battle_info(self):
+        """
+        Return all the battle-relevant information
+        """
+        return {
+            # Modifiable attributes
+            "current_hp": self.current_hp,
+            "status": self.status,
+            "moves": [
+                {"move": self.move1, "pp": self.move1_pp},
+                {"move": self.move2, "pp": self.move2_pp},
+                {"move": self.move3, "pp": self.move3_pp},
+                {"move": self.move4, "pp": self.move4_pp}
+            ],
+            # Immutable attributes
+            "held_item": self.held_item,
+            "happiness": self.happiness,
+            "ability": self.ability,
+            "dex_number": self.dex_number,
+            "level": self.level,
+            "shiny": self.shiny,
+            "stats": {
+                stat: getattr(self, "{}_stat".format(stat)) for stat in consts.STATS
+            },
+            "id": self.pk
+        }
+
+
+    def set_battle_info(self, battle_info):
+        """
+        Set modifiable characteristics based on battle info
+        """
+        self.current_hp = battle_info["current_hp"]
+        self.status = battle_info["status"]
+        self.move1_pp = battle_info["moves"][0]["pp"]
+        self.move2_pp = battle_info["moves"][1]["pp"]
+        self.move3_pp = battle_info["moves"][2]["pp"]
+        self.move4_pp = battle_info["moves"][3]["pp"]
+        self.save()
+
+
     def assign_trainer(self, trainer, ball=None):
         self.trainer = trainer
         if self.original_trainer is None:
@@ -353,6 +394,13 @@ class Pokemon(models.Model):
         self.status = ""
         if not skip_save:
             self.save(update_fields=["status"])
+
+
+    def full_heal(self):
+        self.restore_hp(skip_save=True)
+        self.restore_pp(skip_save=True)
+        self.cure_status(skip_save=True)
+        self.save(update_fields=["current_hp", "move1_pp", "move2_pp", "move3_pp", "move4_pp", "status"])
 
 
     def learn_move(self, move, slot, tms=False, tutor=False, skip_save=False):

@@ -60,8 +60,8 @@ function Box({ pokemonList }) {
     }
 
     // Create the pages, filling out pages if needed
-    var pokemonPages = listToMatrix(tempList, rowCount * 6);
-    while (pokemonPages[pokemonPages.length - 1].length < rowCount * 6) pokemonPages[pokemonPages.length - 1].push(null);
+    var pokemonPages = listToMatrix(tempList, rowCount * 5);
+    while (pokemonPages[pokemonPages.length - 1].length < rowCount * 5) pokemonPages[pokemonPages.length - 1].push(null);
 
     return (
         <div className="container">
@@ -213,12 +213,12 @@ function BoxControls({ rowCount, setRows, sortField, setSortField, sortOrder, se
                 <tr>
                     <th>Per page:</th>
                     <td>
-                    <select value={rowCount * 6} style={{width: "100%"}} onChange={e => setRows(e.target.value / 6)}>
-                        <option value="24">24</option>
+                    <select value={rowCount * 5} style={{width: "100%"}} onChange={e => setRows(e.target.value / 5)}>
+                        <option value="25">25</option>
                         <option value="30">30</option>
-                        <option value="36">36</option>
-                        <option value="48">48</option>
-                        <option value="60">60</option>
+                        <option value="35">35</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
                     </select>
                     </td>
                 </tr>
@@ -259,14 +259,14 @@ function BoxTabs({ pokemonPages, selectedPokemon, setSelectedPokemon, setClicked
 }
 
 function BoxPage({ page, idx, selectedPokemon, setSelectedPokemon, setClicked, setCoords }) {
-    const pokemonRows = listToMatrix(page, 6).map((row, index) => {
+    const pokemonRows = listToMatrix(page, 5).map((row, index) => {
         return <BoxRow row={row} key={"row" + index} selectedPokemon={selectedPokemon}
             setSelectedPokemon={setSelectedPokemon} setClicked={setClicked} setCoords={setCoords} />;
     });
 
     return (
 
-        <table className={"right"}>
+        <table className={"center"}>
             <tbody>
                 {pokemonRows}
             </tbody>

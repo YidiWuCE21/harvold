@@ -36,4 +36,8 @@ def map_data(request):
         return JsonResponse({"status": "false", "message": "Invalid map"}, status=500)
     with open(os.path.join(consts.ASSETS_PATH, "data", "maps", "{}.json".format(map))) as map_file:
         map_data = json.load(map_file)
+    # Update current location of user
+    user = request.user.profile
+    user.current_map = map
+    user.save()
     return JsonResponse(map_data)

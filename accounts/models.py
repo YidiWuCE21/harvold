@@ -3,8 +3,27 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db import IntegrityError, transaction
 from pokemon.models import Pokemon
+from harvoldsite import consts
 
 # Create your models here.
+def default_bag():
+    return {
+        "ball": {
+            "pokeball": 5
+        },
+        "key": {},
+        "battle": {
+            "potion": 5
+        },
+        "tm": {},
+        "misc": {},
+    }
+
+
+def default_map():
+    return ["oak_village"]
+
+
 class Profile(models.Model):
     # Administrative fields
     user = models.OneToOneField(
@@ -23,6 +42,7 @@ class Profile(models.Model):
     # Trainer values
     money = models.IntegerField(default=10000)
     character = models.IntegerField()
+    bag = models.JSONField(default=default_bag)
 
     # Trainer stats
     wins = models.IntegerField(default=0)
@@ -37,6 +57,11 @@ class Profile(models.Model):
     slot_4 = models.ForeignKey("pokemon.Pokemon", related_name="slot4", null=True, on_delete=models.SET_NULL)
     slot_5 = models.ForeignKey("pokemon.Pokemon", related_name="slot5", null=True, on_delete=models.SET_NULL)
     slot_6 = models.ForeignKey("pokemon.Pokemon", related_name="slot6", null=True, on_delete=models.SET_NULL)
+
+    # Progress info
+    map_progress = models.JSONField(default=default_map)
+    current_map = models.TextField(max_length=20, default="oak_village")
+    current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
 
     def add_to_party(self, pokemon):
         """
@@ -146,6 +171,14 @@ class Profile(models.Model):
         # Convert to JSON if needed
         return box
 
+
+    def get_party(self):
+        """
+        Return the party
+        """
+        party = [self.slot_1, self.slot_2, self.slot_3, self.slot_4, self.slot_5, self.slot_6]
+        return [pkmn for pkmn in party if pkmn is not None]
+
     def _sort_party(self):
         """
         Sort party to place pokemon in earliest slots available.
@@ -187,4 +220,24 @@ class Profile(models.Model):
             if pokemon.trainer != self:
                 return (False, "Pokemon in party that is not owned by trainer!")
             found_pokemon.append(pokemon)
+        return (True, "")
+
+
+    def purchase_item(self, item, quantity, shop):
+        """
+        Purchase an item from the shop
+        """
+        if shop not in consts.MART:
+            return (False, "No such shop!")
+        if item not in consts.MART[shop]:
+            return (False, "No such item in the shop!")
+        item_data = consts.MART[shop][item]
+        if self.money < item_data["price"] * quantity:
+            return (False, "Not enough money!")
+        self.money = self.money - item_data["price"] * quantity
+        if item in self.bag[item_data["type"]]:
+            self.bag[item_data["type"]][item] += quantity
+        else:
+            self.bag[item_data["type"]][item] = quantity
+        self.save()
         return (True, "")
