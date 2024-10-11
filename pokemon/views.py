@@ -34,14 +34,24 @@ def make(request):
 
 
 def pokemon(request):
+    """
+    Get the detailed view for a single Pokemon
+
+    Only Pokemon with assigned trainers should be viewable to prevent
+    peeking wild Pokemon stats
+    """
     pokemon_id = request.GET.get("id")
     pokemon = Pokemon.objects.get(pk=pokemon_id)
 
     pokemon_info = pokemon.get_info()
     metadata = pokemon.get_metadata()
     stats = pokemon.get_stats()
-    learnset = populate_moveset(pokemon.dex_number, pokemon.level, last_four=False)
+    learnset = populate_moveset(pokemon.dex, pokemon.level, last_four=False)
     moveset = pokemon.get_moves()
+
+    # Get the evolutions
+    evolutions = pokemon.get_all_evolutions()
+    valid_evolutions = pokemon.get_valid_evolutions()
 
     html_render_variables = {
         "dex": "001",
@@ -52,6 +62,8 @@ def pokemon(request):
         "learnset": learnset,
         "moveset": moveset,
         "in_box": bool(pokemon.location == "box"),
+        "evolutions": evolutions,
+        "valid_evolutions": valid_evolutions
     }
 
     return render(request, "pokemon/detailed.html", html_render_variables)

@@ -9,6 +9,8 @@ canvas.height = 400;
 // Consts to plug in
 const movespeed = 2;
 const tile_width = 16;
+const maxSteps = 500;
+const minSteps = 150;
 
 // Variables loaded from JSON
 let mapWidth = 0;
@@ -22,6 +24,7 @@ let battles = []
 let maplink = []
 let currentMap = mapName;
 let currentData = null;
+let wildPokemon = null;
 
 // Variables declared for collision logic
 let offset = {};
@@ -30,6 +33,8 @@ let waterMap = [];
 let waterTiles = [];
 let maplinkMap = [];
 let maplinkTiles = [];
+let battleMap = [];
+let battleTiles = [];
 
 // Bounding boxes
 let northBound = null;
@@ -57,6 +62,10 @@ let mapLoad = true;
 let travelDir = null;
 // move surfing out for early access
 let surfing = false;
+let grass = false;
+let currentArea = null;
+
+let steps = 10;
 
 
 // Player sprite constants
@@ -112,179 +121,211 @@ const surfer = new Sprite({
 statics = [player, surf, surfer];
 
 
-function mapSetup({map, forcedOffset = {}}) {
+function mapSetup({map, mapData, forcedOffset = {}}) {
+    console.log("entered");
+    console.log(mapData);
+    if (!(Object.keys(mapData).length === 0))
+        currentData = mapData
+    // Changes outside canvas
+    document.getElementById("map-name").innerHTML = currentData.map_name;
+    // Reset relevant vars
+    boundaries = [];
+    waterMap = [];
+    waterTiles = [];
+    maplinkMap = [];
+    maplinkTiles = [];
+    movables = [];
+    battleMap = [];
+    battleTiles = [];
+
+    collisions = currentData.collisions;
+    water = currentData.water;
+    battles = currentData.battles;
+    if (battles == "all")
+        battles = new Array(mapWidth * mapHeight).fill(1)
+    maplink = currentData.maplink;
+
+    mapHeight = currentData.mapHeight;
+    mapWidth = currentData.mapWidth;
+    default_offset = currentData.default_offset;
+    if (Object.keys(forcedOffset).length === 0) {
+        offset = default_offset;
+    } else {
+        offset = forcedOffset;
+    }
+    offset.x = offset.x * tile_width;
+    offset.y = offset.y * tile_width;
+    maplinkKey = currentData.maplinkKey;
+
+    // Set the statics new positions
+    statics = [player, surfer, surf, camera];
+    statics.forEach((static) => {
+        static.position.x = offset.x;
+        static.position.y = offset.y;
+    })
+
+    // Move the surf object right
+    surf.position.x -= 6
+    surf.position.y -= 6
+    // Move the surfer object up
+    surfer.position.y -= 8
+
+    // Move the camera further up by 1/2 the screen
+    camera.position.x -= canvas.width / 2;
+    camera.position.y -= canvas.height / 2;
+
+    // Create collision objects
+    collisionsMap = [];
+    for (let i = 0; i < collisions.length; i += mapWidth) {
+        collisionsMap.push(collisions.slice(i, i + mapWidth));
+    }
+
+    collisionsMap.forEach((row, i) => {
+        row.forEach((col, j) => {
+            if (col != 0)
+                boundaries.push(new Boundary({position: {
+                    x: j * tile_width,
+                    y: i * tile_width
+                }}))
+        })
+    })
+
+    // Create bounding box
+    northBound = new Boundary({
+        position: {
+            x: -16,
+            y: -16
+        },
+        width: (mapWidth + 2) * tile_width
+    });
+    boundaries.push(northBound);
+    southBound = new Boundary({
+        position: {
+            x: -16,
+            y: mapHeight * tile_width
+        },
+        width: (mapWidth + 2) * tile_width
+    });
+    boundaries.push(southBound);
+    westBound = new Boundary({
+        position: {
+            x: -16,
+            y: -16
+        },
+        height: (mapWidth + 2) * tile_width
+    });
+    boundaries.push(westBound);
+    eastBound = new Boundary({
+        position: {
+            x: mapWidth * tile_width,
+            y: -16
+        },
+        height: (mapWidth + 2) * tile_width
+    });
+    boundaries.push(eastBound);
+
+    // Create water objects
+    for (let i = 0; i < water.length; i += mapWidth) {
+        waterMap.push(water.slice(i, i + mapWidth));
+    }
+
+    waterMap.forEach((row, i) => {
+        row.forEach((col, j) => {
+            if (col != 0)
+                waterTiles.push(new Boundary({position: {
+                    x: j * tile_width,
+                    y: i * tile_width
+                }}))
+        })
+    })
+
+    // Create maplink objects
+    for (let i = 0; i < maplink.length; i += mapWidth) {
+        maplinkMap.push(maplink.slice(i, i + mapWidth));
+    }
+
+    maplinkMap.forEach((row, i) => {
+        row.forEach((col, j) => {
+            if (col != 0)
+                maplinkTiles.push(new Boundary({
+                    position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    },
+                    value: col,
+                    direction: maplinkKey[col]["direction"]
+                }))
+        })
+    })
+
+    // Create battle objects
+    for (let i = 0; i < battles.length; i += mapWidth) {
+        battleMap.push(battles.slice(i, i + mapWidth));
+    }
+
+    battleMap.forEach((row, i) => {
+        row.forEach((col, j) => {
+            if (col != 0)
+                battleTiles.push(new Boundary({
+                    position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    },
+                    value: col
+                }))
+        })
+    })
+
+    // Rendered map
+    mapImage = new Image();
+    mapImage.src = '/static/assets/maps/' + map + '/background.png';
+    mapForeground = new Image();
+    mapForeground.src = '/static/assets/maps/' + map + '/foreground.png';
+
+    background = new Sprite({
+        position: {x: 0, y: 0},
+        image: mapImage
+    });
+
+    foreground = new Sprite({
+        position: {x: 0, y: 0},
+        image: mapForeground
+    });
+    // Create movables
+    movables = [background, foreground, ...boundaries, ...waterTiles, ...maplinkTiles];
+    mapLoad = false;
+}
+
+
+function mapInit({map, forcedOffset = {}, preload = null}) {
     mapLoad = true;
+    currentMap = map;
     // Reset statics
-    console.log("")
 
     // Retrieve relevant info from JSON
-    $.ajax(
-    {
-        type: "GET",
-        url: jsonUrl,
-        data: {
-            "payload": {"map": map}
-        }
-    }).done(function( response ) {
-        console.log(response);
-        console.log("=================");
-        if (!(Object.keys(response).length === 0))
-            currentData = response
-        // Reset relevant vars
-        boundaries = [];
-        waterMap = [];
-        waterTiles = [];
-        maplinkMap = [];
-        maplinkTiles = [];
-        movables = [];
-
-        collisions = currentData.collisions;
-        water = currentData.water;
-        battles = currentData.battles;
-        if (battles == "all")
-            battles = new Array(mapWidth * mapHeight).fill(1)
-        maplink = currentData.maplink;
-
-        mapHeight = currentData.mapHeight;
-        mapWidth = currentData.mapWidth;
-        default_offset = currentData.default_offset;
-        if (Object.keys(forcedOffset).length === 0) {
-            offset = default_offset;
-        } else {
-            offset = forcedOffset;
-        }
-        offset.x = offset.x * tile_width;
-        offset.y = offset.y * tile_width;
-        maplinkKey = currentData.maplinkKey;
-
-        // Set the statics new positions
-        statics = [player, surfer, surf, camera];
-        statics.forEach((static) => {
-            static.position.x = offset.x;
-            static.position.y = offset.y;
-        })
-
-        // Move the surf object right
-        surf.position.x -= 6
-        surf.position.y -= 6
-        // Move the surfer object up
-        surfer.position.y -= 8
-
-        // Move the camera further up by 1/2 the screen
-        camera.position.x -= canvas.width / 2;
-        camera.position.y -= canvas.height / 2;
-
-        // Create collision objects
-        collisionsMap = [];
-        for (let i = 0; i < collisions.length; i += mapWidth) {
-            collisionsMap.push(collisions.slice(i, i + mapWidth));
-        }
-
-        collisionsMap.forEach((row, i) => {
-            row.forEach((col, j) => {
-                if (col != 0)
-                    boundaries.push(new Boundary({position: {
-                        x: j * tile_width,
-                        y: i * tile_width
-                    }}))
-            })
-        })
-
-        // Create bounding box
-        northBound = new Boundary({
-            position: {
-                x: -16,
-                y: -16
-            },
-            width: (mapWidth + 2) * tile_width
+    if (preload == null) {
+        $.ajax(
+        {
+            type: "GET",
+            url: jsonUrl,
+            data: {
+                "payload": {"map": map}
+            }
+        }).done(function( response ) {
+            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset});
+        }).fail(function() {
+            alert("This map is not valid! Returning to world map...");
+            window.location.href = worldMapUrl;
         });
-        boundaries.push(northBound);
-        southBound = new Boundary({
-            position: {
-                x: -16,
-                y: mapHeight * tile_width
-            },
-            width: (mapWidth + 2) * tile_width
-        });
-        boundaries.push(southBound);
-        westBound = new Boundary({
-            position: {
-                x: -16,
-                y: -16
-            },
-            height: (mapWidth + 2) * tile_width
-        });
-        boundaries.push(westBound);
-        eastBound = new Boundary({
-            position: {
-                x: mapWidth * tile_width,
-                y: -16
-            },
-            height: (mapWidth + 2) * tile_width
-        });
-        boundaries.push(eastBound);
-
-        // Create water objects
-        for (let i = 0; i < water.length; i += mapWidth) {
-            waterMap.push(water.slice(i, i + mapWidth));
-        }
-
-        waterMap.forEach((row, i) => {
-            row.forEach((col, j) => {
-                if (col != 0)
-                    waterTiles.push(new Boundary({position: {
-                        x: j * tile_width,
-                        y: i * tile_width
-                    }}))
-            })
-        })
-
-        // Create maplink objects
-        for (let i = 0; i < maplink.length; i += mapWidth) {
-            maplinkMap.push(maplink.slice(i, i + mapWidth));
-        }
-
-        maplinkMap.forEach((row, i) => {
-            row.forEach((col, j) => {
-                if (col != 0)
-                    maplinkTiles.push(new Boundary({
-                        position: {
-                            x: j * tile_width,
-                            y: i * tile_width
-                        },
-                        value: col,
-                        direction: maplinkKey[col]["direction"]
-                    }))
-            })
-        })
-        // Rendered map
-        mapImage = new Image();
-        mapImage.src = '/static/assets/maps/' + map + '/background.png';
-        mapForeground = new Image();
-        mapForeground.src = '/static/assets/maps/' + map + '/foreground.png';
-
-        background = new Sprite({
-            position: {x: 0, y: 0},
-            image: mapImage
-        });
-
-        foreground = new Sprite({
-            position: {x: 0, y: 0},
-            image: mapForeground
-        });
-        // Create movables
-        movables = [background, foreground, ...boundaries, ...waterTiles, ...maplinkTiles];
-        mapLoad = false;
-    }).fail(function() {
-        alert("This map is not valid! Returning to world map...");
-        window.location.href = worldMapUrl;
-    });
+    } else {
+        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset});
+    }
 
 
 
 }
 
-mapSetup({map: currentMap});
+mapInit({map: currentMap, preload: initialMap});
 
 const keys = {
     w: {
@@ -343,8 +384,6 @@ function animate(looped = true) {
         } else {
             player.draw(cappedCamera);
         }
-        console.log("Load, skipping animation");
-        console.log(player.moving)
         switch(travelDir) {
             case "in":
                 player.rows.val = 2;
@@ -376,10 +415,8 @@ function animate(looped = true) {
                 surfer.rows.val = 1;
                 break;
         }
-        console.log(travelDir)
         return;
     }
-    console.log("frame")
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.draw(cappedCamera);
@@ -401,6 +438,24 @@ function animate(looped = true) {
         }
     }
     // Detect if on battle
+    currentArea = null;
+    grass = false;
+    for (let i = 0; i < battleTiles.length; i++) {
+        const battleTile = battleTiles[i];
+        if (
+            pointCollision({
+                rectangle1: player,
+                rectangle2: {...battleTile, position: {
+                    x: battleTile.position.x,
+                    y: battleTile.position.y
+                }}
+            })
+        ) {
+            grass = true;
+            currentArea = battleTile.value;
+            break;
+        }
+    }
 
     if (surfing) {
         surf.draw(cappedCamera);
@@ -428,7 +483,7 @@ function animate(looped = true) {
                     const newMap = maplinkKey[maplinkTile.value];
                     player.moving = true;
                     travelDir = maplinkTile.direction;
-                    mapSetup(newMap);
+                    mapInit(newMap);
                     stopTravel = true;
                 }
             }
@@ -440,6 +495,8 @@ function animate(looped = true) {
     player.moving = false;
     surf.moving = true;
     surfer.moving = true;
+
+    // Movement logic
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
         player.moving = true;
         player.rows.val = 2;
@@ -531,6 +588,43 @@ function animate(looped = true) {
         }
         if (moving) {
             statics.forEach(movable => {movable.position.x += movespeed});
+        }
+    }
+    if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
+        if (moving) {
+            let areaStr = null;
+            if (grass) {
+                steps -= 1
+                areaStr = "grass" + currentArea;
+            }
+            if (surfing) {
+                steps -= 1
+                areaStr = "water"
+            }
+            if (steps < 0) {
+                steps = 20;
+                if (Math.random() < 0.1) {
+                    $.ajax(
+                    {
+                        type: "GET",
+                        url: wildUrl,
+                        data: {
+                            "payload": {"map": currentMap, "area": areaStr}
+                        },
+
+                    }).done(function( response ) {
+                        console.log("Write");
+                        document.getElementById("wild-name").innerHTML = "A wild " + response.name + " appeared!";
+                        document.getElementById("wild-level").innerHTML = "Level " + response.level;
+                        document.getElementById("wild-img").src = pokePath + "/" + response.dex_number + ".png";
+                        document.getElementById("wild-button").style.display = "block";
+                        console.log("Write2");
+                        wildPokemon = response;
+                    });
+                }
+
+
+            }
         }
     }
 }

@@ -1,15 +1,65 @@
 {% extends "base_layout.html" %}
+{% load static %}
 
 {% block title %}Detailed Info{% endblock %}
 
 {% block content %}
-<div class="container">
+<div style="display: grid;grid-template-columns: 200px 300px 200px;grid-template-rows: 200px 350px; gap:5px">
+    <div style="grid-column:1;grid-row:1;" class="content-box">
+        <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.Ball }}.png">
+        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ info.Dex }}{% if info.Shiny %}-s{% endif %}.png">
+    </div>
+    <div style="grid-column:2;grid-row:1;" class="content-box">
+
+    </div>
+    <div style="grid-column:1;grid-row:2;" class="content-box">
+
+    </div>
+    <div style="grid-column:2;grid-row:2;" class="content-box">
+        <table>
+            <tr>
+                <th></th>
+                <th>Stat</th>
+                <th>IV</th>
+                <th>EV</th>
+            </tr>
+            {% for key, val in stats.items %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ val.0 }}</td>
+                <td>{{ val.1 }}</td>
+                <td>{{ val.2 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div style="grid-column:3;grid-row:1 / span 2;" class="content-box">
+
+    </div>
+
+</div>
     <h4></h4>
     <div class="row">
         <div class="col">
-            <img src="{% get_static_prefix %}{{ asset_paths.art }}\{{ info["Dex"] }}.png">
+
         </div>
-        <div class="col"></div>
+        <table>
+            {% for key, val in info.items %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ val }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <table>
+            {% for key, val in metadata.items %}
+            <tr>
+                <th>{{ key }}</th>
+                <td>{{ val }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
     </div>
 </div>
 {% endblock %}

@@ -21,5 +21,6 @@ urlpatterns = [
     # Battle related views
     #path('', include('users.urls'))
     # AJAX requests
-    path("map_data/", map_views.map_data, name="map_data")
+    path("map_data/", map_views.map_data, name="map_data"),
+    path("wild_battle/", map_views.wild_battle, name="wild_battle")
 ]

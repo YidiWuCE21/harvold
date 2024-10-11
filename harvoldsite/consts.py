@@ -20,6 +20,10 @@ with open(os.path.join(ASSETS_PATH, "data", "pokemart.json")) as mart:
     MART = json.load(mart)
 with open(os.path.join(ASSETS_PATH, "data", "trainers.json")) as trainers:
     TRAINERS = json.load(trainers)
+with open(os.path.join(ASSETS_PATH, "data", "wild.json")) as wild:
+    WILD = json.load(wild)
+with open(os.path.join(ASSETS_PATH, "data", "evolutions.json")) as evo:
+    EVOLUTIONS = json.load(evo)
 
 # Login-related choicesf
 STARTER_CHOICES = [
@@ -67,6 +71,7 @@ ASSET_PATHS = {
     "player_sprite": os.path.join("assets", "player", "sprite"),
     "player_art": os.path.join("assets", "player", "art"),
     "typing": os.path.join("assets", "pokemon", "type"),
+    "item": os.path.join("assets", "items"),
 }
 
 STATS = ["hp", "atk", "def", "spa", "spd", "spe"]
@@ -113,3 +118,75 @@ MAPS = [
     "route_7",
     "vitur_forest",
 ]
+
+ITEM_TYPES = {
+    "ball": [
+        "pokeball",
+        "great_ball",
+        "ultra_ball",
+        "master_ball"
+    ],
+    "held": [
+        "fire_stone",
+        "water_stone",
+        "leaf_stone",
+        "ice_stone",
+        "dawn_stone",
+        "dusk_stone",
+        "thunder_stone",
+        "sun_stone",
+        "moon_stone",
+        "shiny_stone",
+        "oval_stone",
+        "kings_rock",
+        "metal_coat",
+        "protector",
+        "reaper_cloth",
+        "electirizer",
+        "magmarizer",
+        "dragon_scale",
+        "up_grade",
+        "dubious_disc",
+        "razor_fang",
+        "razor_claw",
+        "deep_sea_tooth",
+        "deep_sea_scale",
+        "leftovers",
+        "life_orb",
+        "eviolite",
+        "choice_scarf",
+        "choice_band",
+        "choice_specs",
+        "exp_share",
+        "macho_brace"
+    ],
+    "fossils": [
+        "root_fossil",
+        "claw_fossil",
+        "helix_fossil",
+        "dome_fossil",
+        "old_amber",
+        "armor_fossil",
+        "skull_fossil",
+        "plume_fossil",
+        "cover_fossil"
+    ],
+    "misc": [],
+    "key": [],
+    "tm": [],
+    "battle": [
+        "potion",
+        "super_potion",
+        "hyper_potion",
+        "max_potion",
+        "full_restore",
+        "revive",
+        "max_revive",
+        "antidote",
+        "paralyze_heal",
+        "awakening",
+        "burn_heal",
+        "ice_heal",
+        "full_heal",
+    ]
+}

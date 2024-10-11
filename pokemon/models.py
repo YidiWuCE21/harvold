@@ -4,6 +4,7 @@ import random
 from datetime import datetime
 
 from django.db import models
+from django.db import IntegrityError, transaction
 from harvoldsite import consts
 
 
@@ -269,6 +270,7 @@ class Pokemon(models.Model):
             self.original_trainer = trainer
         if ball is not None:
             self.ball = ball
+        self.ball = "pokeball"
         self.location = "box"
         self.save(update_fields=["trainer", "original_trainer", "ball"])
 
@@ -291,7 +293,7 @@ class Pokemon(models.Model):
         Recalculate flag should be used for rare candy leveling, battle xp handled separately
         """
         self.experience += xp
-        extra_levels = get_levelups(self.level, self.experience, consts.POKEMON[self.dex_number]["experience_growth"])
+        extra_levels = get_levelups(self.level, self.experience, consts.POKEMON[self.dex]["experience_growth"])
         self.level += extra_levels
 
         # Save fields in one go
@@ -416,7 +418,7 @@ class Pokemon(models.Model):
             current_move = getattr(self, current_slot)
             if move == current_move:
                 return "Move is already known!"
-        learnset = populate_moveset(self.dex_number, self.level, last_four=False, tms=tms, tutor=tutor)
+        learnset = populate_moveset(self.dex, self.level, last_four=False, tms=tms, tutor=tutor)
         if move not in learnset:
             return "Cannot learn this move!"
         setattr(self, slot, move)
@@ -435,8 +437,111 @@ class Pokemon(models.Model):
     def dex(self):
         return str(self.dex_number).zfill(3)
 
-    def evolve(self):
-        raise NotImplementedError()
+
+    def get_all_evolutions(self):
+        """
+        Get all evolutions and conditions
+        """
+        evolutions = []
+        if consts.EVOLUTIONS[self.dex] is None:
+            return evolutions
+
+        for pokemon, requirements in consts.EVOLUTIONS[self.dex].items():
+            reqs_clean = []
+            if requirements["min_level"] != None:
+                reqs_clean.append("Level {}".format(requirements["min_level"]))
+            if requirements["min_happiness"] != None:
+                reqs_clean.append("{} happiness".format(requirements["min_happiness"]))
+            if requirements["gender"] != None:
+                reqs_clean.append("Male" if requirements["gender"] == "m" else "Female")
+            if requirements["held_item"] != None:
+                reqs_clean.append("Traded")
+                if not requirements["held_item"] == "":
+                    reqs_clean.append("Holding {}".format(requirements["held_item"]))
+            if requirements["item"] != None:
+                reqs_clean.append(requirements["item"])
+            if requirements["known_move"] != None:
+                reqs_clean.append("Knows {}".format(requirements["known_move"]))
+            evolutions.append({
+                "name": consts.POKEMON[pokemon]["name"],
+                "dex": pokemon,
+                "requirements": reqs_clean
+            })
+        return evolutions
+
+
+
+
+
+    def get_valid_evolutions(self):
+        # Case where it doesn't evolve
+        valid_evolutions = []
+        if consts.EVOLUTIONS[self.dex] is None:
+            return valid_evolutions
+
+        for pokemon, requirements in consts.EVOLUTIONS[self.dex].items():
+            # Check level requirement
+            if requirements["min_level"] != None:
+                if self.level < requirements["min_level"]:
+                    continue
+
+            # Check happiness requirement
+            if requirements["min_happiness"] != None:
+                if self.happiness < requirements["min_happiness"]:
+                    continue
+
+            # Check gender requirement
+            if requirements["gender"] != None:
+                if str(self.sex) != str(requirements["gender"]):
+                    continue
+
+            # Check traded requirement
+            if requirements["held_item"] != None:
+                if not self.traded:
+                    continue
+                if str(self.held_item) != str(requirements["held_item"]) and str(requirements["held_item"]) != "":
+                    continue
+
+            # Check move requirement
+            if requirements["known_move"] != None:
+                if not requirements["known_move"] in self.get_moves().values():
+                    continue
+
+            # Check item requirement
+            if requirements["item"] != None:
+                if not self.trainer.has_item(requirements["item"]):
+                    continue
+            valid_evolutions.append(pokemon)
+
+        return valid_evolutions
+
+    def evolve(self, evo_dex):
+        """
+        Evolve to the specified Pokemon
+        """
+        if evo_dex in self.get_valid_evolutions():
+            try:
+                with transaction.atomic():
+                    # Consume held item if applicable
+                    if consts.EVOLUTIONS[self.dex][evo_dex]["held_item"] not in [None, ""]:
+                        self.held_item = None
+
+                     # Consume item if applicable
+                    if consts.EVOLUTIONS[self.dex][evo_dex]["item"] is not None:
+                        self.trainer.consume_item(consts.EVOLUTIONS[self.dex][evo_dex]["item"])
+
+                    # Evolve and save
+                    self.dex_number = evo_dex
+                    self.recalculate_stats(skip_save=True)
+                    self.full_heal() # Saves
+
+            except IntegrityError:
+                return (False, "Failed to evolve! Please make sure you have the needed items and your Pokemon meets evolution requirements.")
+
+            return (True, "")
+
+        else:
+            return (False, "Cannot evolve to the Pokemon!")
 
     def change_nature(self):
         raise NotImplementedError()
@@ -447,15 +552,18 @@ class Pokemon(models.Model):
         Function to return generic Pokemon info in a dict format
         """
         pokemon_info = {
-            "Dex": self.dex_number,
+            "Dex": self.dex,
             "Level": self.level,
-            "Experience": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex_number]["experience_growth"]),
+            "Experience": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex]["experience_growth"]),
             "Sex": self.sex,
             "Ability": self.ability,
             "Happiness": self.happiness,
             "Held Item": self.held_item,
             "Status": self.status,
-            "Current HP": self.current_hp
+            "Current HP": self.current_hp,
+            "Nature": self.nature.capitalize(),
+            "Ball": self.ball,
+            "Shiny": self.shiny
         }
         return pokemon_info
 

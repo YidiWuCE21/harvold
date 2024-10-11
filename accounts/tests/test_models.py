@@ -201,49 +201,8 @@ class TestGetBox(TestCase):
 
 
     def test_get_box_standard(self):
-        box = self.trainer1.pokemon()
+        box = self.trainer1.get_pokemon()
         self.assertTrue(False)
-
-    def test_get_box_page_size(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_locked(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_tagged(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_dex(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_level(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_bst(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_iv(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
-    def test_get_box_filter_order(self):
-        box = self.trainer1.get_box()
-        self.assertTrue(False)
-
-
 
 
 class TestSortParty(TestCase):
@@ -424,3 +383,42 @@ class TestPurchaseItem(TestCase):
         self.assertTrue(ret[0])
         self.assertEqual(self.trainer1.money, 9400)
         self.assertEqual(self.trainer1.bag["ball"]["great_ball"], 1)
+
+
+class TestHasItem(TestCase):
+    def setUp(self):
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = models.Profile(character="1", user=self.user1)
+        self.trainer1.save()
+
+
+    def test_has_item(self):
+        self.trainer1.bag = models.default_bag()
+        self.trainer1.bag["ball"]["great_ball"] = 3
+        self.assertTrue(self.trainer1.has_item("pokeball", "ball", 3))
+        self.assertTrue(self.trainer1.has_item("great_ball", "ball", 3))
+        self.assertFalse(self.trainer1.has_item("great_ball", "ball", 4))
+        self.assertFalse(self.trainer1.has_item("ultra_ball", "ball", 1))
+
+
+class TestConsumeItem(TestCase):
+    def setUp(self):
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = models.Profile(character="1", user=self.user1)
+        self.trainer1.save()
+
+
+    def test_consume_item(self):
+        self.trainer1.bag = models.default_bag()
+        ret = self.trainer1.consume_item("pokeball", "ball", 1)
+        self.assertTrue(ret)
+        self.assertEqual(4, self.trainer1.bag["ball"]["pokeball"])
+
+        ret = self.trainer1.consume_item("pokeball", "ball", 6)
+        self.assertFalse(ret)
+        self.assertEqual(4, self.trainer1.bag["ball"]["pokeball"])
+
+        ret = self.trainer1.consume_item("ultra_ball", "ball", 1)
+        self.assertFalse(ret)

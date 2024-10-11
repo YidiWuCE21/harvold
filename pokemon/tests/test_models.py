@@ -616,3 +616,176 @@ class TestLearnMove(TestCase):
     def test_learn_move_invalid_slot(self):
         ret = self.pkmn.learn_move("tackle", "status")
         self.assertEqual("Not a valid slot to save.", ret)
+
+
+class TestGetValidEvolutions(TestCase):
+    def test_level_evolve(self):
+        self.pkmn = models.create_pokemon("001", 10, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn = models.create_pokemon("001", 50, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['002'], ret)
+
+    def test_happiness_evolve(self):
+        self.pkmn = models.create_pokemon("172", 10, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn.happiness = 230
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['025'], ret)
+
+    def test_gender_evolve(self):
+        self.pkmn = models.create_pokemon("415", 10, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn = models.create_pokemon("415", 50, "f")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['416'], ret)
+
+    def test_move_evolve(self):
+        self.pkmn = models.create_pokemon("221", 50, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn.learn_move("ancientpower", "move1")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['473'], ret)
+
+    def test_trade_evolve(self):
+        self.pkmn = models.create_pokemon("093", 50, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn.traded = True
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['094'], ret)
+
+    def test_trade_item_evolve(self):
+        self.pkmn = models.create_pokemon("125", 50, "m")
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.pkmn.traded = True
+        self.pkmn.held_item = "electirizer"
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['466'], ret)
+
+    def test_item_evolve(self):
+        self.user = User(username="test1", password="test1", email="test1@test.com")
+        self.user.save()
+        self.trainer = Profile(character="01", user=self.user)
+        self.trainer.save()
+        self.pkmn = models.create_pokemon("090", 50, "m")
+        self.pkmn.assign_trainer(self.trainer)
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual([], ret)
+
+        self.trainer.bag["evo"] = {
+            "water-stone": 1
+        }
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['091'], ret)
+
+
+    def test_eevee(self):
+        self.user1 = User(username="test1", password="test1", email="test1@test.com")
+        self.user1.save()
+        self.trainer1 = Profile(character="01", user=self.user1)
+        self.trainer1.save()
+        self.pkmn = models.create_pokemon("133", 50, "m")
+        self.pkmn.happiness = 230
+        self.pkmn.assign_trainer(self.trainer1)
+        self.trainer1.bag["evo"] = {
+            "water-stone": 1,
+            "fire-stone": 1,
+            "ice-stone": 1,
+            "leaf-stone": 1,
+            "thunder-stone": 1
+        }
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(['134', '136', '135', '470', '196', '197', '471'], ret)
+
+
+    def test_kirlia(self):
+        self.user2 = User(username="test1", password="test1", email="test1@test.com")
+        self.user2.save()
+        self.trainer2 = Profile(character="01", user=self.user2)
+        self.trainer2.save()
+        self.pkmn = models.create_pokemon("281", 50, "m")
+        self.pkmn.happiness = 230
+        self.pkmn.assign_trainer(self.trainer2)
+        self.trainer2.bag["evo"] = {
+            "dawn-stone": 1
+        }
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(["282", "475"], ret)
+
+        self.pkmn = models.create_pokemon("281", 50, "f")
+        self.pkmn.happiness = 230
+        self.pkmn.assign_trainer(self.trainer2)
+        self.trainer2.bag["evo"] = {
+            "dawn-stone": 1
+        }
+        ret = self.pkmn.get_valid_evolutions()
+        self.assertEqual(["282"], ret)
+
+
+class TestEvolve(TestCase):
+    def test_level_evolve(self):
+        self.pkmn = models.create_pokemon("001", 10, "m")
+        ret = self.pkmn.evolve("002")
+        self.assertFalse(ret[0])
+
+        self.pkmn = models.create_pokemon("001", 50, "m")
+        ret = self.pkmn.evolve("002")
+        self.assertTrue(ret[0])
+
+    def test_happiness_evolve(self):
+        self.pkmn = models.create_pokemon("172", 10, "m")
+        ret = self.pkmn.evolve("025")
+        self.assertFalse(ret[0])
+
+        self.pkmn.happiness = 230
+        ret = self.pkmn.evolve("025")
+        self.assertTrue(ret[0])
+
+    def test_gender_evolve(self):
+        self.pkmn = models.create_pokemon("415", 10, "m")
+        ret = self.pkmn.evolve("416")
+        self.assertFalse(ret[0])
+
+        self.pkmn = models.create_pokemon("415", 50, "f")
+        ret = self.pkmn.evolve("416")
+        self.assertTrue(ret[0])
+
+    def test_move_evolve(self):
+        self.pkmn = models.create_pokemon("221", 50, "m")
+        ret = self.pkmn.evolve("473")
+        self.assertFalse(ret[0])
+
+        self.pkmn.learn_move("ancientpower", "move1")
+        ret = self.pkmn.evolve("473")
+        self.assertTrue(ret[0])
+
+    def test_trade_evolve(self):
+        self.pkmn = models.create_pokemon("093", 50, "m")
+        ret = self.pkmn.evolve("094")
+        self.assertFalse(ret[0])
+
+        self.pkmn.traded = True
+        ret = self.pkmn.evolve("094")
+        self.assertTrue(ret[0])
+
+    def test_trade_item_evolve(self):
+        self.pkmn = models.create_pokemon("125", 50, "m")
+        ret = self.pkmn.evolve("466")
+        self.assertFalse(ret[0])
+
+        self.pkmn.traded = True
+        self.pkmn.held_item = "electirizer"
+        ret = self.pkmn.evolve("466")
+        self.assertTrue(ret[0])

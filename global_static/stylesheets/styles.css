@@ -1,20 +1,13 @@
 /* Colour palette */
 :root {
-    --bg: rgba(242, 242, 237, 1);
-    --main: rgba(247, 252, 255, 1);
-    --header: rgba(227, 232, 255, 1);
-    --border: rgba(135, 185, 235, 1);
-    --content: rgba(150, 225, 255, 1);
+    --bg: rgb(188, 235, 255);
+    --main: rgb(247, 242, 232);
+    --content: rgba(247, 252, 255, 1);
+
     --hover: rgba(210, 219, 224, 0.8);
     --shadow: rgba(0, 0, 0, 0.2);
     --shiny: rgba(237, 231, 197, 1);
     --shiny-hover: rgba(230, 208, 163, 0.8);
-    /* trainer card */
-    --card-stripes: rgba(190, 248, 226, 1);
-    --card-bg: rgba(250, 249, 243, 1);
-    --card-header: rgba(124, 197, 177, 1);
-    --card-text: rgba(255, 253, 238, 1);
-    --card-input: rgba(3, 79, 59, 1);
 }
 
 @font-face {
@@ -30,18 +23,15 @@
     src: url('fonts/Vegur-Regular.otf') format('opentype');
 }
 
-body {
-    background-color: var(--bg);
-    background-image: url("../backdrop.png");
-    background-repeat: repeat-x;
-    font-family: Vegur;
+@font-face {
+    font-family: 'DS';
+    src: url('fonts/DS-Regular.otf') format('truetype');
 }
 
-h5 {
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 5px;
-    font-family: Aldrich;
-    font-size: 12px;
+body {
+    background-color: var(--bg);
+    background-repeat: repeat-x;
+    font-family: DS;
 }
 
 a {
@@ -49,17 +39,54 @@ a {
     text-decoration: none;
 }
 
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    display: flex;
+}
+
+li {
+    float: left;
+    flex: 1;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.active {
+    background-color: #04AA6D;
+    color: white;
+}
+
+.banner {
+    background-color: var(--bg);
+    background-image: url("../backdrop.png");
+    padding: 10px;
+    border: 1px solid black;
+}
+
 .main-content {
     background-color: var(--main);
     padding: 25px 35px;
     min-height: 80vh;
-    border-radius: 10px;
     box-shadow: 0px 2px 4px var(--shadow);
-    min-width: 720px;
 }
 
 .header {
-    border-bottom: 2px solid var(--border);
     margin-bottom: 10px;
 }
 
@@ -68,9 +95,9 @@ a {
 }
 
 .content-box {
-    background-color: var(--bg);
-    padding: 10px;
-    border-radius: 5px;
+    background-color: var(--content);
+    padding: 5px;
+    border-radius: 2px;
     box-shadow: 0px 2px 4px var(--shadow);
     font-family: Aldrich;
     font-size: 12px;
@@ -116,33 +143,6 @@ a {
     margin-right: 0px;
 }
 
-/* Custom context menus */
-.menu-container {
-    width: 120px;
-    box-shadow: 0px 2px 4px var(--shadow);
-    background-color: var(--bg);
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: flex-start;
-    align-items: center;
-    border-radius: 3px;
-    position: absolute;
-    z-index: 99;
-    text-align: center;
-}
-
-.menu-option {
-    width: 100%;
-    height: 30px;
-    padding: 4px;
-    cursor: pointer;
-    font-size: 14px;
-
-    &:hover {
-        background-color: var(--hover);
-    }
-}
-
 /* Invisi-scroll */
 
 .invisi-scroll::-webkit-scrollbar {
@@ -172,20 +172,20 @@ input, select {
     margin: auto;
     background-image: linear-gradient(
         0deg,
-        var(--card-stripes) 25%,
-        var(--card-bg) 25%,
-        var(--card-bg) 50%,
-        var(--card-stripes) 50%,
-        var(--card-stripes) 75%,
-        var(--card-bg) 75%,
-        var(--card-bg) 100%
+        rgb(190, 248, 226) 25%,
+        rgb(250, 249, 243) 25%,
+        rgb(250, 249, 243) 50%,
+        rgb(190, 248, 226) 50%,
+        rgb(190, 248, 226) 75%,
+        rgb(250, 249, 243) 75%,
+        rgb(250, 249, 243) 100%
     );
     background-size: 8.00px 8.00px;
     border-radius: 5px;
-    border: 1px solid var(--card-header);
-    border-bottom: 10px solid var(--card-header);
+    border: 1px solid rgb(124, 197, 177);
+    border-bottom: 10px rgb(124, 197, 177);
     box-shadow: 0px 2px 4px var(--shadow);
-    color: var(--card-input);
+    color: rgb(3, 79, 59);
     font-family: Aldrich;
     width: 480px;
     font-size: 12px;
@@ -193,13 +193,13 @@ input, select {
 }
 
 .trainer-card input {
-    background-color: var(--card-header);
+    background-color: rgb(124, 197, 177);
     border: 0px;
     border-radius: 5px;
 }
 
 .trainer-card table {
-    background-color: var(--card-bg);
+    background-color: rgb(250, 249, 243);
     border-radius:10px
 }
 
@@ -209,8 +209,8 @@ input, select {
 
 .trainer-card-header {
     margin: -5px -10px;
-    background-color: var(--card-header);
-    color: var(--card-text);
+    background-color: rgb(124, 197, 177);
+    color: rgb(255, 253, 238);
     text-decoration: underline;
     font-family: Aldrich;
 }
@@ -218,4 +218,20 @@ input, select {
 .trainer-card-img {
     background-image: url("../trainer_card.png");
     border-radius: 20px;
+}
+
+.map {
+    border: 1px solid black;
+}
+
+.wild-pokemon {
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(0, 170, 255, 0.7)); /* Radial gradient */
+    border: 5px solid rgba(0, 119, 204, 0.8); /* Semi-transparent darker blue border */
+    border-radius: 50%; /* Make it a circle */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    display: flex; /* Optional: to center content inside */
+    justify-content: center; /* Optional: to center content */
+    align-items: center; /* Optional: to center content */
 }

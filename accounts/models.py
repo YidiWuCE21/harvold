@@ -16,12 +16,24 @@ def default_bag():
             "potion": 5
         },
         "tm": {},
-        "misc": {},
+        "held": {},
+        "misc": {}
     }
 
 
 def default_map():
     return ["oak_village"]
+
+
+def item_type(item):
+    """
+    Get the type of item
+    """
+    # Get item type
+    for item_type, items in consts.ITEM_TYPES.items():
+        if item in items:
+            return item_type
+    return None
 
 
 class Profile(models.Model):
@@ -62,6 +74,7 @@ class Profile(models.Model):
     map_progress = models.JSONField(default=default_map)
     current_map = models.TextField(max_length=20, default="oak_village")
     current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
+    wild_opponent = models.ForeignKey("pokemon.Pokemon", related_name="wild_mon", null=True, on_delete=models.SET_NULL)
 
     def add_to_party(self, pokemon):
         """
@@ -235,9 +248,53 @@ class Profile(models.Model):
         if self.money < item_data["price"] * quantity:
             return (False, "Not enough money!")
         self.money = self.money - item_data["price"] * quantity
-        if item in self.bag[item_data["type"]]:
-            self.bag[item_data["type"]][item] += quantity
+        if self.add_item(item, quantity):
+            self.save()
+            return (True, "")
+        return (False, "Failed to add item!")
+
+
+    def add_item(self, item, quantity):
+        """
+        Give the user an item
+        """
+        # Get item type
+        type = item_type(item)
+        if type is None:
+            return False
+        if item in self.bag[type]:
+            self.bag[type][item] += quantity
         else:
-            self.bag[item_data["type"]][item] = quantity
+            self.bag[type][item] = quantity
+        return True
+
+
+
+    def has_item(self, item, quantity=1):
+        """
+        Check that the user has the item
+        """
+        # Get item type
+        type = item_type(item)
+        if type is None:
+            return False
+        # Check if user has item
+        if item not in self.bag[type]:
+            return False
+        return self.bag[type][item] > (quantity - 1)
+
+
+    def consume_item(self, item, quantity=1):
+        """
+        Check that the user has the item
+        """
+        type = item_type(item)
+        if type is None:
+            return False
+        if item not in self.bag[type]:
+            return False
+        if self.bag[type][item] < quantity:
+            return False
+        self.bag[type][item] -= quantity
         self.save()
-        return (True, "")
+        return True

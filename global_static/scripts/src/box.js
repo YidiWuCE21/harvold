@@ -64,26 +64,21 @@ function Box({ pokemonList }) {
     while (pokemonPages[pokemonPages.length - 1].length < rowCount * 5) pokemonPages[pokemonPages.length - 1].push(null);
 
     return (
-        <div className="container">
+        <div style={{display:"flex"}}>
             {clicked && (
                 <ContextMenu top={coords.y} left={coords.x} displayPokemon={displayPokemon} selectedPokemon={selectedPokemon}/>
             )}
-            <div className="row">
-                <div className="col-3">
-                    <PokemonDisplay selectedPokemon={displayedPokemon} />
-                </div>
-                <div className="col-6">
-                    <BoxTabs pokemonPages={pokemonPages}
-                        selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
-                        setClicked={setClicked} setCoords={setCoords}/>
-                </div>
-                <div className="col-3">
-                    <BoxControls rowCount={rowCount} setRows={setRows}
-                        sortField={sortField} setSortField={setSortField}
-                        sortOrder={sortOrder} setSortOrder={setSortOrder}
-                        filterTag={filterTag} setFilterTag={setFilterTag}
-                        searchWord={searchWord} setSearchWord={setSearchWord}/>
-                </div>
+            <div style={{display:"flex"}}>
+                <BoxTabs pokemonPages={pokemonPages}
+                    selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
+                    setClicked={setClicked} setCoords={setCoords}/>
+            </div>
+            <div style={{display:"inline-block"}}>
+                <BoxControls rowCount={rowCount} setRows={setRows}
+                    sortField={sortField} setSortField={setSortField}
+                    sortOrder={sortOrder} setSortOrder={setSortOrder}
+                    filterTag={filterTag} setFilterTag={setFilterTag}
+                    searchWord={searchWord} setSearchWord={setSearchWord}/>
             </div>
         </div>
     )
@@ -312,7 +307,7 @@ function BoxCell({ cell, selectedPokemon, setSelectedPokemon, setClicked, setCoo
             gender = (<span style={{color:'magenta'}}>&#9792;</span>);
         }
         var cellRender = (
-            <a href="https://stackoverflow.com/questions/796087/make-a-div-into-a-link">
+            <a href={detailedUrl + cell["id"]}>
             <div className={"box-cell select-card".concat(cell["shiny"] ? " shiny": "")}
                 //onClick={() => setSelectedPokemon(cell)}
                 onContextMenu={(e) => {

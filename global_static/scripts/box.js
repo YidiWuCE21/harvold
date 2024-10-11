@@ -115,32 +115,23 @@ function Box(_ref) {
         pokemonPages[pokemonPages.length - 1].push(null);
     }return React.createElement(
         "div",
-        { className: "container" },
+        { style: { display: "flex" } },
         clicked && React.createElement(ContextMenu, { top: coords.y, left: coords.x, displayPokemon: displayPokemon, selectedPokemon: selectedPokemon }),
         React.createElement(
             "div",
-            { className: "row" },
-            React.createElement(
-                "div",
-                { className: "col-3" },
-                React.createElement(PokemonDisplay, { selectedPokemon: displayedPokemon })
-            ),
-            React.createElement(
-                "div",
-                { className: "col-6" },
-                React.createElement(BoxTabs, { pokemonPages: pokemonPages,
-                    selectedPokemon: selectedPokemon, setSelectedPokemon: setSelectedPokemon,
-                    setClicked: setClicked, setCoords: setCoords })
-            ),
-            React.createElement(
-                "div",
-                { className: "col-3" },
-                React.createElement(BoxControls, { rowCount: rowCount, setRows: setRows,
-                    sortField: sortField, setSortField: setSortField,
-                    sortOrder: sortOrder, setSortOrder: setSortOrder,
-                    filterTag: filterTag, setFilterTag: setFilterTag,
-                    searchWord: searchWord, setSearchWord: setSearchWord })
-            )
+            { style: { display: "flex" } },
+            React.createElement(BoxTabs, { pokemonPages: pokemonPages,
+                selectedPokemon: selectedPokemon, setSelectedPokemon: setSelectedPokemon,
+                setClicked: setClicked, setCoords: setCoords })
+        ),
+        React.createElement(
+            "div",
+            { style: { display: "inline-block" } },
+            React.createElement(BoxControls, { rowCount: rowCount, setRows: setRows,
+                sortField: sortField, setSortField: setSortField,
+                sortOrder: sortOrder, setSortOrder: setSortOrder,
+                filterTag: filterTag, setFilterTag: setFilterTag,
+                searchWord: searchWord, setSearchWord: setSearchWord })
         )
     );
 }
@@ -727,7 +718,7 @@ function BoxCell(_ref7) {
         }
         var cellRender = React.createElement(
             "a",
-            { href: "https://stackoverflow.com/questions/796087/make-a-div-into-a-link" },
+            { href: detailedUrl + cell["id"] },
             React.createElement(
                 "div",
                 { className: "box-cell select-card".concat(cell["shiny"] ? " shiny" : "")
