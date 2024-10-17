@@ -72,6 +72,7 @@ ASSET_PATHS = {
     "player_art": os.path.join("assets", "player", "art"),
     "typing": os.path.join("assets", "pokemon", "type"),
     "item": os.path.join("assets", "items"),
+    "moves": os.path.join("assets", "pokemon", "moves"),
 }
 
 STATS = ["hp", "atk", "def", "spa", "spd", "spe"]

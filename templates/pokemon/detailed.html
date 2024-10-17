@@ -3,20 +3,89 @@
 
 {% block title %}Detailed Info{% endblock %}
 
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
 {% block content %}
-<div style="display: grid;grid-template-columns: 200px 300px 200px;grid-template-rows: 200px 350px; gap:5px">
+{% if message is not None %}
+<p>{{ message }}</p>
+{% endif %}
+<div style="display: grid;grid-template-columns: 200px 300px 200px;grid-template-rows: 220px 240px 140px; gap:5px">
     <div style="grid-column:1;grid-row:1;" class="content-box">
-        <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.Ball }}.png">
-        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ info.Dex }}{% if info.Shiny %}-s{% endif %}.png">
+        <h5><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.ball }}.png" style="margin-top:-4px;"> {{ data.name }} {% if info.Sex == "m" %}<span style="color:blue">&#9794;</span>{% elif info.Sex == "f" %}<span style="color:magenta">&#9792;</span>{% endif %}</h5>
+        <p style="margin">Level {{ info.level }}</p>
+        <div class="experience-bar center"><div style="width:{{ info.experience_progress }}%;height:4px;background:blue;"></div></div>
+        <p>{{ info.nature }}</p>
+        <p>{{ info.ability }}</p>
+
+        <div class="pokemon-img-bg">
+            <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ info.dex }}{% if info.shiny %}-s{% endif %}.png">
+        </div>
+
+        </br>
+        {% for type in data.typing %}
+        <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png" style="display:inline-block;">
+        {% endfor %}
     </div>
     <div style="grid-column:2;grid-row:1;" class="content-box">
+        <h5>Summary</h5>
+        <table class="center text">
+            <tr>
+                <th>Owner</th>
+                <td>{{ metadata.owner }}</td>
+            </tr>
+            <tr>
+                <th>OT</th>
+                <td>{{ metadata.original_trainer }}</td>
+            </tr>
+            <tr>
+                <th>Date Caught</th>
+                <td>{{ metadata.caught_date }}</td>
+            </tr>
+            <tr>
+                <th>Experience</th>
+                <td>{{ info.experience }}{% if info.level < 100 %} ({{ info.to_next }} to next){% endif %}</td>
+            </tr>
+            <tr>
+                <th>Health</th>
+                <td><p>{{ info.current_hp }} / {{ stats.HP.0 }}</p><div class="experience-bar" stlye="background:red;"><div style="width:{{ info.hp_percent }}%;height:4px;background:lightgreen;"></div></div></td>
+            </tr>
+            <tr>
+                <th>Happiness</th>
+                <td><p>{{ info.happiness}} / 255</p><div class="experience-bar"><div style="width:{{ info.happiness_percent }}%;height:4px;background:pink;"></div></div></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ info.status }}</td>
+            </tr>
+            <tr>
+                <th>Held Item</th>
+                <td>{{ info.held_item }}</td>
+            </tr>
+        </table>
+
 
     </div>
     <div style="grid-column:1;grid-row:2;" class="content-box">
-
+        <h5>Moves</h5>
+        {% for slot, move in moveset.items %}
+        {% if move is None %}
+        <div class="move-box" style="color:gray">Empty</div>
+        {% else %}
+        <div class="move-box"
+             data-toggle="tooltip"
+             title="{{ move.effects }}&#10;Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
+            <p>{{ move.name }} - {{ move.current_pp }}/{{ move.pp }}</p>
+            <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move.damage_class }}.png">
+            <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move.type }}.png">
+        </div>
+        {% endif %}
+        {% endfor %}
     </div>
     <div style="grid-column:2;grid-row:2;" class="content-box">
-        <table>
+        <h5>Stats</h5>
+        <table class="center text">
             <tr>
                 <th></th>
                 <th>Stat</th>
@@ -33,33 +102,130 @@
             {% endfor %}
         </table>
     </div>
-    <div style="grid-column:3;grid-row:1 / span 2;" class="content-box">
-
+    <div style="grid-column:1 / span 2;grid-row:3" class="content-box">
     </div>
-
-</div>
-    <h4></h4>
-    <div class="row">
-        <div class="col">
+    {% if owned %}
+    <div style="grid-column:3;grid-row:1 / span 3;" class="content-box">
+        <h5>Actions</h5>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
+            {% if in_box %}
+            <input type="hidden" name="action" value="add_party">
+            <button class="button-3" type="submit">Add to Party</button>
+            {% else %}
+            <input type="hidden" name="action" value="remove_party">
+            <button class="button-3" type="submit">Add to Box</button>
+            {% endif %}
+        </form>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
+            <input type="hidden" name="action" value="create_trade">
+            <button class="button-3 {% if not in_box %}unclickable{% endif %}" type="button">Create Trade</button>
+        </form>
+        <div id="release" class="release-tab" style="height:65px;">
+            <button class="button-3 button-back" onclick="openTab('release-tab', 'confirm_release')">Release</button>
+        </div>
+        <div id="confirm_release" class="release-tab" style="height:65px;display:none;">
+            <form method="POST">
+            {% csrf_token %}
+                <input type="hidden" name="action" value="release">
+                <p>Are you sure you want to release?</p>
+                <button class="button-3 button-forward" type="submit" style="width:40px">Yes</button>
+                <button class="button-3 button-back" type="button" onclick="openTab('release-tab', 'release')" style="width:40px">No</button>
+            </form>
 
         </div>
-        <table>
-            {% for key, val in info.items %}
-            <tr>
-                <th>{{ key }}</th>
-                <td>{{ val }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <table>
-            {% for key, val in metadata.items %}
-            <tr>
-                <th>{{ key }}</th>
-                <td>{{ val }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+        <h5>Evolution</h5>
+        {% if evolutions %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
+            <input type="hidden" name="action" value="evolve">
+            <div class="invisi-scroll" style="height:60px;width:100px;overflow-x:auto;display:inline-block;">
+                {% for evo in evolutions %}
 
+                <label class="button-3{% if evo.dex not in valid_evolutions %} unclickable{% endif %}" for="id_{{ evo.dex }}"
+                       style="height:50px;display:inline-block;position:relative;"
+                       data-toggle="tooltip"
+                       title="{% for req in evo.requirements %}{{ req }}&#10;{% endfor %}"
+                >
+                    <input type="radio" value="{{ evo.dex }}" name="evolve_to" id="id_{{ evo.dex }}"{% if evo.dex not in valid_evolutions %} disabled{% endif %}
+                        style="position:absolute;top:6px;left:4px;">
+                    <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ evo.dex }}.gif">
+                    <p{% if evo.dex not in valid_evolutions %} style="color:gray;"{% endif %}>{{ evo.name }}</p>
+                </label>
+                {% endfor %}
+            </div>
+            <button class="button-3" type="submit">Evolve</button>
+
+
+        </form>
+        {% else %}
+        <p>No evolutions available!</p>
+        </br>
+        </br>
+        </br>
+        {% endif %}
+        </br>
+        <h5>Learn Moves</h5>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
+            <input type="hidden" name="action" value="teach_move">
+            <div class="move-tab" id="new_move" style="height:170px;">
+                <select name="move"
+                        onchange="openTab('move-info-tab', this.value + '_info');
+                                  let selectedMove = $(this).find('option:selected');
+                                  document.getElementById('replace-text').innerHTML = 'Learning ' + selectedMove.data('name')">
+                    <option selected disabled hidden>Select a move</option>
+                    {% for move, move_data in learnset.items %}
+                    <option value="{{ move }}" data-name="{{ move_data.name }}">{{ move_data.name }}</option>
+                    {% endfor %}
+                </select>
+                </br>
+                {% for move, move_data in learnset.items %}
+                <div style="height:120px;display:none;" class="move-info-tab" id="{{ move }}_info">
+                    <p>{{ move_data.effects }}</p>
+                    <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move_data.damage_class }}.png">
+                    <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move_data.type }}.png">
+                    <p>PP: {{ move_data.pp }}</p>
+                    <p>Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}</p>
+                    <p>Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}</p>
+                    <button class="button-3" type="button" onclick="openTab('move-tab', 'replace-move')">Learn</button>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="move-tab" id="replace-move" style="display:none;">
+                <p id="replace-text"></p>
+                <p>Replace a move:</p>
+                {% for slot, move in moveset.items %}
+                {% if move is None %}
+
+                <label for="{{ slot }}_empty" class="move-box" style="color:gray;position:relative;">
+                    <input type="radio" name="replace_slot" value="{{ slot }}" id="{{ slot }}_empty" style="position:absolute;left:3px;top:6px;">
+                    Empty
+                </label>
+                {% else %}
+
+                <label for="{{ slot }}" class="move-box" style="position:relative;">
+                    <input type="radio" name="replace_slot" value="{{ slot }}" id="{{ slot }}" style="position:absolute;left:3px;top:6px;">
+                    <p>{{ move.name }}</p>
+                    <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move.damage_class }}.png">
+                    <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move.type }}.png">
+                </label>
+                {% endif %}
+                {% endfor %}
+
+                <button class="button-3 button-back" type="button" style="width:65px" onclick="openTab('move-tab', 'new-move')">Back</button>
+                <button class="button-3 button-forward" type="submit" style="width:65px">Confirm</button>
+
+            </div>
+
+
+        </form>
     </div>
-</div>
+    {% endif %}
 {% endblock %}

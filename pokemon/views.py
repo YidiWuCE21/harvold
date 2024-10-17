@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseNotFound
 
 # Create your views here.
 
@@ -40,30 +41,58 @@ def pokemon(request):
     Only Pokemon with assigned trainers should be viewable to prevent
     peeking wild Pokemon stats
     """
-    pokemon_id = request.GET.get("id")
+    # Get the pokemon
+    if "id" in request.GET:
+        pokemon_id = request.GET.get("id")
+    elif "id" in request.POST:
+        pokemon_id = request.POST.get("id")
+    else:
+        return HttpResponseNotFound("Cannot find Pokemon!")
     pokemon = Pokemon.objects.get(pk=pokemon_id)
+
+    # Check for actions
+    message = None
+    if "action" in request.POST:
+        action = request.POST.get("action")
+        if action == "release":
+            if request.user.profile == pokemon.trainer:
+                pokemon.release(request.user.profile)
+                return render(request, "common/message.html", {"message": "Successfully released {}".format(pokemon.name), "links": {"Return to Box": ""}, "title": "Released"})
+        elif action == "add_party":
+            message = request.user.profile.add_to_party(pokemon)
+        elif action == "remove_party":
+            message = request.user.profile.remove_from_party(pokemon)
+        elif action == "evolve":
+            evolution_target = request.POST.get("evolve_to")
+            message = pokemon.evolve(evolution_target)[1]
+        elif action == "teach_move":
+            new_move = request.POST.get("move")
+            slot = request.POST.get("replace_slot")
+            message = pokemon.learn_move(new_move, slot)
 
     pokemon_info = pokemon.get_info()
     metadata = pokemon.get_metadata()
     stats = pokemon.get_stats()
-    learnset = populate_moveset(pokemon.dex, pokemon.level, last_four=False)
-    moveset = pokemon.get_moves()
+    learnset = {move: consts.MOVES[move] for move in populate_moveset(pokemon.dex, pokemon.level, last_four=False)}
+    moveset = pokemon.get_moves(pp=True)
+    pokemon_data = consts.POKEMON[pokemon_info["dex"]]
 
     # Get the evolutions
     evolutions = pokemon.get_all_evolutions()
     valid_evolutions = pokemon.get_valid_evolutions()
 
     html_render_variables = {
-        "dex": "001",
-        "name": "Steelix",
-        "info": pokemon_info,
+        "message": message,
+        "info": pokemon_info, # Pokemon-specific
+        "data": pokemon_data, # Generic to species
         "metadata": metadata,
         "stats": stats,
         "learnset": learnset,
         "moveset": moveset,
         "in_box": bool(pokemon.location == "box"),
         "evolutions": evolutions,
-        "valid_evolutions": valid_evolutions
+        "valid_evolutions": valid_evolutions,
+        "owned": pokemon.trainer == request.user.profile
     }
 
     return render(request, "pokemon/detailed.html", html_render_variables)

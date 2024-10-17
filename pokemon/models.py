@@ -398,11 +398,12 @@ class Pokemon(models.Model):
             self.save(update_fields=["status"])
 
 
-    def full_heal(self):
+    def full_heal(self, skip_save=False):
         self.restore_hp(skip_save=True)
         self.restore_pp(skip_save=True)
         self.cure_status(skip_save=True)
-        self.save(update_fields=["current_hp", "move1_pp", "move2_pp", "move3_pp", "move4_pp", "status"])
+        if not skip_save:
+            self.save(update_fields=["current_hp", "move1_pp", "move2_pp", "move3_pp", "move4_pp", "status"])
 
 
     def learn_move(self, move, slot, tms=False, tutor=False, skip_save=False):
@@ -457,9 +458,9 @@ class Pokemon(models.Model):
             if requirements["held_item"] != None:
                 reqs_clean.append("Traded")
                 if not requirements["held_item"] == "":
-                    reqs_clean.append("Holding {}".format(requirements["held_item"]))
+                    reqs_clean.append("Holding {}".format(requirements["held_item"].replace("_", " ").capitalize()))
             if requirements["item"] != None:
-                reqs_clean.append(requirements["item"])
+                reqs_clean.append(requirements["item"].replace("_", " ").capitalize())
             if requirements["known_move"] != None:
                 reqs_clean.append("Knows {}".format(requirements["known_move"]))
             evolutions.append({
@@ -519,6 +520,7 @@ class Pokemon(models.Model):
         """
         Evolve to the specified Pokemon
         """
+        old_pokemon = self.name
         if evo_dex in self.get_valid_evolutions():
             try:
                 with transaction.atomic():
@@ -533,12 +535,13 @@ class Pokemon(models.Model):
                     # Evolve and save
                     self.dex_number = evo_dex
                     self.recalculate_stats(skip_save=True)
-                    self.full_heal() # Saves
+                    self.full_heal()
+                    self.save()
 
             except IntegrityError:
                 return (False, "Failed to evolve! Please make sure you have the needed items and your Pokemon meets evolution requirements.")
 
-            return (True, "")
+            return (True, "Your {} has evolved into a {}!".format(old_pokemon, self.name))
 
         else:
             return (False, "Cannot evolve to the Pokemon!")
@@ -552,18 +555,22 @@ class Pokemon(models.Model):
         Function to return generic Pokemon info in a dict format
         """
         pokemon_info = {
-            "Dex": self.dex,
-            "Level": self.level,
-            "Experience": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex]["experience_growth"]),
-            "Sex": self.sex,
-            "Ability": self.ability,
-            "Happiness": self.happiness,
-            "Held Item": self.held_item,
-            "Status": self.status,
-            "Current HP": self.current_hp,
-            "Nature": self.nature.capitalize(),
-            "Ball": self.ball,
-            "Shiny": self.shiny
+            "dex": self.dex,
+            "level": self.level,
+            "experience_progress": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex]["experience_growth"]),
+            "experience": self.experience,
+            "to_next": get_xp_for_level(self.level + 1, consts.POKEMON[self.dex]["experience_growth"]) - self.experience if self.level < 100 else None,
+            "sex": self.sex,
+            "ability": self.ability,
+            "happiness_percent": self.happiness / 2.55,
+            "happiness": self.happiness,
+            "held_item": self.held_item,
+            "status": self.status,
+            "current_hp": self.current_hp,
+            "hp_percent": self.current_hp / self.hp_stat * 100,
+            "nature": self.nature.capitalize(),
+            "ball": self.ball,
+            "shiny": self.shiny
         }
         return pokemon_info
 
@@ -573,12 +580,13 @@ class Pokemon(models.Model):
         Function to return Pokemon metadata in a dict format
         """
         metadata = {
-            "Owner": self.trainer.user.username,
-            "Original Trainer": self.original_trainer.user.username,
-            "Date Caught": self.caught_date,
-            "Location": self.location,
-            "Tag": self.box_tag,
-            "Locked": self.locked
+            "owner": self.trainer.user.username,
+            "original_trainer": self.original_trainer.user.username,
+            "caught_date": self.caught_date,
+            "location": self.location,
+            "tag": self.box_tag,
+            "locked": self.locked,
+            "id": self.pk
         }
         return metadata
 
@@ -598,15 +606,20 @@ class Pokemon(models.Model):
         return stats
 
 
-    def get_moves(self):
+    def get_moves(self, pp=False):
         """
         Function to return Pokemon info in a dict format
         """
         moveset = {
-            "move1": self.move1,
-            "move2": self.move2,
-            "move3": self.move3,
-            "move4": self.move4,
+            "move1": consts.MOVES.get(self.move1, None),
+            "move2": consts.MOVES.get(self.move2, None),
+            "move3": consts.MOVES.get(self.move3, None),
+            "move4": consts.MOVES.get(self.move4, None),
         }
+        if pp:
+            for move, data in moveset.items():
+                if data is not None:
+                    moveset[move]["current_pp"] = getattr(self, "{}_pp".format(move))
+
         return moveset
 

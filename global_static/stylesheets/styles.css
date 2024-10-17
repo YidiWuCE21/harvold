@@ -2,7 +2,14 @@
 :root {
     --bg: rgb(188, 235, 255);
     --main: rgb(247, 242, 232);
-    --content: rgba(247, 252, 255, 1);
+    --content: rgb(247, 252, 255);
+    --card: rgb(225, 236, 239);
+
+    --forward: rgb(167, 249, 162);
+    --back: rgb(244, 182, 182);
+
+    --forward-hover: rgb(127, 238, 122);
+    --back-hover: rgb(238, 142, 142);
 
     --hover: rgba(210, 219, 224, 0.8);
     --shadow: rgba(0, 0, 0, 0.2);
@@ -31,7 +38,7 @@
 body {
     background-color: var(--bg);
     background-repeat: repeat-x;
-    font-family: DS;
+    font-family: Aldrich;
 }
 
 a {
@@ -67,9 +74,19 @@ li a:hover {
     color: white;
 }
 
+optgroup {
+    font-size:12px;
+}
+
 .active {
     background-color: #04AA6D;
     color: white;
+}
+
+.text {
+    border-collapse: separate;
+    border-spacing: 15px 0;
+    text-align: left;
 }
 
 .banner {
@@ -101,15 +118,22 @@ li a:hover {
     box-shadow: 0px 2px 4px var(--shadow);
     font-family: Aldrich;
     font-size: 12px;
+    text-align: center;
+}
+
+.content-box p {
+    margin: 0px;
 }
 
 .control-box {
-    background-color: var(--bg);
+    background-color: var(--content);
     padding: 20px;
     border-radius: 0px;
     box-shadow: 0px 2px 4px var(--shadow);
     font-size: 16px;
 }
+
+/* More specific */
 
 .page-select {
     background-color: var(--main);
@@ -143,6 +167,68 @@ li a:hover {
     margin-right: 0px;
 }
 
+.image-container {
+    position: relative;
+    width: 96px;
+    height: 96px;
+}
+
+.base-image {
+    width: 96px;
+    height: 96px;
+}
+
+.overlay-image {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+}
+
+.button-3 {
+    width: 100px;
+    margin-bottom:8px;
+    display:inline-block;
+    border-radius:5px;
+    height: 20px;
+    border: 1px solid var(--content);
+    background-color: var(--card);
+    box-shadow: 0px 2px 4px var(--shadow);
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.button-3:hover {
+    background-color: var(--hover);
+}
+
+.button-back {
+    background-color: var(--back);
+}
+
+.button-back:hover {
+    background-color: var(--back-hover);
+}
+
+.button-forward {
+    background-color: var(--forward);
+}
+
+.button-forward:hover {
+    background-color: var(--forward-hover);
+}
+
+.unclickable {
+    cursor: default!important;
+    background-color: var(--hover);
+    color: gray;
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 3.5+ */
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%);
+}
+
 /* Invisi-scroll */
 
 .invisi-scroll::-webkit-scrollbar {
@@ -150,8 +236,6 @@ li a:hover {
 }
 
 .invisi-scroll {
-    border-top: 1px solid var(--shadow);
-    border-bottom: 1px solid var(--shadow);
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -234,4 +318,43 @@ input, select {
     display: flex; /* Optional: to center content inside */
     justify-content: center; /* Optional: to center content */
     align-items: center; /* Optional: to center content */
+}
+
+.experience-bar {
+    height: 4px;
+    width: 100px;
+    background: gray;
+
+}
+
+.experience-bar span {
+    height: 4px;
+}
+
+.pokemon-img-bg {
+    width: 96px;
+    height: 96px;
+    background-color: var(--shadow);
+    display: inline-block;
+    border-radius: 50%; /* Makes it circular */
+}
+
+.move-box {
+    width: 160px;
+    margin-bottom:8px;
+    display:inline-block;
+    border-radius:5px;
+    height: 40px;
+    border: 2px solid var(--content);
+    background-color: var(--card);
+    box-shadow: 0px 2px 4px var(--shadow);
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.move-box:hover {
+    background-color: var(--hover);
 }

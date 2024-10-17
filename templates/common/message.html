@@ -1,0 +1,10 @@
+{% extends "base_layout.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+{{ message }}
+{% for link, text in links.items %}
+<a href="{{ link }}">{{ text }}</a>
+{% endfor %}
+{% endblock %}

@@ -115,22 +115,33 @@ class Profile(models.Model):
             return "Party is full."
 
 
-    def remove_from_party(self, slot):
+    def remove_from_party(self, pokemon):
         """
         Remove a Pokemon from any slot in the party and bubble upwards.
         """
         # Check if player in battle
         if self.state == "battle":
             return "Party cannot be modified in battle."
-        pokemon = self.__getattribute__(slot)
+
+        slot = None
+        if pokemon == self.slot_1:
+            slot = "slot_1"
+        elif pokemon == self.slot_2:
+            slot = "slot_2"
+        elif pokemon == self.slot_3:
+            slot = "slot_3"
+        elif pokemon == self.slot_4:
+            slot = "slot_4"
+        elif pokemon == self.slot_5:
+            slot = "slot_5"
+        elif pokemon == self.slot_6:
+            slot = "slot_6"
+        else:
+            return "Pokemon not in party!"
 
         # Check if it's the last pokemon
-        if slot == "slot_1" and self.slot_2 is None:
+        if self.slot_2 is None:
             return "This is your last Pokemon!"
-
-        # Check if slot has pokemon
-        if pokemon is None:
-            return "Nothing to remove."
 
         # Place the Pokemon in the box
         pokemon.location = "box"
