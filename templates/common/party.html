@@ -1,7 +1,28 @@
-<div class="container">
-    <a href="">Party editor (WIP)</a>
+{% if party is not None %}
+{% load static %}
+<div class="content-box party row">
+    <h5>Party</h5>
     {% for pokemon in party %}
-
+    <div class="col-4 col-lg-12">
+        <div class="party-box" style="width:200px;height:60px;display:flex;" onclick="location.href='{% url 'pokemon' %}?id={{ pokemon.id }}'">
+            {% if pokemon is not None %}
+            <div style="width:60px;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;position:relative;">
+                <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ pokemon.ball }}.png" style="position:absolute;top:0;left:0;opacity:50%;">
+                <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ pokemon.dex }}.gif" style="position:absolute;top:0px;left:8px;">
+                <div style="margin-top:auto;font-size:12px;">Lv. {{ pokemon.level }}</div>
+            </div>
+            <div style="width:120px;height:100%;position:relative;text-align:left;">
+                <p>{{ pokemon.name }}</p>
+                <div class="experience-bar" style="background:red;width:120px;position:absolute;bottom:6px;"><div style="width:{{ pokemon.hp_percent }}%;height:4px;background:lightgreen;"></div></div>
+                <div class="experience-bar" style="width:120px;position:absolute;bottom:2px;"><div style="width:{{ pokemon.experience_progress }}%;height:4px;background:blue;"></div></div>
+                <button class="exit" onclick="console.log('clicked');" {% if forloop.first and forloop.last %}disabled{% endif %}>x</button>
+            </div>
+            {% else %}
+            <p>Empty</p>
+            {% endif %}
+        </div>
+    </div>
     {% endfor %}
 
 </div>
+{% endif %}

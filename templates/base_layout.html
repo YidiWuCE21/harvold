@@ -15,13 +15,27 @@
         {% block header %}{% endblock header %}
     </head>
     <body>
-        <div style="min-width:800px;" class="container"> <!-- Outer container -->
+        <div style="min-width:800px;max-width:1080px;" class="container"> <!-- Outer container -->
             <div class="banner" style="text-align:center;">
                 <img src="{% static 'harvold_logo.png' %}" style="width:300px" class="center">
             </div>
             {% include 'common/navbar.html' %}
             <div class="main-content">
-                {% block content %}{% endblock content %}
+                <div>
+                    <div class="row">
+                        <div class="col-12 col-lg-4 order-lg-2">
+                            {% include 'common/party.html' %}
+                        </div>
+                        <div class="col-12 col-lg-8 order-lg-1">
+                            {% block content %}{% endblock content %}
+                        </div>
+                    </div>
+                </div>
+                <div  style="display:inline-block;">
+
+                </div>
+
+
             </div>
 
         </div>

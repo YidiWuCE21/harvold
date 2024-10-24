@@ -1,7 +1,7 @@
 // Basic setup
 
 const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d')
+const c = canvas.getContext('2d');
 
 canvas.width = 496;
 canvas.height = 400;
@@ -25,6 +25,7 @@ let maplink = []
 let currentMap = mapName;
 let currentData = null;
 let wildPokemon = null;
+let timeOfDay = 'night';
 
 // Variables declared for collision logic
 let offset = {};
@@ -66,6 +67,9 @@ let grass = false;
 let currentArea = null;
 
 let steps = 10;
+
+let wildShow = null;
+let wildHide = null;
 
 
 // Player sprite constants
@@ -121,9 +125,7 @@ const surfer = new Sprite({
 statics = [player, surf, surfer];
 
 
-function mapSetup({map, mapData, forcedOffset = {}}) {
-    console.log("entered");
-    console.log(mapData);
+function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     if (!(Object.keys(mapData).length === 0))
         currentData = mapData
     // Changes outside canvas
@@ -148,13 +150,23 @@ function mapSetup({map, mapData, forcedOffset = {}}) {
     mapHeight = currentData.mapHeight;
     mapWidth = currentData.mapWidth;
     default_offset = currentData.default_offset;
+    console.log("Data")
+    console.log(currentData)
     if (Object.keys(forcedOffset).length === 0) {
         offset = default_offset;
     } else {
+        console.log("forced")
         offset = forcedOffset;
     }
     offset.x = offset.x * tile_width;
     offset.y = offset.y * tile_width;
+    // Override offset with playerOffset
+    if ("x" in playerOffset) {
+        offset.x = playerOffset.x;
+    }
+    if ("y" in playerOffset) {
+        offset.y = playerOffset.y;
+    }
     maplinkKey = currentData.maplinkKey;
 
     // Set the statics new positions
@@ -297,7 +309,7 @@ function mapSetup({map, mapData, forcedOffset = {}}) {
 }
 
 
-function mapInit({map, forcedOffset = {}, preload = null}) {
+function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}}) {
     mapLoad = true;
     currentMap = map;
     // Reset statics
@@ -312,13 +324,13 @@ function mapInit({map, forcedOffset = {}, preload = null}) {
                 "payload": {"map": map}
             }
         }).done(function( response ) {
-            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset});
+            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset});
         }).fail(function() {
             alert("This map is not valid! Returning to world map...");
             window.location.href = worldMapUrl;
         });
     } else {
-        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset});
+        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset});
     }
 
 
@@ -361,7 +373,23 @@ function pointCollision({rectangle1, rectangle2}) {
         rectangle1.position.y + rectangle1.height / 2 + rectangle1.offset.y >= rectangle2.position.y + rectangle2.offset.y &&
         rectangle1.position.y + rectangle1.height / 2 + rectangle1.offset.y <= rectangle2.position.y + rectangle2.offset.y + rectangle2.height
     )
+}
 
+function applyFilter() {
+    switch (timeOfDay) {
+        case "night":
+            c.fillStyle = 'rgba(5, 0, 40, 0.5)';
+            break;
+        case "morning":
+            c.fillStyle = 'rgba(50, 50, 10, 0.3)';
+            break;
+        case "evening":
+            c.fillStyle = 'rgba(70, 30, 0, 0.2)';
+            break;
+        default:
+            c.fillStyle = 'rgba(0, 0, 0, 0)';
+    }
+    c.fillRect(0, 0, canvas.width, canvas.height);
 }
 
 function animate(looped = true) {
@@ -415,6 +443,8 @@ function animate(looped = true) {
                 surfer.rows.val = 1;
                 break;
         }
+        foreground.draw(cappedCamera);
+        applyFilter();
         return;
     }
     c.fillStyle = 'black';
@@ -481,8 +511,20 @@ function animate(looped = true) {
                     })
                 ) {
                     const newMap = maplinkKey[maplinkTile.value];
+                    // Play the map travel animation
                     player.moving = true;
                     travelDir = maplinkTile.direction;
+                    console.log(newMap);
+                    // Use current position to overwrite positional offset
+                    if ("posOffset" in newMap) {
+                        newMap["playerOffset"] = {};
+                        if ("x" in newMap["posOffset"]) {
+                            newMap["playerOffset"]["x"] = player.position.x + newMap["posOffset"]["x"] * tile_width;
+                        }
+                        if ("y" in newMap["posOffset"]) {
+                            newMap["playerOffset"]["y"] = player.position.y + newMap["posOffset"]["y"] * tile_width;
+                        }
+                    }
                     mapInit(newMap);
                     stopTravel = true;
                 }
@@ -594,15 +636,23 @@ function animate(looped = true) {
         if (moving) {
             let areaStr = null;
             if (grass) {
-                steps -= 1
+                if (wildShow == null && wildHide == null)
+                    steps -= 1;
                 areaStr = "grass" + currentArea;
             }
             if (surfing) {
-                steps -= 1
-                areaStr = "water"
+                if (wildShow == null && wildHide == null)
+                    steps -= 1;
+                areaStr = "water";
+            }
+            if (wildShow != null) {
+                wildShow -= 1;
+            }
+            if (wildHide != null) {
+                wildHide -= 1;
             }
             if (steps < 0) {
-                steps = 20;
+                steps = 10;
                 if (Math.random() < 0.1) {
                     $.ajax(
                     {
@@ -613,20 +663,36 @@ function animate(looped = true) {
                         },
 
                     }).done(function( response ) {
-                        console.log("Write");
-                        document.getElementById("wild-name").innerHTML = "A wild " + response.name + " appeared!";
+                        let sex = ' ';
+                        if (response.sex == "m") {
+                            sex = ' <span style="color:blue">&#9794;</span>'
+                        } else if (response.sex == "f") {
+                            sex = ' <span style="color:magenta">&#9792;</span>'
+                        }
+                        document.getElementById("wild-name").innerHTML = "A wild " + response.name + sex + " appeared!";
                         document.getElementById("wild-level").innerHTML = "Level " + response.level;
+                        document.getElementById("wild-id").value = response.id;
                         document.getElementById("wild-img").src = pokePath + "/" + response.dex_number + ".png";
-                        document.getElementById("wild-button").style.display = "block";
-                        console.log("Write2");
+                        wildShow = 10;
                         wildPokemon = response;
                     });
                 }
 
 
             }
+            // Logic for showing and hiding wild encounters
+            if (wildShow == 0) {
+                document.getElementById("wild").style.display = "block";
+                wildHide = 50;
+                wildShow = null;
+            }
+            if (wildHide == 0) {
+                document.getElementById("wild").style.display = "none";
+                wildHide = null;
+            }
         }
     }
+    applyFilter();
 }
 
 animate();

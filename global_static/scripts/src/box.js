@@ -64,21 +64,21 @@ function Box({ pokemonList }) {
     while (pokemonPages[pokemonPages.length - 1].length < rowCount * 5) pokemonPages[pokemonPages.length - 1].push(null);
 
     return (
-        <div style={{display:"flex"}}>
+        <div style={{display:"flex", flexDirection:"column"}}>
             {clicked && (
                 <ContextMenu top={coords.y} left={coords.x} displayPokemon={displayPokemon} selectedPokemon={selectedPokemon}/>
             )}
             <div style={{display:"flex"}}>
-                <BoxTabs pokemonPages={pokemonPages}
-                    selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
-                    setClicked={setClicked} setCoords={setCoords}/>
-            </div>
-            <div style={{display:"inline-block"}}>
                 <BoxControls rowCount={rowCount} setRows={setRows}
                     sortField={sortField} setSortField={setSortField}
                     sortOrder={sortOrder} setSortOrder={setSortOrder}
                     filterTag={filterTag} setFilterTag={setFilterTag}
                     searchWord={searchWord} setSearchWord={setSearchWord}/>
+            </div>
+            <div style={{display:"flex"}}>
+                <BoxTabs pokemonPages={pokemonPages}
+                    selectedPokemon={selectedPokemon} setSelectedPokemon={setSelectedPokemon}
+                    setClicked={setClicked} setCoords={setCoords}/>
             </div>
         </div>
     )
@@ -157,45 +157,38 @@ function PokemonDisplay({ selectedPokemon }) {
 function BoxControls({ rowCount, setRows, sortField, setSortField, sortOrder, setSortOrder, filterTag, setFilterTag, searchWord, setSearchWord }) {
     // Filter by tag then by search word
     return (
-        <div className="control-box">
-        <h5>BOX SORTING</h5>
-            <table>
-            <tbody>
-                <tr>
-                    <th>Search:</th>
-                    <td>
-                    <input
-                        value={searchWord}
-                        style={{width: "100%"}}
-                        onChange={e => setSearchWord(e.target.value)}
-                    />
-                    </td>
-                </tr>
-                <tr>
-                    <th>Sort by:</th>
-                    <td>
-                    <select value={sortField} style={{width: "100%"}} onChange={e => setSortField(e.target.value)}>
+        <div className="content-box" style={{width: '520px', marginBottom: '5px'}}>
+        <h5>Box</h5>
+        <input
+            value={searchWord}
+            style={{width: "200px", marginLeft: "auto"}}
+            onChange={e => setSearchWord(e.target.value)}
+        />
+        <table>
+            <tr>
+                <th>Field</th>
+                <th>Order</th>
+                <th>Filter</th>
+                <th>Page size</th>
+            </tr>
+            <tr>
+                <td>
+                    <select value={sortField} style={{width: "150px"}} onChange={e => setSortField(e.target.value)}>
                         <option value="caught_date">Caught date</option>
                         <option value="dex_number">Dex number</option>
                         <option value="level">Level</option>
                         <option value="bst">Base stat total</option>
                         <option value="iv_total">IV total</option>
                     </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Order:</th>
-                    <td>
-                    <select value={sortOrder} style={{width: "100%"}} onChange={e => setSortOrder(e.target.value)}>
+                </td>
+                <td>
+                    <select value={sortOrder} style={{width: "120px"}} onChange={e => setSortOrder(e.target.value)}>
                         <option value="asc">Ascending</option>
                         <option value="desc">Descending</option>
                     </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Filter:</th>
-                    <td>
-                    <select value={filterTag} style={{width: "100%"}} onChange={e => setFilterTag(e.target.value)}>
+                </td>
+                <td>
+                    <select value={filterTag} style={{width: "100px"}} onChange={e => setFilterTag(e.target.value)}>
                         <option value="">None</option>
                         <option value="circle">Circle</option>
                         <option value="star">Star</option>
@@ -203,29 +196,18 @@ function BoxControls({ rowCount, setRows, sortField, setSortField, sortOrder, se
                         <option value="diamond">Diamond</option>
                         <option value="shiny">Shiny</option>
                     </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Per page:</th>
-                    <td>
-                    <select value={rowCount * 5} style={{width: "100%"}} onChange={e => setRows(e.target.value / 5)}>
+                </td>
+                <td>
+                    <select value={rowCount * 5} style={{width: "80px"}} onChange={e => setRows(e.target.value / 5)}>
                         <option value="25">25</option>
                         <option value="30">30</option>
                         <option value="35">35</option>
                         <option value="40">40</option>
                         <option value="50">50</option>
                     </select>
-                    </td>
-                </tr>
-            </tbody>
-            </table>
-        <br/>
-        <h5>ADVANCED</h5>
-
-
-
-
-
+                </td>
+            </tr>
+        </table>
         </div>
     )
 }
@@ -245,8 +227,8 @@ function BoxTabs({ pokemonPages, selectedPokemon, setSelectedPokemon, setClicked
         return <button className={"page-select"} key={"btn" + index} onClick={() => newTab(index)}>{index + 1}</button>
     });
     return (
-        <div className="tabs" style={{textAlign: 'center'}}>
-            <h5>Pages</h5>
+        <div className="tabs content-box" style={{textAlign: 'center', width: '520px'}}>
+            <p>Pages</p>
             {tabOpeners}
             {pokemonTabs}
         </div>

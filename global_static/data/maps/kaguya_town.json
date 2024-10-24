@@ -2,7 +2,7 @@
   "mapWidth": 36,
   "mapHeight": 48,
   "maplinkKey": {
-    "1": {"map": "route_2", "direction": "east", "forcedOffset": {"x": 1, "y": 13}},
+    "1": {"map": "route_2", "direction": "east", "forcedOffset": {"x": 0, "y": 13}, "posOffset": {"y": 0}},
     "2": {"map": "route_4", "direction": "north", "forcedOffset": {"x": 12, "y": 30}},
     "3": {"map": "putty_cave", "direction": "east", "forcedOffset": {"x": -1, "y": -1}},
     "4": {"map": "route_7", "direction": "south", "forcedOffset": {"x": 17, "y": 1}},

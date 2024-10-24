@@ -1,0 +1,61 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script>
+function heal() {
+    $.ajax(
+    {
+        type: "GET",
+        url: "{% url 'pokecenter_heal' %}",
+        data: {
+            "payload": {}
+        }
+    }).done(function( response ) {
+        document.getElementById('pokecenter_msg').innerHTML = '<p>' + response.msg + '</p>';
+        setTimeout(function(){
+            location.reload();
+        }, 1500);
+    })
+}
+</script>
+{% endblock %}
+
+{% block title %}Pokécenter{% endblock %}
+
+{% block content %}
+<div style="display: grid;grid-template-columns: 190px 240px 190px;grid-template-rows: 230px 250px; gap:5px">
+    <div style="grid-column:1;grid-row:1;" class="content-box padded">
+        <h5>Swarm Alert</h5>
+        <p>A swarm of ??? has appeared in Route 1</p>
+        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ swarm_dex }}.png">
+
+    </div>
+    <div style="grid-column:2;grid-row:1;" class="content-box">
+        <h5>Pokécenter</h5>
+        <div id="pokecenter_msg">
+            <p>Welcome to the Pokécenter!</p>
+            <p>How may I help you today?</p>
+        </div>
+        <br>
+        <div class="pokemon-img-bg center" style="position:relative;display:inline-block;margin-bottom:10px;">
+            <img src="{% get_static_prefix %}{{ asset_paths.front }}\242.png" style="position:absolute;top:-5px;left:-25px">
+            <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\nurse_joy.png" style="position:absolute;top:5px;left:25px">
+        </div>
+        <br>
+        <div style="display:inline-block">
+            <button class="button-3" onclick="document.getElementById('pokecenter_msg').innerHTML = '<p>...</p>';heal();">Heal</button>
+            <button class="button-3">Training</button>
+        </div>
+    </div>
+    <div style="grid-column:3;grid-row:1 / span 2;" class="content-box">
+        <h5>Notice Board</h5>
+    </div>
+    <div style="grid-column:1 / span 2;grid-row:2;" class="content-box">
+    </div>
+</div>
+{% endblock %}

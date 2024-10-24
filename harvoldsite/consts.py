@@ -65,14 +65,22 @@ TRAINER_CHOICES = [
 
 # Asset paths
 ASSET_PATHS = {
+    # Pokemon sprites
     "icon": os.path.join("assets", "pokemon", "icon"),
     "art": os.path.join("assets", "pokemon", "art"),
     "front": os.path.join("assets", "pokemon", "front"),
+    # Player sprites
     "player_sprite": os.path.join("assets", "player", "sprite"),
     "player_art": os.path.join("assets", "player", "art"),
+    "player_world": os.path.join("assets", "player", "overworld"),
+    # NPC sprites
+    "trainer_sprite": os.path.join("assets", "npc", "trainer_sprite"),
+    "trainer_world": os.path.join("assets", "npc", "trainer_overworld"),
+    # Misc assets
     "typing": os.path.join("assets", "pokemon", "type"),
     "item": os.path.join("assets", "items"),
     "moves": os.path.join("assets", "pokemon", "moves"),
+    "badges": os.path.join("assets", "badges"),
 }
 
 STATS = ["hp", "atk", "def", "spa", "spd", "spe"]
@@ -190,4 +198,17 @@ ITEM_TYPES = {
         "ice_heal",
         "full_heal",
     ]
+}
+
+GYM_LEADERS = {
+    "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 21},
+    "electric": {"npc": "volkner", "name": "Volkner", "reg": "404", "elite": "466", "level": 28},
+    "water": {"npc": "wallace", "name": "Wallace", "reg": "364", "elite": "130", "level": 35},
+    "ground": {"npc": "giovanni", "name": "Giovanni", "reg": "095", "elite": "530", "level": 42},
+    "fighting": {"npc": "bruno", "name": "Bruno", "reg": "107", "elite": "534", "level": 49},
+    "fire": {"npc": "blaine", "name": "Blaine", "reg": "126", "elite": "059", "level": 56},
+    "ghost": {"npc": "shauntal", "name": "Shauntal", "reg": "356", "elite": "609", "level": 63},
+    "psychic": {"npc": "caitlin", "name": "Caitlin", "reg": "281", "elite": "579", "level": 70},
+    "steel": {"npc": "steven", "name": "Steven", "reg": "305", "elite": "376", "level": 77},
+    "dragon": {"npc": "clair", "name": "Clair", "reg": "148", "elite": "445", "level": 84}
 }

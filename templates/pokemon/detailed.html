@@ -11,7 +11,7 @@
 {% if message is not None %}
 <p>{{ message }}</p>
 {% endif %}
-<div style="display: grid;grid-template-columns: 200px 300px 200px;grid-template-rows: 220px 240px 140px; gap:5px">
+<div style="display: grid;grid-template-columns: 190px 260px 170px;grid-template-rows: 220px 240px 140px; gap:5px">
     <div style="grid-column:1;grid-row:1;" class="content-box">
         <h5><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.ball }}.png" style="margin-top:-4px;"> {{ data.name }} {% if info.Sex == "m" %}<span style="color:blue">&#9794;</span>{% elif info.Sex == "f" %}<span style="color:magenta">&#9792;</span>{% endif %}</h5>
         <p style="margin">Level {{ info.level }}</p>
@@ -49,7 +49,7 @@
             </tr>
             <tr>
                 <th>Health</th>
-                <td><p>{{ info.current_hp }} / {{ stats.HP.0 }}</p><div class="experience-bar" stlye="background:red;"><div style="width:{{ info.hp_percent }}%;height:4px;background:lightgreen;"></div></div></td>
+                <td><p>{{ info.current_hp }} / {{ stats.HP.0 }}</p><div class="experience-bar" style="background:red;"><div style="width:{{ info.hp_percent }}%;height:4px;background:lightgreen;"></div></div></td>
             </tr>
             <tr>
                 <th>Happiness</th>
@@ -75,7 +75,7 @@
         {% else %}
         <div class="move-box"
              data-toggle="tooltip"
-             title="{{ move.effects }}&#10;Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
+             title="{{ move.effects }}&#10;Power: {% if move.power is None %}-{% else %}{{ move.power }}{% endif %}&#10;Accuracy: {% if move.accuracy is None %}-{% else %}{{ move.accuracy }}{% endif %}">
             <p>{{ move.name }} - {{ move.current_pp }}/{{ move.pp }}</p>
             <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move.damage_class }}.png">
             <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move.type }}.png">
@@ -122,17 +122,17 @@
             {% csrf_token %}
             <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
             <input type="hidden" name="action" value="create_trade">
-            <button class="button-3 {% if not in_box %}unclickable{% endif %}" type="button">Create Trade</button>
+            <button {% if not in_box %}disabled{% endif %} class="button-3 {% if not in_box %}unclickable{% endif %}" type="button">Create Trade</button>
         </form>
         <div id="release" class="release-tab" style="height:65px;">
-            <button class="button-3 button-back" onclick="openTab('release-tab', 'confirm_release')">Release</button>
+            <button {% if not in_box %}disabled{% endif %} class="button-3 {% if not in_box %}unclickable{% else %}button-back{% endif %}" onclick="openTab('release-tab', 'confirm_release')">Release</button>
         </div>
         <div id="confirm_release" class="release-tab" style="height:65px;display:none;">
             <form method="POST">
             {% csrf_token %}
                 <input type="hidden" name="action" value="release">
                 <p>Are you sure you want to release?</p>
-                <button class="button-3 button-forward" type="submit" style="width:40px">Yes</button>
+                <button class="button-3 button-forward {% if not in_box %}unclickable{% endif %}" type="submit" style="width:40px">Yes</button>
                 <button class="button-3 button-back" type="button" onclick="openTab('release-tab', 'release')" style="width:40px">No</button>
             </form>
 
@@ -175,7 +175,7 @@
             {% csrf_token %}
             <input type="hidden" name="pokemon_id" value="{{ metadata.id }}">
             <input type="hidden" name="action" value="teach_move">
-            <div class="move-tab" id="new_move" style="height:170px;">
+            <div class="move-tab" id="new-move" style="height:170px;">
                 <select name="move"
                         onchange="openTab('move-info-tab', this.value + '_info');
                                   let selectedMove = $(this).find('option:selected');

@@ -5,16 +5,26 @@
 
 {% block content %}
 <div class="container">
+    <h4 id="map-name"></h4>
     <div class="content-box" style="display:flex;width:fit-content;">
-        <canvas class="map" style="display:flex;align-items:center;"></canvas>
-        <div style="width:150px;height:400px;display:inline-block;">
-            <h4 id="map-name"></h4>
-            <div class="wild-pokemon center">
-                <img id="wild-img" src=""/>
+        <canvas class="map" style="align-items:center;">
+        </canvas>
+        <div style="width:110px;height:400px;display:inline-block;padding:5px;">
+
+            <div id="wild" style="display:none;">
+                <form method="POST">
+                    <div class="pokemon-img-bg">
+                        <img id="wild-img" src=""/>
+                    </div>
+                    <p id="wild-name"></p>
+                    <p id="wild-level"></p>
+                    <input type="hidden" id="wild-id">
+                    <button class="button-3" onclick="">Fight</button>
+
+                </form>
+
             </div>
-            <span id="wild-name"></span>
-            <span id="wild-level"></span>
-            <button id="wild-button" onclick="" style="display:none;">Fight</button>
+
         </div>
     </div>
 
@@ -25,7 +35,7 @@
 {% block scripts %}
 <script>
     const mapName = '{{ map }}';
-    const playerNum = '04';
+    const playerNum = '{{ character }}';
     const jsonPath = '{% get_static_prefix %}data/maps/';
     const jsonUrl = '{% url 'map_data' %}';
     const wildUrl = '{% url 'wild_battle' %}';

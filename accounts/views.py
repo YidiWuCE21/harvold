@@ -60,3 +60,27 @@ def signup(request):
 
     return render(request, "registration/signup.html", html_render_variables)
 
+
+def view_profile(request):
+    profile = Profile.objects.get(pk=request.GET.get("id"))
+    self_view =  profile == request.user.profile
+    party = profile.get_party()
+    party = [pkmn.get_party_info() if pkmn is not None else None for pkmn in party]
+    html_render_variables = {
+        "username": profile.user.username,
+        "character": profile.char_id,
+        "trainer_points": profile.trainer_points,
+        "description": profile.description,
+        "title": profile.title,
+        "money": profile.money,
+        "wins": profile.wins,
+        "losses": profile.losses,
+        "pvp_wins": profile.pvp_wins,
+        "pvp_losses": profile.pvp_losses,
+        "party": party,
+        "dex_entries": profile.dex_entries,
+        "date_joined": profile.user.date_joined.date,
+        "self_view": self_view,
+        "badges": {"grass": "silver", "electric": "silver", "fire": "silver", "fighting": "silver", "water": "silver", "dragon": "silver", "ghost": "silver", "ground": "silver"}
+    }
+    return render(request, "registration/profile.html", html_render_variables)

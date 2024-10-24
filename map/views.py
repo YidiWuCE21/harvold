@@ -32,7 +32,8 @@ def map(request):
     html_render_variables = {
         "map": map,
         "map_name": map.replace("_", " ").title(),
-        "map_data": json.dumps(map_data)
+        "map_data": json.dumps(map_data),
+        "character": user.char_id
     }
     return render(request, "map/map.html", html_render_variables)
 
@@ -102,7 +103,8 @@ def wild_battle(request):
         "name": pokemon.name,
         "level": level,
         "sex": sex,
-        "shiny": shiny
+        "shiny": shiny,
+        "id": pokemon.pk
     }
     print("Completed in: {}".format((datetime.datetime.now() - now).total_seconds()))
     return JsonResponse(pokeinfo)

@@ -75,7 +75,20 @@ li a:hover {
 }
 
 optgroup {
-    font-size:12px;
+    font-size:14px;
+}
+
+select {
+    font-size:14px!important;
+}
+
+input {
+    font-size:14px!important;
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
 }
 
 .active {
@@ -89,6 +102,12 @@ optgroup {
     text-align: left;
 }
 
+.grayscale {
+    filter: gray;
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+}
+
 .banner {
     background-color: var(--bg);
     background-image: url("../backdrop.png");
@@ -100,6 +119,7 @@ optgroup {
     background-color: var(--main);
     padding: 25px 35px;
     min-height: 80vh;
+    box-shadow: 0px 2px 4px var(--shadow);
     box-shadow: 0px 2px 4px var(--shadow);
 }
 
@@ -121,22 +141,41 @@ optgroup {
     text-align: center;
 }
 
+.padded {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 .content-box p {
     margin: 0px;
 }
 
-.control-box {
-    background-color: var(--content);
-    padding: 20px;
-    border-radius: 0px;
+.party-box {
+    padding: 2px 4px;
+    margin-bottom:8px;
+    display:inline-block;
+    border-radius:5px;
+    border: 2px solid var(--content);
+    background-color: var(--card);
     box-shadow: 0px 2px 4px var(--shadow);
-    font-size: 16px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+.party-box:hover {
+    background-color: var(--hover);
+}
+
+.party-box p {
+    margin-bottom: 0px;
 }
 
 /* More specific */
 
 .page-select {
-    background-color: var(--main);
+    background-color: var(--content);
     margin: 0px 4px;
     border: 0px;
     font-family: Aldrich;
@@ -152,6 +191,21 @@ optgroup {
     margin-bottom: 6px;
 }
 
+.exit {
+    padding: 0px;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    font-size: 10px;
+    border: none;
+    background-color: var(--card);
+}
+.exit:hover {
+    background-color: var(--hover);
+}
+
 /* Generic helpers */
 .center {
     margin: auto;
@@ -165,6 +219,23 @@ optgroup {
 .right {
     margin-left: auto;
     margin-right: 0px;
+}
+
+.party {
+    width: 240px;
+    height: 460px;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: 0px;
+}
+@media (max-width: 991px) {
+    .party {
+        margin-left: 0px;
+        margin-right: auto;
+        width: 650px;
+        height: 180px;
+        margin-bottom: 10px;
+    }
 }
 
 .image-container {
@@ -201,6 +272,27 @@ optgroup {
 }
 
 .button-3:hover {
+    background-color: var(--hover);
+}
+
+.button-2 {
+    width: 150px;
+    margin-bottom:8px;
+    font-size: 16px;
+    display:inline-block;
+    border-radius:5px;
+    height: 40px;
+    border: 2px solid var(--content);
+    background-color: var(--card);
+    box-shadow: 0px 2px 4px var(--shadow);
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+}
+
+.button-2:hover {
     background-color: var(--hover);
 }
 
@@ -332,11 +424,11 @@ input, select {
 }
 
 .pokemon-img-bg {
-    width: 96px;
-    height: 96px;
+    width: 86px;
+    height: 86px;
     background-color: var(--shadow);
     display: inline-block;
-    border-radius: 50%; /* Makes it circular */
+    border-radius: 50%;
 }
 
 .move-box {

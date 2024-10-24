@@ -115,23 +115,23 @@ function Box(_ref) {
         pokemonPages[pokemonPages.length - 1].push(null);
     }return React.createElement(
         "div",
-        { style: { display: "flex" } },
+        { style: { display: "flex", flexDirection: "column" } },
         clicked && React.createElement(ContextMenu, { top: coords.y, left: coords.x, displayPokemon: displayPokemon, selectedPokemon: selectedPokemon }),
+        React.createElement(
+            "div",
+            { style: { display: "flex" } },
+            React.createElement(BoxControls, { rowCount: rowCount, setRows: setRows,
+                sortField: sortField, setSortField: setSortField,
+                sortOrder: sortOrder, setSortOrder: setSortOrder,
+                filterTag: filterTag, setFilterTag: setFilterTag,
+                searchWord: searchWord, setSearchWord: setSearchWord })
+        ),
         React.createElement(
             "div",
             { style: { display: "flex" } },
             React.createElement(BoxTabs, { pokemonPages: pokemonPages,
                 selectedPokemon: selectedPokemon, setSelectedPokemon: setSelectedPokemon,
                 setClicked: setClicked, setCoords: setCoords })
-        ),
-        React.createElement(
-            "div",
-            { style: { display: "inline-block" } },
-            React.createElement(BoxControls, { rowCount: rowCount, setRows: setRows,
-                sortField: sortField, setSortField: setSortField,
-                sortOrder: sortOrder, setSortOrder: setSortOrder,
-                filterTag: filterTag, setFilterTag: setFilterTag,
-                searchWord: searchWord, setSearchWord: setSearchWord })
         )
     );
 }
@@ -385,211 +385,180 @@ function BoxControls(_ref3) {
     // Filter by tag then by search word
     return React.createElement(
         "div",
-        { className: "control-box" },
+        { className: "content-box", style: { width: '520px', marginBottom: '5px' } },
         React.createElement(
             "h5",
             null,
-            "BOX SORTING"
+            "Box"
         ),
+        React.createElement("input", {
+            value: searchWord,
+            style: { width: "200px", marginLeft: "auto" },
+            onChange: function onChange(e) {
+                return setSearchWord(e.target.value);
+            }
+        }),
         React.createElement(
             "table",
             null,
             React.createElement(
-                "tbody",
+                "tr",
                 null,
                 React.createElement(
-                    "tr",
+                    "th",
                     null,
-                    React.createElement(
-                        "th",
-                        null,
-                        "Search:"
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
-                        React.createElement("input", {
-                            value: searchWord,
-                            style: { width: "100%" },
-                            onChange: function onChange(e) {
-                                return setSearchWord(e.target.value);
-                            }
-                        })
-                    )
+                    "Field"
                 ),
                 React.createElement(
-                    "tr",
+                    "th",
+                    null,
+                    "Order"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Filter"
+                ),
+                React.createElement(
+                    "th",
+                    null,
+                    "Page size"
+                )
+            ),
+            React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                    "td",
                     null,
                     React.createElement(
-                        "th",
-                        null,
-                        "Sort by:"
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
+                        "select",
+                        { value: sortField, style: { width: "150px" }, onChange: function onChange(e) {
+                                return setSortField(e.target.value);
+                            } },
                         React.createElement(
-                            "select",
-                            { value: sortField, style: { width: "100%" }, onChange: function onChange(e) {
-                                    return setSortField(e.target.value);
-                                } },
-                            React.createElement(
-                                "option",
-                                { value: "caught_date" },
-                                "Caught date"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "dex_number" },
-                                "Dex number"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "level" },
-                                "Level"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "bst" },
-                                "Base stat total"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "iv_total" },
-                                "IV total"
-                            )
+                            "option",
+                            { value: "caught_date" },
+                            "Caught date"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "dex_number" },
+                            "Dex number"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "level" },
+                            "Level"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "bst" },
+                            "Base stat total"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "iv_total" },
+                            "IV total"
                         )
                     )
                 ),
                 React.createElement(
-                    "tr",
+                    "td",
                     null,
                     React.createElement(
-                        "th",
-                        null,
-                        "Order:"
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
+                        "select",
+                        { value: sortOrder, style: { width: "120px" }, onChange: function onChange(e) {
+                                return setSortOrder(e.target.value);
+                            } },
                         React.createElement(
-                            "select",
-                            { value: sortOrder, style: { width: "100%" }, onChange: function onChange(e) {
-                                    return setSortOrder(e.target.value);
-                                } },
-                            React.createElement(
-                                "option",
-                                { value: "asc" },
-                                "Ascending"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "desc" },
-                                "Descending"
-                            )
+                            "option",
+                            { value: "asc" },
+                            "Ascending"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "desc" },
+                            "Descending"
                         )
                     )
                 ),
                 React.createElement(
-                    "tr",
+                    "td",
                     null,
                     React.createElement(
-                        "th",
-                        null,
-                        "Filter:"
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
+                        "select",
+                        { value: filterTag, style: { width: "100px" }, onChange: function onChange(e) {
+                                return setFilterTag(e.target.value);
+                            } },
                         React.createElement(
-                            "select",
-                            { value: filterTag, style: { width: "100%" }, onChange: function onChange(e) {
-                                    return setFilterTag(e.target.value);
-                                } },
-                            React.createElement(
-                                "option",
-                                { value: "" },
-                                "None"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "circle" },
-                                "Circle"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "star" },
-                                "Star"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "square" },
-                                "Square"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "diamond" },
-                                "Diamond"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "shiny" },
-                                "Shiny"
-                            )
+                            "option",
+                            { value: "" },
+                            "None"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "circle" },
+                            "Circle"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "star" },
+                            "Star"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "square" },
+                            "Square"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "diamond" },
+                            "Diamond"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "shiny" },
+                            "Shiny"
                         )
                     )
                 ),
                 React.createElement(
-                    "tr",
+                    "td",
                     null,
                     React.createElement(
-                        "th",
-                        null,
-                        "Per page:"
-                    ),
-                    React.createElement(
-                        "td",
-                        null,
+                        "select",
+                        { value: rowCount * 5, style: { width: "80px" }, onChange: function onChange(e) {
+                                return setRows(e.target.value / 5);
+                            } },
                         React.createElement(
-                            "select",
-                            { value: rowCount * 5, style: { width: "100%" }, onChange: function onChange(e) {
-                                    return setRows(e.target.value / 5);
-                                } },
-                            React.createElement(
-                                "option",
-                                { value: "25" },
-                                "25"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "30" },
-                                "30"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "35" },
-                                "35"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "40" },
-                                "40"
-                            ),
-                            React.createElement(
-                                "option",
-                                { value: "50" },
-                                "50"
-                            )
+                            "option",
+                            { value: "25" },
+                            "25"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "30" },
+                            "30"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "35" },
+                            "35"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "40" },
+                            "40"
+                        ),
+                        React.createElement(
+                            "option",
+                            { value: "50" },
+                            "50"
                         )
                     )
                 )
             )
-        ),
-        React.createElement("br", null),
-        React.createElement(
-            "h5",
-            null,
-            "ADVANCED"
         )
     );
 }
@@ -626,9 +595,9 @@ function BoxTabs(_ref4) {
     });
     return React.createElement(
         "div",
-        { className: "tabs", style: { textAlign: 'center' } },
+        { className: "tabs content-box", style: { textAlign: 'center', width: '520px' } },
         React.createElement(
-            "h5",
+            "p",
             null,
             "Pages"
         ),

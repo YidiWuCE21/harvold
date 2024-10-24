@@ -2,8 +2,8 @@
   "mapWidth": 48,
   "mapHeight": 36,
   "maplinkKey": {
-    "1": {"map": "oak_village", "direction":  "east", "forcedOffset": {"x": 1, "y": 22}},
-    "2": {"map": "kaguya_town", "direction": "west","forcedOffset": {"x": 34, "y": 13}}
+    "1": {"map": "oak_village", "direction":  "east", "forcedOffset": {"x": 0, "y": 22}, "posOffset": {"y": 0}},
+    "2": {"map": "kaguya_town", "direction": "west","forcedOffset": {"x": 35, "y": 13}, "posOffset": {"y": 0}}
   },
   "default_offset": {"x": 23, "y": 9},
   "collisions": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

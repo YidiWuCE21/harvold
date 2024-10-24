@@ -1,0 +1,103 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div style="display: grid;grid-template-columns: 150px 200px 220px;grid-template-rows: 170px 310px 50px; gap:5px">
+    <div style="grid-column:1;grid-row:1;position:relative;" class="content-box">
+        <h5>{{ username }}</h5>
+        <div class="pokemon-img-bg">
+            <img src="{% get_static_prefix %}{{ asset_paths.player_sprite }}\{{ character }}.png">
+        </div>
+        <p>{{ title }}</p>
+    </div>
+    <div style="grid-column:2;grid-row:1;" class="content-box">
+        <h5>Trainer Stats</h5>
+        <table class="center text">
+            <tr>
+                <th>Pokédex</th>
+                <td>{{ dex_entries }}/649</td>
+            </tr>
+            <tr>
+                <th>TP</th>
+                <td>{{ trainer_points }}</td>
+            </tr>
+            <tr>
+                <th>Money</th>
+                <td>{{ money }}</td>
+            </tr>
+            <tr>
+                <th>Wins</th>
+                <td>{{ wins }} ({{ pvp_wins }})</td>
+            </tr>
+            <tr>
+                <th>Losses</th>
+                <td>{{ losses }} ({{ pvp_losses }})</td>
+            </tr>
+            <tr>
+                <th>Join Date</th>
+                <td>{{ date_joined }}</td>
+            </tr>
+        </table>
+    </div>
+    <div style="grid-column:3;grid-row:1;" class="content-box">
+        <h5>Badges</h5>
+        <table>
+            <tr>
+                <td>{% if badges.grass is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\grass_{{ badges.grass }}.png">{% endif %}</td>
+                <td>{% if badges.electric is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\electric_{{ badges.electric }}.png">{% endif %}</td>
+                <td>{% if badges.water is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\water_{{ badges.water }}.png">{% endif %}</td>
+                <td>{% if badges.ground is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\ground_{{ badges.ground }}.png">{% endif %}</td>
+            </tr>
+            <tr>
+                <td>{% if badges.fighting is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\fighting_{{ badges.fighting }}.png">{% endif %}</td>
+                <td>{% if badges.fire is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\fire_{{ badges.fire }}.png">{% endif %}</td>
+                <td>{% if badges.ghost is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\ghost_{{ badges.ghost }}.png">{% endif %}</td>
+                <td>{% if badges.dragon is not None %}<img src="{% get_static_prefix %}{{ asset_paths.badges }}\dragon_{{ badges.dragon }}.png">{% endif %}</td>
+            </tr>
+        </table>
+    </div>
+    <div style="grid-column:1 / span 2;grid-row:2" class="content-box">
+        <h5>{{ username }}'s Party</h5>
+        <table style="display:inline-block">
+            <tr>
+                {% for pokemon in party %}
+                <td><a href="{% url 'pokemon' %}?id={{ pokemon.id }}">
+                    <div class="party-box" style="padding:0px;">
+                        <p style="margin-bottom:0px">{{ pokemon.name }}</p>
+                        <p style="margin-bottom:0px;font-size:10px;">Level {{ pokemon.level }}</p>
+                        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ pokemon.dex }}{% if pokemon.shiny %}-s{% endif %}.png" style="margin-top:-10px;">
+                    </div>
+                </a></td>
+                {% if forloop.counter == 3 %}
+            </tr>
+            <tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+    <div style="grid-column:3;grid-row:2" class="content-box">
+        <h5>Description</h5>
+        {% if description is None %}
+        {{ username }} has not added a description.
+        {% else %}
+        {{ description }}
+        {% endif %}
+    </div>
+    <div style="grid-column:1 / span 3;grid-row:3" class="content-box">
+        {% if self_view %}
+        <button class="button-3">Edit Profile</button>
+        {% else %}
+        <button class="button-3">Live Battle</button>
+        <button class="button-3">View Box</button>
+        <button class="button-3">View Trades</button>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

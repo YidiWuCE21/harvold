@@ -3,7 +3,7 @@
   "mapHeight": 36,
   "maplinkKey": {
     "1": {"map": "putty_cave", "direction": "in", "forcedOffset": {"x": -1, "y": -1}},
-    "2": {"map": "oak_village", "direction": "south", "forcedOffset": {"x": 33, "y": 1}}
+    "2": {"map": "oak_village", "direction": "south", "forcedOffset": {"x": 33, "y": 0}, "posOffset": {"x": 12}}
   },
   "default_offset": {"x": 21, "y": 21},
   "collisions": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

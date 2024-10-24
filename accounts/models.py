@@ -36,6 +36,24 @@ def item_type(item):
     return None
 
 
+def default_pokedex():
+    return {str(dex).zfill(3): False for dex in range(1, 650)}
+
+def default_badges():
+    return {
+        "grass": None,
+        "electric": None,
+        "water": None,
+        "ground": None,
+        "fighting": None,
+        "fire": None,
+        "ghost": None,
+        "psychic": None,
+        "steel": None,
+        "dragon": None
+    }
+
+
 class Profile(models.Model):
     # Administrative fields
     user = models.OneToOneField(
@@ -46,10 +64,12 @@ class Profile(models.Model):
 
     # Trainer data
     description = models.CharField(max_length=500, null=True)
-    title = models.CharField(max_length=50, null=True)
+    title = models.CharField(max_length=50, default="Novice Trainer")
     faction = models.IntegerField(null=True)
     state = models.CharField(default="idle", max_length=10) # Used to control in-battle status
-    # TODO - Clan system
+    pokedex_progress = models.JSONField(default=default_pokedex)
+    badges = models.JSONField(default=default_badges)
+    trainer_points = models.IntegerField(default=0)
 
     # Trainer values
     money = models.IntegerField(default=10000)
@@ -75,6 +95,14 @@ class Profile(models.Model):
     current_map = models.TextField(max_length=20, default="oak_village")
     current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
     wild_opponent = models.ForeignKey("pokemon.Pokemon", related_name="wild_mon", null=True, on_delete=models.SET_NULL)
+
+    @property
+    def char_id(self):
+        return str(self.character).zfill(2)
+
+    @property
+    def dex_entries(self):
+        return sum(self.pokedex_progress.values())
 
     def add_to_party(self, pokemon):
         """
@@ -196,7 +224,7 @@ class Profile(models.Model):
         return box
 
 
-    def get_party(self):
+    def get_party(self, return_none=False):
         """
         Return the party
         """
@@ -309,3 +337,9 @@ class Profile(models.Model):
         self.bag[type][item] -= quantity
         self.save()
         return True
+
+
+    def add_pokedex(self, dex):
+        if dex in self.pokedex_progress:
+            self.pokedex_progress[dex] = True
+            self.save()

@@ -71,7 +71,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'pokemon.template_consts.asset_paths'
+                'pokemon.template_consts.asset_paths',
+                'pokemon.template_consts.party'
             ],
         },
     },

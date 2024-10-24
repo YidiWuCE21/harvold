@@ -1,8 +1,9 @@
 import json
+import datetime
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseNotFound
+from django.http import JsonResponse, HttpResponseNotFound
 
 # Create your views here.
 
@@ -26,7 +27,8 @@ def box(request):
 def make(request):
     render_vars = {"made": False}
     if request.GET.get("dex") is not None:
-        pkmn = create_pokemon(request.GET.get("dex").zfill(3), int(request.GET.get("level")), request.GET.get("sex"), shiny=False)
+        pkmn = create_pokemon(request.GET.get("dex").zfill(3), int(request.GET.get("level")), request.GET.get("sex"), shiny=request.GET.get("shiny", False) == "on", nature_override=request.GET.get("nature", None),
+                              iv_advantage=3)
         pkmn.assign_trainer(request.user.profile)
         pkmn.save()
         render_vars["made"] = True
@@ -96,3 +98,28 @@ def pokemon(request):
     }
 
     return render(request, "pokemon/detailed.html", html_render_variables)
+
+
+def pokecenter(request):
+    html_render_variables = {
+        "swarm_dex": "100",
+        "time_of_day": "day",
+        "next_time_of_day": "evening",
+        "time_countdown": datetime.timedelta(minutes=6)
+    }
+    return render(request, "pokemon/pokecenter.html", html_render_variables)
+
+
+def pokecenter_heal(request):
+    # Check if user is eligible for heal
+    if request.user.profile.state == "idle":
+        party = request.user.profile.get_party()
+        for pkmn in party:
+            pkmn.full_heal()
+        return JsonResponse({"msg": "Your party has been healed!"})
+    else:
+        return JsonResponse({"msg": "You cannot heal in a battle!"})
+def pokemart(request):
+    html_render_variables = {
+    }
+    return render(request, "pokemon/pokemart.html", html_render_variables)

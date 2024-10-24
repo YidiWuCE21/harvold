@@ -250,6 +250,19 @@ class Pokemon(models.Model):
             "id": self.pk
         }
 
+    def get_party_info(self):
+        return {
+            "hp_percent": (self.current_hp / self.hp_stat) * 100,
+            "name": self.name,
+            "id": self.pk,
+            "dex": self.dex,
+            "experience_progress": get_progress_to_next_level(self.level, self.experience, consts.POKEMON[self.dex]["experience_growth"]),
+            "status": self.status,
+            "level": self.level,
+            "ball": self.ball,
+            "shiny": self.shiny
+        }
+
 
     def set_battle_info(self, battle_info):
         """
@@ -272,6 +285,7 @@ class Pokemon(models.Model):
             self.ball = ball
         self.ball = "pokeball"
         self.location = "box"
+        self.trainer.add_pokedex(self.dex)
         self.save(update_fields=["trainer", "original_trainer", "ball"])
 
     def release(self, trainer):
@@ -582,7 +596,7 @@ class Pokemon(models.Model):
         metadata = {
             "owner": self.trainer.user.username,
             "original_trainer": self.original_trainer.user.username,
-            "caught_date": self.caught_date,
+            "caught_date": self.caught_date.date,
             "location": self.location,
             "tag": self.box_tag,
             "locked": self.locked,

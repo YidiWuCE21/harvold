@@ -1,0 +1,72 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box">
+    <div class="gym-tab" id="regular">
+        <h5>Gym Leaders</h5>
+        <button class="button-3" disabled>Regular</button>
+        <button class="button-3" onclick="openTab('gym-tab', 'elite');">Elite</button>
+        <table class="center">
+            <tr>
+                {% for type, gym_info, badge in gyms %}
+                <td>
+                    <a href="">
+                        <div class="party-box" style="width:240px;height:100px;">
+                            <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
+                                <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.reg }}.png" style="position:absolute;top:-5px;left:-25px">
+                                <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
+                            </div>
+                            <div style="display:inline-block;margin-left:5px;vertical-align:top;">
+                                <p style="margin-bottom:0px"><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png"> {{ gym_info.name }}</p>
+                                <p style="font-size: 10px">Level: {{ gym_info.level }}</p>
+                                <img src="{% get_static_prefix %}{{ asset_paths.badges }}/{{ type }}_silver.png" {% if badge is None %}class="grayscale"{% endif %}>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                {% if forloop.counter|divisibleby:2 %}
+                </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+
+    </div>
+    <div class="gym-tab" id="elite" style="display:none;">
+        <h5>Gym Leaders (Elite)</h5>
+        <button class="button-3" onclick="openTab('gym-tab', 'regular');">Regular</button>
+        <button class="button-3" disabled>Elite</button>
+        <table class="center">
+            <tr>
+                {% for type, gym_info, badge in gyms %}
+                <td>
+                    <a href="" {% if badge is None %}class="grayscale disabled"{% endif %}>
+                        <div class="party-box" style="width:240px;height:100px;">
+                            <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
+                                <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.elite }}.png" style="position:absolute;top:-5px;left:-25px">
+                                <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
+                            </div>
+                            <div style="display:inline-block;margin-left:5px;vertical-align:top;">
+                                <p style="margin-bottom:0px"><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png"> {{ gym_info.name }}</p>
+                                <p style="font-size: 10px">Level: 100</p>
+                                <img src="{% get_static_prefix %}{{ asset_paths.badges }}/{{ type }}_gold.png" {% if badge is None or badge == "silver" %}class="grayscale"{% endif %}>
+                            </div>
+                        </div>
+                    </a>
+                </td>
+                {% if forloop.counter|divisibleby:2 %}
+                </tr><tr>
+                {% endif %}
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
