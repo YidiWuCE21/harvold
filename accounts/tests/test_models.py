@@ -128,7 +128,7 @@ class TestRemoveFromParty(TestCase):
         self.trainer.slot_4 = None
         self.trainer.slot_5 = None
         self.trainer.slot_6 = None
-        self.trainer.remove_from_party("slot_2")
+        self.trainer.remove_from_party(self.pkmn2)
         self.assertEqual(self.pkmn1, self.trainer.slot_1)
         self.assertIsNone(self.trainer.slot_2)
 
@@ -140,7 +140,7 @@ class TestRemoveFromParty(TestCase):
         self.trainer.slot_4 = None
         self.trainer.slot_5 = None
         self.trainer.slot_6 = None
-        self.trainer.remove_from_party("slot_1")
+        self.trainer.remove_from_party(self.pkmn1)
         self.assertEqual(self.pkmn2, self.trainer.slot_1)
         self.assertIsNone(self.trainer.slot_2)
 
@@ -152,7 +152,7 @@ class TestRemoveFromParty(TestCase):
         self.trainer.slot_4 = None
         self.trainer.slot_5 = None
         self.trainer.slot_6 = None
-        ret = self.trainer.remove_from_party("slot_1")
+        ret = self.trainer.remove_from_party(self.pkmn1)
         self.assertEqual("This is your last Pokemon!", ret)
         self.assertEqual(self.pkmn1, self.trainer.slot_1)
 
@@ -165,7 +165,7 @@ class TestRemoveFromParty(TestCase):
         self.trainer.slot_4 = None
         self.trainer.slot_5 = None
         self.trainer.slot_6 = None
-        self.trainer.remove_from_party("slot_2")
+        self.trainer.remove_from_party(self.pkmn2)
         self.assertEqual(self.pkmn1, self.trainer.slot_1)
         self.assertEqual(self.pkmn2, self.trainer.slot_2)
         self.trainer.state = "idle"
@@ -200,9 +200,7 @@ class TestGetBox(TestCase):
 
 
 
-    def test_get_box_standard(self):
-        box = self.trainer1.get_pokemon()
-        self.assertTrue(False)
+
 
 
 class TestSortParty(TestCase):
@@ -340,11 +338,11 @@ class TestPurchaseItem(TestCase):
         self.trainer1.save()
 
 
-    def test_no_shop(self):
+    def test_no_item_shop(self):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.purchase_item("pokeball", 1, "mart1")
-        exp = "No such shop!"
+        ret = self.trainer1.purchase_item("electirizer", 1)
+        exp = "No such category!"
         self.assertFalse(ret[0])
         self.assertEqual(exp, ret[1])
 
@@ -352,8 +350,8 @@ class TestPurchaseItem(TestCase):
     def test_no_item(self):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.purchase_item("pokeball1", 1, "mart")
-        exp = "No such item in the shop!"
+        ret = self.trainer1.purchase_item("pokeball1", 1)
+        exp = "No such item!"
         self.assertFalse(ret[0])
         self.assertEqual(exp, ret[1])
 
@@ -361,7 +359,7 @@ class TestPurchaseItem(TestCase):
     def test_no_money(self):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.purchase_item("pokeball", 9999, "mart")
+        ret = self.trainer1.purchase_item("pokeball", 9999)
         exp = "Not enough money!"
         self.assertFalse(ret[0])
         self.assertEqual(exp, ret[1])
@@ -370,7 +368,7 @@ class TestPurchaseItem(TestCase):
     def test_success(self):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.purchase_item("pokeball", 1, "mart")
+        ret = self.trainer1.purchase_item("pokeball", 1)
         self.assertTrue(ret[0])
         self.assertEqual(self.trainer1.money, 9800)
         self.assertEqual(self.trainer1.bag["ball"]["pokeball"], 6)
@@ -379,10 +377,10 @@ class TestPurchaseItem(TestCase):
     def test_success_new(self):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.purchase_item("great_ball", 1, "mart")
+        ret = self.trainer1.purchase_item("great-ball", 1)
         self.assertTrue(ret[0])
         self.assertEqual(self.trainer1.money, 9400)
-        self.assertEqual(self.trainer1.bag["ball"]["great_ball"], 1)
+        self.assertEqual(self.trainer1.bag["ball"]["great-ball"], 1)
 
 
 class TestHasItem(TestCase):
@@ -395,11 +393,11 @@ class TestHasItem(TestCase):
 
     def test_has_item(self):
         self.trainer1.bag = models.default_bag()
-        self.trainer1.bag["ball"]["great_ball"] = 3
-        self.assertTrue(self.trainer1.has_item("pokeball", "ball", 3))
-        self.assertTrue(self.trainer1.has_item("great_ball", "ball", 3))
-        self.assertFalse(self.trainer1.has_item("great_ball", "ball", 4))
-        self.assertFalse(self.trainer1.has_item("ultra_ball", "ball", 1))
+        self.trainer1.bag["ball"]["great-ball"] = 3
+        self.assertTrue(self.trainer1.has_item("pokeball", 3))
+        self.assertTrue(self.trainer1.has_item("great-ball", 3))
+        self.assertFalse(self.trainer1.has_item("great-ball", 4))
+        self.assertFalse(self.trainer1.has_item("ultra-ball", 1))
 
 
 class TestConsumeItem(TestCase):
@@ -412,13 +410,13 @@ class TestConsumeItem(TestCase):
 
     def test_consume_item(self):
         self.trainer1.bag = models.default_bag()
-        ret = self.trainer1.consume_item("pokeball", "ball", 1)
+        ret = self.trainer1.consume_item("pokeball",  1)
         self.assertTrue(ret)
         self.assertEqual(4, self.trainer1.bag["ball"]["pokeball"])
 
-        ret = self.trainer1.consume_item("pokeball", "ball", 6)
+        ret = self.trainer1.consume_item("pokeball", 6)
         self.assertFalse(ret)
         self.assertEqual(4, self.trainer1.bag["ball"]["pokeball"])
 
-        ret = self.trainer1.consume_item("ultra_ball", "ball", 1)
+        ret = self.trainer1.consume_item("ultra-ball", 1)
         self.assertFalse(ret)

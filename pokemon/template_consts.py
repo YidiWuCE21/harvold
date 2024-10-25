@@ -7,6 +7,17 @@ def asset_paths(request):
     }
 
 
+def uid(request):
+    try:
+        return {
+            "id_self": request.user.profile.pk
+        }
+    except AttributeError:
+        return {
+            "id_self": ""
+        }
+
+
 def party(request):
     try:
         party = request.user.profile.get_party()

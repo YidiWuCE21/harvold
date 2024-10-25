@@ -7,6 +7,269 @@
 
 {% block title %}Pokémart{% endblock %}
 
+{% block scripts %}
+<script>
+let shoppingList = {};
+let totalCost = 0;
+
+function renderList() {
+    const shop = document.getElementById('shopping_list');
+    const div = document.createElement('div');
+
+    for (const [key, value] of Object.entries(shoppingList)) {
+        const p = document.createElement('p');
+
+
+        // Create an image element
+        const elem = document.getElementById(key)
+        const itemImg = elem.dataset.img;
+        const itemName = elem.dataset.item;
+        const qty = elem.value;
+        const img = document.createElement('img');
+        img.src = itemImg;
+
+        // Create a text node with the dictionary key
+        const textNode = document.createTextNode(itemName + " x " + qty);
+
+        // Append the image and text to the list item
+        p.appendChild(img);
+        p.appendChild(textNode);
+
+        // Append the list item to the unordered list
+        div.appendChild(p);
+    }
+    shop.innerHTML = '';
+    shop.appendChild(div);
+    if (totalCost > 0) {
+        document.getElementById('cost').innerHTML = 'Total cost: ' + totalCost;
+        document.getElementById('checkout').style.display = 'inline-block';
+    } else {
+        document.getElementById('cost').innerHTML = '';
+        document.getElementById('checkout').style.display = 'none';
+    }
+}
+
+function updateList({item, quantity}) {
+    shoppingList[item] = quantity;
+    if (quantity < 1) {
+        delete shoppingList[item];
+    }
+    totalCost = 0;
+    for (const [key, value] of Object.entries(shoppingList)) {
+        let itemPrice = document.getElementById(key).dataset.price;
+        totalCost += itemPrice * value;
+    }
+    renderList();
+}
+
+
+</script>
+{% endblock %}
+
 {% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <div class="content-box">
+        <div>
+            {% if message is not None %}<p>{{ message }}</p>{% endif %}
+            <h5>Pokémart</h5>
+            <p>Hello! What are you looking for today?</p>
+            <img src="{% get_static_prefix %}{{ asset_paths.trainer_ow }}\clerks.png" style="margin:15px;">
+            <p>
+                <button type="button" class="button-3" onclick="openTab('mart_tab', 'ball_tab');">Pokeballs</button>
+                <button type="button" class="button-3" onclick="openTab('mart_tab', 'potion_tab');">Potions</button>
+                <button type="button" class="button-3" onclick="openTab('mart_tab', 'stone_tab');">Stones</button>
+                <button type="button" class="button-3" onclick="openTab('mart_tab', 'training_tab');">Equipment</button>
+                <button type="button" class="button-3" onclick="openTab('mart_tab', 'tm_tab');">TMs</button>
+            </p>
+        </div>
+        <div style="display:none;" class="mart_tab" id="ball_tab">
+            <table class="center text">
+                <tr>
+                    <th></th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item, data in mart.ball.items %}
+                <tr>
+                    <td>
+                        <img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">
+                    </td>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        {{ data.price }}
+                    </td>
+                    <td>
+                        <input type="number" id="{{ item }}"
+                               name="{{ item }}"
+                               data-price="{{ data.price }}"
+                               data-img="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png"
+                               data-item="{{ data.name }}"
+                               min="0" max="1000" oninput="validity.valid||(value='');" style="width:80px"
+                               onchange="updateList({item: '{{ item }}', quantity: this.value});">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="display:none;" class="mart_tab" id="potion_tab">
+            <table class="center text">
+                <tr>
+                    <th></th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item, data in mart.medicine.items %}
+                <tr>
+                    <td>
+                        <img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">
+                    </td>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        {{ data.price }}
+                    </td>
+                    <td>
+                        <input type="number" id="{{ item }}"
+                               name="{{ item }}"
+                               data-price="{{ data.price }}"
+                               data-img="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png"
+                               data-item="{{ data.name }}"
+                               min="0" max="1000" oninput="validity.valid||(value='');" style="width:80px"
+                               onchange="updateList({item: '{{ item }}', quantity: this.value});">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="display:none;" class="mart_tab" id="training_tab">
+            <table class="center text">
+                <tr>
+                    <th></th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item, data in mart.held_items.items %}
+                <tr>
+                    <td>
+                        <img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">
+                    </td>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        {{ data.price }}
+                    </td>
+                    <td>
+                        <input type="number" id="{{ item }}"
+                               name="{{ item }}"
+                               data-price="{{ data.price }}"
+                               data-img="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png"
+                               data-item="{{ data.name }}"
+                               min="0" max="1000" oninput="validity.valid||(value='');" style="width:80px"
+                               onchange="updateList({item: '{{ item }}', quantity: this.value});">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="display:none;" class="mart_tab" id="stone_tab">
+            <table class="center text">
+                <tr>
+                    <th></th>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item, data in mart.general.items %}
+                <tr>
+                    <td>
+                        <img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">
+                    </td>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        {{ data.price }}
+                    </td>
+                    <td>
+                        <input type="number" id="{{ item }}"
+                               name="{{ item }}"
+                               data-price="{{ data.price }}"
+                               data-img="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png"
+                               data-item="{{ data.name }}"
+                               min="0" max="1000" oninput="validity.valid||(value='');" style="width:80px"
+                               onchange="updateList({item: '{{ item }}', quantity: this.value});">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div style="display:none;" class="mart_tab" id="tm_tab">
+            <table class="center text">
+                <tr>
+                    <th></th>
+                    <th>TM</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for item, data in mart.machines.items %}
+                <tr>
+                    <td>
+                        <img src="{% get_static_prefix %}{{ asset_paths.item }}/tm-{{ data.type }}.png">
+                    </td>
+                    <td>
+                        {{ data.name }}
+                    </td>
+                    <td>
+                        {{ data.description }}
+                    </td>
+                    <td>
+                        {{ data.price }}
+                    </td>
+                    <td>
+                        <input type="number" id="{{ item }}"
+                               name="{{ item }}"
+                               data-price="{{ data.price }}"
+                               data-img="{% get_static_prefix %}{{ asset_paths.item }}/tm-{{ data.type }}.png"
+                               data-item="{{ data.name }}"
+                               min="0" max="1000" oninput="validity.valid||(value='');" style="width:80px"
+                               onchange="updateList({item: '{{ item }}', quantity: this.value});">
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div id="checkout" style="display:none;">
+            <div id="shopping_list"></div>
+            <p id="cost"></p>
+            <p>Your funds: {{ funds }}</p>
+            <button class="button-3">Checkout</button>
+        </div>
+    </div>
+</form>
 
 {% endblock %}

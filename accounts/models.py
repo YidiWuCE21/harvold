@@ -11,29 +11,25 @@ def default_bag():
         "ball": {
             "pokeball": 5
         },
-        "key": {},
-        "battle": {
+        "medicine": {
             "potion": 5
         },
-        "tm": {},
-        "held": {},
-        "misc": {}
+        "general": {},
+        "machines": {},
+        "held_items": {},
+        "berries": {},
+        "key": {}
     }
+
+
+def item_type(item):
+    if item not in consts.ITEMS:
+        return False
+    return consts.ITEMS[item]["category"]
 
 
 def default_map():
     return ["oak_village"]
-
-
-def item_type(item):
-    """
-    Get the type of item
-    """
-    # Get item type
-    for item_type, items in consts.ITEM_TYPES.items():
-        if item in items:
-            return item_type
-    return None
 
 
 def default_pokedex():
@@ -72,8 +68,8 @@ class Profile(models.Model):
     trainer_points = models.IntegerField(default=0)
 
     # Trainer values
-    money = models.IntegerField(default=10000)
     character = models.IntegerField()
+    money = models.IntegerField(default=100000)
     bag = models.JSONField(default=default_bag)
 
     # Trainer stats
@@ -275,18 +271,30 @@ class Profile(models.Model):
         return (True, "")
 
 
-    def purchase_item(self, item, quantity, shop):
+    def purchase_item(self, item, quantity):
         """
         Purchase an item from the shop
         """
-        if shop not in consts.MART:
-            return (False, "No such shop!")
-        if item not in consts.MART[shop]:
+        category = item_type(item)
+
+        if category is False:
+            return (False, "No such item!")
+
+        # Check item category exists
+        if category not in consts.MART:
+            return (False, "No such category!")
+
+        # Check item in shop
+        if item not in consts.MART[category]:
             return (False, "No such item in the shop!")
-        item_data = consts.MART[shop][item]
-        if self.money < item_data["price"] * quantity:
+
+        # Check for money
+        item_price = consts.MART[category][item]
+        if self.money < item_price * quantity:
             return (False, "Not enough money!")
-        self.money = self.money - item_data["price"] * quantity
+
+        # Transaction
+        self.money = self.money - item_price * quantity
         if self.add_item(item, quantity):
             self.save()
             return (True, "")
@@ -298,13 +306,13 @@ class Profile(models.Model):
         Give the user an item
         """
         # Get item type
-        type = item_type(item)
-        if type is None:
+        category = item_type(item)
+        if category is None:
             return False
-        if item in self.bag[type]:
-            self.bag[type][item] += quantity
+        if item in self.bag[category]:
+            self.bag[category][item] += quantity
         else:
-            self.bag[type][item] = quantity
+            self.bag[category][item] = quantity
         return True
 
 
@@ -314,27 +322,29 @@ class Profile(models.Model):
         Check that the user has the item
         """
         # Get item type
-        type = item_type(item)
-        if type is None:
+        category = item_type(item)
+        if category is None:
             return False
         # Check if user has item
-        if item not in self.bag[type]:
+        if item not in self.bag[category]:
             return False
-        return self.bag[type][item] > (quantity - 1)
+        return self.bag[category][item] > (quantity - 1)
 
 
     def consume_item(self, item, quantity=1):
         """
         Check that the user has the item
         """
-        type = item_type(item)
-        if type is None:
+        category = item_type(item)
+        if category is None:
             return False
-        if item not in self.bag[type]:
+        if item not in self.bag[category]:
             return False
-        if self.bag[type][item] < quantity:
+        if self.bag[category][item] < quantity:
             return False
-        self.bag[type][item] -= quantity
+        self.bag[category][item] -= quantity
+        if self.bag[category][item] < 1:
+            self.bag[category].pop(item)
         self.save()
         return True
 

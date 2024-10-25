@@ -65,7 +65,7 @@
         <h5>{{ username }}'s Party</h5>
         <table style="display:inline-block">
             <tr>
-                {% for pokemon in party %}
+                {% for pokemon in profile_party %}
                 <td><a href="{% url 'pokemon' %}?id={{ pokemon.id }}">
                     <div class="party-box" style="padding:0px;">
                         <p style="margin-bottom:0px">{{ pokemon.name }}</p>

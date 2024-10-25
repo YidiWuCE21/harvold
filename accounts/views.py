@@ -2,6 +2,7 @@ import random
 
 from django.shortcuts import render, redirect
 from django.db import IntegrityError, transaction
+from django.contrib.auth.decorators import login_required
 
 from .forms import UserCreateForm, StarterChoiceForm, TrainerSelectForm
 from .models import Profile
@@ -61,6 +62,7 @@ def signup(request):
     return render(request, "registration/signup.html", html_render_variables)
 
 
+@login_required
 def view_profile(request):
     profile = Profile.objects.get(pk=request.GET.get("id"))
     self_view =  profile == request.user.profile
@@ -77,10 +79,74 @@ def view_profile(request):
         "losses": profile.losses,
         "pvp_wins": profile.pvp_wins,
         "pvp_losses": profile.pvp_losses,
-        "party": party,
+        "profile_party": party,
         "dex_entries": profile.dex_entries,
         "date_joined": profile.user.date_joined.date,
         "self_view": self_view,
         "badges": {"grass": "silver", "electric": "silver", "fire": "silver", "fighting": "silver", "water": "silver", "dragon": "silver", "ghost": "silver", "ground": "silver"}
     }
     return render(request, "registration/profile.html", html_render_variables)
+
+
+@login_required
+def bag(request):
+    bag = request.user.profile.bag
+    bag_data = {}
+    for category in bag:
+        bag_data[category] = {}
+        for item, qty in bag[category].items():
+            bag_data[category][item] = consts.ITEMS[item]
+            bag_data[category][item]["quantity"] = qty
+            if category == "machines":
+                bag_data[category][item]["move_data"] = consts.MOVES[consts.ITEMS[item]["move"]]
+    html_render_variables = {
+        "bag": bag_data
+    }
+    return render(request, "pokemon/bag.html", html_render_variables)
+
+
+@login_required
+def pokemart(request):
+    mart_data = {}
+    message = None
+    # Process purchase request
+    if request.POST:
+        cost = 0
+        funds = request.user.profile.money
+        order = {}
+        for item in request.POST:
+            if item in consts.ITEMS:
+                quantity = request.POST.get(item)
+                if quantity:
+                    quantity = int(quantity)
+                    cost += consts.MART[consts.ITEMS[item]["category"]][item]
+                    order[item] = quantity
+        if cost > funds:
+            message = "Insufficient funds!"
+        else:
+            message = "Purchase successful!"
+            for item, quantity in order.items():
+                success, ret_msg = request.user.profile.purchase_item(item, quantity)
+                if not success:
+                    message = "Could not buy {}; {}".format(consts.ITEMS[item]["name"], ret_msg)
+                    break
+
+
+
+    for category, mart_items in consts.MART.items():
+        mart_data[category] = {}
+        for item, price in mart_items.items():
+            cost = price
+            mart_data[category][item] = {
+                "price": cost,
+                "name": consts.ITEMS[item]["name"],
+                "description": consts.ITEMS[item]["description"],
+            }
+            if "type" in consts.ITEMS[item]:
+                mart_data[category][item]["type"] = consts.ITEMS[item]["type"]
+    html_render_variables = {
+        "mart": mart_data,
+        "funds": request.user.profile.money,
+        "message": message
+    }
+    return render(request, "pokemon/pokemart.html", html_render_variables)

@@ -463,6 +463,7 @@ class Pokemon(models.Model):
 
         for pokemon, requirements in consts.EVOLUTIONS[self.dex].items():
             reqs_clean = []
+            items = []
             if requirements["min_level"] != None:
                 reqs_clean.append("Level {}".format(requirements["min_level"]))
             if requirements["min_happiness"] != None:
@@ -472,15 +473,18 @@ class Pokemon(models.Model):
             if requirements["held_item"] != None:
                 reqs_clean.append("Traded")
                 if not requirements["held_item"] == "":
+                    items.append(requirements["held_item"])
                     reqs_clean.append("Holding {}".format(requirements["held_item"].replace("_", " ").capitalize()))
             if requirements["item"] != None:
+                items.append(requirements["item"])
                 reqs_clean.append(requirements["item"].replace("_", " ").capitalize())
             if requirements["known_move"] != None:
                 reqs_clean.append("Knows {}".format(requirements["known_move"]))
             evolutions.append({
                 "name": consts.POKEMON[pokemon]["name"],
                 "dex": pokemon,
-                "requirements": reqs_clean
+                "requirements": reqs_clean,
+                "items": items
             })
         return evolutions
 
@@ -596,6 +600,8 @@ class Pokemon(models.Model):
         metadata = {
             "owner": self.trainer.user.username,
             "original_trainer": self.original_trainer.user.username,
+            "owner_id": self.trainer.user.pk,
+            "ot_id": self.original_trainer.user.pk,
             "caught_date": self.caught_date.date,
             "location": self.location,
             "tag": self.box_tag,

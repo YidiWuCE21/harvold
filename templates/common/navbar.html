@@ -1,16 +1,56 @@
 
 {% if user.is_authenticated %}
-<div>
-    <ul>
-        <li><a href="{% url 'world_map' %}">World Map</a></li>
-        <li><a href="{% url 'map' %}">Last Map</a></li>
-        <li><a href="{% url 'box' %}">Box</a></li>
-        <li><a href="{% url 'make' %}">Pokemon Creation</a></li>
-        <li><a href="{% url 'gyms' %}">Gyms</a></li>
-        <li><a href="{% url 'pokecenter' %}">Pokecenter</a></li>
-        <li><a href="{% url 'pokemart' %}">Pokemaart</a></li>
-    </ul>
+<div class="navigation">
+
+    <div class="dropdown">
+        <button class="dropbtn">Travel</button>
+        <div class="dropdown-content">
+            <a href="{% url 'map' %}">Last Map</a>
+            <a href="{% url 'world_map' %}">World Map</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Trainer</button>
+        <div class="dropdown-content">
+            <a href="{% url 'box' %}">Box</a>
+            <a href="{% url 'bag' %}">Bag</a>
+            <a href="#">Pokédex</a>
+            <a href="#">Berry Garden</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Battle</button>
+        <div class="dropdown-content">
+            <a href="{% url 'gyms' %}">Gyms</a>
+            <a href="#">Battle Mansion</a>
+            <a href="#">EV Dojo</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Town</button>
+        <div class="dropdown-content">
+            <a href="{% url 'pokecenter' %}">Pokécenter</a>
+            <a href="{% url 'pokemart' %}">Pokémart</a>
+            <a href="#">Trade Center</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Social</button>
+        <div class="dropdown-content">
+            <a href="{% url 'view_profile' %}?id={{ id_self }}">Profile</a>
+            <a href="#">Friends</a>
+            <a href="#">Inbox</a>
+            <a href="#">Find Trainers</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Devtools</button>
+        <div class="dropdown-content">
+            <a href="{% url 'make' %}">Create</a>
+        </div>
+    </div>
 </div>
+
 {% else %}
 <div>
     <ul>

@@ -1,0 +1,79 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block title %}Bag{% endblock %}
+
+
+{% block content %}
+<div class="content-box">
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'general');">General</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'ball');">Pokéballs</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'medicine');">Medicine</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'machines');">TMs/HMs</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'berries');">Berries</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'held_items');">Held Items</button>
+    <button type="button" style="width:80px" class="button-3" onclick="openTab('bag_tab', 'key');">Key Items</button>
+    {% for category, items in bag.items %}
+    <div class="bag_tab" id="{{ category }}" {% if category != 'general' %}style="display:none;"{% endif %}>
+        {% if category == "general" %}
+        <h5>General Items</h5>
+        {% elif category == "ball" %}
+        <h5>Pokéballs</h5>
+        {% elif category == "medicine" %}
+        <h5>Medicine</h5>
+        {% elif category == "machines" %}
+        <h5>Technical Machines</h5>
+        {% elif category == "berries" %}
+        <h5>Berry Pouch</h5>
+        {% elif category == "held_items" %}
+        <h5>Held Items</h5>
+        {% elif category == "key" %}
+        <h5>Key Items</h5>
+        {% endif %}
+        <img src="{% get_static_prefix %}{{ asset_paths.misc }}/bag_{{ category }}.png">
+        <table class="center text">
+            <tr>
+                <th></th>
+                <th>Item</th>
+                {% if category == 'machines' %}
+                <th>Move</th>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Effect</th>
+                {% else %}
+                <th>Description</th>
+                {% endif %}
+                <th>Qty.</th>
+            </tr>
+            {% for item, item_data in items.items %}
+            <tr>
+                <td>{% if category != "machines" %}<img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">{% else %}{% endif %}</td>
+                <td>{{ item_data.name }}</td>
+                {% if category == 'machines' %}
+                <td>{{ item_data.move_data.name }}</td>
+                <td>
+                    <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ item_data.move_data.damage_class }}.png">
+                </td>
+                <td>
+                    <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ item_data.move_data.type }}.png">
+                </td>
+                <td>
+                    <p>Power: {% if item_data.move_data.power is not None %}{{ item_data.move_data.power }}{% else %}-{% endif %} Accuracy: {% if item_data.move_data.accuracy is not None %}{{ item_data.move_data.accuracy }}{% else %}-{% endif %}</p>
+                    <p>{{ item_data.move_data.effects }}</p>
+                </td>
+                {% else %}
+                <td>{{ item_data.description }}</td>
+                {% endif %}
+                <td>{{ item_data.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

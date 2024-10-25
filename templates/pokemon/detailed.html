@@ -33,11 +33,11 @@
         <table class="center text">
             <tr>
                 <th>Owner</th>
-                <td>{{ metadata.owner }}</td>
+                <td><a href="{% url 'view_profile' %}?id={{ metadata.owner_id }}">{{ metadata.owner }}</a></td>
             </tr>
             <tr>
                 <th>OT</th>
-                <td>{{ metadata.original_trainer }}</td>
+                <td><a href="{% url 'view_profile' %}?id={{ metadata.ot_id }}">{{ metadata.original_trainer }}</a></td>
             </tr>
             <tr>
                 <th>Date Caught</th>
@@ -154,6 +154,9 @@
                     <input type="radio" value="{{ evo.dex }}" name="evolve_to" id="id_{{ evo.dex }}"{% if evo.dex not in valid_evolutions %} disabled{% endif %}
                         style="position:absolute;top:6px;left:4px;">
                     <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ evo.dex }}.gif">
+                    {% for item in evo.items %}
+                    <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ item }}.png" style="position:absolute;opacity:0.5;top:2px;right:2px">
+                    {% endfor %}
                     <p{% if evo.dex not in valid_evolutions %} style="color:gray;"{% endif %}>{{ evo.name }}</p>
                 </label>
                 {% endfor %}

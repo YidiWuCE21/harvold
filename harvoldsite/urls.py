@@ -16,12 +16,13 @@ urlpatterns = [
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     # Account related views
     path("profile", account_views.view_profile, name="view_profile"),
+    path("bag", account_views.bag, name="bag"),
+    path("pokemart", account_views.pokemart, name="pokemart"),
     # Trainer related views
     path("box", pokemon_views.box, name="box"),
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
     path("make", pokemon_views.make, name="make"),
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
-    path("pokemart", pokemon_views.pokemart, name="pokemart"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
     #path('', include('users.urls'))

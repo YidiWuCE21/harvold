@@ -24,6 +24,29 @@ with open(os.path.join(ASSETS_PATH, "data", "wild.json")) as wild:
     WILD = json.load(wild)
 with open(os.path.join(ASSETS_PATH, "data", "evolutions.json")) as evo:
     EVOLUTIONS = json.load(evo)
+with open(os.path.join(ASSETS_PATH, "data", "items.json"), encoding="utf-8") as items:
+    ITEMS = json.load(items)
+
+# Asset paths
+ASSET_PATHS = {
+    # Pokemon sprites
+    "icon": os.path.join("assets", "pokemon", "icon"),
+    "art": os.path.join("assets", "pokemon", "art"),
+    "front": os.path.join("assets", "pokemon", "front"),
+    # Player sprites
+    "player_sprite": os.path.join("assets", "player", "sprite"),
+    "player_art": os.path.join("assets", "player", "art"),
+    "player_ow": os.path.join("assets", "player", "overworld"),
+    # NPC sprites
+    "trainer_sprite": os.path.join("assets", "npc", "sprite"),
+    "trainer_ow": os.path.join("assets", "npc", "overworld"),
+    # Misc assets
+    "typing": os.path.join("assets", "pokemon", "type"),
+    "item": os.path.join("assets", "items"),
+    "moves": os.path.join("assets", "pokemon", "moves"),
+    "badges": os.path.join("assets", "badges"),
+    "misc": os.path.join("assets", "misc")
+}
 
 # Login-related choicesf
 STARTER_CHOICES = [
@@ -62,26 +85,6 @@ TRAINER_CHOICES = [
     ("14", "14"),
     ("15", "15"),
 ]
-
-# Asset paths
-ASSET_PATHS = {
-    # Pokemon sprites
-    "icon": os.path.join("assets", "pokemon", "icon"),
-    "art": os.path.join("assets", "pokemon", "art"),
-    "front": os.path.join("assets", "pokemon", "front"),
-    # Player sprites
-    "player_sprite": os.path.join("assets", "player", "sprite"),
-    "player_art": os.path.join("assets", "player", "art"),
-    "player_world": os.path.join("assets", "player", "overworld"),
-    # NPC sprites
-    "trainer_sprite": os.path.join("assets", "npc", "trainer_sprite"),
-    "trainer_world": os.path.join("assets", "npc", "trainer_overworld"),
-    # Misc assets
-    "typing": os.path.join("assets", "pokemon", "type"),
-    "item": os.path.join("assets", "items"),
-    "moves": os.path.join("assets", "pokemon", "moves"),
-    "badges": os.path.join("assets", "badges"),
-}
 
 STATS = ["hp", "atk", "def", "spa", "spd", "spe"]
 NATURES = {
@@ -127,78 +130,6 @@ MAPS = [
     "route_7",
     "vitur_forest",
 ]
-
-ITEM_TYPES = {
-    "ball": [
-        "pokeball",
-        "great_ball",
-        "ultra_ball",
-        "master_ball"
-    ],
-    "held": [
-        "fire_stone",
-        "water_stone",
-        "leaf_stone",
-        "ice_stone",
-        "dawn_stone",
-        "dusk_stone",
-        "thunder_stone",
-        "sun_stone",
-        "moon_stone",
-        "shiny_stone",
-        "oval_stone",
-        "kings_rock",
-        "metal_coat",
-        "protector",
-        "reaper_cloth",
-        "electirizer",
-        "magmarizer",
-        "dragon_scale",
-        "up_grade",
-        "dubious_disc",
-        "razor_fang",
-        "razor_claw",
-        "deep_sea_tooth",
-        "deep_sea_scale",
-        "leftovers",
-        "life_orb",
-        "eviolite",
-        "choice_scarf",
-        "choice_band",
-        "choice_specs",
-        "exp_share",
-        "macho_brace"
-    ],
-    "fossils": [
-        "root_fossil",
-        "claw_fossil",
-        "helix_fossil",
-        "dome_fossil",
-        "old_amber",
-        "armor_fossil",
-        "skull_fossil",
-        "plume_fossil",
-        "cover_fossil"
-    ],
-    "misc": [],
-    "key": [],
-    "tm": [],
-    "battle": [
-        "potion",
-        "super_potion",
-        "hyper_potion",
-        "max_potion",
-        "full_restore",
-        "revive",
-        "max_revive",
-        "antidote",
-        "paralyze_heal",
-        "awakening",
-        "burn_heal",
-        "ice_heal",
-        "full_heal",
-    ]
-}
 
 GYM_LEADERS = {
     "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 21},

@@ -1,0 +1,4440 @@
+{
+  "001": {
+    "002": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "002": {
+    "003": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "003": null,
+  "004": {
+    "005": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "005": {
+    "006": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "006": null,
+  "007": {
+    "008": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "008": {
+    "009": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "009": null,
+  "010": {
+    "011": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 7,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "011": {
+    "012": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 10,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "012": null,
+  "013": {
+    "014": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 7,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "014": {
+    "015": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 10,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "015": null,
+  "016": {
+    "017": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "017": {
+    "018": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "018": null,
+  "019": {
+    "020": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "020": null,
+  "021": {
+    "022": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "022": null,
+  "023": {
+    "024": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "024": null,
+  "025": {
+    "026": {
+      "gender": null,
+      "held_item": null,
+      "item": "thunder-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "026": null,
+  "027": {
+    "028": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "028": null,
+  "029": {
+    "030": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "030": {
+    "031": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "031": null,
+  "032": {
+    "033": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "033": {
+    "034": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "034": null,
+  "035": {
+    "036": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "036": null,
+  "037": {
+    "038": {
+      "gender": null,
+      "held_item": null,
+      "item": "fire-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "038": null,
+  "039": {
+    "040": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "040": null,
+  "041": {
+    "042": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "042": {
+    "169": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "043": {
+    "044": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 21,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "044": {
+    "045": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "182": {
+      "gender": null,
+      "held_item": null,
+      "item": "sun-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "045": null,
+  "046": {
+    "047": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 24,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "047": null,
+  "048": {
+    "049": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 31,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "049": null,
+  "050": {
+    "051": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 26,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "051": null,
+  "052": {
+    "053": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "053": null,
+  "054": {
+    "055": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 33,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "055": null,
+  "056": {
+    "057": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "057": null,
+  "058": {
+    "059": {
+      "gender": null,
+      "held_item": null,
+      "item": "fire-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "059": null,
+  "060": {
+    "061": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "061": {
+    "062": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "186": {
+      "gender": null,
+      "held_item": "kings-rock",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "062": null,
+  "063": {
+    "064": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "064": {
+    "065": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "065": null,
+  "066": {
+    "067": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "067": {
+    "068": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "068": null,
+  "069": {
+    "070": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 21,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "070": {
+    "071": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "071": null,
+  "072": {
+    "073": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "073": null,
+  "074": {
+    "075": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "075": {
+    "076": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "076": null,
+  "077": {
+    "078": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "078": null,
+  "079": {
+    "080": {
+      "gender": null,
+      "held_item": "kings-rock",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "080": null,
+  "081": {
+    "082": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "082": {
+    "462": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "083": null,
+  "084": {
+    "085": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 31,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "085": null,
+  "086": {
+    "087": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "087": null,
+  "088": {
+    "089": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 38,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "089": null,
+  "090": {
+    "091": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "091": null,
+  "092": {
+    "093": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "093": {
+    "094": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "094": null,
+  "095": {
+    "208": {
+      "gender": null,
+      "held_item": "metal-coat",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "096": {
+    "097": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 26,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "097": null,
+  "098": {
+    "099": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "099": null,
+  "100": {
+    "101": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "101": null,
+  "102": {
+    "103": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "103": null,
+  "104": {
+    "105": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "105": null,
+  "106": null,
+  "107": null,
+  "108": {
+    "463": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "rollout",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "109": {
+    "110": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "110": null,
+  "111": {
+    "112": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 42,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "112": {
+    "464": {
+      "gender": null,
+      "held_item": "protector",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "113": {
+    "242": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "114": {
+    "465": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "ancientpower",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "115": null,
+  "116": {
+    "117": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "117": {
+    "230": {
+      "gender": null,
+      "held_item": "dragon-scale",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "118": {
+    "119": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 33,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "119": null,
+  "120": {
+    "121": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "121": null,
+  "122": null,
+  "123": {
+    "212": {
+      "gender": null,
+      "held_item": "metal-coat",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "124": null,
+  "125": {
+    "466": {
+      "gender": null,
+      "held_item": "electirizer",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "126": {
+    "467": {
+      "gender": null,
+      "held_item": "magmarizer",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "127": null,
+  "128": null,
+  "129": {
+    "130": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "130": null,
+  "131": null,
+  "132": null,
+  "133": {
+    "134": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "136": {
+      "gender": null,
+      "held_item": null,
+      "item": "fire-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "135": {
+      "gender": null,
+      "held_item": null,
+      "item": "thunder-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "470": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "196": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 220,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "197": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 220,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "471": {
+      "gender": null,
+      "held_item": null,
+      "item": "ice-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "134": null,
+  "135": null,
+  "136": null,
+  "137": {
+    "233": {
+      "gender": null,
+      "held_item": "up-grade",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "138": {
+    "139": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "139": null,
+  "140": {
+    "141": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "141": null,
+  "142": null,
+  "143": null,
+  "144": null,
+  "145": null,
+  "146": null,
+  "147": {
+    "148": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "148": {
+    "149": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 55,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "149": null,
+  "150": null,
+  "151": null,
+  "152": {
+    "153": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "153": {
+    "154": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "154": null,
+  "155": {
+    "156": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 14,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "156": {
+    "157": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "157": null,
+  "158": {
+    "159": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "159": {
+    "160": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "160": null,
+  "161": {
+    "162": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 15,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "162": null,
+  "163": {
+    "164": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "164": null,
+  "165": {
+    "166": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "166": null,
+  "167": {
+    "168": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "168": null,
+  "169": null,
+  "170": {
+    "171": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 27,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "171": null,
+  "172": {
+    "025": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 220,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "173": {
+    "035": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "174": {
+    "039": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "175": {
+    "176": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "176": {
+    "468": {
+      "gender": null,
+      "held_item": null,
+      "item": "shiny-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "177": {
+    "178": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "178": null,
+  "179": {
+    "180": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 15,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "180": {
+    "181": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "181": null,
+  "182": null,
+  "183": {
+    "184": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "184": null,
+  "185": null,
+  "186": null,
+  "187": {
+    "188": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "188": {
+    "189": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 27,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "189": null,
+  "190": {
+    "424": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "doublehit",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "191": {
+    "192": {
+      "gender": null,
+      "held_item": null,
+      "item": "sun-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "192": null,
+  "193": {
+    "469": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "ancientpower",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "194": {
+    "195": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "195": null,
+  "196": null,
+  "197": null,
+  "198": {
+    "430": {
+      "gender": null,
+      "held_item": null,
+      "item": "dusk-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "199": null,
+  "200": {
+    "429": {
+      "gender": null,
+      "held_item": null,
+      "item": "dusk-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "201": null,
+  "202": null,
+  "203": null,
+  "204": {
+    "205": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 31,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "205": null,
+  "206": null,
+  "207": {
+    "472": {
+      "gender": null,
+      "held_item": "razor-fang",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "night",
+      "trade_species": null
+    }
+  },
+  "208": null,
+  "209": {
+    "210": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 23,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "210": null,
+  "211": null,
+  "212": null,
+  "213": null,
+  "214": null,
+  "215": {
+    "461": {
+      "gender": null,
+      "held_item": "razor-claw",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "night",
+      "trade_species": null
+    }
+  },
+  "216": {
+    "217": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "217": null,
+  "218": {
+    "219": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 38,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "219": null,
+  "220": {
+    "221": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 33,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "221": {
+    "473": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "ancientpower",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "222": null,
+  "223": {
+    "224": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "224": null,
+  "225": null,
+  "226": null,
+  "227": null,
+  "228": {
+    "229": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 24,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "229": null,
+  "230": null,
+  "231": {
+    "232": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "232": null,
+  "233": {
+    "474": {
+      "gender": null,
+      "held_item": "dubious-disc",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "234": null,
+  "235": null,
+  "236": {
+    "106": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "107": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "237": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "237": null,
+  "238": {
+    "124": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "239": {
+    "125": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "240": {
+    "126": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "241": null,
+  "242": null,
+  "243": null,
+  "244": null,
+  "245": null,
+  "246": {
+    "247": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "247": {
+    "248": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 55,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "248": null,
+  "249": null,
+  "250": null,
+  "251": null,
+  "252": {
+    "253": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "253": {
+    "254": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "254": null,
+  "255": {
+    "256": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "256": {
+    "257": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "257": null,
+  "258": {
+    "259": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "259": {
+    "260": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "260": null,
+  "261": {
+    "262": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "262": null,
+  "263": {
+    "264": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "264": null,
+  "265": {
+    "266": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 7,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "268": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 7,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "266": {
+    "267": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 10,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "267": null,
+  "268": null,
+  "269": null,
+  "270": {
+    "271": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 14,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "271": {
+    "272": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "272": null,
+  "273": {
+    "274": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 14,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "274": {
+    "275": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "275": null,
+  "276": {
+    "277": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "277": null,
+  "278": {
+    "279": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "279": null,
+  "280": {
+    "281": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "281": {
+    "282": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "475": {
+      "gender": "m",
+      "held_item": null,
+      "item": "dawn-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "282": null,
+  "283": {
+    "284": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "284": null,
+  "285": {
+    "286": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 23,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "286": null,
+  "287": {
+    "288": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "288": {
+    "289": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "289": null,
+  "290": {
+    "291": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "291": null,
+  "292": null,
+  "293": {
+    "294": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "294": {
+    "295": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "295": null,
+  "296": {
+    "297": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 24,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "297": null,
+  "298": {
+    "183": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "299": {
+    "476": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "300": {
+    "301": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "301": null,
+  "302": null,
+  "303": null,
+  "304": {
+    "305": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "305": {
+    "306": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 42,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "306": null,
+  "307": {
+    "308": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "308": null,
+  "309": {
+    "310": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 26,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "310": null,
+  "311": null,
+  "312": null,
+  "313": null,
+  "314": null,
+  "315": {
+    "407": {
+      "gender": null,
+      "held_item": null,
+      "item": "shiny-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "316": {
+    "317": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 26,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "317": null,
+  "318": {
+    "319": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "319": null,
+  "320": {
+    "321": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "321": null,
+  "322": {
+    "323": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 33,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "323": null,
+  "324": null,
+  "325": {
+    "326": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "326": null,
+  "327": null,
+  "328": {
+    "329": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "329": {
+    "330": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 45,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "330": null,
+  "331": {
+    "332": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "332": null,
+  "333": {
+    "334": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "334": null,
+  "335": null,
+  "336": null,
+  "337": null,
+  "338": null,
+  "339": {
+    "340": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "340": null,
+  "341": {
+    "342": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "342": null,
+  "343": {
+    "344": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "344": null,
+  "345": {
+    "346": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "346": null,
+  "347": {
+    "348": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "348": null,
+  "349": {
+    "350": {
+      "gender": null,
+      "held_item": "prism-scale",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "350": null,
+  "351": null,
+  "352": null,
+  "353": {
+    "354": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "354": null,
+  "355": {
+    "356": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "356": {
+    "477": {
+      "gender": null,
+      "held_item": "reaper-cloth",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "357": null,
+  "358": null,
+  "359": null,
+  "360": {
+    "202": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 15,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "361": {
+    "362": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 42,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "478": {
+      "gender": "f",
+      "held_item": null,
+      "item": "dawn-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "362": null,
+  "363": {
+    "364": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "364": {
+    "365": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 44,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "365": null,
+  "366": {
+    "367": {
+      "gender": null,
+      "held_item": "deep-sea-tooth",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "368": {
+      "gender": null,
+      "held_item": "deep-sea-scale",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "367": null,
+  "368": null,
+  "369": null,
+  "370": null,
+  "371": {
+    "372": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "372": {
+    "373": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 50,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "373": null,
+  "374": {
+    "375": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "375": {
+    "376": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 45,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "376": null,
+  "377": null,
+  "378": null,
+  "379": null,
+  "380": null,
+  "381": null,
+  "382": null,
+  "383": null,
+  "384": null,
+  "385": null,
+  "386": null,
+  "387": {
+    "388": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 18,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "388": {
+    "389": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "389": null,
+  "390": {
+    "391": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 14,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "391": {
+    "392": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "392": null,
+  "393": {
+    "394": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "394": {
+    "395": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "395": null,
+  "396": {
+    "397": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 14,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "397": {
+    "398": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "398": null,
+  "399": {
+    "400": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 15,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "400": null,
+  "401": {
+    "402": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 10,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "402": null,
+  "403": {
+    "404": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 15,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "404": {
+    "405": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "405": null,
+  "406": {
+    "315": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "day",
+      "trade_species": null
+    }
+  },
+  "407": null,
+  "408": {
+    "409": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "409": null,
+  "410": {
+    "411": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "411": null,
+  "412": {
+    "413": {
+      "gender": "f",
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    },
+    "414": {
+      "gender": "m",
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "413": null,
+  "414": null,
+  "415": {
+    "416": {
+      "gender": "f",
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 21,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "416": null,
+  "417": null,
+  "418": {
+    "419": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 26,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "419": null,
+  "420": {
+    "421": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "421": null,
+  "422": {
+    "423": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "423": null,
+  "424": null,
+  "425": {
+    "426": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 28,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "426": null,
+  "427": {
+    "428": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "428": null,
+  "429": null,
+  "430": null,
+  "431": {
+    "432": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 38,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "432": null,
+  "433": {
+    "358": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 220,
+      "min_level": null,
+      "time_of_day": "night",
+      "trade_species": null
+    }
+  },
+  "434": {
+    "435": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "435": null,
+  "436": {
+    "437": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 33,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "437": null,
+  "438": {
+    "185": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "mimic",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "439": {
+    "122": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": "mimic",
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "440": {
+    "113": {
+      "gender": null,
+      "held_item": "oval-stone",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "day",
+      "trade_species": null
+    }
+  },
+  "441": null,
+  "442": null,
+  "443": {
+    "444": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 24,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "444": {
+    "445": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 48,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "445": null,
+  "446": {
+    "143": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "447": {
+    "448": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "day",
+      "trade_species": null
+    }
+  },
+  "448": null,
+  "449": {
+    "450": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "450": null,
+  "451": {
+    "452": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "452": null,
+  "453": {
+    "454": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "454": null,
+  "455": null,
+  "456": {
+    "457": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 31,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "457": null,
+  "458": {
+    "226": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "459": {
+    "460": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "460": null,
+  "461": null,
+  "462": null,
+  "463": null,
+  "464": null,
+  "465": null,
+  "466": null,
+  "467": null,
+  "468": null,
+  "469": null,
+  "470": null,
+  "471": null,
+  "472": null,
+  "473": null,
+  "474": null,
+  "475": null,
+  "476": null,
+  "477": null,
+  "478": null,
+  "479": null,
+  "480": null,
+  "481": null,
+  "482": null,
+  "483": null,
+  "484": null,
+  "485": null,
+  "486": null,
+  "487": null,
+  "488": null,
+  "489": null,
+  "490": null,
+  "491": null,
+  "492": null,
+  "493": null,
+  "494": null,
+  "495": {
+    "496": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 17,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "496": {
+    "497": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "497": null,
+  "498": {
+    "499": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 17,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "499": {
+    "500": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "500": null,
+  "501": {
+    "502": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 17,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "502": {
+    "503": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "503": null,
+  "504": {
+    "505": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "505": null,
+  "506": {
+    "507": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 16,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "507": {
+    "508": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "508": null,
+  "509": {
+    "510": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "510": null,
+  "511": {
+    "512": {
+      "gender": null,
+      "held_item": null,
+      "item": "leaf-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "512": null,
+  "513": {
+    "514": {
+      "gender": null,
+      "held_item": null,
+      "item": "fire-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "514": null,
+  "515": {
+    "516": {
+      "gender": null,
+      "held_item": null,
+      "item": "water-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "516": null,
+  "517": {
+    "518": {
+      "gender": null,
+      "held_item": null,
+      "item": "moon-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "518": null,
+  "519": {
+    "520": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 21,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "520": {
+    "521": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "521": null,
+  "522": {
+    "523": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 27,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "523": null,
+  "524": {
+    "525": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "525": {
+    "526": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "526": null,
+  "527": {
+    "528": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 160,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "528": null,
+  "529": {
+    "530": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 31,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "530": null,
+  "531": null,
+  "532": {
+    "533": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "533": {
+    "534": {
+      "gender": null,
+      "held_item": "",
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "534": null,
+  "535": {
+    "536": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 25,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "536": {
+    "537": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "537": null,
+  "538": null,
+  "539": null,
+  "540": {
+    "541": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 20,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "541": {
+    "542": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": 220,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "542": null,
+  "543": {
+    "544": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 22,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "544": {
+    "545": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "545": null,
+  "546": {
+    "547": {
+      "gender": null,
+      "held_item": null,
+      "item": "sun-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "547": null,
+  "548": {
+    "549": {
+      "gender": null,
+      "held_item": null,
+      "item": "sun-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "549": null,
+  "550": null,
+  "551": {
+    "552": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 29,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "552": {
+    "553": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "553": null,
+  "554": {
+    "555": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "555": null,
+  "556": null,
+  "557": {
+    "558": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "558": null,
+  "559": {
+    "560": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 39,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "560": null,
+  "561": null,
+  "562": {
+    "563": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "563": null,
+  "564": {
+    "565": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "565": null,
+  "566": {
+    "567": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "567": null,
+  "568": {
+    "569": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "569": null,
+  "570": {
+    "571": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 30,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "571": null,
+  "572": {
+    "573": {
+      "gender": null,
+      "held_item": null,
+      "item": "shiny-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "573": null,
+  "574": {
+    "575": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "575": {
+    "576": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 41,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "576": null,
+  "577": {
+    "578": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 32,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "578": {
+    "579": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 41,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "579": null,
+  "580": {
+    "581": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "581": null,
+  "582": {
+    "583": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 35,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "583": {
+    "584": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 47,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "584": null,
+  "585": {
+    "586": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 34,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "586": null,
+  "587": null,
+  "588": {
+    "589": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": "shelmet"
+    }
+  },
+  "589": null,
+  "590": {
+    "591": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 39,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "591": null,
+  "592": {
+    "593": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "593": null,
+  "594": null,
+  "595": {
+    "596": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 36,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "596": null,
+  "597": {
+    "598": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 40,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "598": null,
+  "599": {
+    "600": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 38,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "600": {
+    "601": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 49,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "601": null,
+  "602": {
+    "603": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 39,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "603": {
+    "604": {
+      "gender": null,
+      "held_item": null,
+      "item": "thunder-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "604": null,
+  "605": {
+    "606": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 42,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "606": null,
+  "607": {
+    "608": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 41,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "608": {
+    "609": {
+      "gender": null,
+      "held_item": null,
+      "item": "dusk-stone",
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "609": null,
+  "610": {
+    "611": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 38,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "611": {
+    "612": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 48,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "612": null,
+  "613": {
+    "614": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 37,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "614": null,
+  "615": null,
+  "616": {
+    "617": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": null,
+      "time_of_day": "",
+      "trade_species": "karrablast"
+    }
+  },
+  "617": null,
+  "618": null,
+  "619": {
+    "620": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 50,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "620": null,
+  "621": null,
+  "622": {
+    "623": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 43,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "623": null,
+  "624": {
+    "625": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 52,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "625": null,
+  "626": null,
+  "627": {
+    "628": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 54,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "628": null,
+  "629": {
+    "630": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 54,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "630": null,
+  "631": null,
+  "632": null,
+  "633": {
+    "634": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 50,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "634": {
+    "635": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 64,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "635": null,
+  "636": {
+    "637": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 59,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
+  "637": null,
+  "638": null,
+  "639": null,
+  "640": null,
+  "641": null,
+  "642": null,
+  "643": null,
+  "644": null,
+  "645": null,
+  "646": null,
+  "647": null,
+  "648": null,
+  "649": null
+}

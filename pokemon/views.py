@@ -36,6 +36,7 @@ def make(request):
 
 
 
+@login_required
 def pokemon(request):
     """
     Get the detailed view for a single Pokemon
@@ -100,6 +101,7 @@ def pokemon(request):
     return render(request, "pokemon/detailed.html", html_render_variables)
 
 
+@login_required
 def pokecenter(request):
     html_render_variables = {
         "swarm_dex": "100",
@@ -110,6 +112,7 @@ def pokecenter(request):
     return render(request, "pokemon/pokecenter.html", html_render_variables)
 
 
+@login_required
 def pokecenter_heal(request):
     # Check if user is eligible for heal
     if request.user.profile.state == "idle":
@@ -119,7 +122,3 @@ def pokecenter_heal(request):
         return JsonResponse({"msg": "Your party has been healed!"})
     else:
         return JsonResponse({"msg": "You cannot heal in a battle!"})
-def pokemart(request):
-    html_render_variables = {
-    }
-    return render(request, "pokemon/pokemart.html", html_render_variables)

@@ -1,9 +1,12 @@
 /* Colour palette */
 :root {
-    --bg: rgb(188, 235, 255);
+    --bg: rgb(31,119,180);
     --main: rgb(247, 242, 232);
     --content: rgb(247, 252, 255);
     --card: rgb(225, 236, 239);
+
+    --menu-hover: rgb(214,39,40);
+    --menu: rgb(255, 100, 29);
 
     --forward: rgb(167, 249, 162);
     --back: rgb(244, 182, 182);
@@ -46,32 +49,64 @@ a {
     text-decoration: none;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    display: flex;
+.navigation {
+    background-color: var(--menu);
 }
-
-li {
-    float: left;
-    flex: 1;
-}
-
-li a {
-    display: block;
+.dropbtn {
+    background-color: var(--menu);
     color: white;
-    text-align: center;
-    padding: 14px 16px;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin: 4px;
+    border-radius: 4px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    background-color: var(--content);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    transition: visibility 0s, opacity 0.1s linear;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
     text-decoration: none;
+    display: block;
+    font-size: 14px;
 }
 
-/* Change the link color on hover */
-li a:hover {
-    background-color: #555;
-    color: white;
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    transition: all linear 0.1s;
+    background-color: var(--hover);
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    transition: visibility 0s, opacity 0.2s linear;
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    transition: visibility 0s, opacity 0.2s linear;
+    background-color: var(--menu-hover);
 }
 
 optgroup {
