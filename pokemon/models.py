@@ -247,7 +247,8 @@ class Pokemon(models.Model):
             "stats": {
                 stat: getattr(self, "{}_stat".format(stat)) for stat in consts.STATS
             },
-            "id": self.pk
+            "id": self.pk,
+            "name": self.name
         }
 
     def get_party_info(self):

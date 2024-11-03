@@ -26,6 +26,8 @@ with open(os.path.join(ASSETS_PATH, "data", "evolutions.json")) as evo:
     EVOLUTIONS = json.load(evo)
 with open(os.path.join(ASSETS_PATH, "data", "items.json"), encoding="utf-8") as items:
     ITEMS = json.load(items)
+with open(os.path.join(ASSETS_PATH, "data", "item_usage.json"), encoding="utf-8") as item_usage:
+    ITEM_USAGE = json.load(item_usage)
 
 # Asset paths
 ASSET_PATHS = {
@@ -142,4 +144,20 @@ GYM_LEADERS = {
     "psychic": {"npc": "caitlin", "name": "Caitlin", "reg": "281", "elite": "579", "level": 70},
     "steel": {"npc": "steven", "name": "Steven", "reg": "305", "elite": "376", "level": 77},
     "dragon": {"npc": "clair", "name": "Clair", "reg": "148", "elite": "445", "level": 84}
+}
+
+STAT_BOOSTS = {
+    6: 4,
+    5: 3.5,
+    4: 3,
+    3: 2.5,
+    2: 2,
+    1: 1.5,
+    0: 1,
+    -1: 2/3,
+    -2: 2/4,
+    -3: 2/5,
+    -4: 2/6,
+    -5: 2/7,
+    -6: 2/8
 }

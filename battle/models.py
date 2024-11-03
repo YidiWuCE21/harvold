@@ -8,6 +8,15 @@ from pokemon.models import Pokemon
 from accounts.models import Profile
 from harvoldsite import consts
 
+from .battle_manager import BattleState
+
+
+BATTLE_TYPES = [
+    ("live", "Live Battle"),
+    ("wild", "Wild Battle"),
+    ("npc", "Trainer Battle")
+]
+
 
 def create_battle(p1_id, p2_id, type, ai="default"):
     """
@@ -16,39 +25,26 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     A team should never enter battle fully knocked out. If a team is in a knocked out state, it is
     a bug and it is safe to full restore the team before starting the battle.
     """
+    player_state = {
+        "current_pokemon": 0,
+        "contributors": [],
+        "stat_boosts": [],
+        "entry_hazards": [],
+        "confusion": False,
+        "locked_moves": [],
+        "defense_active": [],
+        "tailwind": None,
+        "name": None
+    }
     battle_state = {
-        "current_pokemon": {
-            "player_1": None,
-            "player_2": None
-        },
-        "stat_boosts": {
-            "player_1": [0, 0, 0, 0, 0, 0, 0],
-            "player_2": [0, 0, 0, 0, 0, 0, 0],
-        },
-        "entry_hazards": {
-            "player_1": [],
-            "player_2": []
-        },
+        "player_1": player_state.copy(),
+        "player_2": player_state.copy(),
         "weather": None,
         "weather_turns": 0,
-        "confusion": {
-            "player_1": False,
-            "player_2": False,
-        },
         "terrain": None,
-        "ai": None,
-        # Used for thrash, taunt, truant, giga impact, etc.
-        "locked_moves": {
-            "player_1": [],
-            "player_2": []
-        },
-        # Used for protect, endure, etc.
-        "defense_active": {
-            "player_1": None,
-            "player_2": None,
-        },
         "outcome": None,
-        "escapes": 0
+        "type": type,
+        "trick_room": None,
     }
 
     # Attempt to finder player 1 and team data
@@ -56,7 +52,8 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     if player_1.current_battle is not None:
         raise ValueError("Player 1 is already in battle!")
     party_1 = player_1.get_party()
-    battle_state["party"] = {"player_1": [pkmn.get_battle_info() for pkmn in party_1]}
+    battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1]
+    battle_state["player_1"]["name"] = player_1.user.username
 
     # Attempt to find opponent and team data
     player_2 = None
@@ -64,20 +61,26 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     wild_opponent = None
     if type == "wild":
         wild_opponent = Pokemon.objects.get(pk=p2_id)
-        battle_state["party"]["player_2"] = [wild_opponent.get_battle_info()]
+        if wild_opponent.original_trainer is not None:
+            raise ValueError("You cannot catch someone else's Pokémon!")
+        battle_state["player_2"]["party"] = [wild_opponent.get_battle_info()]
+        battle_state["escapes"] = 0
+        battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
     elif type == "npc":
-        battle_state["party"]["player_2"] = consts.TRAINERS[p2_id]
+        if p2_id not in consts.TRAINERS:
+            raise KeyError("{} not recognized as a trainer".format(p2_id))
+        battle_state["player_2"]["party"] = consts.TRAINERS[p2_id]["team"]
         npc_opponent = p2_id
+        battle_state["player_2"]["name"] = consts.TRAINERS[p2_id]["name"]
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)
         if player_2.current_battle is not None:
             raise ValueError("Player 2 is already in battle!")
         party_2 = player_2.get_party()
-        battle_state["party"]["player_2"] = [pkmn.get_battle_info() for pkmn in party_2]
+        battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
+        battle_state["player_2"]["name"] = player_2.user.username
     else:
         raise ValueError("Type of battle must be 'wild', 'npc', or 'live'")
-
-    # Set the current Pokemon to be the first
 
     # DB opereations
     battle = Battle(
@@ -110,16 +113,9 @@ def create_battle(p1_id, p2_id, type, ai="default"):
             if player_2 is not None:
                 player_2.current_battle = battle
                 player_2.save()
-    except IntegrityError:
+    except BaseException as e:
         return (False, "Battle creation failed!")
-    return (True, "")
-
-
-BATTLE_TYPES = [
-    ("live", "Live Battle"),
-    ("wild", "Wild Battle"),
-    ("npc", "Trainer Battle")
-]
+    return (True, battle)
 
 
 # Create your models here.
@@ -159,162 +155,17 @@ class Battle(models.Model):
 
     # Time tracking
     battle_start = models.DateTimeField(auto_now_add=True)
-    battle_end = models.DateTimeField(default=None)
+    battle_end = models.DateTimeField(blank=True, null=True, default=None)
     last_move_time = models.DateTimeField(auto_now_add=True)
 
     # Main var for storing important battle stuff
     battle_state = models.JSONField(blank=True, null=True)
 
 
-    def current_pokemon(self, player):
-        pokemon_idx = self.battle_state["current_pokemon"][player]
-        return self.battle_state["party"][pokemon_idx]
-
-
-    def process_battle(self):
-        """
-        Process phase 1 of the battle, up until Pokemon KO. If no pokemon KO, process P2 immediately.
-
-        Function should be called when both players have selected a move. Process the move and clear it from the DB
-        Need on-fail handling, have up to 3 retries
-
-
-        """
-
-        # Stage 1 - Process standard commands
-        # 0) Save the move log
-        output_log = []
-
-        # 1) Check for surrender/run/draw
-        if self.check_surrender():
-            # Add output to log
-            return
-
-        # 2) Check for switch-in/switch-out, and arena trap/shadow tag
-
-        # 3) Check for item usage
-
-        # 4a) Determine move priority
-
-        # 4b) First Pokemon move if alive
-
-        # 4c) Second Pokemon move if alive
-
-        # 5) Apply weather -> item -> status effects
-
-        # 6) Save to both battle and pokemon state tables
-
-        raise NotImplementedError()
-
-
-    def check_surrender(self):
-        """
-        Processes all updates relating to battle end from surrender
-
-        Return True if battle should end
-        """
-        # Attempt to flee wild battle
-        if self.type == "wild":
-            if self.player_1_choice["action"] == "surrender":
-                # Increment escape attempts
-                self.battle_state["escapes"] += 1
-
-                # Calculate escape odds
-                player_speed = self.current_pokemon("player_1")["stats"]["speed"]
-                opponent_speed = self.current_pokemon("player_2")["stats"]["speed"]
-                escape_odds = (int(player_speed * 8 / opponent_speed) + 30 * self.battle_state["escapes"]) / 256
-                escaped = random.randrange(100) < escape_odds * 100
-
-                # Process escape
-                if escaped:
-                    # Delete opponent Pokemon
-                    self.wild_opponent.delete()
-
-                    # Update battle
-                    self.status = "ended"
-                    self.battle_end = datetime.utcnow()
-                    self.save()
-                    return True
-                else:
-                    return False
-
-            else:
-                # Reset escape attempts
-                self.battle_state["escapes"] = 0
-                return False
-
-        # Surrender a trainer battle
-        elif self.type == "trainer":
-            if self.player_1_choice["action"] == "surrender":
-                # Full heal team
-                for pkmn in self.player_1.get_party():
-                    pkmn.full_heal()
-
-                # Deduct pokedollars
-
-                # Set status and battle end
-                self.status = "loss"
-                self.battle_end = datetime.utcnow()
-                self.save()
-                return True
-            else:
-                return False
-
-        # Surrender a live battle
-        elif self.type == "live":
-            # Both surrender
-            if self.player_1_choice["action"] == "surrender" and self.player_2_choice["action"] == "surrender":
-                print()
-            # P1 surrenders
-            elif self.player_1_choice["action"] == "surrender":
-                print()
-            # P2 surrenders
-            elif self.player_2_choice["action"] == "surrender":
-                print()
-            else:
-                return False
-
-
-
-def process_switch():
-    """
-    If Pokemon is KO'd, process switch here
-    """
-    raise NotImplementedError()
-    # Stage 2 - Check if Pokemon are knocked out; can be by entry hazards, moves, etc.
-
-    # 1) Check for battle end; one or both teams are fully knocked out; send rewards if so
-
-    # 2) Prompt owners of KO'd Pokemon to switch
-
-
-def check_winner():
-    raise NotImplementedError()
-
-
-def check_priority():
-    """
-    Determine which move has priority if two are selected
-    """
-    raise NotImplementedError()
-
-
-def process_move():
-    # Check that user is not knocked out
-    # Check for protection
-    # Calculate damage
-    # Calculate self-damage
-    # Roll for status effects
-    # Apply boosts
-    raise NotImplementedError()
-
-
-def switch_in():
-    # Set chosen pokemon as switched in
-    # Apply entry hazards
-    # Apply switch-in abilities
-    raise NotImplementedError()
-
-def switch_out():
-    #
-    raise NotImplementedError()
+    def get_battle_state(self):
+        battle_state = self.battle_state
+        for pkmn in battle_state["player_1"]["party"]:
+            pkmn["dex_number"] = str(pkmn["dex_number"]).zfill(3)
+        for pkmn in battle_state["player_2"]["party"]:
+            pkmn["dex_number"] = str(pkmn["dex_number"]).zfill(3)
+        return battle_state

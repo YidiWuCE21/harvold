@@ -54,7 +54,7 @@ class Profile(models.Model):
     # Administrative fields
     user = models.OneToOneField(
         get_user_model(),
-        on_delete=models.CASCADE,
+        on_delete=models.CASCADE
     )
     banned = models.BooleanField(default=False)
 

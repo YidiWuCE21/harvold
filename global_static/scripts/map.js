@@ -11,6 +11,7 @@ const movespeed = 2;
 const tile_width = 16;
 const maxSteps = 500;
 const minSteps = 150;
+const defaultLedgeFrames = 16;
 
 // Variables loaded from JSON
 let mapWidth = 0;
@@ -30,6 +31,7 @@ let timeOfDay = 'night';
 // Variables declared for collision logic
 let offset = {};
 let boundaries = [];
+let ledges = [];
 let waterMap = [];
 let waterTiles = [];
 let maplinkMap = [];
@@ -57,6 +59,7 @@ let foreground = null;
 
 let movables = [];
 let statics = [];
+let nonCameraStatics = [];
 let stopTravel = false;
 
 let mapLoad = true;
@@ -70,6 +73,8 @@ let steps = 10;
 
 let wildShow = null;
 let wildHide = null;
+let ledgeActive = null;
+let ledgeFrames = defaultLedgeFrames;
 
 
 // Player sprite constants
@@ -132,6 +137,9 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     document.getElementById("map-name").innerHTML = currentData.map_name;
     // Reset relevant vars
     boundaries = [];
+    ledges = [];
+
+
     waterMap = [];
     waterTiles = [];
     maplinkMap = [];
@@ -150,12 +158,9 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     mapHeight = currentData.mapHeight;
     mapWidth = currentData.mapWidth;
     default_offset = currentData.default_offset;
-    console.log("Data")
-    console.log(currentData)
     if (Object.keys(forcedOffset).length === 0) {
         offset = default_offset;
     } else {
-        console.log("forced")
         offset = forcedOffset;
     }
     offset.x = offset.x * tile_width;
@@ -171,6 +176,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
 
     // Set the statics new positions
     statics = [player, surfer, surf, camera];
+    nonCameraStatics = [player, surfer, surf];
     statics.forEach((static) => {
         static.position.x = offset.x;
         static.position.y = offset.y;
@@ -194,11 +200,23 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
 
     collisionsMap.forEach((row, i) => {
         row.forEach((col, j) => {
-            if (col != 0)
+            if (col != 0) {
                 boundaries.push(new Boundary({position: {
                     x: j * tile_width,
                     y: i * tile_width
                 }}))
+            }
+            if (col > 1 && col < 5) {
+                // 2 is down ledge, 3 is left ledge, 4 is right ledge
+                ledges.push(new Boundary({
+                    position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    },
+                    value: col
+                }))
+            }
+
         })
     })
 
@@ -304,7 +322,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
         image: mapForeground
     });
     // Create movables
-    movables = [background, foreground, ...boundaries, ...waterTiles, ...maplinkTiles];
+    movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles];
     mapLoad = false;
 }
 
@@ -447,6 +465,66 @@ function animate(looped = true) {
         applyFilter();
         return;
     }
+    if (ledgeActive != null) {
+        player.moving = true;
+        if (background)
+            background.draw(cappedCamera);
+        if (surfing) {
+            surf.draw(cappedCamera);
+            surfer.draw(cappedCamera);
+        } else {
+            player.draw(cappedCamera);
+        }
+        // Jump animation
+        console.log(ledgeFrames);
+        if (ledgeFrames > 10) {
+            console.log('up');
+            nonCameraStatics.forEach(movable => {movable.position.y -= 2});
+        } else if (ledgeFrames < 7) {
+            console.log('down');
+            nonCameraStatics.forEach(movable => {movable.position.y += 2});
+        }
+        switch(ledgeActive) {
+            case "in":
+                player.rows.val = 2;
+                surf.rows.val = 3;
+                surfer.rows.val = 2;
+                break;
+            case "north":
+
+                player.rows.val = 2;
+                surf.rows.val = 3;
+                surfer.rows.val = 2;
+                break;
+            case "south":
+                statics.forEach(movable => {movable.position.y += movespeed});
+                player.rows.val = 0;
+                surf.rows.val = 0;
+                surfer.rows.val = 0;
+                break;
+            case "east":
+                statics.forEach(movable => {movable.position.x += movespeed});
+                player.rows.val = 3;
+                surf.rows.val = 2;
+                surfer.rows.val = 3;
+                break;
+            case "west":
+                statics.forEach(movable => {movable.position.x -= movespeed});
+                player.rows.val = 1;
+                surf.rows.val = 1;
+                surfer.rows.val = 1;
+                break;
+        }
+        foreground.draw(cappedCamera);
+        applyFilter();
+        ledgeFrames -= 1;
+        if (ledgeFrames == 0) {
+            ledgeFrames = defaultLedgeFrames;
+            ledgeActive = null;
+        }
+
+        return;
+    }
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.draw(cappedCamera);
@@ -494,6 +572,10 @@ function animate(looped = true) {
         player.draw(cappedCamera);
     }
     foreground.draw(cappedCamera);
+    for (let i = 0; i < ledges.length; i++) {
+        const ledge = ledges[i];
+        ledge.draw(cappedCamera);
+    }
 
     // Manage enter events
     if (keys.enter.pressed) {
@@ -514,7 +596,6 @@ function animate(looped = true) {
                     // Play the map travel animation
                     player.moving = true;
                     travelDir = maplinkTile.direction;
-                    console.log(newMap);
                     // Use current position to overwrite positional offset
                     if ("posOffset" in newMap) {
                         newMap["playerOffset"] = {};
@@ -537,6 +618,8 @@ function animate(looped = true) {
     player.moving = false;
     surf.moving = true;
     surfer.moving = true;
+    ledgeActive = null;
+
 
     // Movement logic
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
@@ -544,6 +627,8 @@ function animate(looped = true) {
         player.rows.val = 2;
         surf.rows.val = 3;
         surfer.rows.val = 2;
+
+        // Collisions
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
             if (
@@ -567,6 +652,24 @@ function animate(looped = true) {
         player.rows.val = 1;
         surf.rows.val = 1;
         surfer.rows.val = 1;
+        // Check ledges first
+        for (let i = 0; i < ledges.length; i++) {
+            const ledge = ledges[i];
+            if (ledge.value == 3) {
+                if (
+                    rectangularCollision({
+                        rectangle1: player,
+                        rectangle2: {...ledge, position: {
+                            x: ledge.position.x + movespeed,
+                            y: ledge.position.y
+                        }}
+                    })
+                ) {
+                    ledgeActive = 'west';
+                    break;
+                }
+            }
+        }
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
             if (
@@ -590,6 +693,24 @@ function animate(looped = true) {
         player.rows.val = 0;
         surf.rows.val = 0;
         surfer.rows.val = 0;
+        // Check ledges first
+        for (let i = 0; i < ledges.length; i++) {
+            const ledge = ledges[i];
+            if (ledge.value == 2) {
+                if (
+                    rectangularCollision({
+                        rectangle1: player,
+                        rectangle2: {...ledge, position: {
+                            x: ledge.position.x,
+                            y: ledge.position.y - movespeed
+                        }}
+                    })
+                ) {
+                    ledgeActive = 'south';
+                    break;
+                }
+            }
+        }
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
             if (
@@ -613,6 +734,24 @@ function animate(looped = true) {
         player.rows.val = 3;
         surf.rows.val = 2;
         surfer.rows.val = 3;
+        // Check ledges first
+        for (let i = 0; i < ledges.length; i++) {
+            const ledge = ledges[i];
+            if (ledge.value == 4) {
+                if (
+                    rectangularCollision({
+                        rectangle1: player,
+                        rectangle2: {...ledge, position: {
+                            x: ledge.position.x - movespeed,
+                            y: ledge.position.y
+                        }}
+                    })
+                ) {
+                    ledgeActive = 'east';
+                    break;
+                }
+            }
+        }
         for (let i = 0; i < boundaries.length; i++) {
             const boundary = boundaries[i];
             if (

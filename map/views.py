@@ -16,7 +16,8 @@ from pokemon.models import create_pokemon
 
 @login_required
 def map(request):
-    map = request.POST.get("map", "oak_village")
+    default_map = request.user.profile.current_map
+    map = request.POST.get("map", default_map)
     if map not in consts.MAPS:
         return HttpResponseNotFound("Invalid map")
     with open(os.path.join(consts.ASSETS_PATH, "data", "maps", "{}.json".format(map))) as map_file:
