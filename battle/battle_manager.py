@@ -90,10 +90,17 @@ class BattleState:
         # Priority modifiers
         if p1_priority != p2_priority:
             return p1_priority > p2_priority
-        # Trick room check
         p1_speed = self.get_speed(self.player_1)
         p2_speed = self.get_speed(self.player_2)
+        # Speed tie
+        if p1_speed == p2_speed:
+            return bool(random.getrandbits(1))
+        # Trick room check
+        if self.trick_room:
+            return p1_speed < p2_speed
         # Speed compare
+        else:
+            return p1_speed > p2_speed
 
 
 
@@ -194,16 +201,24 @@ class BattleState:
                 self.output.append({"text": "You cannot catch Pokémon in a trainer battle!"})
                 return False
             wild_pokemon = user.opponent.get_current_pokemon()
+            if wild_pokemon.current_hp == 0:
+                self.output.append({"text": "You cannot catch a fainted Pokémon!"})
+                return False
             self.output.append({"text": "You threw a {}".format(item), "anim": ["throw_{}".format(item)]})
 
             # Check catch
             ball_bonus = item_data["catch_rate"]
             status_bonus = 2.5 if wild_pokemon.status in ["slp", "frz"] else 1.5 if wild_pokemon.status in ["par", "psn", "brn", "txc"] else 1
             catch_chance = (3 * wild_pokemon.hp - 2 * wild_pokemon.current_hp) / (3 * wild_pokemon.hp) * 4096 * \
-                           consts.POKEMON[wild_pokemon.dex]["catch_rate"] * ball_bonus * status_bonus
-            shake_chance = int(65536) * (4 ** (1044480 / catch_chance))
+                           int(consts.POKEMON[wild_pokemon.dex]["capture_rate"]) * ball_bonus * status_bonus
+            shake_chance = int(65536) * (catch_chance / 1044480) ** (1/4)
+            # Master ball
+            if item == "master-ball":
+                self.output.append({"text": "You have caught the wild {}!".format(wild_pokemon.name), "anim": "caught"})
+                self.outcome = "caught"
+                return True
             # Check shakes
-            for i in range(4):
+            for i in range(3):
                 if random.randrange(65535) > shake_chance:
                     self.output.append({"text": "The wild {} escaped!".format(wild_pokemon.name), "anim": "escape_ball"})
                     return False
@@ -301,7 +316,7 @@ class PokemonState:
         self.held_item = pokemon_state["held_item"]
         self.happiness = pokemon_state["happiness"]
         self.ability = pokemon_state["ability"]
-        self.dex_number = pokemon_state["dex_number"]
+        self.dex = pokemon_state["dex_number"]
         self.level = pokemon_state["level"]
         self.shiny = pokemon_state["shiny"]
         self.hp = pokemon_state["stats"]["hp"]

@@ -62,6 +62,9 @@
     },
     "ultra-ball": {
       "catch_rate": 2
+    },
+    "master-ball": {
+      "catch_rate": 1000
     }
   }
 }

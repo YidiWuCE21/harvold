@@ -147,7 +147,7 @@ class TestBattleManager(TestCase):
             "weather_turns": 0,
             "terrain": None,
             "outcome": None,
-            "type": type,
+            "type": "npc",
             "trick_room": None,
         }
         self.std_battle["player_1"]["name"] = "P1"
@@ -274,4 +274,204 @@ class TestBattleManager(TestCase):
         ret = battle.use_item(battle.player_1, "max-potion", 0)
         self.assertFalse(ret)
         self.assertEqual(0, battle.player_1.party[0].current_hp)
+
+    def test_use_cure(self):
+        battle_state = self.std_battle.copy()
+        battle_state["player_1"]["party"] = [
+            self.snorlax.get_battle_info(),
+            self.gengar.get_battle_info()]
+        battle_state["player_2"]["party"] = [
+            self.raticate.get_battle_info(),
+            self.electivire.get_battle_info()]
+        battle = BattleState(battle_state)
+
+        # Test wrong status
+        battle.player_1.party[0].status = "par"
+        ret = battle.use_item(battle.player_1, "antidote", 0)
+        self.assertFalse(ret)
+        self.assertEqual("par", battle.player_1.party[0].status)
+
+        # Test right status
+        battle.player_1.party[0].status = "psn"
+        ret = battle.use_item(battle.player_1, "antidote", 0)
+        self.assertFalse(ret)
+        self.assertIsNone(battle.player_1.party[0].status)
+
+        # Test right status
+        battle.player_1.party[0].status = "txc"
+        ret = battle.use_item(battle.player_1, "antidote", 0)
+        self.assertFalse(ret)
+        self.assertIsNone(battle.player_1.party[0].status)
+
+        # Test full heal
+        battle.player_1.party[0].status = "par"
+        ret = battle.use_item(battle.player_1, "full-heal", 0)
+        self.assertFalse(ret)
+        self.assertIsNone(battle.player_1.party[0].status)
+
+        # Test full heal
+        battle.player_1.party[0].status = "slp"
+        ret = battle.use_item(battle.player_1, "full-heal", 0)
+        self.assertFalse(ret)
+        self.assertIsNone(battle.player_1.party[0].status)
+
+        # Test full heal
+        battle.player_1.party[0].status = "txc"
+        ret = battle.use_item(battle.player_1, "full-heal", 0)
+        self.assertFalse(ret)
+        self.assertIsNone(battle.player_1.party[0].status)
+
+    def test_use_revive(self):
+        battle_state = self.std_battle.copy()
+        battle_state["player_1"]["party"] = [
+            self.snorlax.get_battle_info(),
+            self.gengar.get_battle_info()]
+        battle_state["player_2"]["party"] = [
+            self.raticate.get_battle_info(),
+            self.electivire.get_battle_info()]
+        battle = BattleState(battle_state)
+
+        # Test not dead
+        battle.player_1.party[0].current_hp = 30
+        ret = battle.use_item(battle.player_1, "revive", 0)
+        self.assertFalse(ret)
+        self.assertEqual(30, battle.player_1.party[0].current_hp)
+
+        # Test revive
+        battle.player_1.party[0].current_hp = 0
+        ret = battle.use_item(battle.player_1, "revive", 0)
+        self.assertFalse(ret)
+        self.assertEqual(231, battle.player_1.party[0].current_hp)
+
+        # Test max revive
+        battle.player_1.party[0].current_hp = 0
+        ret = battle.use_item(battle.player_1, "max-revive", 0)
+        self.assertFalse(ret)
+        self.assertEqual(461, battle.player_1.party[0].current_hp)
+
+    def test_catch_pokemon(self):
+        battle_state = self.std_battle.copy()
+        battle_state["player_1"]["party"] = [
+            self.snorlax.get_battle_info(),
+            self.gengar.get_battle_info()]
+        battle_state["player_2"]["party"] = [
+            self.raticate.get_battle_info(),
+            self.electivire.get_battle_info()]
+        battle = BattleState(battle_state)
+        battle.type = "npc"
+
+        # Test not wild
+        ret = battle.use_item(battle.player_1, "pokeball", 0)
+        self.assertFalse(ret)
+        self.assertEqual([{"text": "You cannot catch Pokémon in a trainer battle!"}], battle.output)
+
+        # Test standard
+        random.seed(900)
+        catches = 0
+        misses = 0
+        for i in range(1000):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.use_item(battle.player_1, "pokeball", 0)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(277, catches)
+        self.assertEqual(723, misses)
+
+        # Test low hp
+        random.seed(900)
+        catches = 0
+        misses = 0
+        outputs = []
+        for i in range(1000):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.player_2.party[0].current_hp = 1
+            battle.use_item(battle.player_1, "pokeball", 0)
+            outputs.append(battle.output)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(635, catches)
+        self.assertEqual(365, misses)
+
+        # Test status
+        random.seed(900)
+        catches = 0
+        misses = 0
+        outputs = []
+        for i in range(1000):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.player_2.party[0].status = "slp"
+            battle.use_item(battle.player_1, "pokeball", 0)
+            outputs.append(battle.output)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(558, catches)
+        self.assertEqual(442, misses)
+
+        # Test status
+        random.seed(900)
+        catches = 0
+        misses = 0
+        outputs = []
+        for i in range(1000):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.player_2.party[0].status = "psn"
+            battle.use_item(battle.player_1, "pokeball", 0)
+            outputs.append(battle.output)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(376, catches)
+        self.assertEqual(624, misses)
+
+        # Test ultra ball
+        random.seed(900)
+        catches = 0
+        misses = 0
+        outputs = []
+        for i in range(1000):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.use_item(battle.player_1, "ultra-ball", 0)
+            outputs.append(battle.output)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(464, catches)
+        self.assertEqual(536, misses)
+
+        # Test master ball
+        random.seed(900)
+        catches = 0
+        misses = 0
+        outputs = []
+        for i in range(100):
+            battle = BattleState(battle_state)
+            battle.type = "wild"
+            battle.use_item(battle.player_1, "master-ball", 0)
+            outputs.append(battle.output)
+            if battle.outcome == "caught":
+                catches += 1
+            else:
+                misses += 1
+        self.assertEqual(100, catches)
+        self.assertEqual(0, misses)
+
+        # Test fainted
+        battle = BattleState(battle_state)
+        battle.type = "wild"
+        battle.player_2.party[0].current_hp = 0
+        battle.use_item(battle.player_1, "pokeball", 0)
+        self.assertEqual([{"text": "You cannot catch a fainted Pokémon!"}], battle.output)
 
