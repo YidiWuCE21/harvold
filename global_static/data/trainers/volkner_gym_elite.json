@@ -1,0 +1,240 @@
+{
+    "name": "Volkner",
+    "team": [
+        {
+            "current_hp": 332,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunder",
+                    "pp": 10
+                },
+                {
+                    "move": "gigadrain",
+                    "pp": 10
+                },
+                {
+                    "move": "bugbuzz",
+                    "pp": 10
+                },
+                {
+                    "move": "stickyweb",
+                    "pp": 20
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Compound Eyes",
+            "dex_number": "596",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 332,
+                "atk": 222,
+                "def": 189,
+                "spa": 282,
+                "spd": 192,
+                "spe": 338
+            },
+            "id": null,
+            "name": "Galvantula"
+        },
+        {
+            "current_hp": 373,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "gigadrain",
+                    "pp": 10
+                },
+                {
+                    "move": "flamethrower",
+                    "pp": 15
+                },
+                {
+                    "move": "voltswitch",
+                    "pp": 20
+                },
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                }
+            ],
+            "held_item": "assault-vest",
+            "happiness": 70,
+            "ability": "Levitate",
+            "dex_number": "604",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 373,
+                "atk": 281,
+                "def": 238,
+                "spa": 332,
+                "spd": 238,
+                "spe": 192
+            },
+            "id": null,
+            "name": "Eelektross"
+        },
+        {
+            "current_hp": 373,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                },
+                {
+                    "move": "focusblast",
+                    "pp": 5
+                },
+                {
+                    "move": "voltswitch",
+                    "pp": 20
+                },
+                {
+                    "move": "dragonpulse",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Static",
+            "dex_number": "181",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 373,
+                "atk": 204,
+                "def": 259,
+                "spa": 353,
+                "spd": 260,
+                "spe": 180
+            },
+            "id": null,
+            "name": "Ampharos"
+        },
+        {
+            "current_hp": 349,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "superpower",
+                    "pp": 5
+                },
+                {
+                    "move": "icefang",
+                    "pp": 15
+                },
+                {
+                    "move": "wildcharge",
+                    "pp": 15
+                },
+                {
+                    "move": "electricterrain",
+                    "pp": 10
+                }
+            ],
+            "held_item": "toxic-orb",
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "405",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 349,
+                "atk": 329,
+                "def": 230,
+                "spa": 247,
+                "spd": 227,
+                "spe": 258
+            },
+            "id": null,
+            "name": "Luxray"
+        },
+        {
+            "current_hp": 366,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "toxic",
+                    "pp": 10
+                },
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                },
+                {
+                    "move": "roost",
+                    "pp": 5
+                },
+                {
+                    "move": "heatwave",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 35,
+            "ability": "Pressure",
+            "dex_number": "145",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 366,
+                "atk": 243,
+                "def": 295,
+                "spa": 322,
+                "spd": 248,
+                "spe": 294
+            },
+            "id": null,
+            "name": "Zapdos"
+        },
+        {
+            "current_hp": 348,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunderpunch",
+                    "pp": 15
+                },
+                {
+                    "move": "earthquake",
+                    "pp": 10
+                },
+                {
+                    "move": "gigaimpact",
+                    "pp": 5
+                },
+                {
+                    "move": "firepunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Motor Drive",
+            "dex_number": "466",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 348,
+                "atk": 341,
+                "def": 213,
+                "spa": 241,
+                "spd": 239,
+                "spe": 314
+            },
+            "id": null,
+            "name": "Electivire"
+        }
+    ],
+    "reward": 800
+}

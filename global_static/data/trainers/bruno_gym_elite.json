@@ -1,0 +1,240 @@
+{
+    "name": "bruno",
+    "team": [
+        {
+            "current_hp": 357,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "stoneedge",
+                    "pp": 5
+                },
+                {
+                    "move": "leafblade",
+                    "pp": 15
+                },
+                {
+                    "move": "closecombat",
+                    "pp": 5
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Justified",
+            "dex_number": "640",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 357,
+                "atk": 256,
+                "def": 234,
+                "spa": 236,
+                "spd": 334,
+                "spe": 339
+            },
+            "id": null,
+            "name": "Virizion"
+        },
+        {
+            "current_hp": 366,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "gunkshot",
+                    "pp": 5
+                },
+                {
+                    "move": "drainpunch",
+                    "pp": 10
+                },
+                {
+                    "move": "icepunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Dry Skin",
+            "dex_number": "454",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 366,
+                "atk": 308,
+                "def": 203,
+                "spa": 235,
+                "spd": 221,
+                "spe": 244
+            },
+            "id": null,
+            "name": "Toxicroak"
+        },
+        {
+            "current_hp": 310,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dragondance",
+                    "pp": 20
+                },
+                {
+                    "move": "hijumpkick",
+                    "pp": 10
+                },
+                {
+                    "move": "knockoff",
+                    "pp": 20
+                },
+                {
+                    "move": "ironhead",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Moxie",
+            "dex_number": "560",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 310,
+                "atk": 278,
+                "def": 302,
+                "spa": 152,
+                "spd": 311,
+                "spe": 211
+            },
+            "id": null,
+            "name": "Scrafty"
+        },
+        {
+            "current_hp": 327,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "nastyplot",
+                    "pp": 20
+                },
+                {
+                    "move": "flashcannon",
+                    "pp": 10
+                },
+                {
+                    "move": "aurasphere",
+                    "pp": 20
+                },
+                {
+                    "move": "darkpulse",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Steadfast",
+            "dex_number": "448",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 327,
+                "atk": 265,
+                "def": 230,
+                "spa": 306,
+                "spd": 220,
+                "spe": 288
+            },
+            "id": null,
+            "name": "Lucario"
+        },
+        {
+            "current_hp": 407,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "drainpunch",
+                    "pp": 10
+                },
+                {
+                    "move": "icepunch",
+                    "pp": 15
+                },
+                {
+                    "move": "knockoff",
+                    "pp": 20
+                },
+                {
+                    "move": "machpunch",
+                    "pp": 30
+                }
+            ],
+            "held_item": "assault-vest",
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "534",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 407,
+                "atk": 400,
+                "def": 275,
+                "spa": 186,
+                "spd": 214,
+                "spe": 166
+            },
+            "id": null,
+            "name": "Conkeldurr"
+        },
+        {
+            "current_hp": 363,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "quickattack",
+                    "pp": 30
+                },
+                {
+                    "move": "rockslide",
+                    "pp": 10
+                },
+                {
+                    "move": "stoneedge",
+                    "pp": 5
+                },
+                {
+                    "move": "closecombat",
+                    "pp": 5
+                }
+            ],
+            "held_item": "choice-band",
+            "happiness": 35,
+            "ability": "Justified",
+            "dex_number": "639",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 363,
+                "atk": 334,
+                "def": 263,
+                "spa": 217,
+                "spd": 249,
+                "spe": 321
+            },
+            "id": null,
+            "name": "Terrakion"
+        }
+    ],
+    "reward": 800
+}

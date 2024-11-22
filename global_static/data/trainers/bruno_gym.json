@@ -1,0 +1,201 @@
+{
+    "name": "Bruno",
+    "team": [
+        {
+            "current_hp": 116,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "wakeupslap",
+                    "pp": 10
+                },
+                {
+                    "move": "endure",
+                    "pp": 10
+                },
+                {
+                    "move": "closecombat",
+                    "pp": 5
+                },
+                {
+                    "move": "reversal",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "296",
+            "level": 43,
+            "shiny": false,
+            "stats": {
+                "hp": 116,
+                "atk": 62,
+                "def": 42,
+                "spa": 19,
+                "spd": 40,
+                "spe": 38
+            },
+            "id": null,
+            "name": "Makuhita"
+        },
+        {
+            "current_hp": 110,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "highjumpkick",
+                    "pp": 10
+                },
+                {
+                    "move": "mindreader",
+                    "pp": 5
+                },
+                {
+                    "move": "foresight",
+                    "pp": 40
+                },
+                {
+                    "move": "wideguard",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Limber",
+            "dex_number": "106",
+            "level": 44,
+            "shiny": false,
+            "stats": {
+                "hp": 110,
+                "atk": 116,
+                "def": 50,
+                "spa": 52,
+                "spd": 102,
+                "spe": 85
+            },
+            "id": null,
+            "name": "Hitmonlee"
+        },
+        {
+            "current_hp": 140,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "hypnosis",
+                    "pp": 20
+                },
+                {
+                    "move": "submission",
+                    "pp": 20
+                },
+                {
+                    "move": "dynamicpunch",
+                    "pp": 5
+                },
+                {
+                    "move": "mindreader",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Swift Swim",
+            "dex_number": "062",
+            "level": 45,
+            "shiny": false,
+            "stats": {
+                "hp": 140,
+                "atk": 90,
+                "def": 91,
+                "spa": 72,
+                "spd": 98,
+                "spe": 81
+            },
+            "id": null,
+            "name": "Poliwrath"
+        },
+        {
+            "current_hp": 148,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "vitalthrow",
+                    "pp": 10
+                },
+                {
+                    "move": "submission",
+                    "pp": 20
+                },
+                {
+                    "move": "wakeupslap",
+                    "pp": 10
+                },
+                {
+                    "move": "crosschop",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Steadfast",
+            "dex_number": "067",
+            "level": 48,
+            "shiny": false,
+            "stats": {
+                "hp": 148,
+                "atk": 109,
+                "def": 83,
+                "spa": 68,
+                "spd": 77,
+                "spe": 53
+            },
+            "id": null,
+            "name": "Machoke"
+        },
+        {
+            "current_hp": 112,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "icepunch",
+                    "pp": 15
+                },
+                {
+                    "move": "thunderpunch",
+                    "pp": 15
+                },
+                {
+                    "move": "skyuppercut",
+                    "pp": 15
+                },
+                {
+                    "move": "megapunch",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Keen Eye",
+            "dex_number": "107",
+            "level": 49,
+            "shiny": false,
+            "stats": {
+                "hp": 112,
+                "atk": 106,
+                "def": 92,
+                "spa": 41,
+                "spd": 127,
+                "spe": 82
+            },
+            "id": null,
+            "name": "Hitmonchan"
+        }
+    ],
+    "reward": 800
+}

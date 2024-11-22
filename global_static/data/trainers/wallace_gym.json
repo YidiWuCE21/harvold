@@ -1,0 +1,162 @@
+{
+    "name": "Wallace",
+    "team": [
+        {
+            "current_hp": 66,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "takedown",
+                    "pp": 20
+                },
+                {
+                    "move": "luckychant",
+                    "pp": 30
+                },
+                {
+                    "move": "waterpulse",
+                    "pp": 20
+                },
+                {
+                    "move": "attract",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Hydration",
+            "dex_number": "370",
+            "level": 29,
+            "shiny": false,
+            "stats": {
+                "hp": 66,
+                "atk": 26,
+                "def": 40,
+                "spa": 29,
+                "spd": 49,
+                "spe": 61
+            },
+            "id": null,
+            "name": "Luvdisc"
+        },
+        {
+            "current_hp": 80,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "furyswipes",
+                    "pp": 15
+                },
+                {
+                    "move": "watersport",
+                    "pp": 15
+                },
+                {
+                    "move": "bubblebeam",
+                    "pp": 20
+                },
+                {
+                    "move": "zenheadbutt",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Own Tempo",
+            "dex_number": "271",
+            "level": 31,
+            "shiny": false,
+            "stats": {
+                "hp": 80,
+                "atk": 41,
+                "def": 39,
+                "spa": 38,
+                "spd": 53,
+                "spe": 39
+            },
+            "id": null,
+            "name": "Lombre"
+        },
+        {
+            "current_hp": 103,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "waterpulse",
+                    "pp": 20
+                },
+                {
+                    "move": "flail",
+                    "pp": 15
+                },
+                {
+                    "move": "aquaring",
+                    "pp": 20
+                },
+                {
+                    "move": "furyattack",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Lightningrod",
+            "dex_number": "119",
+            "level": 33,
+            "shiny": false,
+            "stats": {
+                "hp": 103,
+                "atk": 67,
+                "def": 53,
+                "spa": 55,
+                "spd": 59,
+                "spe": 62
+            },
+            "id": null,
+            "name": "Seaking"
+        },
+        {
+            "current_hp": 108,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "bodyslam",
+                    "pp": 15
+                },
+                {
+                    "move": "aurorabeam",
+                    "pp": 20
+                },
+                {
+                    "move": "hail",
+                    "pp": 10
+                },
+                {
+                    "move": "swagger",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Thick Fat",
+            "dex_number": "364",
+            "level": 35,
+            "shiny": false,
+            "stats": {
+                "hp": 108,
+                "atk": 59,
+                "def": 59,
+                "spa": 58,
+                "spd": 58,
+                "spe": 36
+            },
+            "id": null,
+            "name": "Sealeo"
+        }
+    ],
+    "reward": 600
+}

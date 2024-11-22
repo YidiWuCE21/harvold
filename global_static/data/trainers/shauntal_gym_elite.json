@@ -1,0 +1,240 @@
+{
+    "name": "shauntal",
+    "team": [
+        {
+            "current_hp": 302,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "willowisp",
+                    "pp": 15
+                },
+                {
+                    "move": "recover",
+                    "pp": 15
+                },
+                {
+                    "move": "knockoff",
+                    "pp": 20
+                },
+                {
+                    "move": "shadowsneak",
+                    "pp": 30
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 35,
+            "ability": "Prankster",
+            "dex_number": "302",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 302,
+                "atk": 241,
+                "def": 234,
+                "spa": 189,
+                "spd": 229,
+                "spe": 175
+            },
+            "id": null,
+            "name": "Sableye"
+        },
+        {
+            "current_hp": 299,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "shadowball",
+                    "pp": 15
+                },
+                {
+                    "move": "fireblast",
+                    "pp": 5
+                },
+                {
+                    "move": "energyball",
+                    "pp": 10
+                },
+                {
+                    "move": "memento",
+                    "pp": 10
+                }
+            ],
+            "held_item": "choice-scarf",
+            "happiness": 70,
+            "ability": "Flash Fire",
+            "dex_number": "609",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 299,
+                "atk": 168,
+                "def": 266,
+                "spa": 370,
+                "spd": 266,
+                "spe": 264
+            },
+            "id": null,
+            "name": "Chandelure"
+        },
+        {
+            "current_hp": 361,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "earthquake",
+                    "pp": 10
+                },
+                {
+                    "move": "stealthrock",
+                    "pp": 20
+                },
+                {
+                    "move": "shadowpunch",
+                    "pp": 20
+                },
+                {
+                    "move": "icepunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Iron Fist",
+            "dex_number": "623",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 361,
+                "atk": 365,
+                "def": 246,
+                "spa": 162,
+                "spd": 242,
+                "spe": 207
+            },
+            "id": null,
+            "name": "Golurk"
+        },
+        {
+            "current_hp": 319,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "shadowball",
+                    "pp": 15
+                },
+                {
+                    "move": "focusblast",
+                    "pp": 5
+                },
+                {
+                    "move": "sludgewave",
+                    "pp": 10
+                },
+                {
+                    "move": "icywind",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Levitate",
+            "dex_number": "094",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 319,
+                "atk": 181,
+                "def": 201,
+                "spa": 346,
+                "spd": 234,
+                "spe": 327
+            },
+            "id": null,
+            "name": "Gengar"
+        },
+        {
+            "current_hp": 398,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "willowisp",
+                    "pp": 15
+                },
+                {
+                    "move": "scald",
+                    "pp": 15
+                },
+                {
+                    "move": "hex",
+                    "pp": 10
+                },
+                {
+                    "move": "recover",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Water Absorb",
+            "dex_number": "593",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 398,
+                "atk": 185,
+                "def": 250,
+                "spa": 258,
+                "spd": 303,
+                "spe": 207
+            },
+            "id": null,
+            "name": "Jellicent"
+        },
+        {
+            "current_hp": 184,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "shadowsneak",
+                    "pp": 30
+                },
+                {
+                    "move": "xscissor",
+                    "pp": 15
+                },
+                {
+                    "move": "willowisp",
+                    "pp": 15
+                }
+            ],
+            "held_item": "focus-sash",
+            "happiness": 70,
+            "ability": "Wonder Guard",
+            "dex_number": "292",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 184,
+                "atk": 282,
+                "def": 169,
+                "spa": 135,
+                "spd": 137,
+                "spe": 168
+            },
+            "id": null,
+            "name": "Shedinja"
+        }
+    ],
+    "reward": 800
+}

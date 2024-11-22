@@ -1,0 +1,240 @@
+{
+    "name": "Erika",
+    "team": [
+        {
+            "current_hp": 327,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "spikes",
+                    "pp": 20
+                },
+                {
+                    "move": "leechseed",
+                    "pp": 10
+                },
+                {
+                    "move": "powerwhip",
+                    "pp": 10
+                },
+                {
+                    "move": "thunderwave",
+                    "pp": 20
+                }
+            ],
+            "held_item": "Leftovers",
+            "happiness": 70,
+            "ability": "Iron Barbs",
+            "dex_number": "598",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 327,
+                "atk": 272,
+                "def": 356,
+                "spa": 172,
+                "spd": 344,
+                "spe": 121
+            },
+            "id": null,
+            "name": "Ferrothorn"
+        },
+        {
+            "current_hp": 324,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "spore",
+                    "pp": 15
+                },
+                {
+                    "move": "machpunch",
+                    "pp": 30
+                },
+                {
+                    "move": "bulletseed",
+                    "pp": 30
+                },
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Technician",
+            "dex_number": "286",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 324,
+                "atk": 331,
+                "def": 235,
+                "spa": 193,
+                "spd": 216,
+                "spe": 246
+            },
+            "id": null,
+            "name": "Breloom"
+        },
+        {
+            "current_hp": 346,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "stealthrock",
+                    "pp": 20
+                },
+                {
+                    "move": "recover",
+                    "pp": 5
+                },
+                {
+                    "move": "gigadrain",
+                    "pp": 10
+                },
+                {
+                    "move": "toxic",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Storm Drain",
+            "dex_number": "346",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 346,
+                "atk": 232,
+                "def": 293,
+                "spa": 236,
+                "spd": 328,
+                "spe": 170
+            },
+            "id": null,
+            "name": "Cradily"
+        },
+        {
+            "current_hp": 322,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "sunnyday",
+                    "pp": 5
+                },
+                {
+                    "move": "encore",
+                    "pp": 5
+                },
+                {
+                    "move": "hurricane",
+                    "pp": 10
+                },
+                {
+                    "move": "moonblast",
+                    "pp": 15
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Prankster",
+            "dex_number": "547",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 322,
+                "atk": 206,
+                "def": 257,
+                "spa": 224,
+                "spd": 232,
+                "spe": 358
+            },
+            "id": null,
+            "name": "Whimsicott"
+        },
+        {
+            "current_hp": 344,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "gigadrain",
+                    "pp": 10
+                },
+                {
+                    "move": "synthesis",
+                    "pp": 5
+                },
+                {
+                    "move": "sludgebomb",
+                    "pp": 10
+                },
+                {
+                    "move": "solarbeam",
+                    "pp": 10
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Chlorophyll",
+            "dex_number": "003",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 344,
+                "atk": 216,
+                "def": 254,
+                "spa": 288,
+                "spd": 279,
+                "spe": 266
+            },
+            "id": null,
+            "name": "Venusaur"
+        },
+        {
+            "current_hp": 417,
+            "status": null,
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "spore",
+                    "pp": 15
+                },
+                {
+                    "move": "gigadrain",
+                    "pp": 10
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                },
+                {
+                    "move": "sludgebomb",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Regenerator",
+            "dex_number": "591",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 417,
+                "atk": 231,
+                "def": 236,
+                "spa": 240,
+                "spd": 235,
+                "spe": 150
+            },
+            "id": null,
+            "name": "Amoonguss"
+        }
+    ],
+    "reward": 800
+}
