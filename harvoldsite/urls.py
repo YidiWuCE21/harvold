@@ -25,6 +25,7 @@ urlpatterns = [
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
+    path("battle", battle_views.battle, name="battle"),
     #path('', include('users.urls'))
     # AJAX requests
     path("map_data/", map_views.map_data, name="map_data"),

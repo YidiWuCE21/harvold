@@ -1,4 +1,7 @@
+import os
+import json
 import random
+import copy
 from datetime import datetime
 from django.db import models
 from django.utils import timezone
@@ -25,26 +28,16 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     A team should never enter battle fully knocked out. If a team is in a knocked out state, it is
     a bug and it is safe to full restore the team before starting the battle.
     """
-    player_state = {
-        "current_pokemon": 0,
-        "contributors": [],
-        "stat_boosts": [],
-        "entry_hazards": [],
-        "confusion": False,
-        "locked_moves": [],
-        "defense_active": [],
-        "tailwind": None,
-        "name": None
-    }
     battle_state = {
-        "player_1": player_state.copy(),
-        "player_2": player_state.copy(),
+        "player_1": copy.deepcopy(consts.PLAYER_STATE),
+        "player_2": copy.deepcopy(consts.PLAYER_STATE),
         "weather": None,
         "weather_turns": 0,
         "terrain": None,
         "outcome": None,
         "type": type,
         "trick_room": None,
+        "gravity": None,
     }
 
     # Attempt to finder player 1 and team data
@@ -67,11 +60,15 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         battle_state["escapes"] = 0
         battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
     elif type == "npc":
-        if p2_id not in consts.TRAINERS:
+        trainer_data = "{}.json".format(p2_id)
+        trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+        if not os.path.isfile(trainer_path):
             raise KeyError("{} not recognized as a trainer".format(p2_id))
-        battle_state["player_2"]["party"] = consts.TRAINERS[p2_id]["team"]
-        npc_opponent = p2_id
-        battle_state["player_2"]["name"] = consts.TRAINERS[p2_id]["name"]
+        with open(trainer_path) as trainer_file:
+            trainer_json = json.load(trainer_file)
+            battle_state["player_2"]["party"] = trainer_json["team"]
+            npc_opponent = p2_id
+            battle_state["player_2"]["name"] = trainer_json["name"]
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)
         if player_2.current_battle is not None:

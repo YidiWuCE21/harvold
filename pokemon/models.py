@@ -82,7 +82,7 @@ def get_nature_multiplier(nature, stat):
 
 def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=False, iv_override=None,
                    nature_override=None, ev_override=None, ability_override=None,
-                   held_item=None, status=None, current_hp=None):
+                   held_item=None, status=None, current_hp=None, skip_save=False):
     """
     Instantiate a pokemon with no current assigned trainer
     """
@@ -145,6 +145,8 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
     pkmn.recalculate_stats(skip_save=True)
     # Full heal
     pkmn.restore_hp(skip_save=True)
+    if skip_save:
+        return pkmn.get_battle_info()
     pkmn.save()
     return pkmn
 
@@ -208,6 +210,7 @@ class Pokemon(models.Model):
     held_item = models.CharField(max_length=20, null=True, blank=True)
     current_hp = models.IntegerField()
     status = models.CharField(max_length=20, null=True, blank=True)
+    status_turns = models.IntegerField(default=0)
     traded = models.BooleanField(default=False)
     happiness = models.IntegerField(default=200)
     location = models.CharField(max_length=10, null=True, blank=True, default="box")
@@ -231,6 +234,7 @@ class Pokemon(models.Model):
             # Modifiable attributes
             "current_hp": self.current_hp,
             "status": self.status,
+            "status_turns": self.status_turns,
             "moves": [
                 {"move": self.move1, "pp": self.move1_pp},
                 {"move": self.move2, "pp": self.move2_pp},

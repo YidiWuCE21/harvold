@@ -645,10 +645,7 @@
     "abilities": [
       "Run Away",
       "Guts",
-      "Hustle",
-      "Gluttony",
-      "Hustle",
-      "Thick Fat"
+      "Hustle"
     ],
     "attack": 56,
     "base_egg_steps": 3840,
@@ -668,8 +665,7 @@
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "normal",
-      "dark"
+      "normal"
     ],
     "base_experience": 51,
     "ev_yield": [
@@ -685,31 +681,27 @@
     "abilities": [
       "Run Away",
       "Guts",
-      "Hustle",
-      "Gluttony",
-      "Hustle",
-      "Thick Fat"
+      "Hustle"
     ],
-    "attack": 71,
+    "attack": 81,
     "base_egg_steps": 3840,
     "base_happiness": 70,
     "base_total": 413,
     "capture_rate": "127",
-    "defense": 70,
+    "defense": 60,
     "experience_growth": "medium-fast",
     "height_m": 0.7,
-    "hp": 75,
+    "hp": 55,
     "name": "Raticate",
     "percentage_male": 50.0,
-    "sp_attack": 40,
-    "sp_defense": 80,
-    "speed": 77,
+    "sp_attack": 50,
+    "sp_defense": 70,
+    "speed": 97,
     "weight_kg": 18.5,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "normal",
-      "dark"
+      "normal"
     ],
     "base_experience": 145,
     "ev_yield": [
@@ -903,28 +895,26 @@
   "026": {
     "abilities": [
       "Static",
-      "Lightningrod",
-      "Surge Surfer"
+      "Lightningrod"
     ],
-    "attack": 85,
+    "attack": 90,
     "base_egg_steps": 2560,
     "base_happiness": 70,
     "base_total": 485,
     "capture_rate": "75",
-    "defense": 50,
+    "defense": 55,
     "experience_growth": "medium-fast",
     "height_m": 0.8,
     "hp": 60,
     "name": "Raichu",
     "percentage_male": 50.0,
-    "sp_attack": 95,
-    "sp_defense": 85,
+    "sp_attack": 90,
+    "sp_defense": 80,
     "speed": 110,
     "weight_kg": 30.0,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "electric",
       "electric"
     ],
     "base_experience": 243,
@@ -940,30 +930,27 @@
   "027": {
     "abilities": [
       "Sand Veil",
-      "Sand Rush",
-      "Snow Cloak",
-      "Slush Rush"
+      "Sand Rush"
     ],
     "attack": 75,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 300,
     "capture_rate": "255",
-    "defense": 90,
+    "defense": 85,
     "experience_growth": "medium-fast",
     "height_m": 0.6,
     "hp": 50,
     "name": "Sandshrew",
     "percentage_male": 50.0,
-    "sp_attack": 10,
-    "sp_defense": 35,
+    "sp_attack": 20,
+    "sp_defense": 30,
     "speed": 40,
     "weight_kg": 12.0,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "ground",
-      "ice"
+      "ground"
     ],
     "base_experience": 60,
     "ev_yield": [
@@ -978,30 +965,27 @@
   "028": {
     "abilities": [
       "Sand Veil",
-      "Sand Rush",
-      "Snow Cloak",
-      "Slush Rush"
+      "Sand Rush"
     ],
     "attack": 100,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 450,
     "capture_rate": "90",
-    "defense": 120,
+    "defense": 110,
     "experience_growth": "medium-fast",
     "height_m": 1.0,
     "hp": 75,
     "name": "Sandslash",
     "percentage_male": 50.0,
-    "sp_attack": 25,
-    "sp_defense": 65,
+    "sp_attack": 45,
+    "sp_defense": 55,
     "speed": 65,
     "weight_kg": 29.5,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "ground",
-      "ice"
+      "ground"
     ],
     "base_experience": 158,
     "ev_yield": [
@@ -1306,9 +1290,7 @@
   "037": {
     "abilities": [
       "Flash Fire",
-      "Drought",
-      "Snow Cloak",
-      "Snow Warning"
+      "Drought"
     ],
     "attack": 41,
     "base_egg_steps": 5120,
@@ -1328,8 +1310,7 @@
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "fire",
-      "ice"
+      "fire"
     ],
     "base_experience": 60,
     "ev_yield": [
@@ -1344,11 +1325,9 @@
   "038": {
     "abilities": [
       "Flash Fire",
-      "Drought",
-      "Snow Cloak",
-      "Snow Warning"
+      "Drought"
     ],
-    "attack": 67,
+    "attack": 76,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 505,
@@ -1361,13 +1340,12 @@
     "percentage_male": 24.6,
     "sp_attack": 81,
     "sp_defense": 100,
-    "speed": 109,
+    "speed": 100,
     "weight_kg": 19.9,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "fire",
-      "ice"
+      "fire"
     ],
     "base_experience": 177,
     "ev_yield": [
@@ -1785,9 +1763,6 @@
     "abilities": [
       "Sand Veil",
       "Arena Trap",
-      "Sand Force",
-      "Sand Veil",
-      "Tangling Hair",
       "Sand Force"
     ],
     "attack": 55,
@@ -1795,7 +1770,7 @@
     "base_happiness": 70,
     "base_total": 265,
     "capture_rate": "255",
-    "defense": 30,
+    "defense": 25,
     "experience_growth": "medium-fast",
     "height_m": 0.2,
     "hp": 10,
@@ -1803,12 +1778,11 @@
     "percentage_male": 50.0,
     "sp_attack": 35,
     "sp_defense": 45,
-    "speed": 90,
+    "speed": 95,
     "weight_kg": 0.8,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "ground",
       "ground"
     ],
     "base_experience": 53,
@@ -1825,9 +1799,6 @@
     "abilities": [
       "Sand Veil",
       "Arena Trap",
-      "Sand Force",
-      "Sand Veil",
-      "Tangling Hair",
       "Sand Force"
     ],
     "attack": 100,
@@ -1835,7 +1806,7 @@
     "base_happiness": 70,
     "base_total": 425,
     "capture_rate": "50",
-    "defense": 60,
+    "defense": 50,
     "experience_growth": "medium-fast",
     "height_m": 0.7,
     "hp": 35,
@@ -1843,12 +1814,11 @@
     "percentage_male": 50.0,
     "sp_attack": 50,
     "sp_defense": 70,
-    "speed": 110,
+    "speed": 120,
     "weight_kg": 33.3,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "ground",
       "ground"
     ],
     "base_experience": 149,
@@ -1865,12 +1835,9 @@
     "abilities": [
       "Pickup",
       "Technician",
-      "Unnerve",
-      "Pickup",
-      "Technician",
-      "Rattled"
+      "Unnerve"
     ],
-    "attack": 35,
+    "attack": 45,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 290,
@@ -1881,15 +1848,14 @@
     "hp": 40,
     "name": "Meowth",
     "percentage_male": 50.0,
-    "sp_attack": 50,
+    "sp_attack": 40,
     "sp_defense": 40,
     "speed": 90,
     "weight_kg": 4.2,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "normal",
-      "dark"
+      "normal"
     ],
     "base_experience": 58,
     "ev_yield": [
@@ -1905,12 +1871,9 @@
     "abilities": [
       "Limber",
       "Technician",
-      "Unnerve",
-      "Fur Coat",
-      "Technician",
-      "Rattled"
+      "Unnerve"
     ],
-    "attack": 60,
+    "attack": 70,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 440,
@@ -1921,15 +1884,14 @@
     "hp": 65,
     "name": "Persian",
     "percentage_male": 50.0,
-    "sp_attack": 75,
+    "sp_attack": 65,
     "sp_defense": 65,
     "speed": 115,
     "weight_kg": 32.0,
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "normal",
-      "dark"
+      "normal"
     ],
     "base_experience": 154,
     "ev_yield": [
@@ -2668,10 +2630,7 @@
     "abilities": [
       "Rock Head",
       "Sturdy",
-      "Sand Veil",
-      "Magnet Pull",
-      "Sturdy",
-      "Galvanize"
+      "Sand Veil"
     ],
     "attack": 80,
     "base_egg_steps": 3840,
@@ -2708,10 +2667,7 @@
     "abilities": [
       "Rock Head",
       "Sturdy",
-      "Sand Veil",
-      "Magnet Pull",
-      "Sturdy",
-      "Galvanize"
+      "Sand Veil"
     ],
     "attack": 95,
     "base_egg_steps": 3840,
@@ -2748,10 +2704,7 @@
     "abilities": [
       "Rock Head",
       "Sturdy",
-      "Sand Veil",
-      "Magnet Pull",
-      "Sturdy",
-      "Galvanize"
+      "Sand Veil"
     ],
     "attack": 120,
     "base_egg_steps": 3840,
@@ -3192,10 +3145,7 @@
     "abilities": [
       "Stench",
       "Sticky Hold",
-      "Poison Touch",
-      "Poison Touch",
-      "Gluttony",
-      "Power of Alchemy"
+      "Poison Touch"
     ],
     "attack": 80,
     "base_egg_steps": 5120,
@@ -3215,7 +3165,6 @@
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "poison",
       "poison"
     ],
     "base_experience": 65,
@@ -3232,10 +3181,7 @@
     "abilities": [
       "Stench",
       "Sticky Hold",
-      "Poison Touch",
-      "Poison Touch",
-      "Gluttony",
-      "Power of Alchemy"
+      "Poison Touch"
     ],
     "attack": 105,
     "base_egg_steps": 5120,
@@ -3255,7 +3201,6 @@
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "poison",
       "poison"
     ],
     "base_experience": 175,
@@ -3413,7 +3358,7 @@
   },
   "094": {
     "abilities": [
-      "Cursed Body"
+      "Levitate"
     ],
     "attack": 65,
     "base_egg_steps": 5120,
@@ -3742,7 +3687,7 @@
       "Frisk",
       "Harvest"
     ],
-    "attack": 105,
+    "attack": 95,
     "base_egg_steps": 5120,
     "base_happiness": 70,
     "base_total": 530,
@@ -3755,7 +3700,7 @@
     "percentage_male": 50.0,
     "sp_attack": 125,
     "sp_defense": 75,
-    "speed": 45,
+    "speed": 55,
     "weight_kg": 120.0,
     "generation": 1,
     "is_legendary": 0,
@@ -3813,10 +3758,7 @@
     "abilities": [
       "Rock Head",
       "Lightningrod",
-      "Battle Armor",
-      "Cursed Body",
-      "Lightningrod",
-      "Rock Head"
+      "Battle Armor"
     ],
     "attack": 80,
     "base_egg_steps": 5120,
@@ -3836,8 +3778,7 @@
     "generation": 1,
     "is_legendary": 0,
     "typing": [
-      "ground",
-      "fire"
+      "ground"
     ],
     "base_experience": 149,
     "ev_yield": [

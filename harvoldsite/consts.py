@@ -7,26 +7,26 @@ from pokemon import utils
 from harvoldsite import settings
 
 # Large files
-ASSETS_PATH = os.path.join(settings.BASE_DIR, "global_static")
-with open(os.path.join(ASSETS_PATH, "data", "learnsets.json")) as learnset_file:
+STATIC_PATH = os.path.join(settings.BASE_DIR, "global_static")
+with open(os.path.join(STATIC_PATH, "data", "learnsets.json")) as learnset_file:
     LEARNSETS = json.load(learnset_file)
-with open(os.path.join(ASSETS_PATH, "data", "pokemon.json")) as pokemon_file:
+with open(os.path.join(STATIC_PATH, "data", "pokemon.json")) as pokemon_file:
     POKEMON = json.load(pokemon_file)
-with open(os.path.join(ASSETS_PATH, "data", "moves.json")) as pokemon_file:
+with open(os.path.join(STATIC_PATH, "data", "moves.json")) as pokemon_file:
     MOVES = json.load(pokemon_file)
-with open(os.path.join(ASSETS_PATH, "data", "exp_curves.json")) as pokemon_file:
+with open(os.path.join(STATIC_PATH, "data", "exp_curves.json")) as pokemon_file:
     EXP_CURVES = json.load(pokemon_file)
-with open(os.path.join(ASSETS_PATH, "data", "pokemart.json")) as mart:
+with open(os.path.join(STATIC_PATH, "data", "pokemart.json")) as mart:
     MART = json.load(mart)
-with open(os.path.join(ASSETS_PATH, "data", "trainers.json")) as trainers:
+with open(os.path.join(STATIC_PATH, "data", "trainers.json")) as trainers:
     TRAINERS = json.load(trainers)
-with open(os.path.join(ASSETS_PATH, "data", "wild.json")) as wild:
+with open(os.path.join(STATIC_PATH, "data", "wild.json")) as wild:
     WILD = json.load(wild)
-with open(os.path.join(ASSETS_PATH, "data", "evolutions.json")) as evo:
+with open(os.path.join(STATIC_PATH, "data", "evolutions.json")) as evo:
     EVOLUTIONS = json.load(evo)
-with open(os.path.join(ASSETS_PATH, "data", "items.json"), encoding="utf-8") as items:
+with open(os.path.join(STATIC_PATH, "data", "items.json"), encoding="utf-8") as items:
     ITEMS = json.load(items)
-with open(os.path.join(ASSETS_PATH, "data", "item_usage.json"), encoding="utf-8") as item_usage:
+with open(os.path.join(STATIC_PATH, "data", "item_usage.json"), encoding="utf-8") as item_usage:
     ITEM_USAGE = json.load(item_usage)
 
 # Asset paths
@@ -160,4 +160,149 @@ STAT_BOOSTS = {
     -4: 2/6,
     -5: 2/7,
     -6: 2/8
+}
+
+PLAYER_STATE = {
+    "current_pokemon": 0,
+    "contributors": [],
+    "stat_boosts": {
+        "attack": 0,
+        "defense": 0,
+        "special_attack": 0,
+        "special_defense": 0,
+        "speed": 0,
+        "accuracy": 0,
+        "evasion": 0
+    },
+    "entry_hazards": [],
+    "confusion": 0,
+    "locked_moves": [],
+    "defense_active": [],
+    "tailwind": None,
+    "name": None,
+    "trapped": 0,
+    "choice": None
+}
+
+TYPE_EFFECTIVENESS = {
+    ("normal", "rock"): 0.5,
+    ("normal", "ghost"): 0,
+    ("normal", "steel"): 0.5,
+    ("fire", "fire"): 0.5,
+    ("fire", "water"): 0.5,
+    ("fire", "grass"): 2,
+    ("fire", "ice"): 2,
+    ("fire", "bug"): 2,
+    ("fire", "rock"): 0.5,
+    ("fire", "dragon"): 0.5,
+    ("fire", "steel"): 0.5,
+    ("water", "fire"): 2,
+    ("water", "water"): 0.5,
+    ("water", "grass"): 0.5,
+    ("water", "ground"): 2,
+    ("water", "rock"): 2,
+    ("water", "dragon"): 0.5,
+    ("grass", "fire"): 0.5,
+    ("grass", "water"): 2,
+    ("grass", "grass"): 0.5,
+    ("grass", "poison"): 0.5,
+    ("grass", "ground"): 2,
+    ("grass", "flying"): 0.5,
+    ("grass", "bug"): 0.5,
+    ("grass", "rock"): 2,
+    ("grass", "dragon"): 0.5,
+    ("grass", "steel"): 0.5,
+    ("electric", "water"): 2,
+    ("electric", "grass"): 0.5,
+    ("electric", "electric"): 0.5,
+    ("electric", "ground"): 0,
+    ("electric", "flying"): 2,
+    ("electric", "dragon"): 0.5,
+    ("ice", "fire"): 0.5,
+    ("ice", "water"): 0.5,
+    ("ice", "grass"): 2,
+    ("ice", "ice"): 0.5,
+    ("ice", "ground"): 2,
+    ("ice", "flying"): 2,
+    ("ice", "dragon"): 2,
+    ("ice", "steel"): 0.5,
+    ("fighting", "normal"): 2,
+    ("fighting", "ice"): 2,
+    ("fighting", "poison"): 0.5,
+    ("fighting", "flying"): 0.5,
+    ("fighting", "psychic"): 0.5,
+    ("fighting", "bug"): 0.5,
+    ("fighting", "rock"): 2,
+    ("fighting", "ghost"): 0,
+    ("fighting", "dark"): 2,
+    ("fighting", "steel"): 2,
+    ("fighting", "fairy"): 0.5,
+    ("poison", "grass"): 2,
+    ("poison", "poison"): 0.5,
+    ("poison", "ground"): 0.5,
+    ("poison", "rock"): 0.5,
+    ("poison", "ghost"): 0.5,
+    ("poison", "steel"): 0,
+    ("poison", "fairy"): 2,
+    ("ground", "fire"): 2,
+    ("ground", "grass"): 0.5,
+    ("ground", "electric"): 2,
+    ("ground", "poison"): 2,
+    ("ground", "flying"): 0,
+    ("ground", "bug"): 0.5,
+    ("ground", "rock"): 2,
+    ("ground", "steel"): 2,
+    ("flying", "grass"): 2,
+    ("flying", "electric"): 0.5,
+    ("flying", "fighting"): 2,
+    ("flying", "bug"): 2,
+    ("flying", "rock"): 0.5,
+    ("flying", "steel"): 0.5,
+    ("psychic", "fighting"): 2,
+    ("psychic", "poison"): 2,
+    ("psychic", "psychic"): 0.5,
+    ("psychic", "dark"): 0,
+    ("psychic", "steel"): 0.5,
+    ("bug", "fire"): 0.5,
+    ("bug", "grass"): 2,
+    ("bug", "fighting"): 0.5,
+    ("bug", "poison"): 0.5,
+    ("bug", "flying"): 0.5,
+    ("bug", "psychic"): 2,
+    ("bug", "ghost"): 0.5,
+    ("bug", "dark"): 2,
+    ("bug", "steel"): 0.5,
+    ("bug", "fairy"): 0.5,
+    ("rock", "fire"): 2,
+    ("rock", "ice"): 2,
+    ("rock", "fighting"): 0.5,
+    ("rock", "ground"): 0.5,
+    ("rock", "flying"): 2,
+    ("rock", "bug"): 2,
+    ("rock", "steel"): 0.5,
+    ("ghost", "normal"): 0,
+    ("ghost", "psychic"): 2,
+    ("ghost", "ghost"): 2,
+    ("ghost", "dark"): 0.5,
+    ("dragon", "dragon"): 2,
+    ("dragon", "steel"): 0.5,
+    ("dragon", "fairy"): 0,
+    ("dark", "fighting"): 0.5,
+    ("dark", "psychic"): 2,
+    ("dark", "ghost"): 2,
+    ("dark", "dark"): 0.5,
+    ("dark", "fairy"): 0.5,
+    ("steel", "fire"): 0.5,
+    ("steel", "water"): 0.5,
+    ("steel", "electric"): 0.5,
+    ("steel", "ice"): 2,
+    ("steel", "rock"): 2,
+    ("steel", "steel"): 0.5,
+    ("steel", "fairy"): 2,
+    ("fairy", "fire"): 0.5,
+    ("fairy", "fighting"): 2,
+    ("fairy", "poison"): 0.5,
+    ("fairy", "dragon"): 2,
+    ("fairy", "dark"): 2,
+    ("fairy", "steel"): 0.5
 }
