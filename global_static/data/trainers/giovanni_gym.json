@@ -3,7 +3,7 @@
     "team": [
         {
             "current_hp": 116,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -42,7 +42,7 @@
         },
         {
             "current_hp": 101,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -81,7 +81,7 @@
         },
         {
             "current_hp": 108,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -120,7 +120,7 @@
         },
         {
             "current_hp": 81,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {

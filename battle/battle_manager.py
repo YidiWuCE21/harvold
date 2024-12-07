@@ -46,6 +46,10 @@ class BattleState:
         self.outcome = battle_state["outcome"]
 
 
+    def requires_switch(self):
+        return not (self.player_1.get_current_pokemon().is_alive() and self.player_1.get_current_pokemon().is_alive()) and self.outcome is None
+
+
     def process_battle(self, p1_move, p2_move):
         """
         Function that controls the main turn flow.
@@ -70,11 +74,11 @@ class BattleState:
 
         # Determine move order
         # Case where only P1 moves
-        if p2_move["action"] != "move":
-            self.attack(self.player_1.get_current_pokemon(), self.player_2.get_current_pokemon())
+        if p2_move["action"] != "attack":
+            self.attack(self.player_1, p1_move["move"])
         # Case where only P2 moves
-        elif p1_move["action"] != "move":
-            self.attack(self.player_2.get_current_pokemon(), self.player_1.get_current_pokemon())
+        elif p1_move["action"] != "attack":
+            self.attack(self.player_2, p2_move["move"])
         # Determine which move goes first
         else:
             if self.check_p1_first(p1_move["move"], p2_move["move"]):
@@ -86,13 +90,26 @@ class BattleState:
 
         # Decrement weather, trick room, etc.
         # Apply item, weather, status
-        raise NotImplementedError()
+        # Update outcome if one or both teams have no more useable pokemon
+        p1_alive = self.player_1.has_pokemon()
+        p2_alive = self.player_2.has_pokemon()
+        if p1_alive and not p2_alive:
+            self.outcome = "p1_victory"
+            self.output.append({"text": "{} has won!".format(self.player_1.name)})
+        elif p2_alive and not p1_alive:
+            self.outcome = "p2_victory"
+            self.output.append({"text": "{} has won!".format(self.player_2.name)})
+        elif not p2_alive and not p1_alive:
+            self.outcome = "draw"
+            self.output.append({"text": "The battle was a draw!"})
+
+
 
 
     def check_p1_first(self, p1_move, p2_move):
         # Check priority
-        p1_priority = self.get_priority(self.player_1.get_current_pokemon(), p1_move["move"])
-        p2_priority = self.get_priority(self.player_2.get_current_pokemon(), p2_move["move"])
+        p1_priority = self.get_priority(self.player_1.get_current_pokemon(), p1_move)
+        p2_priority = self.get_priority(self.player_2.get_current_pokemon(), p2_move)
         # Priority modifiers
         if p1_priority != p2_priority:
             return p1_priority > p2_priority
@@ -102,8 +119,9 @@ class BattleState:
         if p1_speed == p2_speed:
             return bool(random.getrandbits(1))
         # Trick room check
-        if self.trick_room > 0:
-            return p1_speed < p2_speed
+        if self.trick_room is not None:
+            if self.trick_room > 0:
+                return p1_speed < p2_speed
         # Speed compare
         else:
             return p1_speed > p2_speed
@@ -170,17 +188,22 @@ class BattleState:
         if user.current_hp == 0:
             return
         # Freeze and sleep
-        if user.status == "frz" or user.status == "slp":
+        if user.status == "slp":
             if user.status_turns == 0:
-                if user.status == "frz":
-                    self.output.append({"text": "{} thawed out!".format(user.name), "anim": "{}_frozen".format(player.player)})
-                else:
-                    self.output.append({"text": "{} woke up!".format(user.name), "anim": "{}_sleep".format(player.player)})
-                user.status = None
+                self.output.append({"text": "{} woke up!".format(user.name)})
+                user.status = ""
             else:
                 user.status_turns -= 1
-                self.output.append({"text": "{} is fast asleep...".format(user.name) if user.status == "slp" else "{} is frozen solid!".format(user.name)})
+                self.output.append({"text": "{} is fast asleep...".format(user.name), "anim": ["{}_sleep".format(player.player)]})
                 return
+        if user.status == "frz":
+            if random.randrange(100) < 20 or consts.MOVES[move]["type"] == "fire":
+                self.output.append({"text": "{} thawed out!".format(user.name)})
+                user.status = ""
+            else:
+                self.output.append({"text": "{} is frozen solid!".format(user.name), "anim": ["{}_frz".format(player.player)]})
+                return
+
         # Confusion roll
         if player.confusion > 0:
             player.confusion -= 1
@@ -194,28 +217,30 @@ class BattleState:
         # Paralysis
         if user.status == "par":
             if user.ability != "Magic Guard" and random.random() < 0.25:
-                self.output.append({"text": "{} is paralyzed! It cannot move!".format(user.name), "anim": "{}_paralyze".format(player.player)})
+                self.output.append({"text": "{} is paralyzed! It cannot move!".format(user.name), "anim": ["{}_paralyze".format(player.player)]})
         # Locked move check; outrage, choice items, taunt, etc.
         move_data = consts.MOVES[move]
         if player.locked_moves:
             print()
+        # Struggle check
         # Roll for accuracy for attacking moves
         if not self.roll_accuracy(player, move):
-            self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": "{}_{}_{}_miss".format(player.player, move_data["damage_class"], move_data["type"])})
+            self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}_miss".format(player.player, move_data["damage_class"], move_data["type"])]})
             self.output.append({"text": "The attack missed!"})
             return
         # Case where move is targeted attack
         if target not in ["users-field", "user", "opponents-field"]:
             # Protect/detect/endure check
+            self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])]})
             if "protect" in player.opponent.defense_active or "detect" in player.opponent.defense_active:
-                self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": "{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])})
                 self.output.append({"text": "{} protected itself!".format(target.name)})
                 return
             if move_data["damage_class"] != "status":
                 # Roll for crit
-                critical = self.roll_crit(player, move)
+                critical = 1.5 if self.roll_crit(player, move) else 1
                 # Roll for damage, if move does damage
                 damage = self.move_damage(
+                    player,
                     user,
                     target,
                     move_data["type"],
@@ -223,15 +248,13 @@ class BattleState:
                     move_data["damage_class"],
                     critical
                 )
-                # Apply effects
-                self.apply_status(player.opponent, target, move)
-            else:
-                self.apply_status(player.opponent, target, move)
-        # Case where move is self boost, heal, etc.
+                self.apply_damage(damage, player.opponent, False)
+            # Apply effects
+            self.apply_boosts(player, move)
+            self.apply_status(player.opponent, target, move)
+        # TODO - Case where move is self boost, heal, etc.
         else:
-            print()
-
-        raise NotImplementedError()
+            self.apply_boosts(player, move)
 
 
     def roll_accuracy(self, player, move):
@@ -247,7 +270,7 @@ class BattleState:
         if move_accuracy is None:
             return True
         # Determine the modifier
-        modified_accuracy = (1.67 if self.gravity > 0 else 1) * \
+        modified_accuracy = (1.67 if self.gravity is not None else 1) * \
                             (0.5 if (target.ability == "Tangled Feet" and player.opponent.confusion > 0) else 1) * \
                             (0.8 if (user.ability == "Hustle" and move_data["damage_class"] == "physical") else 1) * \
                             (0.8 if (target.ability == "Sand Veil" and self.weather == "sand") else 1) * \
@@ -291,11 +314,19 @@ class BattleState:
         """
         Calculate damage for a move. Crits applied in advance so can be controlled
         """
+        if base_power is None:
+            base_power = 0
         weather_boost = 1
         randdmg = random.randrange(85, 101) / 100
         stab = 1.5 if type in consts.POKEMON[user.dex]["typing"] else 1
         burn = 0.5 if (user.status == "brn" and user.ability != "Guts" and damage_class == "physical") else 1
         type_effectiveness = effectiveness(type, target.dex) if not ignore_type else 1
+        if type_effectiveness > 1:
+            self.output.append({"text": "It's super effective!"})
+        elif type_effectiveness <= 0:
+            self.output.append({"text": "It's completely ineffective!"})
+        elif type_effectiveness < 1:
+            self.output.append({"text": "It's not very effective!"})
         other = 1
         attack_stat = user.attack * consts.STAT_BOOSTS[player.stat_boosts["attack"]] \
             if damage_class == "physical" else \
@@ -314,25 +345,36 @@ class BattleState:
         Damage and faint a Pokemon
         """
         target = player.get_current_pokemon()
+        self.output.append({"anim": ["{}_update_hp".format(player.player)]})
         if damage >= target.current_hp:
             if survive:
                 target.current_hp = 1
                 return
             else:
                 target.current_hp = 0
-                self.output.append({"text": "{} has fainted!".format(target.name), "anim": "{}_faint".format(player.player)})
+                self.output.append({"text": "{} has fainted!".format(target.name), "anim": ["{}_faint".format(player.player)]})
                 return
         target.current_hp -= damage
 
 
     def apply_status(self, opponent, target, move):
-        generic_status = ["brn", "par", "frz", "slp", "psn", "txc"]
+        # If target was already KO'd do not apply status
+        if not target.is_alive():
+            return
+        generic_status = {
+            "brn": "{} was burned!",
+            "par": "{} was paralyzed!",
+            "frz": "{} was frozen solid!",
+            "slp": "{} fell asleep!",
+            "psn": "{} was poisoned!",
+            "txc": "{} was badly poisoned!"
+        }
         move_data = consts.MOVES[move]
         ailment = move_data["ailment"]
         chance = move_data["ailment_chance"]
         # Do not apply if already afflicted by similar status
         if ailment in generic_status:
-            if target.status is not None:
+            if target.status:
                 if move_data["damage_class"] == "status":
                     self.output.append({"text": "But it failed!"})
                 return
@@ -346,8 +388,13 @@ class BattleState:
         if chance == 0 or random.randrange(100) < chance:
             if ailment in generic_status:
                 target.status = ailment
+                self.output.append({"anim": ["{}_update_hp".format(opponent.player)]})
+                if ailment == "slp":
+                    target.status_turns = random.randrange(1, 4)
+                self.output.append({"text": generic_status[ailment].format(target.name)})
             elif ailment == "confusion":
                 opponent.confusion = random.randrange(2, 6)
+                self.output.append({"text": "{} became confused!".format(target.name)})
 
 
 
@@ -365,25 +412,41 @@ class BattleState:
             if "opponent" in stat_boosts:
                 for boost in stat_boosts["opponent"]:
                     current_boost = player.opponent.stat_boosts[boost[1]]
+                    prev_boost = current_boost
                     current_boost = max(-6, min(6, current_boost + boost[0]))
                     player.opponent.stat_boosts[boost[1]] = current_boost
-                    self.output.append({"text": "{}'s {} {}{}!".format(
-                        player.opponent.get_current_pokemon().name,
-                        boost[1].replace("-", " "),
-                        "sharply " if boost[0] > 1 else "harshly " if boost[0] < -1 else "",
-                        "rose" if boost[0] > 0 else "fell"
-                    )})
+                    if prev_boost == current_boost:
+                        self.output.append({"text": "{}'s {} {}!".format(
+                            player.opponent.get_current_pokemon().name,
+                            boost[1].replace("-", " "),
+                            "has already reached its limit" if current_boost > 1 else "cannot go any lower" if current_boost < -1 else "",
+                        )})
+                    else:
+                        self.output.append({"text": "{}'s {} {}{}!".format(
+                            player.opponent.get_current_pokemon().name,
+                            boost[1].replace("-", " "),
+                            "sharply " if boost[0] > 1 else "harshly " if boost[0] < -1 else "",
+                            "rose" if boost[0] > 0 else "fell"
+                        )})
             if "self" in stat_boosts:
                 for boost in stat_boosts["self"]:
                     current_boost = player.stat_boosts[boost[1]]
                     current_boost = max(-6, min(6, current_boost + boost[0]))
+                    prev_boost = current_boost
                     player.stat_boosts[boost[1]] = current_boost
-                    self.output.append({"text": "{}'s {} {}{}!".format(
-                        player.get_current_pokemon().name,
-                        boost[1].replace("-", " "),
-                        "sharply " if boost[0] > 1 else "harshly " if boost[0] < -1 else "",
-                        "rose" if boost[0] > 0 else "fell"
-                    )})
+                    if prev_boost == current_boost:
+                        self.output.append({"text": "{}'s {} {}!".format(
+                            player.get_current_pokemon().name,
+                            boost[1].replace("-", " "),
+                            "has already reached its limit" if current_boost > 1 else "cannot go any lower" if current_boost < -1 else "",
+                        )})
+                    else:
+                        self.output.append({"text": "{}'s {} {}{}!".format(
+                            player.get_current_pokemon().name,
+                            boost[1].replace("-", " "),
+                            "sharply " if boost[0] > 1 else "harshly " if boost[0] < -1 else "",
+                            "rose" if boost[0] > 0 else "fell"
+                        )})
         return
 
 
@@ -418,12 +481,13 @@ class BattleState:
                     target_pokemon.current_hp = min(target_pokemon.current_hp + item_effects["hp"], target_pokemon.hp)
             if "status" in item_effects:
                 if item_effects["status"] == "any":
-                    target_pokemon.status = None
+                    target_pokemon.status = ""
                 elif item_effects["status"] == target_pokemon.status:
-                    target_pokemon.status = None
+                    target_pokemon.status = ""
                 elif item_effects["status"] == "psn" and target_pokemon.status == "txc":
-                    target_pokemon.status = None
-            self.output.append({"text": "Used {} on {}!".format(item, target_pokemon.name), "anim": ["update_hp"], "val": target_pokemon.current_hp})
+                    target_pokemon.status = ""
+            self.output.append({"text": "Used {} on {}!".format(item, target_pokemon.name)})
+            self.output.append({"anim": ["{}_update_hp".format(user.player)]})
 
         # Pokeball usage
         if item_type == "ball":
@@ -445,16 +509,16 @@ class BattleState:
             shake_chance = int(65536) * (catch_chance / 1044480) ** (1/4)
             # Master ball
             if item == "master-ball":
-                self.output.append({"text": "You have caught the wild {}!".format(wild_pokemon.name), "anim": "caught"})
+                self.output.append({"text": "You have caught the wild {}!".format(wild_pokemon.name), "anim": ["caught"]})
                 self.outcome = "caught"
                 return True
             # Check shakes
             for i in range(3):
                 if random.randrange(65535) > shake_chance:
-                    self.output.append({"text": "The wild {} escaped!".format(wild_pokemon.name), "anim": "escape_ball"})
+                    self.output.append({"text": "The wild {} escaped!".format(wild_pokemon.name), "anim": ["escape_ball"]})
                     return False
-                self.output.append({"anim": "shake"})
-            self.output.append({"text": "You have caught the wild {}!".format(wild_pokemon.name), "anim": "caught"})
+                self.output.append({"anim": ["shake"]})
+            self.output.append({"text": "You have caught the wild {}!".format(wild_pokemon.name), "anim": ["caught"]})
             self.outcome = "caught"
             return True
         return False
@@ -476,7 +540,8 @@ class BattleState:
 
         # Check switch to target is alive
         if player.party[swap_to].is_alive():
-            self.output.append({"text": "Come back, {}!".format(player.get_current_pokemon().name), "anim": ["{}_retreat".format(player.player)]})
+            if player.get_current_pokemon().is_alive():
+                self.output.append({"text": "Come back, {}!".format(player.get_current_pokemon().name), "anim": ["{}_retreat".format(player.player)]})
             player.current_pokemon = swap_to
             player.stat_boosts = copy.deepcopy(consts.PLAYER_STATE["stat_boosts"])
             player.confusion = 0
@@ -561,6 +626,7 @@ class PlayerState:
         self.name = player_state["name"]
         self.trapped = player_state["trapped"]
         self.choice = player_state["choice"]
+        self.inventory = player_state["inventory"]
 
         # Not in state
         self.player = None
@@ -568,6 +634,9 @@ class PlayerState:
 
     def get_current_pokemon(self):
         return self.party[self.current_pokemon]
+
+    def has_pokemon(self):
+        return any([pkmn.is_alive() for pkmn in self.party])
 
     def jsonify(self):
         return {
@@ -582,7 +651,8 @@ class PlayerState:
             "tailwind": self.tailwind,
             "name": self.name,
             "trapped": self.trapped,
-            "choice": self.choice
+            "choice": self.choice,
+            "inventory": self.inventory
         }
 
 
@@ -595,7 +665,7 @@ class PokemonState:
         self.held_item = pokemon_state["held_item"]
         self.happiness = pokemon_state["happiness"]
         self.ability = pokemon_state["ability"]
-        self.dex = pokemon_state["dex_number"]
+        self.dex = str(pokemon_state["dex_number"]).zfill(3)
         self.level = pokemon_state["level"]
         self.shiny = pokemon_state["shiny"]
         self.hp = pokemon_state["stats"]["hp"]
@@ -618,6 +688,10 @@ class PokemonState:
         return False
 
 
+    def struggling(self):
+        return not any([self.has_pp(move) for move in self.moves])
+
+
     def jsonify(self):
         return {
             "current_hp": self.current_hp,
@@ -627,7 +701,7 @@ class PokemonState:
             "held_item": self.held_item,
             "happiness": self.happiness,
             "ability": self.ability,
-            "dex_number": self.dex,
+            "dex_number": str(self.dex).zfill(3),
             "level": self.level,
             "shiny": self.shiny,
             "stats": {

@@ -26,6 +26,7 @@ urlpatterns = [
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
     path("battle", battle_views.battle, name="battle"),
+    path("battle_create", battle_views.battle_create, name="battle_create"),
     #path('', include('users.urls'))
     # AJAX requests
     path("map_data/", map_views.map_data, name="map_data"),

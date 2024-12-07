@@ -1,5 +1,6 @@
 {% extends 'base_layout.html' %}
 {% load static %}
+{% load stat_tags %}
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
@@ -8,5 +9,86 @@
 {% block content %}
 
 <h4>Battle</h4>
+{{ is_p1 }}
+<div id="battle">
+    <div class="content-box" style="display: grid; grid-template-columns: 480px 200px; grid-template-rows: 224px 120px; gap: 5px; width: 700px;">
+        <div style="grid-area: 1 / 1; background-image: url('{% get_static_prefix %}{{ asset_paths.scene|replace:'\|/'  }}/{{ scene }}.png'); border: 1px solid black; position: relative;">
+            <div id="opp_hp" class="content-box" style="height:40px; width: 220px; position: absolute; top: 0; left: 0"></div>
+            <img id="opp_spr" src="" style="position:absolute; top: 60px; left: 300px">
+            <img id="player_spr" src="" style="position:absolute; top: 130px; left: 70px">
+            <img id="player_splat" src="{% get_static_prefix %}assets/hitsplat.png" style="position:absolute; top: 75px; left: 315px; opacity: 0;z-index:100;">
+            <img id="opp_splat" src="{% get_static_prefix %}assets/hitsplat.png" style="position:absolute; top: 145px; left: 85px; opacity: 0; z-index:100;">
+            <div id="player_hp" class="content-box" style="height: 40px; width: 220px; position: absolute; bottom: 0; right: 0"></div>
+        </div>
+        <div style="grid-area: 2 / 1;">
+            <div class="control-tab" id="select">
+                <button class="move-box battler" onclick="openTab('control-tab', 'attack')">Attack</button>
+                <button class="move-box battler" onclick="openTab('control-tab', 'switch')">Switch</button>
+                <button class="move-box battler" onclick="openTab('control-tab', 'items')">Items</button>
+                <button class="move-box battler" onclick="sendMove({'action': 'surrender'})">Surrender</button>
+            </div>
+            <div class="control-tab" id="attack" style="display:none">
+                <table class="center">
+                    <tr>
+                        <td>
+                            <button id="move-1" class="move-box battler" onclick="sendMove(moves[0])">
+                                <span></span><br>
+                                <img src="">
+                                <img src="">
+                            </button>
+                        </td>
+                        <td>
+                            <button id="move-2" class="move-box battler" onclick="sendMove(moves[1])">
+                                <span></span><br>
+                                <img src="">
+                                <img src="">
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button id="move-3" class="move-box battler" onclick="sendMove(moves[2])">
+                                <span></span><br>
+                                <img src="">
+                                <img src="">
+                            </button>
+                        </td>
+                        <td>
+                            <button id="move-4" class="move-box battler" onclick="sendMove(moves[3])">
+                                <span></span><br>
+                                <img src="">
+                                <img src="">
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <button onclick="openTab('control-tab', 'select')" class="button-3 button-back">Cancel</button>
+            </div>
+            <div class="control-tab" id="switch" style="display:none">
+            </div>
+            <div class="control-tab" id="items" style="display:none">
+                <button onclick="openTab('control-tab', 'select')" class="button-3 button-back">Cancel</button>
+            </div>
+        </div>
+        <textarea id="chat-log" cols="100" rows="20" style="grid-area: 1 / 2 / span 2;"></textarea>
+    </div>
+</div>
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+const initialState = JSON.parse('{{ battle_state|safe }}');
+const moveData = JSON.parse('{{ move_data|safe }}');
+const roomName = {{ battle_id }};
+const initialTurn = {{ current_turn }};
+const isPlayerOne = {{ is_p1|yesno:"true,false" }};
+
+const typePath = '{% get_static_prefix %}{{ asset_paths.typing|replace:'\|/' }}';
+const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' }}';
+const iconPath = '{% get_static_prefix %}{{ asset_paths.icon|replace:'\|/' }}';
+const frontPath = '{% get_static_prefix %}{{ asset_paths.front|replace:'\|/' }}';
+const backPath = '{% get_static_prefix %}{{ asset_paths.back|replace:'\|/' }}';
+</script>
+<script src="{% static 'scripts/battleSocket.js' %}"></script>
 {% endblock %}

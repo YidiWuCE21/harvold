@@ -3,7 +3,7 @@
     "team": [
         {
             "current_hp": 327,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -42,7 +42,7 @@
         },
         {
             "current_hp": 324,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -81,7 +81,7 @@
         },
         {
             "current_hp": 346,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -120,7 +120,7 @@
         },
         {
             "current_hp": 322,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -159,7 +159,7 @@
         },
         {
             "current_hp": 344,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {
@@ -198,7 +198,7 @@
         },
         {
             "current_hp": 417,
-            "status": null,
+            "status": "",
             "status_turns": 0,
             "moves": [
                 {

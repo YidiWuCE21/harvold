@@ -4,7 +4,7 @@
         "team": [
             {
                 "ability": "Chlorophyll",
-                "status": null,
+                "status": "",
                 "current_hp": 20,
                 "happiness": 70,
                 "held_item": null,
@@ -29,7 +29,7 @@
         "team": [
             {
                 "ability": "Chlorophyll",
-                "status": null,
+                "status": "",
                 "current_hp": 43,
                 "happiness": 70,
                 "held_item": null,

@@ -50,7 +50,7 @@ class TestCreateBattle(TestCase):
         ret = models.create_battle(self.trainer1.pk, "erika_gym", "npc")
 
         # Test battle object
-        battle_obj = ret[1]
+        battle_obj = ret
         self.assertEqual(self.trainer1, battle_obj.player_1)
         self.assertIsNone(battle_obj.player_2)
         self.assertEqual("erika_gym", battle_obj.npc_opponent)
@@ -73,7 +73,7 @@ class TestCreateBattle(TestCase):
         ret = models.create_battle(self.trainer1.pk, self.wild.pk, "wild")
 
         # Test battle object
-        battle_obj = ret[1]
+        battle_obj = ret
         self.assertEqual(self.trainer1, battle_obj.player_1)
         self.assertIsNone(battle_obj.player_2)
         self.assertIsNone(battle_obj.npc_opponent)
@@ -103,7 +103,7 @@ class TestCreateBattle(TestCase):
         ret = models.create_battle(self.trainer1.pk, self.trainer2.pk, "live")
 
         # Test battle object
-        battle_obj = ret[1]
+        battle_obj = ret
         self.assertEqual(self.trainer1, battle_obj.player_1)
         self.assertEqual(self.trainer2, battle_obj.player_2)
         self.assertIsNone(battle_obj.npc_opponent)

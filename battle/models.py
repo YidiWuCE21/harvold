@@ -47,6 +47,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     party_1 = player_1.get_party()
     battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1]
     battle_state["player_1"]["name"] = player_1.user.username
+    battle_state["player_1"]["inventory"] = copy.deepcopy(player_1.bag)
 
     # Attempt to find opponent and team data
     player_2 = None
@@ -59,6 +60,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         battle_state["player_2"]["party"] = [wild_opponent.get_battle_info()]
         battle_state["escapes"] = 0
         battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
+        battle_state["player_2"]["inventory"] = None
     elif type == "npc":
         trainer_data = "{}.json".format(p2_id)
         trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
@@ -69,6 +71,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
             battle_state["player_2"]["party"] = trainer_json["team"]
             npc_opponent = p2_id
             battle_state["player_2"]["name"] = trainer_json["name"]
+        battle_state["player_2"]["inventory"] = None
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)
         if player_2.current_battle is not None:
@@ -76,8 +79,21 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         party_2 = player_2.get_party()
         battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
         battle_state["player_2"]["name"] = player_2.user.username
+        battle_state["player_1"]["inventory"] = copy.deepcopy(player_2.bag)
     else:
         raise ValueError("Type of battle must be 'wild', 'npc', or 'live'")
+
+    # For case when first Pokemon is fainted, increment until we reach a living Pokemon
+    for player in ["player_1", "player_2"]:
+        current = 0
+        while True:
+            try:
+                if battle_state[player]["party"][current]["current_hp"] > 0:
+                    break
+                current += 1
+            except:
+                raise ValueError("All Pokemon are fainted, cannot make battle!")
+        battle_state[player]["current_pokemon"] = current
 
     # DB opereations
     battle = Battle(
@@ -102,17 +118,14 @@ def create_battle(p1_id, p2_id, type, ai="default"):
                 pkmn.full_heal()
 
     # Save users and parties together
-    try:
-        with transaction.atomic():
-            battle.save()
-            player_1.current_battle = battle
-            player_1.save()
-            if player_2 is not None:
-                player_2.current_battle = battle
-                player_2.save()
-    except BaseException as e:
-        return (False, "Battle creation failed!")
-    return (True, battle)
+    with transaction.atomic():
+        battle.save()
+        player_1.current_battle = battle
+        player_1.save()
+        if player_2 is not None:
+            player_2.current_battle = battle
+            player_2.save()
+    return battle
 
 
 # Create your models here.
@@ -166,3 +179,14 @@ class Battle(models.Model):
         for pkmn in battle_state["player_2"]["party"]:
             pkmn["dex_number"] = str(pkmn["dex_number"]).zfill(3)
         return battle_state
+
+
+    def get_all_moves(self):
+        moves = []
+        for player in [self.battle_state["player_1"], self.battle_state["player_2"]]:
+            for pkmn in player["party"]:
+                for move in pkmn["moves"]:
+                    if move["move"] is not None:
+                        if not move["move"] in moves:
+                            moves.append(move["move"])
+        return moves

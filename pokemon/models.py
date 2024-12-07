@@ -209,7 +209,7 @@ class Pokemon(models.Model):
     # Status
     held_item = models.CharField(max_length=20, null=True, blank=True)
     current_hp = models.IntegerField()
-    status = models.CharField(max_length=20, null=True, blank=True)
+    status = models.CharField(max_length=20, default="")
     status_turns = models.IntegerField(default=0)
     traded = models.BooleanField(default=False)
     happiness = models.IntegerField(default=200)

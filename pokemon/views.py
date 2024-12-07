@@ -2,7 +2,7 @@ import json
 import datetime
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse, HttpResponseNotFound
 
 # Create your views here.
@@ -102,6 +102,7 @@ def pokemon(request):
 
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def pokecenter(request):
     html_render_variables = {
         "swarm_dex": "100",
@@ -115,7 +116,7 @@ def pokecenter(request):
 @login_required
 def pokecenter_heal(request):
     # Check if user is eligible for heal
-    if request.user.profile.state == "idle":
+    if request.user.profile.state == "idle" and request.user.profile.current_battle is None:
         party = request.user.profile.get_party()
         for pkmn in party:
             pkmn.full_heal()

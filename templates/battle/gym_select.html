@@ -16,8 +16,10 @@
             <tr>
                 {% for type, gym_info, badge in gyms %}
                 <td>
-                    <a href="">
-                        <div class="party-box" style="width:240px;height:100px;">
+                    <form method="POST" action="{% url 'battle_create' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym">
+                        <button class="party-box" style="width:240px;height:100px;">
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.reg }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
@@ -27,8 +29,8 @@
                                 <p style="font-size: 10px">Level: {{ gym_info.level }}</p>
                                 <img src="{% get_static_prefix %}{{ asset_paths.badges }}/{{ type }}_silver.png" {% if badge is None %}class="grayscale"{% endif %}>
                             </div>
-                        </div>
-                    </a>
+                        </button>
+                    </form>
                 </td>
                 {% if forloop.counter|divisibleby:2 %}
                 </tr><tr>
@@ -46,8 +48,10 @@
             <tr>
                 {% for type, gym_info, badge in gyms %}
                 <td>
-                    <a href="" {% if badge is None %}class="grayscale disabled"{% endif %}>
-                        <div class="party-box" style="width:240px;height:100px;">
+                    <form method="POST" action="{% url 'battle_create' %}" {% if badge is None %}class="grayscale disabled"{% endif %}>
+                        {% csrf_token %}
+                        <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym_elite">
+                        <button class="party-box" style="width:240px;height:100px;">
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.elite }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
@@ -57,8 +61,8 @@
                                 <p style="font-size: 10px">Level: 100</p>
                                 <img src="{% get_static_prefix %}{{ asset_paths.badges }}/{{ type }}_gold.png" {% if badge is None or badge == "silver" %}class="grayscale"{% endif %}>
                             </div>
-                        </div>
-                    </a>
+                        </button>
+                    </form>
                 </td>
                 {% if forloop.counter|divisibleby:2 %}
                 </tr><tr>

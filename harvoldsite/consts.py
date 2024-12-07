@@ -35,6 +35,7 @@ ASSET_PATHS = {
     "icon": os.path.join("assets", "pokemon", "icon"),
     "art": os.path.join("assets", "pokemon", "art"),
     "front": os.path.join("assets", "pokemon", "front"),
+    "back": os.path.join("assets", "pokemon", "back"),
     # Player sprites
     "player_sprite": os.path.join("assets", "player", "sprite"),
     "player_art": os.path.join("assets", "player", "art"),
@@ -47,7 +48,8 @@ ASSET_PATHS = {
     "item": os.path.join("assets", "items"),
     "moves": os.path.join("assets", "pokemon", "moves"),
     "badges": os.path.join("assets", "badges"),
-    "misc": os.path.join("assets", "misc")
+    "misc": os.path.join("assets", "misc"),
+    "scene": os.path.join("assets", "scene")
 }
 
 # Login-related choicesf
@@ -181,7 +183,8 @@ PLAYER_STATE = {
     "tailwind": None,
     "name": None,
     "trapped": 0,
-    "choice": None
+    "choice": None,
+    "inventory": None
 }
 
 TYPE_EFFECTIVENESS = {
@@ -306,3 +309,7 @@ TYPE_EFFECTIVENESS = {
     ("fairy", "dark"): 2,
     ("fairy", "steel"): 0.5
 }
+
+# Functions for checking that the user passes some test
+def user_not_in_battle(user):
+    return user.profile.current_battle is None
