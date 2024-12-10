@@ -7,14 +7,6 @@ from harvoldsite import consts
 from . import models
 
 
-def index(request):
-    return render(request, "chat/index.html")
-
-
-def room(request, room_name):
-    return render(request, "chat/room.html", {"room_name": room_name})
-
-
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def gyms(request):

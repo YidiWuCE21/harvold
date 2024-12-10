@@ -15,7 +15,11 @@ Success!!!
 <form method="GET">
     {% csrf_token %}
     Dex
-    <input name="dex" type="text">
+    <select name="dex">
+        {% for idx, poke in pkmn.items %}
+        <option value="{{idx}}">{{ poke }}</option>
+        {% endfor %}
+    </select>
     Level
     <input name="level" type="text">
     Sex

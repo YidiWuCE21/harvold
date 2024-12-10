@@ -166,8 +166,8 @@ def battle_processor(text_data, sender):
                 battle.move_history.append({"player_1": battle.player_1_choice, "player_2": battle.player_2_choice})
                 try:
                     battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
-                except:
-                    return {"self": {"message": "Error occurred processing battle!", "prompt": "move"}}
+                except BaseException as e:
+                    return {"self": {"message": "Error occurred processing battle! {}".format(e), "prompt": "move"}}
 
             # Check the battle outcome and process if outcome
             if battle_state.outcome is not None:

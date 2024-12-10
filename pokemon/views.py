@@ -25,7 +25,7 @@ def box(request):
 
 @login_required
 def make(request):
-    render_vars = {"made": False}
+    render_vars = {"made": False, "pkmn": {idx: pkmn["name"] for idx, pkmn in consts.POKEMON.items()}}
     if request.GET.get("dex") is not None:
         pkmn = create_pokemon(request.GET.get("dex").zfill(3), int(request.GET.get("level")), request.GET.get("sex"), shiny=request.GET.get("shiny", False) == "on", nature_override=request.GET.get("nature", None),
                               iv_advantage=3)

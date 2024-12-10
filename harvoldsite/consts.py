@@ -49,7 +49,8 @@ ASSET_PATHS = {
     "moves": os.path.join("assets", "pokemon", "moves"),
     "badges": os.path.join("assets", "badges"),
     "misc": os.path.join("assets", "misc"),
-    "scene": os.path.join("assets", "scene")
+    "scene": os.path.join("assets", "scene"),
+    "status": os.path.join("assets", "status")
 }
 
 # Login-related choicesf

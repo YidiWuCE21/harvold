@@ -4,6 +4,7 @@ import json
 from functools import partial
 
 from harvoldsite import consts
+from . import custom_moves
 """
 Battle state is outlined in models.py
 
@@ -88,8 +89,11 @@ class BattleState:
                 self.attack(self.player_2, p2_move["move"])
                 self.attack(self.player_1, p1_move["move"])
 
-        # Decrement weather, trick room, etc.
         # Apply item, weather, status
+        self.weather_effect()
+        self.status_effect(self.player_1)
+        self.status_effect(self.player_2)
+
         # Update outcome if one or both teams have no more useable pokemon
         p1_alive = self.player_1.has_pokemon()
         p2_alive = self.player_2.has_pokemon()
@@ -229,9 +233,9 @@ class BattleState:
             self.output.append({"text": "The attack missed!"})
             return
         # Case where move is targeted attack
-        if target not in ["users-field", "user", "opponents-field"]:
+        self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])]})
+        if move_data["target"] not in ["users-field", "user", "opponents-field"]:
             # Protect/detect/endure check
-            self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])]})
             if "protect" in player.opponent.defense_active or "detect" in player.opponent.defense_active:
                 self.output.append({"text": "{} protected itself!".format(target.name)})
                 return
@@ -249,12 +253,31 @@ class BattleState:
                     critical
                 )
                 self.apply_damage(damage, player.opponent, False)
+                # Apply drain
+                if move_data["drain"] != 0:
+                    if move_data["drain"] > 0:
+                        self.output.append({"text": "{} restored its HP!".format(user.name)})
+                    else:
+                        self.output.append({"text": "{} took damage from recoil!".format(user.name)})
+                    self.apply_damage(int(damage * -move_data["drain"] / 100), player, False)
+                # Apply struggle
+                if move_data["healing"] != 0:
+                    self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
             # Apply effects
             self.apply_boosts(player, move)
             self.apply_status(player.opponent, target, move)
-        # TODO - Case where move is self boost, heal, etc.
         else:
             self.apply_boosts(player, move)
+            if move_data["healing"] != 0:
+                self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
+        # Custom effects
+        if move in custom_moves.SUPPORTED_MOVES:
+            custom_moves.SUPPORTED_MOVES[move](self, player)
+        # Subtract PP
+        for i, known_move in enumerate(user.moves):
+            if known_move["move"] == move:
+                user.moves[i]["pp"] -= 1
+                return
 
 
     def roll_accuracy(self, player, move):
@@ -345,16 +368,17 @@ class BattleState:
         Damage and faint a Pokemon
         """
         target = player.get_current_pokemon()
-        self.output.append({"anim": ["{}_update_hp".format(player.player)]})
         if damage >= target.current_hp:
             if survive:
                 target.current_hp = 1
-                return
             else:
                 target.current_hp = 0
-                self.output.append({"text": "{} has fainted!".format(target.name), "anim": ["{}_faint".format(player.player)]})
-                return
-        target.current_hp -= damage
+        else:
+            target.current_hp -= damage
+        target.current_hp = min(target.current_hp, target.hp)
+        self.output.append({"anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
+        if target.current_hp == 0:
+            self.output.append({"text": "{} has fainted!".format(target.name), "anim": ["{}_faint".format(player.player)]})
 
 
     def apply_status(self, opponent, target, move):
@@ -388,10 +412,11 @@ class BattleState:
         if chance == 0 or random.randrange(100) < chance:
             if ailment in generic_status:
                 target.status = ailment
-                self.output.append({"anim": ["{}_update_hp".format(opponent.player)]})
+                self.output.append({"text": generic_status[ailment].format(target.name), "anim": ["{}_update_hp_{}".format(opponent.player, target.current_hp)]})
                 if ailment == "slp":
                     target.status_turns = random.randrange(1, 4)
-                self.output.append({"text": generic_status[ailment].format(target.name)})
+                if ailment == "txc":
+                    target.status_turns = 1
             elif ailment == "confusion":
                 opponent.confusion = random.randrange(2, 6)
                 self.output.append({"text": "{} became confused!".format(target.name)})
@@ -431,8 +456,8 @@ class BattleState:
             if "self" in stat_boosts:
                 for boost in stat_boosts["self"]:
                     current_boost = player.stat_boosts[boost[1]]
-                    current_boost = max(-6, min(6, current_boost + boost[0]))
                     prev_boost = current_boost
+                    current_boost = max(-6, min(6, current_boost + boost[0]))
                     player.stat_boosts[boost[1]] = current_boost
                     if prev_boost == current_boost:
                         self.output.append({"text": "{}'s {} {}!".format(
@@ -487,7 +512,7 @@ class BattleState:
                 elif item_effects["status"] == "psn" and target_pokemon.status == "txc":
                     target_pokemon.status = ""
             self.output.append({"text": "Used {} on {}!".format(item, target_pokemon.name)})
-            self.output.append({"anim": ["{}_update_hp".format(user.player)]})
+            self.output.append({"anim": ["{}_update_hp_{}".format(user.player, target_pokemon.current_hp)]})
 
         # Pokeball usage
         if item_type == "ball":
@@ -608,6 +633,69 @@ class BattleState:
         if self.escapes is not None:
             json_obj["escapes"] = self.escapes
         return json_obj
+
+
+    def status_effect(self, player):
+        """
+        Apply status effects
+        """
+        pokemon = player.get_current_pokemon()
+        if pokemon.status == "brn":
+            burn_damage = int(pokemon.hp / 16)
+            self.output.append({"text": "{} was hurt by its burn!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
+            self.apply_damage(burn_damage, player)
+        if pokemon.status == "psn":
+            psn_damage = int(pokemon.hp / 16)
+            self.output.append({"text": "{} was hurt by poison!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
+            self.apply_damage(psn_damage, player)
+        if pokemon.status == "txc":
+            psn_damage = int(pokemon.hp / 16 * min(pokemon.status_turns, 15))
+            self.output.append({"text": "{} was hurt by burn!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
+            self.apply_damage(psn_damage, player)
+            pokemon.status_turns += 1
+
+
+    def weather_effect(self):
+        """Manage weather"""
+        weather_text = {
+            "rain": ["Rain continues to fall.", "The rain stopped."],
+            "hail": ["Hail continues to fall.", "The hail stopped"],
+            "sun": ["The sunlight is strong.", "The sunlight faded."],
+            "sand": ["The sandstorm rages.", "The sandstorm subsided."]
+        }
+        p1_pokemon = self.player_1.get_current_pokemon()
+        p2_pokemon = self.player_2.get_current_pokemon()
+        if self.weather is not None:
+            self.weather_turns -= 1
+            if self.weather_turns < 1:
+                self.output.append({"text": weather_text[self.weather][1]})
+                self.weather = None
+            else:
+                self.output.append({"text": weather_text[self.weather][0]})
+                if self.weather == "sand":
+                    if not any([any([protected in consts.POKEMON[p1_pokemon.dex]["typing"] for protected in ["rock", "ground", "steel"]]),
+                                p1_pokemon.ability in ["Sand Veil", "Sand Rush", "Sand Force", "Magic Guard", "Overcoat"],
+                                p1_pokemon.held_item == "safety-goggles"]):
+                        self.output.append({"text": "{} is buffeted by the sandstorm!".format(p1_pokemon.name)})
+                        self.apply_damage(int(p1_pokemon.hp / 16), self.player_1)
+                    if not any([any([protected in consts.POKEMON[p2_pokemon.dex]["typing"] for protected in ["rock", "ground", "steel"]]),
+                                p2_pokemon.ability in ["Sand Veil", "Sand Rush", "Sand Force", "Magic Guard", "Overcoat"],
+                                p2_pokemon.held_item == "safety-goggles"]):
+                        self.output.append({"text": "{} is buffeted by the sandstorm!".format(p2_pokemon.name)})
+                        self.apply_damage(int(p2_pokemon.hp / 16), self.player_2)
+                if self.weather == "hail":
+                    if not any(["ice" in consts.POKEMON[p1_pokemon.dex]["typing"],
+                                p1_pokemon.ability in ["Ice Body", "Snow Cloak", "Magic Guard", "Overcoat"],
+                                p1_pokemon.held_item == "safety-goggles"]):
+                        self.output.append({"text": "{} is buffeted by the hail!".format(self.player_1.get_current_pokemon().name)})
+                        self.apply_damage(int(self.player_1.get_current_pokemon().hp / 16), self.player_1)
+                    if not any(["ice" in consts.POKEMON[p2_pokemon.dex]["typing"],
+                                p2_pokemon.ability in ["Ice Body", "Snow Cloak", "Magic Guard", "Overcoat"],
+                                p2_pokemon.held_item == "safety-goggles"]):
+                        self.output.append({"text": "{} is buffeted by the hail!".format(self.player_2.get_current_pokemon().name)})
+                        self.apply_damage(int(self.player_2.get_current_pokemon().hp / 16), self.player_2)
+
+
 
 
 
