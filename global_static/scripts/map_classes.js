@@ -56,3 +56,45 @@ class Sprite {
 
     }
 }
+
+class Trainer extends Sprite {
+    constructor({ position, velocity, image, wanderPoints, delay, battle = null, speed = 1, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, offset = {x: 0, y: 0}}) {
+        super({
+            position: position,
+            velocity: velocity,
+            image: image,
+            crop: crop,
+            frames: frames,
+            rows: rows,
+            hitbox: hitbox,
+            offset: offset
+        });
+        this.wanderPoints = wanderPoints;
+        this.currentPoint = 0;
+        this.currentState = 'idle';
+        this.idleTicks = 0;
+        this.speed = speed;
+        this.solid = false;
+        this.width = 12;
+        this.height = 12;
+        this.delay = delay;
+        this.exclamation = new Image();
+        this.exclamation.src = '/static/assets/misc/exclaim.png'
+        this.battle = battle;
+    }
+
+    exclaim(cameraPosition) {
+        c.drawImage(
+            this.exclamation,
+            this.position.x - cameraPosition.x + 6,
+            this.position.y - cameraPosition.y - 12
+        );
+    }
+
+    draw(cameraPosition) {
+        super.draw(cameraPosition);
+        if (this.solid && this.battle != null) {
+            this.exclaim(cameraPosition);
+        }
+    }
+}

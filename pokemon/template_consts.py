@@ -20,7 +20,7 @@ def uid(request):
 
 def party(request):
     try:
-        party = request.user.profile.get_party()
+        party = request.user.profile.get_party(return_none=True)
         party = [pkmn.get_party_info() if pkmn is not None else None for pkmn in party]
         return {
             "party": party

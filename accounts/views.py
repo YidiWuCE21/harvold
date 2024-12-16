@@ -83,7 +83,7 @@ def view_profile(request):
         "dex_entries": profile.dex_entries,
         "date_joined": profile.user.date_joined.date,
         "self_view": self_view,
-        "badges": {"grass": "silver", "electric": "silver", "fire": "silver", "fighting": "silver", "water": "silver", "dragon": "silver", "ghost": "silver", "ground": "silver"}
+        "badges": profile.badges
     }
     return render(request, "registration/profile.html", html_render_variables)
 

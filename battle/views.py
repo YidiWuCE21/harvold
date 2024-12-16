@@ -1,4 +1,5 @@
 import json
+import os
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -78,6 +79,7 @@ def battle(request):
         battle = request.user.profile.current_battle
     else:
         return redirect("pokecenter")
+    is_p1 = request.user.profile == battle.player_1
 
     html_render_variables = {
         "battle_state": json.dumps(battle.battle_state),
@@ -88,7 +90,7 @@ def battle(request):
         "battle_id": battle.pk,
         "current_turn": battle.current_turn,
         "scene": "default",
-        "is_p1": request.user.profile == battle.player_1,
+        "is_p1": is_p1,
         "move_data": json.dumps({move: {k: v for k, v in consts.MOVES[move].items() if k in ["damage_class", "name", "power", "accuracy", "category", "type", "pp"]} for move in battle.get_all_moves()}),
         "balls_allowed": battle.type == "wild",
         "medicines_allowed": battle.type != "live"

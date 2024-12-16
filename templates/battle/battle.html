@@ -8,10 +8,8 @@
 
 {% block content %}
 
-<h4>Battle</h4>
-{{ is_p1 }}
 <div id="battle">
-    <div class="content-box" style="display: grid; grid-template-columns: 480px 200px; grid-template-rows: 224px 120px; gap: 5px; width: 700px;">
+    <div class="content-box" style="padding: 0px; display: grid; grid-template-columns: 480px 200px; grid-template-rows: 224px 130px; gap: 0px; width: 680px;">
         <div style="grid-area: 1 / 1; background-image: url('{% get_static_prefix %}{{ asset_paths.scene|replace:'\|/'  }}/{{ scene }}.png'); border: 1px solid black; position: relative;">
 
             <div class="content-box battle-info right-clip" style="top: 0; left: 3px; background: rgb(60, 60, 60);"></div>
@@ -31,18 +29,18 @@
                 </div>
             </div>
 
-            <img id="opp_spr" src="" style="position:absolute; top: 60px; left: 300px">
-            <img id="player_spr" src="" style="position:absolute; top: 130px; left: 70px">
+            <img id="player_spr" src="" style="position:absolute; left: 70px; top: 130px;" data-ox="70" data-oy="130">
+            <img id="opp_spr" src="" style="position:absolute; left: 300px; top: 60px;" data-ox="300" data-oy="60">
 
             <img id="player_splat" src="{% get_static_prefix %}assets/hitsplat.png" style="position:absolute; top: 90px; left: 330px; opacity: 0;z-index:100;">
             <img id="opp_splat" src="{% get_static_prefix %}assets/hitsplat.png" style="position:absolute; top: 160px; left: 100px; opacity: 0; z-index:100;">
 
-            <div id="player_balls" style="position:absolute; top:157px; left: 280px;">
+            <div id="player_balls" style="position:absolute; top:159px; left: 280px;">
             </div>
             <div id="opp_balls" style="position:absolute; top:45px; left: 10px;">
             </div>
         </div>
-        <div style="grid-area: 2 / 1;">
+        <div style="grid-area: 2 / 1;padding:5px;">
             <div class="control-tab" id="end"></div>
             <div class="control-tab" id="select">
                 <button class="move-box battler" onclick="openTab('control-tab', 'attack')">Attack</button>
@@ -50,7 +48,7 @@
                 <button class="move-box battler" onclick="openTab('control-tab', 'items')">Items</button>
                 <button class="move-box battler" onclick="sendMove({'action': 'surrender'})">{% if type == 'wild' %}Run Away{% else %}Surrender{% endif %}</button>
             </div>
-            <div class="control-tab" id="attack" style="display:none">
+            <div class="control-tab" id="attack" style="display:none;">
                 <table class="center">
                     <tr>
                         <td>
@@ -94,15 +92,17 @@
                     <tr>
                         <td><button class="button-3" onclick="openTab('item-tab', 'medicine')" {% if not medicines_allowed %}disabled{% endif %}>Medicines</button></td>
                         <td><button class="button-3" onclick="openTab('item-tab', 'ball')" {% if not balls_allowed %}disabled{% endif %}>Pokeballs</button></td>
-                        <td onclick="openTab('control-tab', 'select')" class="button-3 button-back">Back</td>
+
                     </tr>
                 </table>
                 <div class="item-tab" id="medicine" style="display:block;"></div>
                 <div class="item-tab" id="ball" style="display:none;"></div>
+                <br>
+                <button onclick="openTab('control-tab', 'select')" class="button-3 button-back">Back</button>
             </div>
             <div class="control-tab" id="item_target_select" style="display:none;"></div>
         </div>
-        <textarea id="chat-log" cols="100" rows="20" style="grid-area: 1 / 2 / span 2;"></textarea>
+        <textarea id="chat-log" cols="100" rows="20" style="grid-area: 1 / 2 / span 2; resize: none; width:100%; border-radius:none" disabled></textarea>
     </div>
 </div>
 
@@ -126,6 +126,7 @@ const frontPath = '{% get_static_prefix %}{{ asset_paths.front|replace:'\|/' }}'
 const backPath = '{% get_static_prefix %}{{ asset_paths.back|replace:'\|/' }}';
 const statusPath = '{% get_static_prefix %}{{ asset_paths.status|replace:'\|/' }}';
 const itemPath = '{% get_static_prefix %}{{ asset_paths.item|replace:'\|/' }}';
+const miscPath = '{% get_static_prefix %}{{ asset_paths.misc|replace:'\|/' }}';
 </script>
 <script src="{% static 'scripts/battleSocket.js' %}"></script>
 {% endblock %}

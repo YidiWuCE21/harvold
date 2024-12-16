@@ -3,7 +3,7 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
-canvas.width = 496;
+canvas.width = 576;
 canvas.height = 400;
 
 // Consts to plug in
@@ -12,6 +12,7 @@ const tile_width = 16;
 const maxSteps = 500;
 const minSteps = 150;
 const defaultLedgeFrames = 16;
+let gameTick = 0;
 
 // Variables loaded from JSON
 let mapWidth = 0;
@@ -27,6 +28,9 @@ let currentMap = mapName;
 let currentData = null;
 let wildPokemon = null;
 let timeOfDay = 'night';
+
+let mapTrainers = [];
+let mapTrainersSprites = [];
 
 // Variables declared for collision logic
 let offset = {};
@@ -147,8 +151,10 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     movables = [];
     battleMap = [];
     battleTiles = [];
+    mapTrainers = [];
 
     collisions = currentData.collisions;
+    mapTrainers = currentData.trainers;
     water = currentData.water;
     battles = currentData.battles;
     if (battles == "all")
@@ -191,6 +197,28 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     // Move the camera further up by 1/2 the screen
     camera.position.x -= canvas.width / 2;
     camera.position.y -= canvas.height / 2;
+
+    // Create trainer objects
+    mapTrainersSprites = [];
+    mapTrainers.forEach((trainer) => {
+        const trainerImage = new Image();
+        trainerImage.src = '/static/assets/npc/overworld/' + trainer.sprite + '.png';
+        mapTrainersSprites.push(new Trainer({
+            position: {
+                x: trainer.wander_points[0].x * tile_width + 8,
+                y: trainer.wander_points[0].y * tile_width,
+            },
+            frames: {max: 4},
+            rows: {max: 4},
+            image: trainerImage,
+            crop: {x: 0, y: 0},
+            offset: {x: 3, y: 12},
+            wanderPoints: trainer.wander_points,
+            delay:  Math.floor(Math.random() * 4) * 25 + 1,
+            battle: trainer.battle
+        }));
+
+    })
 
     // Create collision objects
     collisionsMap = [];
@@ -322,7 +350,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
         image: mapForeground
     });
     // Create movables
-    movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles];
+    movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles, ...mapTrainersSprites];
     mapLoad = false;
 }
 
@@ -411,6 +439,12 @@ function applyFilter() {
 }
 
 function animate(looped = true) {
+    // Increment game tick
+    gameTick += 1;
+    trainerTick();
+    if (gameTick == 100) {
+        gameTick = 0;
+    }
     // Get camera
     let cappedCamera = {
         x: Math.min(Math.max(camera.position.x, 0), mapWidth * tile_width - canvas.width),
@@ -419,16 +453,39 @@ function animate(looped = true) {
     // Check for loop
     if (looped)
         window.requestAnimationFrame(animate);
+    // Order game sprites
+    let orderedSprites = [...mapTrainersSprites];
+    if (surfing) {
+        orderedSprites.push(surf);
+        orderedSprites.push(surfer);
+    } else {
+        orderedSprites.push(player);
+    }
+    let zCompare = (a, b) => {
+        if (a.position.y < b.position.y) {
+            return -1;
+        }
+        if (a.position.y < b.position.y) {
+            return 1;
+        }
+        return 0;
+    };
+    orderedSprites.sort(zCompare);
+    // Flip surf and surfer
+    let surfIdx = orderedSprites.indexOf(surf);
+    let surferIdx = orderedSprites.indexOf(surfer);
+    orderedSprites[surferIdx] = surf;
+    orderedSprites[surfIdx] = surfer;
     // Check for map transition
     if (mapLoad) {
         player.moving = true;
         if (background)
             background.draw(cappedCamera);
-        if (surfing) {
-            surf.draw(cappedCamera);
-            surfer.draw(cappedCamera);
-        } else {
-            player.draw(cappedCamera);
+
+        // Draw trainers in order
+        for (let i = 0; i < orderedSprites.length; i++) {
+            const currentSprite = orderedSprites[i];
+            currentSprite.draw(cappedCamera);
         }
         switch(travelDir) {
             case "in":
@@ -469,19 +526,16 @@ function animate(looped = true) {
         player.moving = true;
         if (background)
             background.draw(cappedCamera);
-        if (surfing) {
-            surf.draw(cappedCamera);
-            surfer.draw(cappedCamera);
-        } else {
-            player.draw(cappedCamera);
+
+        // Draw trainers in order
+        for (let i = 0; i < orderedSprites.length; i++) {
+            const currentSprite = orderedSprites[i];
+            currentSprite.draw(cappedCamera);
         }
         // Jump animation
-        console.log(ledgeFrames);
         if (ledgeFrames > 10) {
-            console.log('up');
             nonCameraStatics.forEach(movable => {movable.position.y -= 2});
         } else if (ledgeFrames < 7) {
-            console.log('down');
             nonCameraStatics.forEach(movable => {movable.position.y += 2});
         }
         switch(ledgeActive) {
@@ -564,18 +618,16 @@ function animate(looped = true) {
             break;
         }
     }
-
-    if (surfing) {
-        surf.draw(cappedCamera);
-        surfer.draw(cappedCamera);
-    } else {
-        player.draw(cappedCamera);
-    }
-    foreground.draw(cappedCamera);
-    for (let i = 0; i < ledges.length; i++) {
+    /*for (let i = 0; i < ledges.length; i++) {
         const ledge = ledges[i];
         ledge.draw(cappedCamera);
+    }*/
+    // Draw trainers in order
+    for (let i = 0; i < orderedSprites.length; i++) {
+        const currentSprite = orderedSprites[i];
+        currentSprite.draw(cappedCamera);
     }
+    foreground.draw(cappedCamera);
 
     // Manage enter events
     if (keys.enter.pressed) {
@@ -611,6 +663,25 @@ function animate(looped = true) {
                 }
             }
         }
+        // Trainer battle activation
+        mapTrainersSprites.forEach((trainer) => {
+            if (trainer.solid) {
+                if (trainer.battle != null) {
+                    // Go to battle
+                    const url = trainerUrl;
+                    const form = $('<form action="' + url + '" method="post">' +
+                      '<input type="text" name="trainer" value="' + trainer.battle + '" />' +
+                      '</form>');
+                    $('body').append(form);
+                    const csrfElem = document.createElement('input');
+                    csrfElem.type = 'hidden';
+                    csrfElem.name = 'csrfmiddlewaretoken';
+                    csrfElem.value = csrf_val;
+                    form.append(csrfElem);
+                    form.submit();
+                }
+            }
+        })
 
     }
 
@@ -637,6 +708,24 @@ function animate(looped = true) {
                     rectangle2: {...boundary, position: {
                         x: boundary.position.x,
                         y: boundary.position.y + movespeed
+                    }}
+                })
+            ) {
+                moving = false;
+                break;
+            }
+        }
+
+        // Trainer collision
+        for (let i = 0; i < mapTrainersSprites.length; i++) {
+            const stationaryTrainer = mapTrainersSprites[i];
+            // The extra 6 is to adjust for the larger trainer spritesheet compared to player
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...stationaryTrainer, position: {
+                        x: stationaryTrainer.position.x + 6,
+                        y: stationaryTrainer.position.y + 6 + movespeed
                     }}
                 })
             ) {
@@ -685,6 +774,26 @@ function animate(looped = true) {
                 break;
             }
         }
+
+        // Trainer collision
+        for (let i = 0; i < mapTrainersSprites.length; i++) {
+            const stationaryTrainer = mapTrainersSprites[i];
+            // The extra 6 is to adjust for the larger trainer spritesheet compared to player
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...stationaryTrainer, position: {
+                        x: stationaryTrainer.position.x + 6 + movespeed,
+                        y: stationaryTrainer.position.y + 6
+                    }}
+                })
+            ) {
+                moving = false;
+                break;
+            } else if (stationaryTrainer.solid) {
+                console.log('no col');
+            }
+        }
         if (moving) {
             statics.forEach(movable => {movable.position.x -= movespeed});
         }
@@ -726,6 +835,26 @@ function animate(looped = true) {
                 break;
             }
         }
+
+        // Trainer collision
+        for (let i = 0; i < mapTrainersSprites.length; i++) {
+            const stationaryTrainer = mapTrainersSprites[i];
+            // The extra 6 is to adjust for the larger trainer spritesheet compared to player
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...stationaryTrainer, position: {
+                        x: stationaryTrainer.position.x + 6,
+                        y: stationaryTrainer.position.y + 6 - movespeed
+                    }}
+                })
+            ) {
+                moving = false;
+                break;
+            } else if (stationaryTrainer.solid) {
+                console.log('no col');
+            }
+        }
         if (moving) {
             statics.forEach(movable => {movable.position.y += movespeed});
         }
@@ -765,6 +894,26 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
+            }
+        }
+
+        // Trainer collision
+        for (let i = 0; i < mapTrainersSprites.length; i++) {
+            const stationaryTrainer = mapTrainersSprites[i];
+            // The extra 6 is to adjust for the larger trainer spritesheet compared to player
+            if (
+                rectangularCollision({
+                    rectangle1: player,
+                    rectangle2: {...stationaryTrainer, position: {
+                        x: stationaryTrainer.position.x + 6 - movespeed,
+                        y: stationaryTrainer.position.y + 6
+                    }}
+                })
+            ) {
+                moving = false;
+                break;
+            } else if (stationaryTrainer.solid) {
+                console.log('no col');
             }
         }
         if (moving) {
@@ -831,6 +980,73 @@ function animate(looped = true) {
         }
     }
     // applyFilter();
+}
+
+function inRadius({point1, point2, radius}) {
+    const distance = (point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2;
+    return (distance < radius ** 2);
+}
+// Function to handle trainer movements
+function trainerTick() {
+    mapTrainersSprites.forEach((trainer) => {
+        // If there is more than one wander point and has idled for more than 5 ticks, chance to walk
+        if (gameTick == trainer.delay && trainer.currentState == 'idle') {
+            trainer.idleTicks += 1;
+            if (Math.random() < 0.5) {
+                // Turn chance
+                trainer.rows.val = Math.floor(Math.random() * 4);
+            } else if (trainer.wanderPoints.length > 1 && trainer.idleTicks > 1) {
+                if (Math.random() < 0.9 * (trainer.idleTicks - 4)) {
+                    trainer.currentState = 'walking';
+                    trainer.idleTicks = 0;
+                }
+            }
+        }
+        // Near trainer case
+        if (inRadius({point1: trainer.position, point2: player.position, radius: 30})) {
+            trainer.frames.val = 0;
+            trainer.rows.val = 0;
+            trainer.solid = true;
+        } else {
+            trainer.solid = false;
+            // Idle case
+            if (trainer.currentState == 'idle') {
+                trainer.moving = false;
+                trainer.frames.val = 0;
+            }
+            // Walk case
+            if (trainer.currentState == 'walking') {
+                trainer.moving = true;
+                // SADW
+                const destinationIndex = (trainer.currentPoint == trainer.wanderPoints.length - 1) ? 0 : trainer.currentPoint + 1;
+                const destination = trainer.wanderPoints[destinationIndex];
+                switch(trainer.wanderPoints[trainer.currentPoint].dir) {
+                    case 'left':
+                        trainer.rows.val = 1;
+                        trainer.position.x -= trainer.speed;
+                        break;
+                    case 'right':
+                        trainer.rows.val = 2;
+                        trainer.position.x += trainer.speed;
+                        break;
+                    case 'down':
+                        trainer.rows.val = 0;
+                        trainer.position.y += trainer.speed;
+                        break;
+                    case 'up':
+                        trainer.rows.val = 3;
+                        trainer.position.y -= trainer.speed;
+                        break;
+                }
+                if (trainer.position.x - 8 == destination.x * tile_width && trainer.position.y == destination.y * tile_width) {
+                    trainer.currentState = "idle";
+                    trainer.currentPoint = destinationIndex;
+                }
+            }
+        }
+
+
+    })
 }
 
 animate();

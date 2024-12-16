@@ -160,8 +160,8 @@ function attack({x, y, div_id}) {
     const splat = document.getElementById(div_id.replace('spr', 'splat'));
 
     const originalPosition = {
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
+        x: sprite.getAttribute('data-ox'),
+        y: sprite.getAttribute('data-oy')
     };
 
     sprite.style.transition = `all ${interval / 1000 * 0.4}s ease-in`;
@@ -188,19 +188,19 @@ function wiggle({div_id}) {
     const sprite = document.getElementById(div_id);
 
     const originalPosition = {
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
+        x: sprite.getAttribute('data-ox'),
+        y: sprite.getAttribute('data-oy')
     };
 
     sprite.style.transition = `all ${interval / 1000 * 0.3}s ease`;
-    sprite.style.left = `${originalPosition.x - 20}px`;
+    sprite.style.left = `${Number(originalPosition.x) - 20}px`;
 
     setTimeout(() => {
-        sprite.style.left = `${originalPosition.x + 20}px`;
+        sprite.style.left = `${Number(originalPosition.x) + 20}px`;
     }, 0.1 * interval);
 
     setTimeout(() => {
-        sprite.style.left = `${originalPosition.x - 20}px`;
+        sprite.style.left = `${Number(originalPosition.x) - 20}px`;
     }, 0.3 * interval);
 
     setTimeout(() => {
@@ -217,37 +217,71 @@ function toggleButtons(enable) {
 
 function disappear({x, y, div_id}) {
     const sprite = document.getElementById(div_id);
+    console.log('dis');
 
     const originalPosition = {
+        x: sprite.getAttribute('data-ox'),
+        y: sprite.getAttribute('data-oy')
+    };
+    console.log({
         x: sprite.offsetLeft,
         y: sprite.offsetTop
-    };
+    });
 
-    sprite.style.transition = `all ${interval / 1000}s ease`;
-    sprite.transform = `translate(${x}px, ${y}px)`;
+    sprite.style.transition = `all ${interval / 1000 * 0.8}s ease`;
+    sprite.style.left = `${x}px`;
+    sprite.style.top = `${y}px`;
     sprite.style.opacity = 0.0
+    console.log({
+        x: sprite.offsetLeft,
+        y: sprite.offsetTop
+    });
 
-    sprite.style.left = `${originalPosition.x}px`;
-    sprite.style.top = `${originalPosition.y}px`;
+    setTimeout(() => {
+        sprite.style.left = `${originalPosition.x}px`;
+        sprite.style.top = `${originalPosition.y}px`;
+
+        console.log({
+            x: sprite.offsetLeft,
+            y: sprite.offsetTop
+        });
+    }, interval * 0.8);
 }
 
 function reappear({x, y, div_id}) {
+    console.log('reappear');
     const sprite = document.getElementById(div_id);
 
     const originalPosition = {
+        x: sprite.getAttribute('data-ox'),
+        y: sprite.getAttribute('data-oy')
+    };
+    console.log({
         x: sprite.offsetLeft,
         y: sprite.offsetTop
-    };
+    });
 
     sprite.style.transition = null;
     sprite.style.left = `${x}px`;
     sprite.style.top = `${y}px`;
     sprite.style.opacity = 0.0
+    console.log({
+        x: sprite.offsetLeft,
+        y: sprite.offsetTop
+    });
 
-    sprite.style.transition = `all ${interval / 1000}s ease`;
-    sprite.style.left = `${originalPosition.x}px`;
-    sprite.style.top = `${originalPosition.y}px`;
-    sprite.style.opacity = 1.0
+
+    setTimeout(() => {
+        sprite.style.transition = `all ${interval / 1000 * 0.8}s ease`;
+        sprite.style.left = `${originalPosition.x}px`;
+        sprite.style.top = `${originalPosition.y}px`;
+        sprite.style.opacity = 1.0
+
+        console.log({
+            x: sprite.offsetLeft,
+            y: sprite.offsetTop
+        });
+    }, 0.1 * interval);
 }
 
 function sendMove({ action, move = null, item = null, target = null}) {
@@ -308,8 +342,8 @@ function updateMoves() {
             }
             const moveInfo = moveData[move["move"]];
             moveButton.children[0].innerHTML = moveInfo["name"] + " - " + move["pp"] + "/" + moveInfo["pp"];
-            moveButton.children[1].src = categoryPath + "/" + moveInfo["damage_class"] + ".png";
-            moveButton.children[2].src = typePath + "/" + moveInfo["type"] + ".png";
+            moveButton.children[2].src = categoryPath + "/" + moveInfo["damage_class"] + ".png";
+            moveButton.children[3].src = typePath + "/" + moveInfo["type"] + ".png";
         }
     });
 }
@@ -323,16 +357,18 @@ function updateSwitches() {
     }
     const party = battleState[player]['party'];
     const switchPane = document.getElementById('switch');
-    switchPane.innerHTML = '';
+    switchPane.innerHTML = '<p>Choose a Pokémon:</p>';
     party.forEach(function (pkmn, i) {
         const switchButton = document.createElement('button');
-        switchButton.classList.add("move-box");
+        switchButton.classList.add("button-3");
         switchButton.classList.add("battler");
+        switchButton.style.height = '40px';
+        switchButton.style.width = '40px';
+        switchButton.style.margin = '4px';
         const pkmnIcon = document.createElement("img");
         pkmnIcon.src = iconPath + "/" + pkmn["dex_number"].toString().padStart(3, '0') + ".gif";
         pkmnIcon.style.filter = (pkmn.current_hp < 1) ? 'grayscale(90%)' : 'none';
         switchButton.append(pkmnIcon);
-        switchButton.append(pkmn["name"]);
         if (i == battleState[player]["current_pokemon"]) {
             // Pokemon is currently out
             switchButton.disabled = true;
@@ -354,6 +390,8 @@ function updateSwitches() {
     backButton.classList.add("button-back");
     backButton.innerHTML = 'Back';
     backButton.onclick = function () {openTab('control-tab', 'select')};
+    switchPane.append(document.createElement('br'));
+    switchPane.append(document.createElement('br'));
     switchPane.append(backButton);
 }
 
@@ -363,7 +401,7 @@ function updateSelector() {
     const party = battleState[player]['party'];
     // Update target select
     const targetSelector = document.getElementById('item_target_select');
-    targetSelector.innerHTML = '<span>Choose a Pokémon </span>';
+    targetSelector.innerHTML = '<span>Use item on</span>';
     // Show the image of item being used
     const selectedItemImg = document.createElement('img');
     selectedItemImg.src = itemPath + "/" + selectedItem + ".png";
@@ -379,6 +417,7 @@ function updateSelector() {
         targetButton.classList.add("battler");
         targetButton.style.height = '40px';
         targetButton.style.width = '40px';
+        targetButton.style.margin = '4px';
         targetButton.onclick = function () {
             if (selectedItem != null) {
                 sendMove({"action": "item", "item": selectedItem, "target": i});
@@ -527,8 +566,7 @@ function updateBalls() {
         const pokeBall = document.createElement('img');
         const pkmn = battleState[player]['party'][i]
         pokeBall.style.filter = (pkmn.current_hp < 1) ? 'grayscale(100%)' : 'none';
-        pokeBall.src = itemPath + "/pokeball.png";
-        pokeBall.style.margin = '-6px';
+        pokeBall.src = miscPath + "/ballicon.png";
         playerBalls.append(pokeBall);
     }
     // fill opp party
@@ -536,8 +574,7 @@ function updateBalls() {
         const pokeBall = document.createElement('img');
         const pkmn = battleState[opp]['party'][i]
         pokeBall.style.filter = (pkmn.current_hp < 1) ? 'grayscale(100%)' : 'none';
-        pokeBall.src = itemPath + "/pokeball.png";
-        pokeBall.style.margin = '-6px';
+        pokeBall.src = miscPath + "/ballicon.png";
         oppBalls.append(pokeBall);
     }
 }

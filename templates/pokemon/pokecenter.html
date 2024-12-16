@@ -17,9 +17,6 @@ function heal() {
         }
     }).done(function( response ) {
         document.getElementById('pokecenter_msg').innerHTML = '<p>' + response.msg + '</p>';
-        setTimeout(function(){
-            location.reload();
-        }, 1500);
     })
 }
 </script>

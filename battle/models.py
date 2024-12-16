@@ -73,6 +73,10 @@ def create_battle(p1_id, p2_id, type, ai="default"):
             npc_opponent = p2_id
             battle_state["player_2"]["name"] = trainer_json["name"]
             reward = trainer_json["reward"]
+            # If the trainer requires the user be on a map, perform check now
+            if "map" in trainer_json:
+                if trainer_json["map"] != player_1.current_map:
+                    raise ValueError("Trainer is not on the right map!")
         battle_state["player_2"]["inventory"] = None
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)

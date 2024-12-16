@@ -225,6 +225,8 @@ class Profile(models.Model):
         Return the party
         """
         party = [self.slot_1, self.slot_2, self.slot_3, self.slot_4, self.slot_5, self.slot_6]
+        if return_none:
+            return party
         return [pkmn for pkmn in party if pkmn is not None]
 
     def _sort_party(self):
