@@ -4,6 +4,8 @@
     --main: rgb(247, 242, 232);
     --content: rgb(247, 252, 255);
     --card: rgb(225, 236, 239);
+    --border: rgb(60, 60, 60);
+    --shading: rgb(160, 160, 160);
 
     --menu-hover: rgb(214,39,40);
     --menu: rgb(255, 100, 29);
@@ -448,9 +450,11 @@ input, select {
 }
 
 .experience-bar {
-    height: 4px;
+    height: 6px;
     width: 100px;
     background: gray;
+    border: 1px solid rgb(60, 60, 60);
+    border-radius: 2px;
 
 }
 
@@ -484,4 +488,22 @@ input, select {
 
 .move-box:hover {
     background-color: var(--hover);
+}
+
+.battle-info {
+    background: linear-gradient(to bottom, var(--content) 50%, var(--shading) 100%);
+    height:44px;
+    width: 220px;
+    position: absolute;
+    border: 2px solid var(--border);
+}
+
+.right-clip {
+    clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
+    box-shadow: 4px 4px 8px var(--border);
+}
+
+.left-clip {
+    clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
+    box-shadow: -4px -4px 8px var(--border);
 }

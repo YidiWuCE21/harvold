@@ -138,8 +138,8 @@ MAPS = [
 
 GYM_LEADERS = {
     "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 21},
-    "electric": {"npc": "volkner", "name": "Volkner", "reg": "404", "elite": "466", "level": 28},
-    "water": {"npc": "wallace", "name": "Wallace", "reg": "364", "elite": "130", "level": 35},
+    "electric": {"npc": "elesa", "name": "Elesa", "reg": "522", "elite": "466", "level": 28},
+    "water": {"npc": "marlon", "name": "Marlon", "reg": "364", "elite": "130", "level": 35},
     "ground": {"npc": "giovanni", "name": "Giovanni", "reg": "095", "elite": "530", "level": 42},
     "fighting": {"npc": "bruno", "name": "Bruno", "reg": "107", "elite": "534", "level": 49},
     "fire": {"npc": "blaine", "name": "Blaine", "reg": "126", "elite": "059", "level": 56},
@@ -185,7 +185,8 @@ PLAYER_STATE = {
     "name": None,
     "trapped": 0,
     "choice": None,
-    "inventory": None
+    "inventory": None,
+    "participants": []
 }
 
 TYPE_EFFECTIVENESS = {
@@ -199,7 +200,7 @@ TYPE_EFFECTIVENESS = {
     ("fire", "bug"): 2,
     ("fire", "rock"): 0.5,
     ("fire", "dragon"): 0.5,
-    ("fire", "steel"): 0.5,
+    ("fire", "steel"): 2,
     ("water", "fire"): 2,
     ("water", "water"): 0.5,
     ("water", "grass"): 0.5,

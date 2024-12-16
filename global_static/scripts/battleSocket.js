@@ -2,6 +2,8 @@ let battleState = initialState;
 let currentTurn = initialTurn;
 let prevState = initialState;
 let interval = 1000;
+let selectedItem = null;
+let prompt = null;
 
 // Moves
 let moves = new Array(4).fill(null).map(() => ({}));
@@ -23,6 +25,8 @@ battleSocket.onmessage = function(e) {
     // Display any warnings
     if (data.message != null) {
         document.querySelector('#chat-log').value += ('Warning: ' + data.message + '\n');
+        document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
+        toggleButtons(true);
     }
     // Update the state
     if (data.state != null) {
@@ -30,6 +34,11 @@ battleSocket.onmessage = function(e) {
         battleState = data.state;
         updateMoves();
         updateSwitches();
+        updateInventory();
+    }
+
+    if (data.prompt != null) {
+        prompt = data.prompt;
     }
 
     // Process outputs
@@ -51,9 +60,24 @@ battleSocket.onclose = function(e) {
     console.error('Chat socket closed unexpectedly');
 };
 
+function endBattle() {
+    const endPane = document.getElementById('end');
+    if (prompt == null)
+        return;
+    for (const [displayText, nextUrl] of Object.entries(prompt)) {
+        const endButton = document.createElement('a');
+        endButton.href = nextUrl;
+        endButton.innerHTML = displayText;
+        endButton.classList.add('move-box');
+        endPane.append(endButton);
+    }
+    openTab('control-tab', 'end');
+}
+
 function processOutput({text = null, anim = null}) {
     if (text != null)
         document.querySelector('#chat-log').value += (text + '\n');
+        document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
     if (anim != null) {
         document.querySelector('#chat-log').value += (anim + '\n');
         anim.forEach((animMove) => {
@@ -68,7 +92,7 @@ function processAnim({animMove}) {
         if (battleState.outcome == null) {
             toggleButtons(true);
         } else {
-            console.log("Do something for battle end here.")
+            endBattle();
         }
     }
     // Attacks
@@ -102,8 +126,10 @@ function processAnim({animMove}) {
     // Fainting
     if ((isPlayerOne && animMove == 'p1_faint') || (!isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '70', 'y': '180', 'div_id': 'player_spr'});
+        updateBalls();
     } else if ((!isPlayerOne && animMove == 'p1_faint') || (isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '300', 'y': '110', 'div_id': 'opp_spr'});
+        updateBalls();
     }
     // New pokemon
     if ((isPlayerOne && animMove == 'p1_appear') || (!isPlayerOne && animMove == 'p2_appear')) {
@@ -240,8 +266,6 @@ function sendMove({ action, move = null, item = null, target = null}) {
     } else if (action == 'item') {
         if (item == null)
             throw new Error('Item usage must choose an item!');
-        if (target == null)
-            throw new Error('Item usage must choose a target!');
         message['item'] = item;
         message['target'] = target;
     } else if (action == 'switch') {
@@ -301,15 +325,12 @@ function updateSwitches() {
     const switchPane = document.getElementById('switch');
     switchPane.innerHTML = '';
     party.forEach(function (pkmn, i) {
-        const switchButton = document.createElement('div');
+        const switchButton = document.createElement('button');
         switchButton.classList.add("move-box");
         switchButton.classList.add("battler");
-        switchButton.onclick = function () {
-            sendMove({"action": "switch", "target": i});
-            openTab('control-tab', 'select');
-        };
         const pkmnIcon = document.createElement("img");
         pkmnIcon.src = iconPath + "/" + pkmn["dex_number"].toString().padStart(3, '0') + ".gif";
+        pkmnIcon.style.filter = (pkmn.current_hp < 1) ? 'grayscale(90%)' : 'none';
         switchButton.append(pkmnIcon);
         switchButton.append(pkmn["name"]);
         if (i == battleState[player]["current_pokemon"]) {
@@ -321,15 +342,114 @@ function updateSwitches() {
         } else {
             // Can be switched to
             switchButton.disabled = !buttonsActive;
+            switchButton.onclick = function () {
+                sendMove({"action": "switch", "target": i});
+                openTab('control-tab', 'select');
+            };
         }
         switchPane.append(switchButton);
     });
     const backButton = document.createElement('button');
     backButton.classList.add("button-3");
     backButton.classList.add("button-back");
-    backButton.innerHTML = 'Cancel';
+    backButton.innerHTML = 'Back';
     backButton.onclick = function () {openTab('control-tab', 'select')};
     switchPane.append(backButton);
+}
+
+function updateSelector() {
+    // Function to update the item tab and target selector pane
+    const player = (isPlayerOne) ? 'player_1' : 'player_2';
+    const party = battleState[player]['party'];
+    // Update target select
+    const targetSelector = document.getElementById('item_target_select');
+    targetSelector.innerHTML = '<span>Choose a Pokémon </span>';
+    // Show the image of item being used
+    const selectedItemImg = document.createElement('img');
+    selectedItemImg.src = itemPath + "/" + selectedItem + ".png";
+    console.log(selectedItem);
+    console.log(itemPath + "/" + selectedItem + ".png");
+    console.log(selectedItemImg.src);
+    targetSelector.append(selectedItemImg);
+    targetSelector.append(document.createElement('br'));
+    // Show the party buttons
+    party.forEach(function (pkmn, i) {
+        const targetButton = document.createElement('div');
+        targetButton.classList.add("button-3");
+        targetButton.classList.add("battler");
+        targetButton.style.height = '40px';
+        targetButton.style.width = '40px';
+        targetButton.onclick = function () {
+            if (selectedItem != null) {
+                sendMove({"action": "item", "item": selectedItem, "target": i});
+            } else {
+                document.querySelector('#chat-log').value += ('Select an item first!\n');
+                document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
+            }
+            targetSelector.style.display = 'none';
+            openTab('control-tab', 'select');
+        };
+        const pkmnIcon = document.createElement("img");
+        pkmnIcon.src = iconPath + "/" + pkmn["dex_number"].toString().padStart(3, '0') + ".gif";
+        // Grayscale if Pokemon is fainted
+        pkmnIcon.style.filter = (pkmn.current_hp < 1) ? 'grayscale(90%)' : 'none';
+        targetButton.append(pkmnIcon);
+        targetSelector.append(targetButton);
+    });
+    // Add back button to target selector
+    const backButton = document.createElement('button');
+    backButton.classList.add("button-3");
+    backButton.classList.add("button-back");
+    backButton.innerHTML = 'Back';
+    backButton.onclick = function () {openTab('control-tab', 'items')};
+    targetSelector.append(document.createElement('br'));
+    targetSelector.append(backButton);
+}
+
+function updateInventory() {
+    // Function to update the item tab and target selector pane
+    const player = (isPlayerOne) ? 'player_1' : 'player_2';
+    const inventory = battleState[player]['inventory'];
+    // Update item select portion
+    const invControls = document.getElementById('switch');
+    let validItems = [];
+    // Get the valid items
+    if (ballsAllowed)
+        validItems.push('ball');
+    if (medicinesAllowed)
+        validItems.push('medicine');
+    // Update each item group
+    validItems.forEach((itemClass) => {
+        const itemGroup = document.getElementById(itemClass);
+        itemGroup.innerHTML = '';
+        for (const [item, quantity] of Object.entries(inventory[itemClass])) {
+            if (quantity > 0) {
+                // Add item when quantity exists
+                const itemButton = document.createElement('button');
+                itemButton.classList.add("button-3");
+                itemButton.classList.add("battler");
+                if (itemClass == 'ball') {
+                    itemButton.onclick = function () {
+                        sendMove({"action": "item", "item": item});
+                        openTab('control-tab', 'select');
+                    };
+                } else {
+                    itemButton.onclick = function () {
+                        selectedItem = item;
+                        updateSelector();
+                        openTab('control-tab', 'item_target_select');
+                    };
+                }
+                itemButton.style.height = '35px';
+                itemButton.style.width = '80px';
+                const itemImg = document.createElement('img')
+                itemImg.src = itemPath + "/" + item + ".png";
+                itemButton.append(itemImg);
+                itemButton.append(` x${quantity}`);
+                itemGroup.append(itemButton);
+            }
+        }
+    })
 }
 
 function updateCanvas({forPlayer, justHp = false, usePrevPokemon = false, usePrevState = false, newHp = null}) {
@@ -395,7 +515,36 @@ function updateCanvas({forPlayer, justHp = false, usePrevPokemon = false, usePre
     }
 }
 
+function updateBalls() {
+    const player = (isPlayerOne) ? 'player_1' : 'player_2';
+    const opp = (isPlayerOne) ? 'player_2' : 'player_1';
+    const playerBalls = document.getElementById('player_balls');
+    const oppBalls = document.getElementById('opp_balls');
+    playerBalls.innerHTML = '';
+    oppBalls.innerHTML = '';
+    // fill player party
+    for (let i = 0; i < battleState[player]['party'].length; i++) {
+        const pokeBall = document.createElement('img');
+        const pkmn = battleState[player]['party'][i]
+        pokeBall.style.filter = (pkmn.current_hp < 1) ? 'grayscale(100%)' : 'none';
+        pokeBall.src = itemPath + "/pokeball.png";
+        pokeBall.style.margin = '-6px';
+        playerBalls.append(pokeBall);
+    }
+    // fill opp party
+    for (let i = 0; i < battleState[opp]['party'].length; i++) {
+        const pokeBall = document.createElement('img');
+        const pkmn = battleState[opp]['party'][i]
+        pokeBall.style.filter = (pkmn.current_hp < 1) ? 'grayscale(100%)' : 'none';
+        pokeBall.src = itemPath + "/pokeball.png";
+        pokeBall.style.margin = '-6px';
+        oppBalls.append(pokeBall);
+    }
+}
+
 updateMoves();
 updateSwitches();
+updateInventory();
 updateCanvas({'forPlayer': true});
 updateCanvas({'forPlayer': false});
+updateBalls();

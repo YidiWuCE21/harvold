@@ -53,6 +53,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
     player_2 = None
     npc_opponent = None
     wild_opponent = None
+    reward = None
     if type == "wild":
         wild_opponent = Pokemon.objects.get(pk=p2_id)
         if wild_opponent.original_trainer is not None:
@@ -71,6 +72,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
             battle_state["player_2"]["party"] = trainer_json["team"]
             npc_opponent = p2_id
             battle_state["player_2"]["name"] = trainer_json["name"]
+            reward = trainer_json["reward"]
         battle_state["player_2"]["inventory"] = None
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)
@@ -94,6 +96,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
             except:
                 raise ValueError("All Pokemon are fainted, cannot make battle!")
         battle_state[player]["current_pokemon"] = current
+        battle_state[player]["participants"].append(current)
 
     # DB opereations
     battle = Battle(
@@ -103,7 +106,8 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         player_2=player_2,
         npc_opponent=npc_opponent,
         wild_opponent=wild_opponent,
-        battle_state = battle_state
+        battle_state=battle_state,
+        battle_prize=reward
     )
 
     # Check that parties are not knocked out
@@ -170,6 +174,9 @@ class Battle(models.Model):
 
     # Main var for storing important battle stuff
     battle_state = models.JSONField(blank=True, null=True)
+
+    # Prize tracking
+    battle_prize = models.JSONField(blank=True, null=True, default=None)
 
 
     def get_battle_state(self):

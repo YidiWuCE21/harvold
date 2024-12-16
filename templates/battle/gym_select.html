@@ -14,12 +14,12 @@
         <button class="button-3" onclick="openTab('gym-tab', 'elite');">Elite</button>
         <table class="center">
             <tr>
-                {% for type, gym_info, badge in gyms %}
+                {% for type, gym_info, badge, reg_access, elite_access in gyms %}
                 <td>
-                    <form method="POST" action="{% url 'battle_create' %}">
+                    <form method="POST" action="{% url 'battle_create' %}" {% if not reg_access %}class="grayscale"{% endif %}>
                         {% csrf_token %}
                         <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym">
-                        <button class="party-box" style="width:240px;height:100px;">
+                        <button class="party-box" style="width:240px;height:100px;" {% if not reg_access %}disabled{% endif %}>
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.reg }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
@@ -46,12 +46,12 @@
         <button class="button-3" disabled>Elite</button>
         <table class="center">
             <tr>
-                {% for type, gym_info, badge in gyms %}
+                {% for type, gym_info, badge, reg_access, elite_access in gyms %}
                 <td>
-                    <form method="POST" action="{% url 'battle_create' %}" {% if badge is None %}class="grayscale disabled"{% endif %}>
+                    <form method="POST" action="{% url 'battle_create' %}" {% if not elite_access %}class="grayscale"{% endif %}>
                         {% csrf_token %}
                         <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym_elite">
-                        <button class="party-box" style="width:240px;height:100px;">
+                        <button class="party-box" style="width:240px;height:100px;" {% if not elite_access %}disabled{% endif %}>
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.elite }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">

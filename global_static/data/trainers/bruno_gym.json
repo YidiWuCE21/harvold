@@ -1,5 +1,6 @@
 {
     "name": "Bruno",
+    "sprite": "bruno",
     "team": [
         {
             "current_hp": 116,
@@ -197,5 +198,14 @@
             "name": "Hitmonchan"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "fighting": "silver"
+        }
+    },
+    "lines": {
+        "lose": "My job is done. Go face your next challenge.",
+        "start": "You will bow to our superior power! Hoo hah!"
+    }
 }

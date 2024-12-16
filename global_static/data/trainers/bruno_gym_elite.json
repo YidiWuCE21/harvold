@@ -1,5 +1,6 @@
 {
-    "name": "bruno",
+    "name": "Bruno",
+    "sprite": "bruno",
     "team": [
         {
             "current_hp": 357,
@@ -89,7 +90,7 @@
                     "pp": 20
                 },
                 {
-                    "move": "hijumpkick",
+                    "move": "highjumpkick",
                     "pp": 10
                 },
                 {
@@ -236,5 +237,14 @@
             "name": "Terrakion"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "fighting": "gold"
+        }
+    },
+    "lines": {
+        "lose": "Why?! How could we lose?",
+        "start": "You will bow to our superior power! Hoo hah!"
+    }
 }

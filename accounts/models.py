@@ -90,7 +90,7 @@ class Profile(models.Model):
     map_progress = models.JSONField(default=default_map)
     current_map = models.TextField(max_length=20, default="oak_village")
     current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
-    wild_opponent = models.ForeignKey("pokemon.Pokemon", related_name="wild_mon", null=True, on_delete=models.SET_NULL)
+    wild_opponent = models.JSONField(blank=True, null=True, default=None)
 
     @property
     def char_id(self):

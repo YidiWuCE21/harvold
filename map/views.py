@@ -4,7 +4,7 @@ import random
 import datetime
 
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse, HttpResponseNotFound
 
 # Create your views here.
@@ -15,6 +15,7 @@ from pokemon.models import create_pokemon
 # Create your views here.
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def map(request):
     default_map = request.user.profile.current_map
     map = request.POST.get("map", default_map)
@@ -39,6 +40,7 @@ def map(request):
     return render(request, "map/map.html", html_render_variables)
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def world_map(request):
     html_render_variables = {
         "maps": consts.MAPS
@@ -86,26 +88,18 @@ def wild_battle(request):
     shiny = random.random() < 0.001
     percentage_male = consts.POKEMON[dex_number]["percentage_male"]
     sex = "g" if percentage_male < 0 else "m" if random.random() * 100 < percentage_male else "f"
-    print("Gen rand in: {}".format((datetime.datetime.now() - now).total_seconds()))
 
     # If there is an existing wild opponent, delete it
-    print("Delete wild in: {}".format((datetime.datetime.now() - now).total_seconds()))
-
-    # Set the Pokemon as the current wild opponent; prevents client-side manipulation
-    pokemon = create_pokemon(dex_number, level, sex, shiny)
-    print("Create pokemon in: {}".format((datetime.datetime.now() - now).total_seconds()))
-    user.wild_opponent = pokemon
+    user.wild_opponent = {"dex": dex_number, "level": level, "shiny": shiny, "sex": sex}
     user.save()
-    print("Save wild in: {}".format((datetime.datetime.now() - now).total_seconds()))
 
     # Send the Pokemon species, level, and shininess
     pokeinfo = {
         "dex_number": dex_number,
-        "name": pokemon.name,
+        "name": consts.POKEMON[dex_number]["name"],
         "level": level,
         "sex": sex,
-        "shiny": shiny,
-        "id": pokemon.pk
+        "shiny": shiny
     }
     print("Completed in: {}".format((datetime.datetime.now() - now).total_seconds()))
     return JsonResponse(pokeinfo)

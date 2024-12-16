@@ -1,5 +1,6 @@
 {
-    "name": "steven",
+    "name": "Steven",
+    "sprite": "steven",
     "team": [
         {
             "current_hp": 325,
@@ -236,5 +237,14 @@
             "name": "Bisharp"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "steel": "gold"
+        }
+    },
+    "lines": {
+        "lose": "You are a truly noble Pokémon trainer!",
+        "start": "Welcome. I was looking forward to seeing you here one day."
+    }
 }

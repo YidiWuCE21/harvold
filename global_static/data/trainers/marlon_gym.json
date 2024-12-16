@@ -1,5 +1,6 @@
 {
-    "name": "Wallace",
+    "name": "Marlon",
+    "sprite": "marlon",
     "team": [
         {
             "current_hp": 66,
@@ -158,5 +159,14 @@
             "name": "Sealeo"
         }
     ],
-    "reward": 600
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "water": "silver"
+        }
+    },
+    "lines": {
+        "lose": "You totally rocked that! You're raising some wicked Pokémon.",
+        "start": "Here already, huh? Let's start!"
+    }
 }

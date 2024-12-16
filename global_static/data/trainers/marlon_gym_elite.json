@@ -1,5 +1,6 @@
 {
-    "name": "Wallace",
+    "name": "Marlon",
+    "sprite": "marlon",
     "team": [
         {
             "current_hp": 375,
@@ -236,5 +237,14 @@
             "name": "Gyarados"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "water": "gold"
+        }
+    },
+    "lines": {
+        "lose": "You don't just look strong, you're strong fo' reals!",
+        "start": "Here already, huh? Let's start!"
+    }
 }

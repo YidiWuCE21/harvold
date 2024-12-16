@@ -1,5 +1,6 @@
 {
     "name": "Giovanni",
+    "sprite": "giovanni",
     "team": [
         {
             "current_hp": 116,
@@ -158,5 +159,14 @@
             "name": "Onix"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "ground": "silver"
+        }
+    },
+    "lines": {
+        "lose": "I see that you raise Pokémon with utmost care.",
+        "start": "Time to experience a world of pain!"
+    }
 }

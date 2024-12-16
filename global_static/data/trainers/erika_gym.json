@@ -1,5 +1,6 @@
 {
     "name": "Erika",
+    "sprite": "erika",
     "team": [
         {
             "current_hp": 44,
@@ -119,5 +120,14 @@
             "name": "Weepinbell"
         }
     ],
-    "reward": 400
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "grass": "silver"
+        }
+    },
+    "lines": {
+        "lose": "Looks like I underestimated you.",
+        "start": "Lovely weather, isn't it? It's so pleasant..."
+    }
 }

@@ -52,6 +52,8 @@ def pokemon(request):
     else:
         return HttpResponseNotFound("Cannot find Pokemon!")
     pokemon = Pokemon.objects.get(pk=pokemon_id)
+    if pokemon.trainer is None:
+        return HttpResponseNotFound("This Pokemon was released!")
 
     # Check for actions
     message = None

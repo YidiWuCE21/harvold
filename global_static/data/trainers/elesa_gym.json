@@ -1,5 +1,6 @@
 {
-    "name": "Volkner",
+    "name": "Elesa",
+    "sprite": "elesa",
     "team": [
         {
             "current_hp": 59,
@@ -158,5 +159,14 @@
             "name": "Luxio"
         }
     ],
-    "reward": 500
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "electric": "silver"
+        }
+    },
+    "lines": {
+        "lose": "You and your Pokémon's moves are simply dazzling!",
+        "start": "My beloved Pokémon will make your head spin!"
+    }
 }

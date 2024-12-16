@@ -320,6 +320,7 @@ class Pokemon(models.Model):
             self.recalculate_stats(skip_save=True)
             self.save(update_fields=["experience", "level", "hp_stat", "atk_stat",
                                      "def_stat", "spa_stat", "spd_stat", "spe_stat"])
+        return extra_levels > 0
 
     def add_evs(self, evs, recalculate=False):
         """

@@ -186,7 +186,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     surf.position.x -= 6
     surf.position.y -= 6
     // Move the surfer object up
-    surfer.position.y -= 8
+    surfer.position.y -= 9
 
     // Move the camera further up by 1/2 the screen
     camera.position.x -= canvas.width / 2;
@@ -462,7 +462,7 @@ function animate(looped = true) {
                 break;
         }
         foreground.draw(cappedCamera);
-        applyFilter();
+        // applyFilter();
         return;
     }
     if (ledgeActive != null) {
@@ -516,7 +516,7 @@ function animate(looped = true) {
                 break;
         }
         foreground.draw(cappedCamera);
-        applyFilter();
+        // applyFilter();
         ledgeFrames -= 1;
         if (ledgeFrames == 0) {
             ledgeFrames = defaultLedgeFrames;
@@ -810,7 +810,6 @@ function animate(looped = true) {
                         }
                         document.getElementById("wild-name").innerHTML = "A wild " + response.name + sex + " appeared!";
                         document.getElementById("wild-level").innerHTML = "Level " + response.level;
-                        document.getElementById("wild-id").value = response.id;
                         document.getElementById("wild-img").src = pokePath + "/" + response.dex_number + ".png";
                         wildShow = 10;
                         wildPokemon = response;
@@ -831,7 +830,7 @@ function animate(looped = true) {
             }
         }
     }
-    applyFilter();
+    // applyFilter();
 }
 
 animate();

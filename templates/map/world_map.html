@@ -5,7 +5,14 @@
 
 {% block content %}
 Map list
-{% for map in maps %}
-<a href="{% url 'map' %}?map={{ map }}">{{ map }}</a>
-{% endfor %}
+<form method="POST" action="{% url 'map' %}">
+    {% csrf_token %}
+    <select name="map">
+        {% for map in maps %}
+        <option value="{{ map }}">{{ map }}</option>
+        {% endfor %}
+
+    </select>
+    <button>Go</button>
+</form>
 {% endblock %}

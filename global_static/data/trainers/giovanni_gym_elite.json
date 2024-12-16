@@ -1,5 +1,6 @@
 {
-    "name": "giovanni",
+    "name": "Giovanni",
+    "sprite": "giovanni",
     "team": [
         {
             "current_hp": 398,
@@ -236,5 +237,14 @@
             "name": "Dugtrio"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "ground": "gold"
+        }
+    },
+    "lines": {
+        "lose": "That was a truly intense fight!",
+        "start": "Time to experience a world of pain!"
+    }
 }

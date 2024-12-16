@@ -1,5 +1,6 @@
 {
-    "name": "Volkner",
+    "name": "Elesa",
+    "sprite": "elesa",
     "team": [
         {
             "current_hp": 332,
@@ -236,5 +237,14 @@
             "name": "Electivire"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "electric": "gold"
+        }
+    },
+    "lines": {
+        "lose": "I meant to make your head spin, but you shocked me instead.",
+        "start": "My beloved Pokémon will make your head spin!"
+    }
 }

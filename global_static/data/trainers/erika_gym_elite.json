@@ -1,5 +1,6 @@
 {
     "name": "Erika",
+    "sprite": "erika",
     "team": [
         {
             "current_hp": 327,
@@ -236,5 +237,14 @@
             "name": "Amoonguss"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "grass": "gold"
+        }
+    },
+    "lines": {
+        "lose": "I concede defeat. You are remarkably strong.",
+        "start": "Lovely weather, isn't it? It's so pleasant..."
+    }
 }

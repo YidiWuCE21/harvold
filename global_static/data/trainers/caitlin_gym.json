@@ -1,1 +1,211 @@
-{"name": "Caitlin", "team": [{"current_hp": 131, "status": "", "status_turns": 0, "moves": [{"move": "charm", "pp": 20}, {"move": "hypnosis", "pp": 20}, {"move": "dreameater", "pp": 15}, {"move": "storedpower", "pp": 10}], "held_item": null, "happiness": 35, "ability": "Trace", "dex_number": "281", "level": 64, "shiny": false, "stats": {"hp": 131, "atk": 51, "def": 65, "spa": 95, "spd": 95, "spe": 88}, "id": null, "name": "Kirlia"}, {"current_hp": 165, "status": "", "status_turns": 0, "moves": [{"move": "psychic", "pp": 10}, {"move": "skillswap", "pp": 10}, {"move": "healblock", "pp": 15}, {"move": "wonderroom", "pp": 10}], "held_item": null, "happiness": 70, "ability": "Regenerator", "dex_number": "578", "level": 65, "shiny": false, "stats": {"hp": 165, "atk": 76, "def": 81, "spa": 186, "spd": 85, "spe": 57}, "id": null, "name": "Duosion"}, {"current_hp": 175, "status": "", "status_turns": 0, "moves": [{"move": "psychic", "pp": 10}, {"move": "telekinesis", "pp": 15}, {"move": "charm", "pp": 20}, {"move": "magicroom", "pp": 10}], "held_item": null, "happiness": 70, "ability": "Competitive", "dex_number": "575", "level": 68, "shiny": false, "stats": {"hp": 175, "atk": 76, "def": 110, "spa": 98, "spd": 136, "spe": 97}, "id": null, "name": "Gothorita"}, {"current_hp": 243, "status": "", "status_turns": 0, "moves": [{"move": "defensecurl", "pp": 40}, {"move": "hypnosis", "pp": 20}, {"move": "luckychant", "pp": 30}, {"move": "psybeam", "pp": 20}], "held_item": null, "happiness": 70, "ability": "Telepathy", "dex_number": "518", "level": 70, "shiny": false, "stats": {"hp": 243, "atk": 99, "def": 131, "spa": 163, "spd": 154, "spe": 45}, "id": null, "name": "Musharna"}, {"current_hp": 193, "status": "", "status_turns": 0, "moves": [{"move": "airslash", "pp": 15}, {"move": "psychic", "pp": 10}, {"move": "cosmicpower", "pp": 20}, {"move": "skyattack", "pp": 5}], "held_item": null, "happiness": 70, "ability": "Magic Guard", "dex_number": "561", "level": 70, "shiny": false, "stats": {"hp": 193, "atk": 106, "def": 105, "spa": 150, "spd": 131, "spe": 174}, "id": null, "name": "Sigilyph"}], "reward": 800}
+{
+    "name": "Caitlin",
+    "sprite": "caitlin",
+    "team": [
+        {
+            "current_hp": 131,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "charm",
+                    "pp": 20
+                },
+                {
+                    "move": "hypnosis",
+                    "pp": 20
+                },
+                {
+                    "move": "dreameater",
+                    "pp": 15
+                },
+                {
+                    "move": "storedpower",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Trace",
+            "dex_number": "281",
+            "level": 64,
+            "shiny": false,
+            "stats": {
+                "hp": 131,
+                "atk": 51,
+                "def": 65,
+                "spa": 95,
+                "spd": 95,
+                "spe": 88
+            },
+            "id": null,
+            "name": "Kirlia"
+        },
+        {
+            "current_hp": 165,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "skillswap",
+                    "pp": 10
+                },
+                {
+                    "move": "healblock",
+                    "pp": 15
+                },
+                {
+                    "move": "wonderroom",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Regenerator",
+            "dex_number": "578",
+            "level": 65,
+            "shiny": false,
+            "stats": {
+                "hp": 165,
+                "atk": 76,
+                "def": 81,
+                "spa": 186,
+                "spd": 85,
+                "spe": 57
+            },
+            "id": null,
+            "name": "Duosion"
+        },
+        {
+            "current_hp": 175,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "telekinesis",
+                    "pp": 15
+                },
+                {
+                    "move": "charm",
+                    "pp": 20
+                },
+                {
+                    "move": "magicroom",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Competitive",
+            "dex_number": "575",
+            "level": 68,
+            "shiny": false,
+            "stats": {
+                "hp": 175,
+                "atk": 76,
+                "def": 110,
+                "spa": 98,
+                "spd": 136,
+                "spe": 97
+            },
+            "id": null,
+            "name": "Gothorita"
+        },
+        {
+            "current_hp": 243,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "defensecurl",
+                    "pp": 40
+                },
+                {
+                    "move": "hypnosis",
+                    "pp": 20
+                },
+                {
+                    "move": "luckychant",
+                    "pp": 30
+                },
+                {
+                    "move": "psybeam",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Telepathy",
+            "dex_number": "518",
+            "level": 70,
+            "shiny": false,
+            "stats": {
+                "hp": 243,
+                "atk": 99,
+                "def": 131,
+                "spa": 163,
+                "spd": 154,
+                "spe": 45
+            },
+            "id": null,
+            "name": "Musharna"
+        },
+        {
+            "current_hp": 193,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "airslash",
+                    "pp": 15
+                },
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "cosmicpower",
+                    "pp": 20
+                },
+                {
+                    "move": "skyattack",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Magic Guard",
+            "dex_number": "561",
+            "level": 70,
+            "shiny": false,
+            "stats": {
+                "hp": 193,
+                "atk": 106,
+                "def": 105,
+                "spa": 150,
+                "spd": 131,
+                "spe": 174
+            },
+            "id": null,
+            "name": "Sigilyph"
+        }
+    ],
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "psychic": "silver"
+        }
+    },
+    "lines": {
+        "lose": "Your Pokémon have class. I'm pleased to have battled you.",
+        "start": "Be sure not to bore me with a snooze-inducing battle, got it?"
+    }
+}

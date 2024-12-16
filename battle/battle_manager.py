@@ -45,6 +45,10 @@ class BattleState:
         self.output = []
         # Battle end or pokemon KO, requiring special input to user
         self.outcome = battle_state["outcome"]
+        # Experience gained. Safe to set in class since the default state should be 0,
+        # it is added when battle is processed and immediately updated and set back to 0
+        # Only relevant for P1
+        self.experience_gain = 0
 
 
     def requires_switch(self):
@@ -69,7 +73,9 @@ class BattleState:
 
         # Check for item usage
         if p1_move["action"] == "item":
-            self.use_item(self.player_1, p1_move["item"], p1_move.get("target", None))
+            # Case of wild battle, return early
+            if self.use_item(self.player_1, p1_move["item"], p1_move.get("target", None)):
+                return
         if p2_move["action"] == "item":
             self.use_item(self.player_2, p2_move["item"], p2_move.get("target", None))
 
@@ -91,12 +97,16 @@ class BattleState:
 
         # Apply item, weather, status
         self.weather_effect()
-        self.status_effect(self.player_1)
-        self.status_effect(self.player_2)
+        if self.player_1.get_current_pokemon().is_alive():
+            self.status_effect(self.player_1)
+        if self.player_2.get_current_pokemon().is_alive():
+            self.status_effect(self.player_2)
 
         # Update outcome if one or both teams have no more useable pokemon
         p1_alive = self.player_1.has_pokemon()
         p2_alive = self.player_2.has_pokemon()
+        if not self.player_2.get_current_pokemon().is_alive():
+            self.apply_experience()
         if p1_alive and not p2_alive:
             self.outcome = "p1_victory"
             self.output.append({"text": "{} has won!".format(self.player_1.name)})
@@ -194,7 +204,7 @@ class BattleState:
         # Freeze and sleep
         if user.status == "slp":
             if user.status_turns == 0:
-                self.output.append({"text": "{} woke up!".format(user.name)})
+                self.output.append({"text": "{} woke up!".format(user.name), "anim": ["{}_update_hp_{}".format(player.player, user.current_hp)]})
                 user.status = ""
             else:
                 user.status_turns -= 1
@@ -202,7 +212,7 @@ class BattleState:
                 return
         if user.status == "frz":
             if random.randrange(100) < 20 or consts.MOVES[move]["type"] == "fire":
-                self.output.append({"text": "{} thawed out!".format(user.name)})
+                self.output.append({"text": "{} thawed out!".format(user.name), "anim": ["{}_update_hp_{}".format(player.player, user.current_hp)]})
                 user.status = ""
             else:
                 self.output.append({"text": "{} is frozen solid!".format(user.name), "anim": ["{}_frz".format(player.player)]})
@@ -214,7 +224,7 @@ class BattleState:
             self.output.append({"text": "{} is confused...".format(user.name)})
             if bool(random.getrandbits(1)):
                 self.output.append({"text": "{} hurt itself in confusion!".format(user.name)})
-                confusion_damage = self.move_damage(player, user, user, "normal", 40, "physical", 1, ignore_type=True)
+                confusion_damage = self.move_damage(player, user, user, "normal", 40, "physical", 1, ignore_type=True)[0]
                 self.apply_damage(confusion_damage, player)
                 return
 
@@ -222,6 +232,7 @@ class BattleState:
         if user.status == "par":
             if user.ability != "Magic Guard" and random.random() < 0.25:
                 self.output.append({"text": "{} is paralyzed! It cannot move!".format(user.name), "anim": ["{}_paralyze".format(player.player)]})
+                return
         # Locked move check; outrage, choice items, taunt, etc.
         move_data = consts.MOVES[move]
         if player.locked_moves:
@@ -243,7 +254,7 @@ class BattleState:
                 # Roll for crit
                 critical = 1.5 if self.roll_crit(player, move) else 1
                 # Roll for damage, if move does damage
-                damage = self.move_damage(
+                damage, type_effectiveness = self.move_damage(
                     player,
                     user,
                     target,
@@ -252,14 +263,14 @@ class BattleState:
                     move_data["damage_class"],
                     critical
                 )
-                self.apply_damage(damage, player.opponent, False)
+                damage_dealt = self.apply_damage(damage, player.opponent, False, effect=type_effectiveness)
                 # Apply drain
                 if move_data["drain"] != 0:
                     if move_data["drain"] > 0:
                         self.output.append({"text": "{} restored its HP!".format(user.name)})
                     else:
                         self.output.append({"text": "{} took damage from recoil!".format(user.name)})
-                    self.apply_damage(int(damage * -move_data["drain"] / 100), player, False)
+                    self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False)
                 # Apply struggle
                 if move_data["healing"] != 0:
                     self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
@@ -344,12 +355,6 @@ class BattleState:
         stab = 1.5 if type in consts.POKEMON[user.dex]["typing"] else 1
         burn = 0.5 if (user.status == "brn" and user.ability != "Guts" and damage_class == "physical") else 1
         type_effectiveness = effectiveness(type, target.dex) if not ignore_type else 1
-        if type_effectiveness > 1:
-            self.output.append({"text": "It's super effective!"})
-        elif type_effectiveness <= 0:
-            self.output.append({"text": "It's completely ineffective!"})
-        elif type_effectiveness < 1:
-            self.output.append({"text": "It's not very effective!"})
         other = 1
         attack_stat = user.attack * consts.STAT_BOOSTS[player.stat_boosts["attack"]] \
             if damage_class == "physical" else \
@@ -360,14 +365,15 @@ class BattleState:
         damage = int(int(int(int(int(int(int(int((2 * user.level / 5 + 2) * base_power * attack_stat / defense_stat / 50 + 2) \
                  * weather_boost) * critical) * randdmg) * stab) * type_effectiveness) * burn) * other)
 
-        return int(damage)
+        return (int(damage), type_effectiveness)
 
 
-    def apply_damage(self, damage, player, survive=False):
+    def apply_damage(self, damage, player, survive=False, effect=None):
         """
         Damage and faint a Pokemon
         """
         target = player.get_current_pokemon()
+        orig_hp = target.current_hp
         if damage >= target.current_hp:
             if survive:
                 target.current_hp = 1
@@ -376,9 +382,21 @@ class BattleState:
         else:
             target.current_hp -= damage
         target.current_hp = min(target.current_hp, target.hp)
-        self.output.append({"anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
+        effect_text = None
+        if effect is not None:
+            if effect > 1:
+                effect_text = "It's super effective!"
+            elif effect == 0:
+                effect_text = "It's completely ineffective!"
+            elif effect < 1:
+                effect_text = "It's not very effective!"
+        if effect_text is not None:
+            self.output.append({"text": effect_text, "anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
+        else:
+            self.output.append({"anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
         if target.current_hp == 0:
             self.output.append({"text": "{} has fainted!".format(target.name), "anim": ["{}_faint".format(player.player)]})
+        return orig_hp - target.current_hp
 
 
     def apply_status(self, opponent, target, move):
@@ -480,11 +498,15 @@ class BattleState:
         """
         Use battle items and pokeballs
         """
-        target_pokemon = user.party[target]
         item_type = consts.ITEMS[item]["category"]
         item_data = consts.ITEM_USAGE[item_type][item]
+        quantity = user.inventory[item_type].get(item, 0)
+        if quantity < 1:
+            self.output.append({"text": "You have no {}s left!".format(consts.ITEMS[item]["name"])})
+            return False
         # Medicine usage
         if item_type == "medicine":
+            target_pokemon = user.party[target]
             # Check target valid
             valid_targets = item_data.get("valid_targets", "any")
             if valid_targets == "alive":
@@ -512,7 +534,10 @@ class BattleState:
                 elif item_effects["status"] == "psn" and target_pokemon.status == "txc":
                     target_pokemon.status = ""
             self.output.append({"text": "Used {} on {}!".format(item, target_pokemon.name)})
-            self.output.append({"anim": ["{}_update_hp_{}".format(user.player, target_pokemon.current_hp)]})
+            user.inventory[item_type][item] -= 1
+            # Only update HP if current Pokemon HP is being changed
+            if target == user.current_pokemon:
+                self.output.append({"anim": ["{}_update_hp_{}".format(user.player, target_pokemon.current_hp)]})
 
         # Pokeball usage
         if item_type == "ball":
@@ -524,7 +549,8 @@ class BattleState:
             if wild_pokemon.current_hp == 0:
                 self.output.append({"text": "You cannot catch a fainted Pokémon!"})
                 return False
-            self.output.append({"text": "You threw a {}".format(item), "anim": ["throw_{}".format(item)]})
+            self.output.append({"text": "You threw a {}!".format(consts.ITEMS[item]["name"]), "anim": ["throw_{}".format(item)]})
+            user.inventory[item_type][item] -= 1
 
             # Check catch
             ball_bonus = item_data["catch_rate"]
@@ -567,12 +593,18 @@ class BattleState:
         if player.party[swap_to].is_alive():
             if player.get_current_pokemon().is_alive():
                 self.output.append({"text": "Come back, {}!".format(player.get_current_pokemon().name), "anim": ["{}_retreat".format(player.player)]})
+            # Reset relevant battle state vars
             player.current_pokemon = swap_to
             player.stat_boosts = copy.deepcopy(consts.PLAYER_STATE["stat_boosts"])
             player.confusion = 0
             player.locked_moves = []
             player.choice = None
+            # Reset opponent's participation
+            player.opponent.participants = [player.opponent.current_pokemon]
+            # Reset player's participation
+            player.participants.append(swap_to)
             self.output.append({"text": "Go, {}!".format(player.get_current_pokemon().name), "anim": ["{}_new_sprite".format(player.player), "{}_appear".format(player.player)]})
+
         # TODO - Apply entry hazards
 
 
@@ -600,7 +632,7 @@ class BattleState:
             # Calculate escape odds
             player_speed = self.player_1.get_current_pokemon().speed
             opp_speed = self.player_2.get_current_pokemon().speed
-            escape_odds = (int(player_speed * 8 / opp_speed) + 30 * self.escapes) / 256
+            escape_odds = (int(player_speed * 32 / (opp_speed / 4)) + 30 * self.escapes) / 256
             escaped = random.randrange(100) < escape_odds * 100
 
             # Escape outcomes
@@ -695,6 +727,20 @@ class BattleState:
                         self.output.append({"text": "{} is buffeted by the hail!".format(self.player_2.get_current_pokemon().name)})
                         self.apply_damage(int(self.player_2.get_current_pokemon().hp / 16), self.player_2)
 
+    def apply_experience(self):
+        """
+        Function to apply experience to a winning team. This can be written as though p1 always gets exp as live battles award nothing
+        """
+        ko_pokemon = self.player_2.get_current_pokemon()
+        winning_pokemon = self.player_1.get_current_pokemon()
+        base_experience = consts.POKEMON[ko_pokemon.dex]["base_experience"]
+        trainer_multiplier = 1.5 if self.type == "npc" else 1 if self.type == "wild" else 0
+        egg_multiplier = 1.5 if winning_pokemon.held_item == "lucky-egg" else 1
+        experience_gain = base_experience * ko_pokemon.level / 7 * trainer_multiplier * egg_multiplier
+        self.experience_gain = int(experience_gain)
+
+
+
 
 
 
@@ -715,6 +761,7 @@ class PlayerState:
         self.trapped = player_state["trapped"]
         self.choice = player_state["choice"]
         self.inventory = player_state["inventory"]
+        self.participants = player_state.get("participants", [])
 
         # Not in state
         self.player = None
@@ -740,7 +787,8 @@ class PlayerState:
             "name": self.name,
             "trapped": self.trapped,
             "choice": self.choice,
-            "inventory": self.inventory
+            "inventory": self.inventory,
+            "participants": self.participants
         }
 
 
@@ -778,6 +826,15 @@ class PokemonState:
 
     def struggling(self):
         return not any([self.has_pp(move) for move in self.moves])
+
+
+    def update_stats(self, new_stats):
+        self.hp = new_stats["hp"]
+        self.attack = new_stats["atk"]
+        self.defense = new_stats["def"]
+        self.sp_attack = new_stats["spa"]
+        self.sp_defense = new_stats["spd"]
+        self.speed = new_stats["spe"]
 
 
     def jsonify(self):

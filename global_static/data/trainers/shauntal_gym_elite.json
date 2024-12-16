@@ -1,5 +1,6 @@
 {
-    "name": "shauntal",
+    "name": "Shauntal",
+    "sprite": "shauntal",
     "team": [
         {
             "current_hp": 302,
@@ -236,5 +237,14 @@
             "name": "Shedinja"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "ghost": "gold"
+        }
+    },
+    "lines": {
+        "lose": "Wow. I'm stunned. For all the words I know, I can't figure out how to say this.",
+        "start": "Beginnings are important, whether in a good novel or a good battle!"
+    }
 }

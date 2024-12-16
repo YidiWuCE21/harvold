@@ -1,5 +1,6 @@
 {
     "name": "Blaine",
+    "sprite": "blaine",
     "team": [
         {
             "current_hp": 120,
@@ -197,5 +198,14 @@
             "name": "Camerupt"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "fire": "silver"
+        }
+    },
+    "lines": {
+        "lose": "You have ambition, kid!",
+        "start": "My fiery Pokémon will incinerate all challengers! Ha!"
+    }
 }

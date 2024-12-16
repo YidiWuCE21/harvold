@@ -1,5 +1,6 @@
 {
     "name": "Clair",
+    "sprite": "clair",
     "team": [
         {
             "current_hp": 368,
@@ -236,5 +237,14 @@
             "name": "Garchomp"
         }
     ],
-    "reward": 800
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "dragon": "gold"
+        }
+    },
+    "lines": {
+        "lose": "I lost? I don't believe it...",
+        "start": "I will use my full power against any opponent!"
+    }
 }
