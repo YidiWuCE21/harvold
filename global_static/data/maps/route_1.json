@@ -27,8 +27,24 @@
         "y": 21
     },
     "trainers": [
-        {"name": "Camper Adam", "battle": "route_1_camper_1", "sprite": "picnicker_m", "wander_points": [{"x": 10, "y": 28, "dir": "down"}, {"x":  10, "y": 30, "dir": "left"}, {"x":  5, "y": 30, "dir": "up"}, {"x":  5, "y": 28, "dir": "right"}]},
-        {"name": "Picnicker Eve" ,"battle": "route_1_picnicker_1", "sprite": "picnicker_f", "wander_points": [{"x": 30, "y": 13, "dir": "down"}, {"x":  30, "y": 15, "dir": "up"}, {"x": 30, "y": 13, "dir": "left"}, {"x": 26, "y": 13, "dir": "right"}]}
+        {
+            "name": "Camper Adam", "battle": "route_1_camper_1", "sprite": "picnicker_m",
+            "dialogue": "Hope you brought your brown pants!",
+            "wander_points": [{"x": 10, "y": 28, "dir": "down"}, {"x":  10, "y": 30, "dir": "left"}, {"x":  5, "y": 30, "dir": "up"}, {"x":  5, "y": 28, "dir": "right"}]
+        },
+        {
+            "name": "Picnicker Eve", "battle": "route_1_picnicker_1", "sprite": "picnicker_f",
+            "dialogue": "I will grind your bones to a fine dust.",
+            "wander_points": [{"x": 30, "y": 13, "dir": "down"}, {"x":  30, "y": 15, "dir": "up"}, {"x": 30, "y": 13, "dir": "left"}, {"x": 26, "y": 13, "dir": "right"}]
+        },
+        {
+            "name": "Boomer Steve", "dialogue": "RuneLite is a cheat client! Back in my day, we used Sal's realm for quests!", "sprite": "grandpa_1",
+            "wander_points": [{"x": 10, "y": 15, "dir": "right"}, {"x":  15, "y": 15, "dir": "left"}]
+        },
+        {
+            "name": "Starly", "dialogue": "Starly!", "sprite": "396", "type": "pokemon",
+            "wander_points": [{"x": 5, "y": 18, "dir": "right"}, {"x":  11, "y": 18, "dir": "left"}]
+        }
     ],
     "collisions": [
         0,

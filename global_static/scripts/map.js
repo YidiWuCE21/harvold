@@ -13,6 +13,7 @@ const maxSteps = 500;
 const minSteps = 150;
 const defaultLedgeFrames = 16;
 let gameTick = 0;
+const delayPerCharacter = 50;
 
 // Variables loaded from JSON
 let mapWidth = 0;
@@ -77,8 +78,11 @@ let steps = 10;
 
 let wildShow = null;
 let wildHide = null;
+let wildArea = null;
 let ledgeActive = null;
 let ledgeFrames = defaultLedgeFrames;
+
+let dialogueActive = false;
 
 
 // Player sprite constants
@@ -202,7 +206,14 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     mapTrainersSprites = [];
     mapTrainers.forEach((trainer) => {
         const trainerImage = new Image();
-        trainerImage.src = '/static/assets/npc/overworld/' + trainer.sprite + '.png';
+        let trainerOffset = {x: 3, y: 12}
+        if ((trainer.type || "trainer") == "pokemon") {
+            trainerImage.src = '/static/assets/pokemon/overworld/' + trainer.sprite + '.png';
+            trainerOffset = {x: 3, y: 12}
+        } else {
+            trainerImage.src = '/static/assets/npc/overworld/' + trainer.sprite + '.png';
+            trainerOffset = {x: 3, y: 12}
+        }
         mapTrainersSprites.push(new Trainer({
             position: {
                 x: trainer.wander_points[0].x * tile_width + 8,
@@ -212,10 +223,12 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
             rows: {max: 4},
             image: trainerImage,
             crop: {x: 0, y: 0},
-            offset: {x: 3, y: 12},
+            offset: trainerOffset,
             wanderPoints: trainer.wander_points,
             delay:  Math.floor(Math.random() * 4) * 25 + 1,
-            battle: trainer.battle
+            battle: trainer.battle,
+            dialogue: trainer.dialogue,
+            name: trainer.name
         }));
 
     })
@@ -582,6 +595,23 @@ function animate(looped = true) {
     c.fillStyle = 'black';
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.draw(cappedCamera);
+    // Detect maplink nearby
+    for (let i = 0; i < maplinkTiles.length; i++) {
+        const maplinkTile = maplinkTiles[i];
+        if (
+            inRadius({point1: player.position, point2: maplinkTile.position, radius: 50, offset: 0})
+        ) {
+            // Set opacity based on distance to player
+            const distance = Math.sqrt((player.position.x - maplinkTile.position.x) ** 2 + (player.position.y - maplinkTile.position.y) ** 2)
+            const opacity = -3/250 * distance + 1
+            console.log(distance);
+            console.log(opacity);
+            c.globalAlpha = opacity;
+            maplinkTile.draw(cappedCamera, gameTick);
+            c.globalAlpha = 1;
+        }
+    }
+
     // Detect if on water
     surfing = false;
     for (let i = 0; i < waterTiles.length; i++) {
@@ -663,13 +693,26 @@ function animate(looped = true) {
                 }
             }
         }
-        // Trainer battle activation
-        mapTrainersSprites.forEach((trainer) => {
-            if (trainer.solid) {
-                if (trainer.battle != null) {
-                    // Go to battle
+    }
+    // Also manages enter events but we need to loop this regardless so keep it outside of block
+    mapTrainersSprites.forEach((trainer) => {
+        if (trainer.solid) {
+            // Trainer battle/dialogue activation
+            if (trainer.battle != null && !dialogueActive && keys.enter.pressed) {
+                // Play dialogue first
+                document.getElementById("wild").style.display = "none";
+                wildHide = null;
+                dialogueActive = true;
+                // Prepare speaker name and image
+                document.getElementById("speaker_name").innerHTML = trainer.name;
+                document.getElementById("speaker_sprite").src = trainer.image.src;
+                // View dialogue and start writing
+                toggleDialogueWindow({'open': true});
+                writeDialogue(trainer.dialogue);
+                // Go to battle
+                setTimeout(() => {
                     const url = trainerUrl;
-                    const form = $('<form action="' + url + '" method="post">' +
+                    const form = $('<form action="' + url + '" method="post" style="display:none;">' +
                       '<input type="text" name="trainer" value="' + trainer.battle + '" />' +
                       '</form>');
                     $('body').append(form);
@@ -679,11 +722,27 @@ function animate(looped = true) {
                     csrfElem.value = csrf_val;
                     form.append(csrfElem);
                     form.submit();
-                }
-            }
-        })
+                }, Math.max(trainer.dialogue.length * delayPerCharacter - 500, 0));
 
-    }
+            } else if(trainer.dialogue != null && !dialogueActive && keys.enter.pressed) {
+                // Remove wild Pokemon
+                document.getElementById("wild").style.display = "none";
+                wildHide = null;
+                dialogueActive = true;
+                // Prepare speaker name and image
+                document.getElementById("speaker_name").innerHTML = trainer.name;
+                document.getElementById("speaker_sprite").src = trainer.image.src;
+                // View dialogue and start writing
+                toggleDialogueWindow({'open': true});
+                writeDialogue(trainer.dialogue);
+            }
+        } else if(dialogueActive && trainer.battle == null) {
+            if (document.getElementById("speaker_name").innerHTML == trainer.name) {
+                toggleDialogueWindow({'open': false});
+                dialogueActive = false;
+            }
+        }
+    })
 
     let moving = true;
     player.moving = false;
@@ -790,8 +849,6 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
-            } else if (stationaryTrainer.solid) {
-                console.log('no col');
             }
         }
         if (moving) {
@@ -851,8 +908,6 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
-            } else if (stationaryTrainer.solid) {
-                console.log('no col');
             }
         }
         if (moving) {
@@ -912,8 +967,6 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
-            } else if (stationaryTrainer.solid) {
-                console.log('no col');
             }
         }
         if (moving) {
@@ -921,7 +974,7 @@ function animate(looped = true) {
         }
     }
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-        if (moving) {
+        if (moving && !dialogueActive) {
             let areaStr = null;
             if (grass) {
                 if (wildShow == null && wildHide == null)
@@ -934,14 +987,23 @@ function animate(looped = true) {
                 areaStr = "water";
             }
             if (wildShow != null) {
-                wildShow -= 1;
+                if ((wildArea == 'grass' && grass) || (wildArea == 'water' && surfing)) {
+                    wildShow -= 1;
+                } else {
+                    wildArea = null;
+                }
+                if (wildArea == null) {
+                    wildShow = null;
+                }
             }
             if (wildHide != null) {
                 wildHide -= 1;
             }
             if (steps < 0) {
                 steps = 10;
-                if (Math.random() < 0.1) {
+                if (Math.random() < 0.15) {
+                    wildArea = (grass) ? 'grass' : 'water';
+                    console.log('hit');
                     $.ajax(
                     {
                         type: "GET",
@@ -957,7 +1019,7 @@ function animate(looped = true) {
                         } else if (response.sex == "f") {
                             sex = ' <span style="color:magenta">&#9792;</span>'
                         }
-                        document.getElementById("wild-name").innerHTML = "A wild " + response.name + sex + " appeared!";
+                        document.getElementById("wild-name").innerHTML = response.name + sex;
                         document.getElementById("wild-level").innerHTML = "Level " + response.level;
                         document.getElementById("wild-img").src = pokePath + "/" + response.dex_number + ".png";
                         wildShow = 10;
@@ -972,6 +1034,7 @@ function animate(looped = true) {
                 document.getElementById("wild").style.display = "block";
                 wildHide = 50;
                 wildShow = null;
+                wildArea = null;
             }
             if (wildHide == 0) {
                 document.getElementById("wild").style.display = "none";
@@ -982,8 +1045,8 @@ function animate(looped = true) {
     // applyFilter();
 }
 
-function inRadius({point1, point2, radius}) {
-    const distance = (point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2;
+function inRadius({point1, point2, radius, offset}) {
+    const distance = (point1.x + offset - point2.x) ** 2 + (point1.y + offset - point2.y) ** 2;
     return (distance < radius ** 2);
 }
 // Function to handle trainer movements
@@ -1003,7 +1066,7 @@ function trainerTick() {
             }
         }
         // Near trainer case
-        if (inRadius({point1: trainer.position, point2: player.position, radius: 30})) {
+        if (inRadius({point1: trainer.position, point2: player.position, radius: trainer.radius, offset: 6})) {
             trainer.frames.val = 0;
             trainer.rows.val = 0;
             trainer.solid = true;
@@ -1096,3 +1159,44 @@ window.addEventListener('keyup', (e) => {
             break
     }
 })
+
+function writeDialogue(text) {
+    // Get the div where the text will appear
+    const dialogueBox = document.getElementById('dialogue');
+    dialogueBox.textContent = '';  // Clear any previous content
+
+    let index = 0;
+
+    // Function to append one character at a time
+    function addLetter() {
+        if (index < text.length) {
+            dialogueBox.textContent += text[index];  // Add the next letter
+            if (text[index] == ' ') {
+                index++;
+                dialogueBox.textContent += text[index];
+            }
+            index++;
+            // For spaces, skip
+            if (dialogueActive)
+                setTimeout(addLetter, delayPerCharacter);  // Call this function again after the delay
+        }
+    }
+
+    // Start the letter-by-letter animation
+    addLetter();
+}
+
+function toggleDialogueWindow({open}) {
+    const dialogueBox = document.getElementById('dialogue');
+    const textBox = document.getElementById('speaker');
+    const closeBtn = document.getElementById('close');
+    if (open) {
+        dialogueBox.style.display = 'block';
+        textBox.style.display = 'block';
+        closeBtn.style.display = 'block';
+    } else {
+        dialogueBox.style.display = 'none';
+        textBox.style.display = 'none';
+        closeBtn.style.display = 'none';
+    }
+}

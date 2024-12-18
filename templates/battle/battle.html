@@ -12,8 +12,8 @@
     <div class="content-box" style="padding: 0px; display: grid; grid-template-columns: 480px 200px; grid-template-rows: 224px 130px; gap: 0px; width: 680px;">
         <div style="grid-area: 1 / 1; background-image: url('{% get_static_prefix %}{{ asset_paths.scene|replace:'\|/'  }}/{{ scene }}.png'); border: 1px solid black; position: relative;">
 
-            <div class="content-box battle-info right-clip" style="top: 0; left: 3px; background: rgb(60, 60, 60);"></div>
-            <div class="content-box battle-info left-clip" style="bottom: 0; right: 3px; background: rgb(60, 60, 60);"></div>
+            <div id="opp_shadow" class="content-box battle-info right-clip" style="top: 0; left: 3px; background: rgb(60, 60, 60);"></div>
+            <div id="player_shadow" class="content-box battle-info left-clip" style="bottom: 0; right: 3px; background: rgb(60, 60, 60);"></div>
             <div id="opp_info" class="content-box battle-info right-clip" style="top: 0; left: 0">
                 <p id="opp_name"></p>
                 <img src="" id="opp_status">
@@ -117,7 +117,11 @@ const initialTurn = {{ current_turn }};
 const isPlayerOne = {{ is_p1|yesno:"true,false" }};
 const ballsAllowed = {{ balls_allowed|yesno:"true,false" }};
 const medicinesAllowed = {{ medicines_allowed|yesno:"true,false" }};
-const pokecenterUrl = '{% url 'pokecenter' %}'
+const pokecenterUrl = '{% url 'pokecenter' %}';
+
+const battleType = '{{ type }}';
+const playerTrainer = '{% get_static_prefix %}{{ asset_paths.player_back|replace:'\|/' }}/{{ player_sprite }}.png';
+const oppTrainer = {% if type == "npc" %}'{% get_static_prefix %}{{ asset_paths.trainer_sprite|replace:'\|/' }}/{{ opp_sprite }}.png'{% elif type == "live" %}'{% get_static_prefix %}{{ asset_paths.player_back|replace:'\|/' }}/{{ opp_sprite }}.png'{% else %}null{% endif %};
 
 const typePath = '{% get_static_prefix %}{{ asset_paths.typing|replace:'\|/' }}';
 const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' }}';

@@ -1,6 +1,7 @@
 {
     "name": "Clair",
     "sprite": "clair",
+    "music": "gym",
     "team": [
         {
             "current_hp": 187,

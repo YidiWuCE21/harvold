@@ -36,13 +36,19 @@ ASSET_PATHS = {
     "art": os.path.join("assets", "pokemon", "art"),
     "front": os.path.join("assets", "pokemon", "front"),
     "back": os.path.join("assets", "pokemon", "back"),
+    "ow": os.path.join("assets", "pokemon", "overworld"),
     # Player sprites
     "player_sprite": os.path.join("assets", "player", "sprite"),
     "player_art": os.path.join("assets", "player", "art"),
     "player_ow": os.path.join("assets", "player", "overworld"),
+    "player_back": os.path.join("assets", "player", "back"),
     # NPC sprites
     "trainer_sprite": os.path.join("assets", "npc", "sprite"),
     "trainer_ow": os.path.join("assets", "npc", "overworld"),
+    # Audio assets
+    "music": os.path.join("assets", "audio", "music"),
+    "cries": os.path.join("assets", "audio", "cries"),
+    "move_sounds": os.path.join("assets", "audio", "moves"),
     # Misc assets
     "typing": os.path.join("assets", "pokemon", "type"),
     "item": os.path.join("assets", "items"),
@@ -124,16 +130,7 @@ TAGS = ["circle", "star", "square", "diamond"]
 
 MAPS = [
     "oak_village",
-    "kaguya_town",
-    "synecdoche_city",
     "route_1",
-    "route_2",
-    "route_3",
-    "route_4",
-    "route_5",
-    "route_6",
-    "route_7",
-    "vitur_forest",
 ]
 
 GYM_LEADERS = {

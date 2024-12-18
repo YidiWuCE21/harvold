@@ -20,6 +20,9 @@
     --shadow: rgba(0, 0, 0, 0.2);
     --shiny: rgba(237, 231, 197, 1);
     --shiny-hover: rgba(230, 208, 163, 0.8);
+
+    --bubble: rgba(210, 244, 246, 0.8);
+    --bubble-border: rgb(162, 234, 238)
 }
 
 @font-face {
@@ -468,6 +471,31 @@ input, select {
     background-color: var(--shadow);
     display: inline-block;
     border-radius: 50%;
+}
+
+.pokemon-wild-bg {
+    width: 150px;
+    height: 150px;
+    background-color: var(--bubble);
+    border: 3px solid var(--bubble-border);
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.dialogue-box {
+    height: 95px;
+    width: 252px;
+    background: url("../assets/misc/speech.png");
+    padding: 10px 30px 5px 15px;
+}
+
+.text-box {
+    height: 20px;
+    width: 160px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    background-color: var(--content);
 }
 
 .move-box {

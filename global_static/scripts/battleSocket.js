@@ -79,7 +79,6 @@ function processOutput({text = null, anim = null}) {
         document.querySelector('#chat-log').value += (text + '\n');
         document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
     if (anim != null) {
-        document.querySelector('#chat-log').value += (anim + '\n');
         anim.forEach((animMove) => {
             processAnim({"animMove": animMove});
         })
@@ -93,6 +92,20 @@ function processAnim({animMove}) {
             toggleButtons(true);
         } else {
             endBattle();
+        }
+    }
+    if (animMove == 'player_info') {
+        const playerInfo = document.getElementById('player_info').children;
+        for (let i = 0; i < playerInfo.length; i++) {
+            playerInfo[i].style.transition = 'opacity 1s';
+            playerInfo[i].style.opacity = '1';
+        }
+    }
+    if (animMove == 'opp_info') {
+        const oppInfo = document.getElementById('opp_info').children;
+        for (let i = 0; i < oppInfo.length; i++) {
+            oppInfo[i].style.transition = 'opacity 1s';
+            oppInfo[i].style.opacity = '1';
         }
     }
     // Attacks
@@ -122,6 +135,9 @@ function processAnim({animMove}) {
         disappear({'x': '20', 'y': '130', 'div_id': 'player_spr'});
     } else if ((!isPlayerOne && animMove == 'p1_retreat') || (isPlayerOne && animMove == 'p2_retreat')) {
         disappear({'x': '350', 'y': '60', 'div_id': 'opp_spr'});
+    }
+    if (animMove == 'trainer_retreat') {
+        disappear({'x': '20', 'y': '142', 'div_id': 'player_spr'});
     }
     // Fainting
     if ((isPlayerOne && animMove == 'p1_faint') || (!isPlayerOne && animMove == 'p2_faint')) {
@@ -579,9 +595,51 @@ function updateBalls() {
     }
 }
 
+function battleStart() {
+    let loadAnim = [{}];
+
+    let player = (isPlayerOne) ? "player_1" : "player_2";
+    let opp = (isPlayerOne) ? "player_2" : "player_1";
+
+    const oppPokemon = battleState[opp]["party"][battleState[opp]["current_pokemon"]]
+    const playerPokemon = battleState[player]["party"][battleState[player]["current_pokemon"]]
+
+    const playerSpr = document.getElementById("player_spr");
+    playerSpr.src = playerTrainer;
+    playerSpr.style.top = '142px';
+
+    if (battleType == 'wild') {
+        loadAnim.push({'text': 'A ' + battleState['player_2']['name'] + ' appeared!'});
+    } else {
+        const oppSpr = document.getElementById("opp_spr");
+        oppSpr.src = oppTrainer;
+        loadAnim.push({'text': battleState[opp]['name'] + ' wants to battle!'});
+        loadAnim.push({'anim': ['p2_retreat']});
+        loadAnim.push({'text': battleState[opp]['name'] + ' sent out ' + oppPokemon['name'] +'!', 'anim': ['p2_new_sprite', 'p2_appear']});
+    }
+    loadAnim.push({'text': 'Go, ' + playerPokemon['name'] + '!', "anim": ["trainer_retreat"]});
+    loadAnim.push({'anim': ['p1_new_sprite', 'p1_appear']})
+    loadAnim.push({"anim": ["turnEnd"]});
+    let promise = Promise.resolve();
+    loadAnim.forEach(function (out) {
+        promise = promise.then(function() {
+            processOutput(out);
+            return new Promise(function (resolve) {
+                setTimeout(resolve, interval);
+            })
+        });
+    })
+}
+
 updateMoves();
 updateSwitches();
 updateInventory();
 updateCanvas({'forPlayer': true});
 updateCanvas({'forPlayer': false});
 updateBalls();
+toggleButtons(false);
+if (initialTurn == 1) {
+    battleStart();
+} else {
+    toggleButtons(true);
+}

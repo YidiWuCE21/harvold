@@ -1,6 +1,7 @@
 {
     "name": "Marlon",
     "sprite": "marlon",
+    "music": "gym",
     "team": [
         {
             "current_hp": 375,

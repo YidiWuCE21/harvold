@@ -201,3 +201,10 @@ class Battle(models.Model):
                         if not move["move"] in moves:
                             moves.append(move["move"])
         return moves
+
+    def get_opp(self, player):
+        if player == self.player_1:
+            return self.player_2
+        elif player == self.player_2:
+            return self.player_1
+        return None

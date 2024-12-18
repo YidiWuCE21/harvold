@@ -1,6 +1,7 @@
 {
     "name": "Blaine",
     "sprite": "blaine",
+    "music": "gym",
     "team": [
         {
             "current_hp": 339,

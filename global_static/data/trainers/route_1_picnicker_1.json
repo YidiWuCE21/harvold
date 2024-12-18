@@ -84,7 +84,7 @@
         "base_payout": 16
     },
     "map": "route_1",
-    "sprite": "picnicker_m",
+    "sprite": "picnicker_f",
     "lines": {
         "lose": "You live another day, but there is always tomorrow.",
         "start": "I will grind your bones to a fine dust."

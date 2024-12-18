@@ -81,6 +81,27 @@ def battle(request):
         return redirect("pokecenter")
     is_p1 = request.user.profile == battle.player_1
 
+    # Fetch player/opp sprites
+    player_sprite = str(request.user.profile.character).zfill(2)
+    opp_sprite = None
+    music = "wild"
+    if battle.type == "npc":
+        music = "trainer"
+        trainer_data = "{}.json".format(battle.npc_opponent)
+        try:
+            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+            with open(trainer_path) as trainer_file:
+                trainer_json = json.load(trainer_file)
+                opp_sprite = trainer_json["sprite"]
+                if "music" in trainer_json:
+                    music = trainer_json["music"]
+
+        except:
+            pass
+    if battle.type == "live":
+        music = "trainer"
+        opp_sprite = str(battle.get_opp(request.user.profile).character).zfill(2)
+
     html_render_variables = {
         "battle_state": json.dumps(battle.battle_state),
         "output_log": battle.output_log,
@@ -93,6 +114,9 @@ def battle(request):
         "is_p1": is_p1,
         "move_data": json.dumps({move: {k: v for k, v in consts.MOVES[move].items() if k in ["damage_class", "name", "power", "accuracy", "category", "type", "pp"]} for move in battle.get_all_moves()}),
         "balls_allowed": battle.type == "wild",
-        "medicines_allowed": battle.type != "live"
+        "medicines_allowed": battle.type != "live",
+        "player_sprite": player_sprite,
+        "opp_sprite": opp_sprite,
+        "music": music
     }
     return render(request, "battle/battle.html", html_render_variables)

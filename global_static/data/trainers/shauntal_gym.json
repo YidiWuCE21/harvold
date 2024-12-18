@@ -1,6 +1,7 @@
 {
     "name": "Shauntal",
     "sprite": "shauntal",
+    "music": "gym",
     "team": [
         {
             "current_hp": 130,

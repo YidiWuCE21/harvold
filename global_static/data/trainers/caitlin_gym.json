@@ -1,6 +1,7 @@
 {
     "name": "Caitlin",
     "sprite": "caitlin",
+    "music": "gym",
     "team": [
         {
             "current_hp": 131,
