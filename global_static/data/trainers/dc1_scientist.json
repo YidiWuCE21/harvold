@@ -1,0 +1,154 @@
+{
+    "name": "Scientist Curie",
+    "team": [
+        {
+            "current_hp": 77,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "uproar",
+                    "pp": 10
+                }, {
+                    "move": "doubleteam",
+                    "pp": 15
+                }, {
+                    "move": "shockwave",
+                    "pp": 20
+                }, {
+                    "move": "ominouswind",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Levitate",
+            "dex_number": "479",
+            "level": 33,
+            "shiny": false,
+            "stats": {
+                "hp": 77,
+                "atk": 38,
+                "def": 69,
+                "spa": 65,
+                "spd": 62,
+                "spe": 66
+            },
+            "id": null,
+            "name": "Rotom"
+        }, {
+            "current_hp": 71,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "selfdestruct",
+                    "pp": 5
+                }, {
+                    "move": "haze",
+                    "pp": 30
+                }, {
+                    "move": "gyroball",
+                    "pp": 5
+                }, {
+                    "move": "sludgebomb",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Levitate",
+            "dex_number": "109",
+            "level": 34,
+            "shiny": false,
+            "stats": {
+                "hp": 71,
+                "atk": 59,
+                "def": 69,
+                "spa": 56,
+                "spd": 32,
+                "spe": 33
+            },
+            "id": null,
+            "name": "Koffing"
+        }, {
+            "current_hp": 100,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "chargebeam",
+                    "pp": 10
+                }, {
+                    "move": "lightscreen",
+                    "pp": 30
+                }, {
+                    "move": "electroball",
+                    "pp": 10
+                }, {
+                    "move": "selfdestruct",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Soundproof",
+            "dex_number": "101",
+            "level": 36,
+            "shiny": false,
+            "stats": {
+                "hp": 100,
+                "atk": 45,
+                "def": 64,
+                "spa": 63,
+                "spd": 64,
+                "spe": 118
+            },
+            "id": null,
+            "name": "Electrode"
+        }, {
+            "current_hp": 133,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "megapunch",
+                    "pp": 20
+                }, {
+                    "move": "chipaway",
+                    "pp": 20
+                }, {
+                    "move": "dizzypunch",
+                    "pp": 10
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Inner Focus",
+            "dex_number": "115",
+            "level": 37,
+            "shiny": false,
+            "stats": {
+                "hp": 133,
+                "atk": 79,
+                "def": 65,
+                "spa": 40,
+                "spd": 79,
+                "spe": 71
+            },
+            "id": null,
+            "name": "Kangaskhan"
+        }
+    ],
+    "reward": {
+        "base_payout": 24
+    },
+    "map": "drilbur_cave_1f",
+    "sprite": "scientist_m",
+    "lines": {
+        "lose": "The pursuit of knowledge is never without setbacks."
+    }
+}

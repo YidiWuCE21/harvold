@@ -24,7 +24,7 @@
 
         </div>
         <div id="speaker" class="text-box" style="display:none;position:absolute;top:290px;left:172px;z-index:1;">
-            <img id="speaker_sprite" src="" style="margin-left: -25px; margin-top: -3px; width: 30px; height: 20px; object-fit: none; object-position: -5px -5px;">
+            <img id="speaker_sprite" src="" style="margin-left: -25px; margin-top: -2px; width: 30px; height: 20px; object-fit: none; object-position: -3px -5px;">
             <span id="speaker_name"></span>
         </div>
         <div id="dialogue" class="dialogue-box" style="display:none;position:absolute;top:300px;left:162px;">
@@ -48,10 +48,12 @@ const playerNum = '{{ character }}';
 const jsonPath = '{% get_static_prefix %}data/maps/';
 const jsonUrl = '{% url 'map_data' %}';
 const wildUrl = '{% url 'wild_battle' %}';
+const posUrl = '{% url 'update_pos' %}';
 const trainerUrl = '{% url 'battle_create' %}';
 const worldMapUrl = '{% url 'world_map' %}';
 const pokePath = '{% get_static_prefix %}{{ asset_paths.front|escapejs }}';
 const initialMap = JSON.parse('{{ map_data|escapejs }}');
+const initialPos = JSON.parse('{{ position|escapejs }}');
 const csrf_val = '{{ csrf_token }}';
 
 

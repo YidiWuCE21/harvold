@@ -601,6 +601,9 @@ function battleStart() {
     let player = (isPlayerOne) ? "player_1" : "player_2";
     let opp = (isPlayerOne) ? "player_2" : "player_1";
 
+    const playerName = document.getElementById("player_name");
+    playerName.innerHTML = battleState[player]['name'];
+
     const oppPokemon = battleState[opp]["party"][battleState[opp]["current_pokemon"]]
     const playerPokemon = battleState[player]["party"][battleState[player]["current_pokemon"]]
 
@@ -611,6 +614,8 @@ function battleStart() {
     if (battleType == 'wild') {
         loadAnim.push({'text': 'A ' + battleState['player_2']['name'] + ' appeared!'});
     } else {
+        const oppName = document.getElementById("opp_name");
+        oppName.innerHTML = battleState[opp]['name'];
         const oppSpr = document.getElementById("opp_spr");
         oppSpr.src = oppTrainer;
         loadAnim.push({'text': battleState[opp]['name'] + ' wants to battle!'});

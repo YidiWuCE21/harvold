@@ -1,0 +1,154 @@
+{
+    "name": "Scientist Laplace",
+    "team": [
+        {
+            "current_hp": 89,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "pursuit",
+                    "pp": 20
+                }, {
+                    "move": "miracleeye",
+                    "pp": 40
+                }, {
+                    "move": "zenheadbutt",
+                    "pp": 15
+                }, {
+                    "move": "bulletpunch",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Light Metal",
+            "dex_number": "375",
+            "level": 33,
+            "shiny": false,
+            "stats": {
+                "hp": 89,
+                "atk": 62,
+                "def": 66,
+                "spa": 53,
+                "spd": 58,
+                "spe": 43
+            },
+            "id": null,
+            "name": "Metang"
+        }, {
+            "current_hp": 112,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "recover",
+                    "pp": 5
+                }, {
+                    "move": "magnetrise",
+                    "pp": 10
+                }, {
+                    "move": "signalbeam",
+                    "pp": 15
+                }, {
+                    "move": "recycle",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Trace",
+            "dex_number": "233",
+            "level": 34,
+            "shiny": false,
+            "stats": {
+                "hp": 112,
+                "atk": 73,
+                "def": 67,
+                "spa": 86,
+                "spd": 69,
+                "spe": 47
+            },
+            "id": null,
+            "name": "Porygon2"
+        }, {
+            "current_hp": 88,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "psybeam",
+                    "pp": 20
+                }, {
+                    "move": "reflect",
+                    "pp": 20
+                }, {
+                    "move": "telekinesis",
+                    "pp": 15
+                }, {
+                    "move": "recover",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Inner Focus",
+            "dex_number": "065",
+            "level": 36,
+            "shiny": false,
+            "stats": {
+                "hp": 88,
+                "atk": 50,
+                "def": 40,
+                "spa": 104,
+                "spd": 83,
+                "spe": 94
+            },
+            "id": null,
+            "name": "Alakazam"
+        }, {
+            "current_hp": 133,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "megapunch",
+                    "pp": 20
+                }, {
+                    "move": "chipaway",
+                    "pp": 20
+                }, {
+                    "move": "dizzypunch",
+                    "pp": 10
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Inner Focus",
+            "dex_number": "115",
+            "level": 37,
+            "shiny": false,
+            "stats": {
+                "hp": 133,
+                "atk": 86,
+                "def": 64,
+                "spa": 45,
+                "spd": 66,
+                "spe": 78
+            },
+            "id": null,
+            "name": "Kangaskhan"
+        }
+    ],
+    "reward": {
+        "base_payout": 24
+    },
+    "map": "drilbur_cave_2f",
+    "sprite": "scientist_m",
+    "lines": {
+        "lose": "But how? All my calculations pointed at your defeat!"
+    }
+}

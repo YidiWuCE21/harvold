@@ -12,6 +12,7 @@ with open(os.path.join(STATIC_PATH, "data", "learnsets.json")) as learnset_file:
     LEARNSETS = json.load(learnset_file)
 with open(os.path.join(STATIC_PATH, "data", "pokemon.json")) as pokemon_file:
     POKEMON = json.load(pokemon_file)
+    DEX_LOOKUP = {pkmn["name"]: dex for dex, pkmn in POKEMON.items()}
 with open(os.path.join(STATIC_PATH, "data", "moves.json")) as pokemon_file:
     MOVES = json.load(pokemon_file)
 with open(os.path.join(STATIC_PATH, "data", "exp_curves.json")) as pokemon_file:
@@ -130,7 +131,37 @@ TAGS = ["circle", "star", "square", "diamond"]
 
 MAPS = [
     "oak_village",
+    "kaguya_town",
+    "synecdoche_city",
+    "zubrowka_city",
+    "port_inisherin",
+    "baxter_city",
+    "juvet_town",
+    "vitur_forest",
+    "pacific_lake",
+    "mountain_grove",
+    "snorlax_island",
+    "drilbur_cave_1f",
+    "drilbur_cave_2f",
     "route_1",
+    "route_2",
+    "route_3",
+    "route_4",
+    "route_5",
+    "route_6",
+    "route_7",
+    "route_8",
+    "route_9",
+    "route_10",
+    "route_11",
+    "route_12",
+    "route_13",
+    "route_14",
+    "route_15",
+    "route_16",
+    "route_17",
+    "route_18",
+    "route_19",
 ]
 
 GYM_LEADERS = {

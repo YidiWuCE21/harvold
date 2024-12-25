@@ -1,0 +1,119 @@
+{
+    "name": "Black Belt Marcus",
+    "team": [
+        {
+            "current_hp": 86,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "lowsweep",
+                    "pp": 20
+                }, {
+                    "move": "foresight",
+                    "pp": 40
+                }, {
+                    "move": "seismictoss",
+                    "pp": 20
+                }, {
+                    "move": "revenge",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "067",
+            "level": 29,
+            "shiny": false,
+            "stats": {
+                "hp": 86,
+                "atk": 65,
+                "def": 47,
+                "spa": 38,
+                "spd": 49,
+                "spe": 33
+            },
+            "id": null,
+            "name": "Machoke"
+        }, {
+            "current_hp": 95,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "counter",
+                    "pp": 20
+                }, {
+                    "move": "brickbreak",
+                    "pp": 15
+                }, {
+                    "move": "takedown",
+                    "pp": 20
+                }, {
+                    "move": "pinmissile",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "214",
+            "level": 31,
+            "shiny": false,
+            "stats": {
+                "hp": 95,
+                "atk": 84,
+                "def": 54,
+                "spa": 28,
+                "spd": 72,
+                "spe": 61
+            },
+            "id": null,
+            "name": "Heracross"
+        }, {
+            "current_hp": 132,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "revenge",
+                    "pp": 10
+                }, {
+                    "move": "stormthrow",
+                    "pp": 10
+                }, {
+                    "move": "bodyslam",
+                    "pp": 15
+                }, {
+                    "move": "bulkup",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Guts",
+            "dex_number": "538",
+            "level": 34,
+            "shiny": false,
+            "stats": {
+                "hp": 132,
+                "atk": 79,
+                "def": 58,
+                "spa": 28,
+                "spd": 71,
+                "spe": 45
+            },
+            "id": null,
+            "name": "Throh"
+        }
+    ],
+    "reward": {
+        "base_payout": 24
+    },
+    "map": "drilbur_cave_1f",
+    "sprite": "blackbelt",
+    "lines": {
+        "lose": "You trained your Pok\u00e9mon well!"
+    }
+}

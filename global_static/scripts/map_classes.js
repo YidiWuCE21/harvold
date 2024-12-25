@@ -82,7 +82,10 @@ class Sprite {
 }
 
 class Trainer extends Sprite {
-    constructor({ position, velocity, image, wanderPoints, delay, battle = null, dialogue = null, name = null, speed = 1, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, offset = {x: 0, y: 0}}) {
+    constructor({
+        position, velocity, image, wanderPoints, delay, battle = null, dialogue = null, name = null, frameTick = 10,
+        speed = 1, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, alwaysMoving = false, fast = false,
+        offset = {x: 0, y: 0}}) {
         super({
             position: position,
             velocity: velocity,
@@ -99,6 +102,7 @@ class Trainer extends Sprite {
         this.idleTicks = 0;
         this.speed = speed;
         this.solid = false;
+        this.wasIndependent = false;
         this.width = 12;
         this.height = 12;
         this.delay = delay;
@@ -114,6 +118,9 @@ class Trainer extends Sprite {
         this.dialogue = dialogue;
         this.radius = (this.battle == null) ? 25 : 35;
         this.name = name;
+        this.alwaysMoving = alwaysMoving;
+        this.frameTick = frameTick;
+        this.fast = fast;
     }
 
     exclaim(cameraPosition) {
@@ -125,6 +132,16 @@ class Trainer extends Sprite {
     }
 
     draw(cameraPosition) {
+        // For alwaysmoving sprites, do check here as we skip in parent method
+        if (!this.moving && this.alwaysMoving) {
+            if (this.frames.max > 1) {
+                this.frames.elapsed++
+            }
+            if (this.frames.elapsed % this.frameTick === 0) {
+                if (this.frames.val < this.frames.max - 1) this.frames.val++;
+                else this.frames.val = 0;
+            }
+        }
         super.draw(cameraPosition);
         if (this.solid && (this.battle != null || this.dialogue != null)) {
             this.exclaim(cameraPosition);

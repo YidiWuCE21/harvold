@@ -86,7 +86,7 @@
     "map": "route_1",
     "sprite": "picnicker_f",
     "lines": {
-        "lose": "You live another day, but there is always tomorrow.",
-        "start": "I will grind your bones to a fine dust."
+        "lose": "No fair! I said to go easy!",
+        "start": "Go easy on me, I'm new!"
     }
 }

@@ -138,7 +138,7 @@ const surfer = new Sprite({
 statics = [player, surf, surfer];
 
 
-function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
+function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingPos = null}) {
     if (!(Object.keys(mapData).length === 0))
         currentData = mapData
     // Changes outside canvas
@@ -161,8 +161,10 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     mapTrainers = currentData.trainers;
     water = currentData.water;
     battles = currentData.battles;
+    // Set to zero where water is not None
     if (battles == "all")
-        battles = new Array(mapWidth * mapHeight).fill(1)
+        battles = water.map(num => num === 0 ? 1 : 0);
+        //battles = new Array(mapWidth * mapHeight).fill(1)
     maplink = currentData.maplink;
 
     mapHeight = currentData.mapHeight;
@@ -181,6 +183,11 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
     }
     if ("y" in playerOffset) {
         offset.y = playerOffset.y;
+    }
+    // Override with known offset if available
+    if (startingPos != null) {
+        offset.x = startingPos.x;
+        offset.y = startingPos.y;
     }
     maplinkKey = currentData.maplinkKey;
 
@@ -214,13 +221,14 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
             trainerImage.src = '/static/assets/npc/overworld/' + trainer.sprite + '.png';
             trainerOffset = {x: 3, y: 12}
         }
+        let trainerRows = trainer.rows || 4;
         mapTrainersSprites.push(new Trainer({
             position: {
-                x: trainer.wander_points[0].x * tile_width + 8,
-                y: trainer.wander_points[0].y * tile_width,
+                x: Math.floor(trainer.wander_points[0].x * tile_width + 8),
+                y: Math.floor(trainer.wander_points[0].y * tile_width),
             },
             frames: {max: 4},
-            rows: {max: 4},
+            rows: {max: trainerRows},
             image: trainerImage,
             crop: {x: 0, y: 0},
             offset: trainerOffset,
@@ -228,7 +236,10 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
             delay:  Math.floor(Math.random() * 4) * 25 + 1,
             battle: trainer.battle,
             dialogue: trainer.dialogue,
-            name: trainer.name
+            name: trainer.name,
+            alwaysMoving: trainer.alwaysMoving || false,
+            fast: trainer.fast || false,
+            frameTick: trainer.frameTick || 10
         }));
 
     })
@@ -368,7 +379,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}}) {
 }
 
 
-function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}}) {
+function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}, startingPos = null}) {
     mapLoad = true;
     currentMap = map;
     // Reset statics
@@ -383,20 +394,20 @@ function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}}) {
                 "payload": {"map": map}
             }
         }).done(function( response ) {
-            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset});
+            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
         }).fail(function() {
             alert("This map is not valid! Returning to world map...");
             window.location.href = worldMapUrl;
         });
     } else {
-        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset});
+        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
     }
 
 
 
 }
 
-mapInit({map: currentMap, preload: initialMap});
+mapInit({map: currentMap, preload: initialMap, startingPos: initialPos});
 
 const keys = {
     w: {
@@ -506,6 +517,11 @@ function animate(looped = true) {
                 surf.rows.val = 3;
                 surfer.rows.val = 2;
                 break;
+            case "out":
+                player.rows.val = 0;
+                surf.rows.val = 0;
+                surfer.rows.val = 0;
+                break;
             case "north":
                 statics.forEach(movable => {movable.position.y -= movespeed});
                 player.rows.val = 2;
@@ -604,8 +620,6 @@ function animate(looped = true) {
             // Set opacity based on distance to player
             const distance = Math.sqrt((player.position.x - maplinkTile.position.x) ** 2 + (player.position.y - maplinkTile.position.y) ** 2)
             const opacity = -3/250 * distance + 1
-            console.log(distance);
-            console.log(opacity);
             c.globalAlpha = opacity;
             maplinkTile.draw(cappedCamera, gameTick);
             c.globalAlpha = 1;
@@ -648,10 +662,10 @@ function animate(looped = true) {
             break;
         }
     }
-    /*for (let i = 0; i < ledges.length; i++) {
+    for (let i = 0; i < ledges.length; i++) {
         const ledge = ledges[i];
         ledge.draw(cappedCamera);
-    }*/
+    }
     // Draw trainers in order
     for (let i = 0; i < orderedSprites.length; i++) {
         const currentSprite = orderedSprites[i];
@@ -699,6 +713,7 @@ function animate(looped = true) {
         if (trainer.solid) {
             // Trainer battle/dialogue activation
             if (trainer.battle != null && !dialogueActive && keys.enter.pressed) {
+                updatePos();
                 // Play dialogue first
                 document.getElementById("wild").style.display = "none";
                 wildHide = null;
@@ -778,6 +793,9 @@ function animate(looped = true) {
         // Trainer collision
         for (let i = 0; i < mapTrainersSprites.length; i++) {
             const stationaryTrainer = mapTrainersSprites[i];
+            // Do not collide with non-solid trainers
+            if (!stationaryTrainer.solid)
+                continue;
             // The extra 6 is to adjust for the larger trainer spritesheet compared to player
             if (
                 rectangularCollision({
@@ -837,6 +855,9 @@ function animate(looped = true) {
         // Trainer collision
         for (let i = 0; i < mapTrainersSprites.length; i++) {
             const stationaryTrainer = mapTrainersSprites[i];
+            // Do not collide with non-solid trainers
+            if (!stationaryTrainer.solid)
+                continue;
             // The extra 6 is to adjust for the larger trainer spritesheet compared to player
             if (
                 rectangularCollision({
@@ -896,6 +917,9 @@ function animate(looped = true) {
         // Trainer collision
         for (let i = 0; i < mapTrainersSprites.length; i++) {
             const stationaryTrainer = mapTrainersSprites[i];
+            // Do not collide with non-solid trainers
+            if (!stationaryTrainer.solid)
+                continue;
             // The extra 6 is to adjust for the larger trainer spritesheet compared to player
             if (
                 rectangularCollision({
@@ -955,6 +979,9 @@ function animate(looped = true) {
         // Trainer collision
         for (let i = 0; i < mapTrainersSprites.length; i++) {
             const stationaryTrainer = mapTrainersSprites[i];
+            // Do not collide with non-solid trainers
+            if (!stationaryTrainer.solid)
+                continue;
             // The extra 6 is to adjust for the larger trainer spritesheet compared to player
             if (
                 rectangularCollision({
@@ -1003,7 +1030,6 @@ function animate(looped = true) {
                 steps = 10;
                 if (Math.random() < 0.15) {
                     wildArea = (grass) ? 'grass' : 'water';
-                    console.log('hit');
                     $.ajax(
                     {
                         type: "GET",
@@ -1041,8 +1067,10 @@ function animate(looped = true) {
                 wildHide = null;
             }
         }
+    } else {
+        player.frames.val = 0;
     }
-    // applyFilter();
+    //applyFilter();
 }
 
 function inRadius({point1, point2, radius, offset}) {
@@ -1054,8 +1082,13 @@ function trainerTick() {
     mapTrainersSprites.forEach((trainer) => {
         // If there is more than one wander point and has idled for more than 5 ticks, chance to walk
         if (gameTick == trainer.delay && trainer.currentState == 'idle') {
+            // If fast, do not idle
+            if (trainer.fast) {
+                trainer.currentState = 'walking';
+                trainer.idleTicks = 0;
+            }
             trainer.idleTicks += 1;
-            if (Math.random() < 0.5) {
+            if (Math.random() < 0.5 && trainer.rows.max > 1) {
                 // Turn chance
                 trainer.rows.val = Math.floor(Math.random() * 4);
             } else if (trainer.wanderPoints.length > 1 && trainer.idleTicks > 1) {
@@ -1067,15 +1100,20 @@ function trainerTick() {
         }
         // Near trainer case
         if (inRadius({point1: trainer.position, point2: player.position, radius: trainer.radius, offset: 6})) {
-            trainer.frames.val = 0;
-            trainer.rows.val = 0;
-            trainer.solid = true;
+            if (!trainer.alwaysMoving) {
+                trainer.frames.val = 0;
+                trainer.rows.val = 0;
+                if (trainer.wasIndependent)
+                    trainer.solid = true;
+            }
         } else {
             trainer.solid = false;
+            trainer.wasIndependent = true;
             // Idle case
             if (trainer.currentState == 'idle') {
                 trainer.moving = false;
-                trainer.frames.val = 0;
+                if (!trainer.alwaysMoving)
+                    trainer.frames.val = 0;
             }
             // Walk case
             if (trainer.currentState == 'walking') {
@@ -1177,8 +1215,9 @@ function writeDialogue(text) {
             }
             index++;
             // For spaces, skip
+            const delay = (keys.enter.pressed) ? delayPerCharacter / 2 : delayPerCharacter;
             if (dialogueActive)
-                setTimeout(addLetter, delayPerCharacter);  // Call this function again after the delay
+                setTimeout(addLetter, delay);  // Call this function again after the delay
         }
     }
 
@@ -1200,3 +1239,30 @@ function toggleDialogueWindow({open}) {
         closeBtn.style.display = 'none';
     }
 }
+
+function updatePos() {
+    // Define the URL for your Django view
+    const pos = {
+        'x': player.position.x,
+        'y': player.position.y,
+        'map': currentMap
+    }
+
+    // Send the data asynchronously using fetch
+    fetch(posUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',  // Indicate that you're sending JSON
+        },
+        body: JSON.stringify({pos})  // Convert the data to a JSON string
+    })
+    .catch(error => {
+        // Handle any errors that occur during the fetch request
+        console.error('Fetch error:', error);
+    });
+}
+
+window.addEventListener('beforeunload', function (event) {
+    // Send the position on map exit
+    updatePos();
+});

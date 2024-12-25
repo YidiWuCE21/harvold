@@ -28,8 +28,9 @@ urlpatterns = [
     path("battle", battle_views.battle, name="battle"),
     path("battle_create", battle_views.battle_create, name="battle_create"),
     #path('', include('users.urls'))
-    # AJAX requests
+    # AJAX/fetch requests
     path("map_data/", map_views.map_data, name="map_data"),
     path("wild_battle/", map_views.wild_battle, name="wild_battle"),
-    path("pokecenter_heal", pokemon_views.pokecenter_heal, name="pokecenter_heal")
+    path("pokecenter_heal", pokemon_views.pokecenter_heal, name="pokecenter_heal"),
+    path("update_pos", map_views.update_pos, name="update_pos")
 ]
