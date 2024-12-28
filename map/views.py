@@ -50,7 +50,7 @@ def map(request):
     map = request.POST.get("map", default_map)
     if map not in consts.MAPS:
         return HttpResponseNotFound("Invalid map")
-    with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))) as map_file:
+    with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map)), encoding="utf-8") as map_file:
         map_data = json.load(map_file)
     # Update current location of user
     user = request.user.profile
@@ -83,7 +83,7 @@ def map_data(request):
     map = request.GET.get("payload[map]")
     if map not in consts.MAPS:
         return JsonResponse({"status": "false", "message": "Invalid map"}, status=500)
-    with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))) as map_file:
+    with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map)), encoding="utf-8") as map_file:
         map_data = json.load(map_file)
     # Update current location of user
     user = request.user.profile

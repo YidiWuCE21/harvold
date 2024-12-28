@@ -9,6 +9,16 @@
             "weights": [10, 10]
         }
     },
+    "synecdoche_city": {
+        "grass": {
+            "pokemon": [["Rattata", 5, 10], ["Lillipup", 5, 10], ["Zigzagoon", 5, 10], ["Pidgey", 5, 10], ["Meowth", 5, 10]],
+            "weights": [10, 10, 10, 10, 10]
+        },
+        "water": {
+            "pokemon": [],
+            "weights": []
+        }
+    },
     "drilbur_cave_1f": {
         "grass1": {
             "pokemon": [["Zubat", 25, 29], ["Geodude", 25, 29], ["Sandshrew", 25, 29], ["Diglett", 25, 29], ["Phanpy", 25, 29], ["Graveler", 27, 29], ["Drilbur", 25, 29]],
@@ -63,6 +73,27 @@
         "grass1": {
             "pokemon": [["Spearow", 4, 7], ["Bidoof", 4, 7], ["Sandshrew", 4, 7], ["Mankey", 4, 7], ["Hoothoot", 4, 7]],
             "weights": [10, 10, 8, 4, 8]
+        },
+        "water": {
+            "pokemon": [],
+            "weights": []
+        }
+    },
+    "route_5": {
+        "grass1": {
+            "pokemon": [["Starly", 5, 9], ["Sentret", 5, 9], ["Poochyena", 5, 9], ["Growlithe", 6, 9], ["Oddish", 5, 9], ["Bellsprout", 5, 9]],
+            "weights": [4, 10, 10, 2, 8, 8]
+        },
+        "water": {
+            "pokemon": [],
+            "weights": []
+        }
+    },
+    "vitur_forest": {
+        "grass1": {
+            "pokemon": [["Caterpie", 9, 13], ["Metapod", 9, 13], ["Weedle", 9, 13], ["Kakuna", 9, 13], ["Wurmple", 9, 13],
+                ["Kricketot", 9, 13], ["Ledyba", 9, 13], ["Spinarak", 9, 13], ["Yanma", 9, 13], ["Heracross", 9, 13]],
+            "weights": [8, 2, 8, 2, 10, 8, 8, 8, 8, 1]
         },
         "water": {
             "pokemon": [],

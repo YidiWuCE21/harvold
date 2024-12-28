@@ -1,0 +1,154 @@
+{
+    "name": "Bug Catcher Vasily",
+    "team": [
+        {
+            "current_hp": 31,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "poisonsting",
+                    "pp": 35
+                }, {
+                    "move": "stringshot",
+                    "pp": 40
+                }, {
+                    "move": "scaryface",
+                    "pp": 10
+                }, {
+                    "move": "constrict",
+                    "pp": 35
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Swarm",
+            "dex_number": "167",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 31,
+                "atk": 21,
+                "def": 16,
+                "spa": 13,
+                "spd": 14,
+                "spe": 15
+            },
+            "id": null,
+            "name": "Spinarak"
+        }, {
+            "current_hp": 29,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "poisonsting",
+                    "pp": 35
+                }, {
+                    "move": "stringshot",
+                    "pp": 40
+                }, {
+                    "move": "scaryface",
+                    "pp": 10
+                }, {
+                    "move": "constrict",
+                    "pp": 35
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Insomnia",
+            "dex_number": "167",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 29,
+                "atk": 20,
+                "def": 15,
+                "spa": 14,
+                "spd": 15,
+                "spe": 11
+            },
+            "id": null,
+            "name": "Spinarak"
+        }, {
+            "current_hp": 32,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "spiderweb",
+                    "pp": 10
+                }, {
+                    "move": "stringshot",
+                    "pp": 40
+                }, {
+                    "move": "thunderwave",
+                    "pp": 20
+                }, {
+                    "move": "screech",
+                    "pp": 40
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Compoundeyes",
+            "dex_number": "595",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 32,
+                "atk": 16,
+                "def": 19,
+                "spa": 20,
+                "spd": 19,
+                "spe": 21
+            },
+            "id": null,
+            "name": "Joltik"
+        }, {
+            "current_hp": 31,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "poisonpowder",
+                    "pp": 35
+                }, {
+                    "move": "stunspore",
+                    "pp": 30
+                }, {
+                    "move": "leechlife",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Effect Spore",
+            "dex_number": "046",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 31,
+                "atk": 21,
+                "def": 15,
+                "spa": 14,
+                "spd": 18,
+                "spe": 12
+            },
+            "id": null,
+            "name": "Paras"
+        }
+    ],
+    "reward": {
+        "base_payout": 16
+    },
+    "map": "vitur_forest",
+    "sprite": "bug_catcher",
+    "lines": {
+        "lose": "No! My poor babies!"
+    }
+}

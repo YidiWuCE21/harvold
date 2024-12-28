@@ -40,12 +40,16 @@
                 <td><a href="{% url 'view_profile' %}?id={{ metadata.ot_id }}">{{ metadata.original_trainer }}</a></td>
             </tr>
             <tr>
-                <th>Date Caught</th>
+                <th>Caught</th>
                 <td>{{ metadata.caught_date }}</td>
             </tr>
             <tr>
                 <th>Experience</th>
-                <td>{{ info.experience }}{% if info.level < 100 %} ({{ info.to_next }} to next){% endif %}</td>
+                <td>{{ info.experience }}</td>
+            </tr>
+            <tr>
+                <th>To Next</th>
+                <td>{% if info.level < 100 %}{{ info.to_next }}{% else %}-{% endif %}</td>
             </tr>
             <tr>
                 <th>Health</th>
@@ -58,10 +62,6 @@
             <tr>
                 <th>Status</th>
                 <td>{{ info.status }}</td>
-            </tr>
-            <tr>
-                <th>Held Item</th>
-                <td>{{ info.held_item }}</td>
             </tr>
         </table>
 

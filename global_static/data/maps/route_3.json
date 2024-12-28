@@ -15,30 +15,30 @@
         },
         "2": {
             "map": "vitur_forest",
-            "direction": "south",
+            "direction": "west",
             "forcedOffset": {
-                "x": -1,
-                "y": -1
+                "x": 39,
+                "y": 17
             },
             "posOffset": {
-                "x": 12
+                "y": -8
             }
         },
         "3": {
             "map": "synecdoche_city",
             "direction": "south",
             "forcedOffset": {
-                "x": -1,
-                "y": -1
+                "x": 12,
+                "y": 0
             },
             "posOffset": {
-                "x": 12
+                "x": 0
             }
         }
     },
     "default_offset": {
         "x": 21,
-        "y": 21
+        "y": 23
     },
     "trainers": [
         {

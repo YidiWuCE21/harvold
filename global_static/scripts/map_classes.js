@@ -37,6 +37,11 @@ class Boundary {
             else this.frames.val = 0;
         }*/
     }
+
+    drawBox(cameraPosition, color) {
+        c.fillStyle = color;
+        c.fillRect(this.position.x - cameraPosition.x, this.position.y - cameraPosition.y, this.width, this.height)
+    }
 }
 
 class Sprite {
@@ -124,11 +129,13 @@ class Trainer extends Sprite {
     }
 
     exclaim(cameraPosition) {
-        c.drawImage(
-            this.exclamation,
-            this.position.x - cameraPosition.x + 6,
-            this.position.y - cameraPosition.y - 12
-        );
+        if (this.solid && (this.battle != null || this.dialogue != null)) {
+            c.drawImage(
+                this.exclamation,
+                this.position.x - cameraPosition.x + 6,
+                this.position.y - cameraPosition.y - 12
+            );
+        }
     }
 
     draw(cameraPosition) {
@@ -143,8 +150,5 @@ class Trainer extends Sprite {
             }
         }
         super.draw(cameraPosition);
-        if (this.solid && (this.battle != null || this.dialogue != null)) {
-            this.exclaim(cameraPosition);
-        }
     }
 }

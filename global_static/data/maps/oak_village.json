@@ -46,7 +46,7 @@
             "wander_points": [{"x": 28, "y": 10, "dir": "down"}, {"x": 28, "y": 12, "dir": "up"}, {"x": 28, "y": 10, "dir": "left"}, {"x": 22, "y": 10, "dir": "right"}]
         },
         {
-            "name": "Professor Oak", "dialogue": "Welcome to the world of Pokemon! My name is Oak! People call me the Pokemon Prof!", "sprite": "oak",
+            "name": "Professor Oak", "dialogue": "Welcome to the world of Pokémon! My name is Oak! People call me the Pokémon Prof!", "sprite": "oak",
             "wander_points": [{"x": 31, "y": 22, "dir": "right"}]
         },
         {

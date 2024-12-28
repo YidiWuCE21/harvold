@@ -43,7 +43,9 @@ let maplinkMap = [];
 let maplinkTiles = [];
 let battleMap = [];
 let battleTiles = [];
-
+let bridgeTiles = [];
+let bridgeMap = [];
+let bridgeBounds = [];
 // Bounding boxes
 let northBound = null;
 let southBound = null;
@@ -61,6 +63,8 @@ let mapImage = new Image();
 let mapForeground = new Image();
 let background = null;
 let foreground = null;
+let bridgeImage = new Image();
+let bridgeRender = null;
 
 let movables = [];
 let statics = [];
@@ -83,6 +87,8 @@ let ledgeActive = null;
 let ledgeFrames = defaultLedgeFrames;
 
 let dialogueActive = false;
+
+let onBridge = false;
 
 
 // Player sprite constants
@@ -156,11 +162,15 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     battleMap = [];
     battleTiles = [];
     mapTrainers = [];
+    bridgeTiles = []
+    bridgeBounds = [];
+    bridgeMap = []
 
     collisions = currentData.collisions;
     mapTrainers = currentData.trainers;
     water = currentData.water;
     battles = currentData.battles;
+    bridge = currentData.bridge || [];
     // Set to zero where water is not None
     if (battles == "all")
         battles = water.map(num => num === 0 ? 1 : 0);
@@ -252,12 +262,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
 
     collisionsMap.forEach((row, i) => {
         row.forEach((col, j) => {
-            if (col != 0) {
-                boundaries.push(new Boundary({position: {
-                    x: j * tile_width,
-                    y: i * tile_width
-                }}))
-            }
             if (col > 1 && col < 5) {
                 // 2 is down ledge, 3 is left ledge, 4 is right ledge
                 ledges.push(new Boundary({
@@ -267,6 +271,11 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
                     },
                     value: col
                 }))
+            } else if (col != 0) {
+                boundaries.push(new Boundary({position: {
+                    x: j * tile_width,
+                    y: i * tile_width
+                }}))
             }
 
         })
@@ -321,6 +330,26 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         })
     })
 
+    // Create bridge objects
+    for (let i = 0; i < bridge.length; i += mapWidth) {
+        bridgeMap.push(bridge.slice(i, i + mapWidth));
+    }
+
+    bridgeMap.forEach((row, i) => {
+        row.forEach((col, j) => {
+            if (col != 0)
+                bridgeTiles.push(new Boundary({
+                    position:{
+                        x: j * tile_width,
+                        y: i * tile_width
+                    },
+                    value: col
+                }))
+        })
+    })
+    bridgeBounds = bridgeTiles.filter(obj => obj.value === 3);
+
+
     // Create maplink objects
     for (let i = 0; i < maplink.length; i += mapWidth) {
         maplinkMap.push(maplink.slice(i, i + mapWidth));
@@ -364,6 +393,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     mapForeground = new Image();
     mapForeground.src = '/static/assets/maps/' + map + '/foreground.png';
 
+
     background = new Sprite({
         position: {x: 0, y: 0},
         image: mapImage
@@ -373,6 +403,14 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         position: {x: 0, y: 0},
         image: mapForeground
     });
+    if (currentData.bridge != null) {
+        bridgeImage = new Image();
+        bridgeImage.src = '/static/assets/maps/' + map + '/bridge.png';
+        bridgeRender = new Sprite({
+            position: {x: 0, y: 0},
+            image: bridgeImage
+        })
+    }
     // Create movables
     movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles, ...mapTrainersSprites];
     mapLoad = false;
@@ -628,50 +666,94 @@ function animate(looped = true) {
 
     // Detect if on water
     surfing = false;
-    for (let i = 0; i < waterTiles.length; i++) {
-        const waterTile = waterTiles[i];
-        if (
-            pointCollision({
-                rectangle1: player,
-                rectangle2: {...waterTile, position: {
-                    x: waterTile.position.x,
-                    y: waterTile.position.y
-                }}
-            })
-        ) {
-            surfing = true;
-            break;
+    if (!onBridge) {
+        for (let i = 0; i < waterTiles.length; i++) {
+            const waterTile = waterTiles[i];
+            if (
+                pointCollision({
+                    rectangle1: player,
+                    rectangle2: {...waterTile, position: {
+                        x: waterTile.position.x,
+                        y: waterTile.position.y
+                    }}
+                })
+            ) {
+                surfing = true;
+                break;
+            }
         }
     }
     // Detect if on battle
     currentArea = null;
     grass = false;
-    for (let i = 0; i < battleTiles.length; i++) {
-        const battleTile = battleTiles[i];
+    if (!onBridge) {
+        for (let i = 0; i < battleTiles.length; i++) {
+            const battleTile = battleTiles[i];
+            if (
+                pointCollision({
+                    rectangle1: player,
+                    rectangle2: {...battleTile, position: {
+                        x: battleTile.position.x,
+                        y: battleTile.position.y
+                    }}
+                })
+            ) {
+                grass = true;
+                currentArea = battleTile.value;
+                break;
+            }
+        }
+    }
+    // Detect if on bridge
+    const currentOnBridge = onBridge;
+    onBridge = false;
+    for (let i = 0; i < bridgeTiles.length; i++) {
+        const bridgeTile = bridgeTiles[i];
+        if (bridgeTile.value == 3)
+            continue;
         if (
             pointCollision({
                 rectangle1: player,
-                rectangle2: {...battleTile, position: {
-                    x: battleTile.position.x,
-                    y: battleTile.position.y
+                rectangle2: {...bridgeTile, position: {
+                    x: bridgeTile.position.x,
+                    y: bridgeTile.position.y
                 }}
             })
         ) {
-            grass = true;
-            currentArea = battleTile.value;
-            break;
+            if (bridgeTile.value == 2) {
+                onBridge = true;
+            } else if (bridgeTile.value == 1 && currentOnBridge) {
+                onBridge = true;
+            } else {
+                onBridge = false;
+            }
         }
     }
+    /*// Draw ledges
     for (let i = 0; i < ledges.length; i++) {
         const ledge = ledges[i];
-        ledge.draw(cappedCamera);
+        ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
     }
+    // Draw collision
+    for (let i = 0; i < boundaries.length; i++) {
+        const boundary = boundaries[i];
+        boundary.drawBox(cappedCamera, 'rgba(0, 255, 0, 0.3)');
+
+    }*/
     // Draw trainers in order
     for (let i = 0; i < orderedSprites.length; i++) {
         const currentSprite = orderedSprites[i];
         currentSprite.draw(cappedCamera);
     }
     foreground.draw(cappedCamera);
+    if (!onBridge)
+        bridgeRender.draw(cappedCamera);
+    // Draw speech bubbles after
+
+    for (let i = 0; i < mapTrainersSprites.length; i++) {
+        const currentTrainer = mapTrainersSprites[i];
+        currentTrainer.exclaim(cappedCamera);
+    }
 
     // Manage enter events
     if (keys.enter.pressed) {
@@ -767,6 +849,12 @@ function animate(looped = true) {
 
 
     // Movement logic
+    const relevantBoundaries = (onBridge) ? bridgeBounds : boundaries;
+    // Draw bounds
+    /*for (let i = 0; i < relevantBoundaries.length; i++) {
+        const ledge = relevantBoundaries[i];
+        ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
+    }*/
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
         player.moving = true;
         player.rows.val = 2;
@@ -774,8 +862,8 @@ function animate(looped = true) {
         surfer.rows.val = 2;
 
         // Collisions
-        for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
+        for (let i = 0; i < relevantBoundaries.length; i++) {
+            const boundary = relevantBoundaries[i];
             if (
                 rectangularCollision({
                     rectangle1: player,
@@ -818,26 +906,8 @@ function animate(looped = true) {
         player.rows.val = 1;
         surf.rows.val = 1;
         surfer.rows.val = 1;
-        // Check ledges first
-        for (let i = 0; i < ledges.length; i++) {
-            const ledge = ledges[i];
-            if (ledge.value == 3) {
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {...ledge, position: {
-                            x: ledge.position.x + movespeed,
-                            y: ledge.position.y
-                        }}
-                    })
-                ) {
-                    ledgeActive = 'west';
-                    break;
-                }
-            }
-        }
-        for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
+        for (let i = 0; i < relevantBoundaries.length; i++) {
+            const boundary = relevantBoundaries[i];
             if (
                 rectangularCollision({
                     rectangle1: player,
@@ -849,6 +919,26 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
+            }
+        }
+        if (moving) {
+            // Check ledges second
+            for (let i = 0; i < ledges.length; i++) {
+                const ledge = ledges[i];
+                if (ledge.value == 3) {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x + movespeed,
+                                y: ledge.position.y
+                            }}
+                        })
+                    ) {
+                        ledgeActive = 'west';
+                        break;
+                    }
+                }
             }
         }
 
@@ -880,26 +970,8 @@ function animate(looped = true) {
         player.rows.val = 0;
         surf.rows.val = 0;
         surfer.rows.val = 0;
-        // Check ledges first
-        for (let i = 0; i < ledges.length; i++) {
-            const ledge = ledges[i];
-            if (ledge.value == 2) {
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {...ledge, position: {
-                            x: ledge.position.x,
-                            y: ledge.position.y - movespeed
-                        }}
-                    })
-                ) {
-                    ledgeActive = 'south';
-                    break;
-                }
-            }
-        }
-        for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
+        for (let i = 0; i < relevantBoundaries.length; i++) {
+            const boundary = relevantBoundaries[i];
             if (
                 rectangularCollision({
                     rectangle1: player,
@@ -911,6 +983,26 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
+            }
+        }
+        if (moving) {
+            // Check ledges second
+            for (let i = 0; i < ledges.length; i++) {
+                const ledge = ledges[i];
+                if (ledge.value == 2) {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x,
+                                y: ledge.position.y - movespeed
+                            }}
+                        })
+                    ) {
+                        ledgeActive = 'south';
+                        break;
+                    }
+                }
             }
         }
 
@@ -942,26 +1034,8 @@ function animate(looped = true) {
         player.rows.val = 3;
         surf.rows.val = 2;
         surfer.rows.val = 3;
-        // Check ledges first
-        for (let i = 0; i < ledges.length; i++) {
-            const ledge = ledges[i];
-            if (ledge.value == 4) {
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {...ledge, position: {
-                            x: ledge.position.x - movespeed,
-                            y: ledge.position.y
-                        }}
-                    })
-                ) {
-                    ledgeActive = 'east';
-                    break;
-                }
-            }
-        }
-        for (let i = 0; i < boundaries.length; i++) {
-            const boundary = boundaries[i];
+        for (let i = 0; i < relevantBoundaries.length; i++) {
+            const boundary = relevantBoundaries[i];
             if (
                 rectangularCollision({
                     rectangle1: player,
@@ -973,6 +1047,26 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
+            }
+        }
+        // Check ledges second
+        if (moving) {
+            for (let i = 0; i < ledges.length; i++) {
+                const ledge = ledges[i];
+                if (ledge.value == 4) {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x - movespeed,
+                                y: ledge.position.y
+                            }}
+                        })
+                    ) {
+                        ledgeActive = 'east';
+                        break;
+                    }
+                }
             }
         }
 
