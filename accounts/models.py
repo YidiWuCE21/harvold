@@ -1,3 +1,4 @@
+from datetime import datetime, date
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
@@ -92,6 +93,10 @@ class Profile(models.Model):
     current_pos = models.JSONField(default=None, blank=True, null=True)
     current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
     wild_opponent = models.JSONField(blank=True, null=True, default=None)
+
+    # Daily tracker
+    last_update = models.DateField(blank=True, null=True, auto_now_add=True)
+    trainers_beat = models.JSONField(blank=True, null=True, default=None)
 
     @property
     def char_id(self):
@@ -356,3 +361,21 @@ class Profile(models.Model):
         if dex in self.pokedex_progress:
             self.pokedex_progress[dex] = True
             self.save()
+
+    def beat_trainer(self, trainer, skip_save=False):
+        self.last_update = date.today()
+        if self.trainers_beat is None:
+            self.trainers_beat = [trainer]
+        else:
+            self.trainers_beat.append(trainer)
+        if skip_save:
+            return
+        self.save()
+
+
+    def has_beat_trainer(self, trainer):
+        if self.trainers_beat is None:
+            return False
+        if self.last_update != date.today():
+            return False
+        return trainer in self.trainers_beat

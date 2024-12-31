@@ -535,3 +535,7 @@ input, select {
     clip-path: polygon(5% 0, 100% 0, 100% 100%, 0% 100%);
     box-shadow: -4px -4px 8px var(--border);
 }
+
+.clickable:hover {
+    cursor: pointer;
+}

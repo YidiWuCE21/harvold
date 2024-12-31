@@ -7,11 +7,11 @@ canvas.width = 576;
 canvas.height = 400;
 
 // Consts to plug in
-const movespeed = 2;
+let movespeed = 2;
 const tile_width = 16;
 const maxSteps = 500;
 const minSteps = 150;
-const defaultLedgeFrames = 16;
+const defaultLedgeFrames = 15;
 let gameTick = 0;
 const delayPerCharacter = 50;
 
@@ -71,7 +71,7 @@ let statics = [];
 let nonCameraStatics = [];
 let stopTravel = false;
 
-let mapLoad = true;
+let mapLoad = false;
 let travelDir = null;
 // move surfing out for early access
 let surfing = false;
@@ -88,6 +88,7 @@ let ledgeFrames = defaultLedgeFrames;
 
 let dialogueActive = false;
 
+let bridgeExists = false;
 let onBridge = false;
 
 
@@ -171,6 +172,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     water = currentData.water;
     battles = currentData.battles;
     bridge = currentData.bridge || [];
+    bridgeExists = bridge.length > 0;
     // Set to zero where water is not None
     if (battles == "all")
         battles = water.map(num => num === 0 ? 1 : 0);
@@ -202,6 +204,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     maplinkKey = currentData.maplinkKey;
 
     // Set the statics new positions
+    console.log("Moving positions...");
     statics = [player, surfer, surf, camera];
     nonCameraStatics = [player, surfer, surf];
     statics.forEach((static) => {
@@ -303,7 +306,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
             x: -16,
             y: -16
         },
-        height: (mapWidth + 2) * tile_width
+        height: (mapHeight + 2) * tile_width
     });
     boundaries.push(westBound);
     eastBound = new Boundary({
@@ -311,7 +314,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
             x: mapWidth * tile_width,
             y: -16
         },
-        height: (mapWidth + 2) * tile_width
+        height: (mapHeight + 2) * tile_width
     });
     boundaries.push(eastBound);
 
@@ -418,31 +421,32 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
 
 
 function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}, startingPos = null}) {
-    mapLoad = true;
-    currentMap = map;
-    // Reset statics
+    if (!mapLoad) {
+        mapLoad = true;
+        currentMap = map;
+        // Reset statics
 
-    // Retrieve relevant info from JSON
-    if (preload == null) {
-        $.ajax(
-        {
-            type: "GET",
-            url: jsonUrl,
-            data: {
-                "payload": {"map": map}
-            }
-        }).done(function( response ) {
-            mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
-        }).fail(function() {
-            alert("This map is not valid! Returning to world map...");
-            window.location.href = worldMapUrl;
-        });
+        // Retrieve relevant info from JSON
+        if (preload == null) {
+            $.ajax(
+            {
+                type: "GET",
+                url: jsonUrl,
+                data: {
+                    "payload": {"map": map}
+                }
+            }).done(function( response ) {
+                mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
+            }).fail(function() {
+                alert("This map is not valid! Returning to world map...");
+                window.location.href = worldMapUrl;
+            });
+        } else {
+            mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
+        }
     } else {
-        mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
+        console.log("Did not load map")
     }
-
-
-
 }
 
 mapInit({map: currentMap, preload: initialMap, startingPos: initialPos});
@@ -461,6 +465,9 @@ const keys = {
         pressed: false
     },
     enter: {
+        pressed: false
+    },
+    shift: {
         pressed: false
     }
 };
@@ -506,6 +513,12 @@ function animate(looped = true) {
     trainerTick();
     if (gameTick == 100) {
         gameTick = 0;
+    }
+    // Check sprint
+    if (keys.shift.pressed) {
+        movespeed = 4;
+    } else {
+        movespeed = 2;
     }
     // Get camera
     let cappedCamera = {
@@ -599,8 +612,10 @@ function animate(looped = true) {
             const currentSprite = orderedSprites[i];
             currentSprite.draw(cappedCamera);
         }
+        console.log(ledgeFrames);
+        console.log(player.position.y)
         // Jump animation
-        if (ledgeFrames > 10) {
+        if (ledgeFrames > 9) {
             nonCameraStatics.forEach(movable => {movable.position.y -= 2});
         } else if (ledgeFrames < 7) {
             nonCameraStatics.forEach(movable => {movable.position.y += 2});
@@ -618,19 +633,19 @@ function animate(looped = true) {
                 surfer.rows.val = 2;
                 break;
             case "south":
-                statics.forEach(movable => {movable.position.y += movespeed});
+                statics.forEach(movable => {movable.position.y += 2});
                 player.rows.val = 0;
                 surf.rows.val = 0;
                 surfer.rows.val = 0;
                 break;
             case "east":
-                statics.forEach(movable => {movable.position.x += movespeed});
+                statics.forEach(movable => {movable.position.x += 2});
                 player.rows.val = 3;
                 surf.rows.val = 2;
                 surfer.rows.val = 3;
                 break;
             case "west":
-                statics.forEach(movable => {movable.position.x -= movespeed});
+                statics.forEach(movable => {movable.position.x -= 2});
                 player.rows.val = 1;
                 surf.rows.val = 1;
                 surfer.rows.val = 1;
@@ -657,7 +672,7 @@ function animate(looped = true) {
         ) {
             // Set opacity based on distance to player
             const distance = Math.sqrt((player.position.x - maplinkTile.position.x) ** 2 + (player.position.y - maplinkTile.position.y) ** 2)
-            const opacity = -3/250 * distance + 1
+            const opacity = -1/50 * distance + 1
             c.globalAlpha = opacity;
             maplinkTile.draw(cappedCamera, gameTick);
             c.globalAlpha = 1;
@@ -746,7 +761,7 @@ function animate(looped = true) {
         currentSprite.draw(cappedCamera);
     }
     foreground.draw(cappedCamera);
-    if (!onBridge)
+    if (!onBridge && bridgeExists)
         bridgeRender.draw(cappedCamera);
     // Draw speech bubbles after
 
@@ -851,10 +866,10 @@ function animate(looped = true) {
     // Movement logic
     const relevantBoundaries = (onBridge) ? bridgeBounds : boundaries;
     // Draw bounds
-    /*for (let i = 0; i < relevantBoundaries.length; i++) {
+    for (let i = 0; i < relevantBoundaries.length; i++) {
         const ledge = relevantBoundaries[i];
         ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
-    }*/
+    }
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
         player.moving = true;
         player.rows.val = 2;
@@ -875,6 +890,25 @@ function animate(looped = true) {
             ) {
                 moving = false;
                 break;
+            }
+        }
+        if (moving) {
+            // Check ledges second
+            for (let i = 0; i < ledges.length; i++) {
+                const ledge = ledges[i];
+                if (
+                    rectangularCollision({
+                        rectangle1: player,
+                        rectangle2: {...ledge, position: {
+                            x: ledge.position.x,
+                            y: ledge.position.y + movespeed
+                        }}
+                    })
+                ) {
+                    moving = false;
+                    break;
+                }
+
             }
         }
 
@@ -936,6 +970,19 @@ function animate(looped = true) {
                         })
                     ) {
                         ledgeActive = 'west';
+                        break;
+                    }
+                } else {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x + movespeed,
+                                y: ledge.position.y
+                            }}
+                        })
+                    ) {
+                        moving = false;
                         break;
                     }
                 }
@@ -1002,6 +1049,19 @@ function animate(looped = true) {
                         ledgeActive = 'south';
                         break;
                     }
+                } else {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x,
+                                y: ledge.position.y - movespeed
+                            }}
+                        })
+                    ) {
+                        moving = false;
+                        break;
+                    }
                 }
             }
         }
@@ -1064,6 +1124,19 @@ function animate(looped = true) {
                         })
                     ) {
                         ledgeActive = 'east';
+                        break;
+                    }
+                } else {
+                    if (
+                        rectangularCollision({
+                            rectangle1: player,
+                            rectangle2: {...ledge, position: {
+                                x: ledge.position.x - movespeed,
+                                y: ledge.position.y
+                            }}
+                        })
+                    ) {
+                        moving = false;
                         break;
                     }
                 }
@@ -1268,6 +1341,9 @@ window.addEventListener('keydown', (e) => {
         case 'Enter':
             keys.enter.pressed = true;
             break
+        case 'b':
+            keys.shift.pressed = true;
+            break
     }
 })
 
@@ -1288,6 +1364,9 @@ window.addEventListener('keyup', (e) => {
         case 'Enter':
             keys.enter.pressed = false;
             stopTravel = false;
+            break
+        case 'b':
+            keys.shift.pressed = false;
             break
     }
 })

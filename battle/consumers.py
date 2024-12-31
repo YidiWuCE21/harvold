@@ -228,7 +228,7 @@ def battle_processor(text_data, sender):
                         trainer_data = "{}.json".format(battle.npc_opponent)
                         trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
                         try:
-                            with open(trainer_path) as trainer_file:
+                            with open(trainer_path, encoding="utf-8") as trainer_file:
                                 trainer_json = json.load(trainer_file)
                                 output_log.append({"text": "{}: {}".format(trainer_json["name"], trainer_json["lines"]["lose"])})
                         except:
@@ -237,6 +237,9 @@ def battle_processor(text_data, sender):
                     if "base_payout" in battle.battle_prize:
                         max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
                         cash_payout = max_level * battle.battle_prize["base_payout"]
+                        # If it's not the first victory of the day, divide by 10
+                        if player_1.has_beat_trainer(battle.npc_opponent):
+                            cash_payout = int(cash_payout / 10)
                         output_log.append({"text": "You received ${} for winning!".format(cash_payout)})
                         player_1.money += cash_payout
                     # Gym badge
@@ -250,6 +253,7 @@ def battle_processor(text_data, sender):
                             elif player_1.badges[badge] == "silver" and rank == "gold":
                                 player_1.badges[badge] = "gold"
                                 output_log.append({"text": "You earned the Elite {} Badge!".format(badge.capitalize)})
+                player_1.beat_trainer(battle.npc_opponent, skip_save=True)
                 player_1.save()
 
         # Send battle state update and output log to room group

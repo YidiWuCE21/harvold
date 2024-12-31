@@ -25,14 +25,14 @@
             }
         },
         "3": {
-            "map": "kaguya_town",
-            "direction": "east",
+            "map": "mountain_grove",
+            "direction": "north",
             "forcedOffset": {
-                "x": 0,
-                "y": 25
+                "x": 17,
+                "y": 62
             },
             "posOffset": {
-                "y": 8
+                "x": -48
             }
         },
         "4": {

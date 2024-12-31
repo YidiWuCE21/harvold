@@ -1,5 +1,6 @@
 import json
 import datetime
+import pandas as pd
 
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -125,3 +126,39 @@ def pokecenter_heal(request):
         return JsonResponse({"msg": "Your party has been healed!"})
     else:
         return JsonResponse({"msg": "You cannot heal in a battle!"})
+
+@login_required
+def pokedex(request):
+    pokedex_dict = {
+        "<p>{dex}</p><img src='/static/{path}/{dex}.gif'>".format(path=consts.ASSET_PATHS["icon"], dex=dex): {
+            "Name": "<a onclick=\"getDex({{dex: '{dex}'}})\">{name}</a>".format(name=data["name"], dex=dex),
+            "Type": "".join(["<p><img src='/static/{path}/{type}.png'></p>".format(path=consts.ASSET_PATHS["typing"], type=type) for type in data["typing"]]),
+            "HP": data["hp"],
+            "Atk": data["attack"],
+            "Def": data["defense"],
+            "SpA": data["sp_attack"],
+            "SpD": data["sp_defense"],
+            "Spe": data["speed"],
+            "BST": data["base_total"]
+        } for dex, data in consts.POKEMON.items()
+    }
+    html_render_variables = {
+        "pokedex_table": pd.DataFrame(pokedex_dict.values(), index=pokedex_dict.keys()).to_html(escape=False, table_id="pokedex", classes=["display", "compact"])
+    }
+    return render(request, "pokemon/pokedex.html", html_render_variables)
+
+@login_required
+def pokedex_detailed(request):
+    dex = request.GET.get("payload[dex]")
+    if dex not in consts.POKEMON:
+        return HttpResponseNotFound("Not a valid number!")
+    dex_data = consts.POKEMON[dex]
+    maps = [route for route, spawns in consts.WILD.items() if any([dex_data["name"] in [wildspawn[0] for wildspawn in spawn_list["pokemon"]] for spawn_area, spawn_list in spawns.items()])]
+    html_render_variables = {
+        "dex_data": dex_data,
+        "maps": maps,
+        "dex": dex,
+        "moves": {level: consts.MOVES[move] for level, move in consts.LEARNSETS[dex]["level"]},
+        "description": consts.DESCRIPTIONS[dex],
+    }
+    return render(request, "pokemon/pokedex_detailed.html", html_render_variables)

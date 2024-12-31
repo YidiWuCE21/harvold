@@ -90,7 +90,7 @@ def battle(request):
         trainer_data = "{}.json".format(battle.npc_opponent)
         try:
             trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
-            with open(trainer_path) as trainer_file:
+            with open(trainer_path, encoding="utf-8") as trainer_file:
                 trainer_json = json.load(trainer_file)
                 opp_sprite = trainer_json["sprite"]
                 if "music" in trainer_json:

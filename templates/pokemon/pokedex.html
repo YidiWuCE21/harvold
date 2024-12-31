@@ -1,0 +1,46 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block scripts %}
+<script>
+new DataTable('#pokedex', {
+    columnDefs: [{ width: 40, targets: 0 }],
+    fixedColumns: true,
+    paging: false,
+    scrollCollapse: true,
+    scrollX: true
+});
+
+function getDex({dex}) {
+    $.ajax({
+        url: "{% url 'pokedex_detailed' %}",
+        type: "GET",
+        data: {
+            "payload": {"dex": dex}
+        },
+        success: function(data) {
+            $("#detailed").html(data);
+            openTab('dexGroup', 'detailTab');
+        }
+    });
+};
+</script>
+{% endblock %}
+
+{% block title %}Pokédex{% endblock %}
+
+{% block content %}
+<div>
+    <div class="dexGroup content-box" id="dexTab" style="max-width:660px;">
+    {{ pokedex_table|safe }}
+    </div>
+    <div style="display:none" class="dexGroup" id="detailTab">
+        <button class="button-2" onclick="openTab('dexGroup', 'dexTab')">Back to Dex</button>
+        <div id="detailed"></div>
+    </div>
+</div>
+{% endblock %}

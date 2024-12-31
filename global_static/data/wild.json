@@ -1,6 +1,6 @@
 {
     "kaguya_town": {
-        "grass": {
+        "grass1": {
             "pokemon": [["Bellsprout", 3, 6], ["Oddish", 3, 6], ["Bidoof", 3, 6], ["Sunkern", 3, 6], ["Budew", 2, 5]],
             "weights": [10, 10, 10, 8, 1]
         },
@@ -10,7 +10,7 @@
         }
     },
     "synecdoche_city": {
-        "grass": {
+        "grass1": {
             "pokemon": [["Rattata", 5, 10], ["Lillipup", 5, 10], ["Zigzagoon", 5, 10], ["Pidgey", 5, 10], ["Meowth", 5, 10]],
             "weights": [10, 10, 10, 10, 10]
         },

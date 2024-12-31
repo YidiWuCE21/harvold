@@ -21,6 +21,7 @@ urlpatterns = [
     # Trainer related views
     path("box", pokemon_views.box, name="box"),
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
+    path("pokedex", pokemon_views.pokedex, name="pokedex"),
     path("make", pokemon_views.make, name="make"),
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
     # Battle related views
@@ -30,6 +31,7 @@ urlpatterns = [
     #path('', include('users.urls'))
     # AJAX/fetch requests
     path("map_data/", map_views.map_data, name="map_data"),
+    path("pokedex_detailed", pokemon_views.pokedex_detailed, name="pokedex_detailed"),
     path("wild_battle/", map_views.wild_battle, name="wild_battle"),
     path("pokecenter_heal", pokemon_views.pokecenter_heal, name="pokecenter_heal"),
     path("update_pos", map_views.update_pos, name="update_pos")

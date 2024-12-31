@@ -29,6 +29,8 @@ with open(os.path.join(STATIC_PATH, "data", "items.json"), encoding="utf-8") as 
     ITEMS = json.load(items)
 with open(os.path.join(STATIC_PATH, "data", "item_usage.json"), encoding="utf-8") as item_usage:
     ITEM_USAGE = json.load(item_usage)
+with open(os.path.join(STATIC_PATH, "data", "pokemon_descriptions.json"), encoding="utf-8") as desc:
+    DESCRIPTIONS = json.load(desc)
 
 # Asset paths
 ASSET_PATHS = {

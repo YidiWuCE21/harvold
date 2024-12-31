@@ -31,3 +31,12 @@ def replace(value, arg):
 
     what, to = arg.split('|')
     return value.replace(what, to)
+
+@register.filter(name="field_name_to_label")
+def field_name_to_label(value):
+    """
+    Replacing filter
+    Use `{{ "aaa"|replace:"a|b" }}`
+    """
+    value = value.replace('_', ' ')
+    return value.title()

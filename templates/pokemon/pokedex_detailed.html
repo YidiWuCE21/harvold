@@ -1,0 +1,92 @@
+{% load static %}
+{% load stat_tags %}
+<div style="display: grid;grid-template-columns: 250px 360px;grid-template-rows: 330px 180px 240px; gap:5px">
+    <div style="grid-column:1;grid-row:1;" class="content-box">
+        <h4>{{ dex_data.name }}</h4>
+        {% for type in dex_data.typing %}
+        <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png">
+        {% endfor %}
+        <br>
+        <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ dex }}.png">
+        <table class="center text">
+            <tr>
+                <th>Dex Number</th>
+                <td>{{ dex }}</td>
+            </tr>
+            <tr>
+                <th>Height</th>
+                <td>{{ dex_data.height_m }} m</td>
+            </tr>
+            <tr>
+                <th>Weight</th>
+                <td>{{ dex_data.weight_kg }} kg</td>
+            </tr>
+            <tr>
+                <th>Abilities</th>
+                <td>{% for ability in dex_data.abilities %}<p>{{ ability }}</p>{% endfor %}</td>
+            </tr>
+            <tr>
+                <th>Catch Rate</th>
+                <td>{{ dex_data.capture_rate }}</td>
+            </tr>
+            <tr>
+                <th>Growth Rate</th>
+                <td>{{ dex_data.experience_growth|field_name_to_label }}</td>
+            </tr>
+        </table>
+
+    </div>
+    <div style="grid-column:2;grid-row:1;" class="content-box">
+        <h4>General Info</h4>
+        <div class="invisi-scroll" style="overflow-x:auto;height:200px;margin:15px;">
+            {% for paragraph in description %}
+            <p>{{ paragraph }}</p><br>
+            {% endfor %}
+        </div>
+        {% if dex_data.family %}
+        <p>Family:</p>
+        {% for evo in dex_data.family %}
+        {% if forloop.counter != 1 %}  {% endif %}<img style="margin-top:-5px;" class="clickable" onclick="getDex({dex: '{{ evo }}'})" src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ evo }}.gif">
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div style="grid-column:1;grid-row:2;" class="content-box">
+        <h4>Locations</h4>
+        {% if maps %}
+        {% for map in maps %}
+        <p>{{ map|field_name_to_label }}</p>
+        {% endfor %}
+        {% else %}
+        Not obtainable on maps
+        {% endif %}
+    </div>
+    <div style="grid-column:2;grid-row:2;" class="content-box">
+        <h4>Stats</h4>
+        {% include 'common/stats.html' with max_stat=1.8 width=220 hp=dex_data.hp atk=dex_data.attack def=dex_data.defense spa=dex_data.sp_attack spd=dex_data.sp_defense spe=dex_data.speed %}
+    </div>
+    <div style="grid-column:1 / span 2;grid-row:3" class="content-box">
+        <h4>Moves</h4>
+        <div class="invisi-scroll" style="height: 180px;overflow-y:auto;">
+            <table>
+                <tr style="position: sticky; top: 0; z-index: 1; background-color: rgb(247, 252, 255)">
+                    <th>Level</th>
+                    <th>Move</th>
+                    <th>Type</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                </tr>
+                {% for level, move_data in moves.items %}
+                <tr data-toggle="tooltip"
+                    title="Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
+                    <td>{{ level }}<br></td>
+                    <td>{{ move_data.name }}</td>
+                    <td><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move_data.type }}.png"></td>
+                    <td><img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move_data.damage_class }}.png"></td>
+                    <td>{{ move_data.effects }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div>
+</div>
