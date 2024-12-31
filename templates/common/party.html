@@ -6,7 +6,7 @@
     <p style="color:red;">{{ msg }}</p>
     {% endif %}
     {% for pokemon in party %}
-    <div class="col-4 col-lg-12">
+    <div class="col-12">
         {% if pokemon is not None %}
         <div class="party-box" style="width:200px;height:60px;display:flex;position:relative;">
             {% if forloop.counter0 > 0 and pokemon is not None %}

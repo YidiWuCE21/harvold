@@ -272,7 +272,7 @@ a.disabled {
     margin-left: auto;
     margin-right: 0px;
 }
-@media (max-width: 991px) {
+/*@media (max-width: 991px) {
     .party {
         margin-left: 0px;
         margin-right: auto;
@@ -280,7 +280,7 @@ a.disabled {
         height: 180px;
         margin-bottom: 10px;
     }
-}
+}*/
 
 .image-container {
     position: relative;
