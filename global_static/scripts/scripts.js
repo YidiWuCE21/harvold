@@ -24,5 +24,40 @@ function ajaxToHtml(url, sources, target) {
             $("#" + target).html(response);
         }
     });
+}
 
+function removeParty(slot, url) {
+    // Get the proper slot
+    slot = "slot_" + slot;
+    $.ajax(
+    {
+        type:"GET",
+        url: url,
+        data: {
+            "payload": slot
+        },
+        success: function(response)
+        {
+            $("#party-container").html(response);
+        }
+    });
+}
+
+function moveUp(slot, url) {
+    // Get the proper slot
+    slot_1 = "slot_" + slot;
+    slot_2 = "slot_" + (slot - 1);
+    $.ajax(
+    {
+        type:"GET",
+        url: url,
+        data: {
+            "slot_1": slot_1,
+            "slot_2": slot_2
+        },
+        success: function(response)
+        {
+            $("#party-container").html(response);
+        }
+    });
 }

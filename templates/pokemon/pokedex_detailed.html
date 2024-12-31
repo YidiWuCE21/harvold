@@ -64,25 +64,24 @@
         <h4>Stats</h4>
         {% include 'common/stats.html' with max_stat=1.8 width=220 hp=dex_data.hp atk=dex_data.attack def=dex_data.defense spa=dex_data.sp_attack spd=dex_data.sp_defense spe=dex_data.speed %}
     </div>
-    <div style="grid-column:1 / span 2;grid-row:3" class="content-box">
+    <div style="grid-column:1;grid-row:3;" class="content-box"></div>
+    <div style="grid-column:2;grid-row:3;" class="content-box">
         <h4>Moves</h4>
         <div class="invisi-scroll" style="height: 180px;overflow-y:auto;">
-            <table>
+            <table class="center text">
                 <tr style="position: sticky; top: 0; z-index: 1; background-color: rgb(247, 252, 255)">
                     <th>Level</th>
                     <th>Move</th>
                     <th>Type</th>
-                    <th>Category</th>
-                    <th>Description</th>
+                    <th>Class</th>
                 </tr>
                 {% for level, move_data in moves.items %}
                 <tr data-toggle="tooltip"
-                    title="Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
+                    title="{{ move_data.effects }}&#10;Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
                     <td>{{ level }}<br></td>
                     <td>{{ move_data.name }}</td>
                     <td><img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ move_data.type }}.png"></td>
                     <td><img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ move_data.damage_class }}.png"></td>
-                    <td>{{ move_data.effects }}</td>
                 </tr>
                 {% endfor %}
 

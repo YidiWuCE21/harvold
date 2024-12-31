@@ -2,7 +2,8 @@ import random
 
 from django.shortcuts import render, redirect
 from django.db import IntegrityError, transaction
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import JsonResponse
 
 from .forms import UserCreateForm, StarterChoiceForm, TrainerSelectForm
 from .models import Profile
@@ -150,3 +151,36 @@ def pokemart(request):
         "message": message
     }
     return render(request, "pokemon/pokemart.html", html_render_variables)
+
+
+@login_required
+def remove_party_ajax(request):
+    profile = request.user.profile
+    msg = ""
+    if profile.current_battle is not None:
+        msg = "Cannot swap party in battle!"
+    else:
+        try:
+            slot = request.GET.get("payload")
+            profile.remove_from_party(getattr(profile, slot))
+        except:
+            msg = "Failed to remove from party!"
+    party = profile.get_party(return_none=True)
+    return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})
+
+
+@login_required
+def reorder_party_ajax(request):
+    profile = request.user.profile
+    msg = ""
+    if profile.current_battle is not None:
+        msg = "Cannot swap party in battle!"
+    else:
+        try:
+            slot_1 = request.GET.get("slot_1")
+            slot_2 = request.GET.get("slot_2")
+            profile.swap_pokemon(slot_1, slot_2)
+        except:
+            msg = "Failed to reorder party!"
+    party = profile.get_party(return_none=True)
+    return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})

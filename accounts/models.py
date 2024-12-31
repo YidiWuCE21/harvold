@@ -149,6 +149,8 @@ class Profile(models.Model):
         """
         Remove a Pokemon from any slot in the party and bubble upwards.
         """
+        if pokemon is None:
+            return
         # Check if player in battle
         if self.state == "battle":
             return "Party cannot be modified in battle."
@@ -194,6 +196,20 @@ class Profile(models.Model):
             return "Failed to remove Pokemon from party, please try again in a few moments."
 
 
+    def swap_pokemon(self, slot_1, slot_2, skip_save=False):
+        if slot_1 == slot_2:
+            return
+        slot_1_pkmn = getattr(self, slot_1)
+        slot_2_pkmn = getattr(self, slot_2)
+        if slot_1_pkmn is None or slot_2_pkmn is None:
+            return
+        setattr(self, slot_1, slot_2_pkmn)
+        setattr(self, slot_2, slot_1_pkmn)
+        if skip_save:
+            return
+        self.save()
+
+
     def get_pokemon(self, order_by="caught_date", descending=False, filter_by=None):
         """
         Function to get a user's box, splitting Pokemon into pages.
@@ -233,7 +249,8 @@ class Profile(models.Model):
         party = [self.slot_1, self.slot_2, self.slot_3, self.slot_4, self.slot_5, self.slot_6]
         if return_none:
             return party
-        return [pkmn for pkmn in party if pkmn is not None]
+        party = [pkmn for pkmn in party if pkmn is not None]
+        return party
 
     def _sort_party(self):
         """

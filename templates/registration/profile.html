@@ -67,7 +67,7 @@
             <tr>
                 {% for pokemon in profile_party %}
                 <td><a href="{% url 'pokemon' %}?id={{ pokemon.id }}">
-                    <div class="party-box" style="padding:0px;">
+                    <div class="party-box" style="padding:0px;margin-left:2px;">
                         <p style="margin-bottom:0px">{{ pokemon.name }}</p>
                         <p style="margin-bottom:0px;font-size:10px;">Level {{ pokemon.level }}</p>
                         <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ pokemon.dex }}{% if pokemon.shiny %}-s{% endif %}.png" style="margin-top:-10px;">

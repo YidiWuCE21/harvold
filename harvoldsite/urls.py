@@ -34,5 +34,7 @@ urlpatterns = [
     path("pokedex_detailed", pokemon_views.pokedex_detailed, name="pokedex_detailed"),
     path("wild_battle/", map_views.wild_battle, name="wild_battle"),
     path("pokecenter_heal", pokemon_views.pokecenter_heal, name="pokecenter_heal"),
-    path("update_pos", map_views.update_pos, name="update_pos")
+    path("update_pos", map_views.update_pos, name="update_pos"),
+    path("remove_party_ajax", account_views.remove_party_ajax, name="remove_party_ajax"),
+    path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax")
 ]

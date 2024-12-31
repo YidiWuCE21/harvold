@@ -19,7 +19,7 @@
                     <form method="POST" action="{% url 'battle_create' %}" {% if not reg_access %}class="grayscale"{% endif %}>
                         {% csrf_token %}
                         <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym">
-                        <button class="party-box" style="width:240px;height:100px;" {% if not reg_access %}disabled{% endif %}>
+                        <button class="party-box{% if reg_access %} hoverable{% endif %}" style="width:240px;height:100px;margin-left:2px;" {% if not reg_access %}disabled{% endif %}>
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.reg }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">
@@ -51,7 +51,7 @@
                     <form method="POST" action="{% url 'battle_create' %}" {% if not elite_access %}class="grayscale"{% endif %}>
                         {% csrf_token %}
                         <input type="hidden" name="trainer" value="{{ gym_info.npc }}_gym_elite">
-                        <button class="party-box" style="width:240px;height:100px;" {% if not elite_access %}disabled{% endif %}>
+                        <button class="party-box{% if elite_access %} hoverable{% endif %}" style="width:240px;height:100px;margin-left:2px;" {% if not elite_access %}disabled{% endif %}>
                             <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
                                 <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ gym_info.elite }}.png" style="position:absolute;top:-5px;left:-25px">
                                 <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ gym_info.npc }}.png" style="position:absolute;top:5px;left:25px">

@@ -1,8 +1,8 @@
 /* Colour palette */
 :root {
-    --bg: rgb(175,230,196);
+    --bg: rgb(213,236,243);
     --main: rgb(247, 242, 232);
-    --content: rgb(247, 252, 255);
+    --content: rgb(254, 254, 255);
     --card: rgb(225, 236, 239);
     --border: rgb(60, 60, 60);
     --shading: rgb(160, 160, 160);
@@ -191,22 +191,22 @@ a.disabled {
 }
 
 .party-box {
+
     padding: 2px 4px;
     margin-bottom:8px;
+    margin-left: -10px;
     display:inline-block;
     border-radius:5px;
     border: 2px solid var(--content);
     background-color: var(--card);
     box-shadow: 0px 2px 4px var(--shadow);
-    cursor: pointer;
     -webkit-user-select: none; /* Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
 }
-.party-box:hover {
-    background-color: var(--hover);
-}
+
+
 
 .party-box p {
     margin-bottom: 0px;
@@ -222,6 +222,10 @@ a.disabled {
 }
 
 .page-select:hover {
+    background-color: var(--hover);
+}
+
+.hoverable:hover {
     background-color: var(--hover);
 }
 
@@ -334,6 +338,26 @@ a.disabled {
 
 .button-2:hover {
     background-color: var(--hover);
+}
+
+
+
+.small-button {
+    background-color: var(--content);
+    border-radius: 2px;
+    height:14px;
+    width: 14px;
+    box-shadow: 0px 0px 3px var(--shadow);
+    /*border: 2px solid var(--content);*/
+    background-color: var(--card);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 14px;
+    cursor:pointer;
+    font-size:8px;
+}
+.small-button:hover {
+    background-color: var(--hover)
 }
 
 .button-back {
@@ -538,4 +562,5 @@ input, select {
 
 .clickable:hover {
     cursor: pointer;
+    text-decoration: underline;
 }

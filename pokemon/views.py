@@ -10,6 +10,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 
 from harvoldsite import consts
 from .models import Pokemon, populate_moveset, get_progress_to_next_level, create_pokemon
+from battle import battle_manager
 
 
 # Additional models required for signup
@@ -159,6 +160,6 @@ def pokedex_detailed(request):
         "maps": maps,
         "dex": dex,
         "moves": {level: consts.MOVES[move] for level, move in consts.LEARNSETS[dex]["level"]},
-        "description": consts.DESCRIPTIONS[dex],
+        "description": consts.DESCRIPTIONS[dex]
     }
     return render(request, "pokemon/pokedex_detailed.html", html_render_variables)
