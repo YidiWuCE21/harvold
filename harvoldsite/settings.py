@@ -204,7 +204,7 @@ else:
                         'host': url.hostname,
                         'port': url.port,
                         'username': url.username,
-                        'passowrd': url.password,
+                        'password': url.password,
                         'connection_class': CustomSSLConnection,
                         'ssl_context': ssl_context
                     }
