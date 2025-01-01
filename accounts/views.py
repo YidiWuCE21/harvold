@@ -74,7 +74,7 @@ def view_profile(request):
         "character": profile.char_id,
         "trainer_points": profile.trainer_points,
         "description": profile.description,
-        "title": os.environ.get('REDIS_URL'),
+        "title": profile.title,
         "money": profile.money,
         "wins": profile.wins,
         "losses": profile.losses,
