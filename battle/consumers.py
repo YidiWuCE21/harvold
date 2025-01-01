@@ -179,12 +179,15 @@ def battle_processor(text_data, sender):
             if battle_state.experience_gain != 0 and battle_state.type != "live":
                 for i, pkmn in enumerate(battle.player_1.get_party()):
                     if i in battle_state.player_1.participants:
+                        true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants))
                         if not battle_state.player_1.party[i].is_alive():
                             break
-                        output_log.append({"text": "{} gained {} experience!".format(pkmn.name, int(battle_state.experience_gain))})
+                        output_log.append({"text": "{} gained {} experience!".format(pkmn.name, true_exp)})
+                        pkmn.happiness += 1
                         # Levelup case
-                        if pkmn.add_xp(battle_state.experience_gain, recalculate=True):
-                            output_log.append({"text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)]})
+                        if pkmn.add_xp(true_exp, recalculate=True):
+                            anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle.player_1.get_current_pokemon() else []
+                            output_log.append({"text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
                             # Get the new stats
                             new_stats = pkmn.get_battle_info()["stats"]
                             battle_state.player_1.party[i].update_stats(new_stats)
@@ -217,6 +220,8 @@ def battle_processor(text_data, sender):
                 # Caught a wild Pokemon
                 if battle_state.outcome == "caught" and battle.type == "wild":
                     prompt["View Caught Pokemon"] = "{}?id={}".format(reverse("pokemon"), battle.wild_opponent.pk)
+                    battle.wild_opponent.status = battle_state.player_2.get_current_pokemon().status
+                    battle.wild_opponent.current_hp = battle_state.player_2.get_current_pokemon().current_hp
                     battle.wild_opponent.assign_trainer(battle.player_1)
                     battle.wild_opponent.save()
                     player_1.add_to_party(battle.wild_opponent)

@@ -318,9 +318,9 @@ function updateMoves() {
             // No move case
             moves[i] = null;
             moveButton.disabled = true;
-            moveButton.childNodes[0] = "No move learned";
-            moveButton.children[1].src = "";
+            moveButton.children[0].innerHTML = "No move learned";
             moveButton.children[2].src = "";
+            moveButton.children[3].src = "";
         } else {
             // Standard case
             moves[i] = {"action": "attack", "move": move["move"]};

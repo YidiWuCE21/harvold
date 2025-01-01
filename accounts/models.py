@@ -384,7 +384,8 @@ class Profile(models.Model):
         if self.trainers_beat is None:
             self.trainers_beat = [trainer]
         else:
-            self.trainers_beat.append(trainer)
+            if trainer not in self.trainers_beat:
+                self.trainers_beat.append(trainer)
         if skip_save:
             return
         self.save()
