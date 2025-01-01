@@ -153,7 +153,7 @@ LOGOUT_REDIRECT_URL = "home"
 
 ASGI_APPLICATION = "harvoldsite.asgi.application"
 
-if DEBUG:
+if False:
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
