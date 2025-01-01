@@ -1,5 +1,5 @@
 import random
-
+import os
 from django.shortcuts import render, redirect
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -74,7 +74,7 @@ def view_profile(request):
         "character": profile.char_id,
         "trainer_points": profile.trainer_points,
         "description": profile.description,
-        "title": profile.title,
+        "title": os.environ.get('REDIS_URL'),
         "money": profile.money,
         "wins": profile.wins,
         "losses": profile.losses,
