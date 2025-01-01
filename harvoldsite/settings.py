@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import ssl
+from redis.asyncio.connection import Connection, RedisSSLContext
+from typing import Optional
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,7 +158,28 @@ LOGOUT_REDIRECT_URL = "home"
 
 ASGI_APPLICATION = "harvoldsite.asgi.application"
 
+class CustomSSLConnection(Connection):
+    def __init__(
+        self,
+        ssl_context: Optional[str] = None,
+        **kwargs,
+    ):
+        super().__init__(**kwargs)
+        self.ssl_context = RedisSSLContext(ssl_context)
 
+class RedisSSLContext:
+    __slots__ = (
+        "context",
+    )
+
+    def __init__(
+        self,
+        ssl_context,
+    ):
+        self.context = ssl_context
+
+    def get(self):
+        return self.context
 
 if False:
     CHANNEL_LAYERS = {
@@ -166,11 +191,24 @@ if False:
         }
     }
 else:
+    url = urlparse(os.environ.get('REDIS_URL'))
+    ssl_context = ssl.SSLContext()
+    ssl_context.check_hostname = False
+
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": [os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')],
+                "hosts": [
+                    {
+                        'host': url.hostname,
+                        'port': url.port,
+                        'username': url.username,
+                        'passowrd': url.password,
+                        'connection_class': CustomSSLConnection,
+                        'ssl_context': ssl_context
+                    }
+                ],
             },
         }
     }
