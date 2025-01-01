@@ -5,6 +5,7 @@ import datetime
 from . import models
 from .battle_manager import BattleState
 from harvoldsite import consts
+from . import battle_ai
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -150,7 +151,8 @@ def battle_processor(text_data, sender):
             battle.player_2_choice = action
         # If non-PVP battle, submit other move as well
         if battle.type != "live" and not battle_state.requires_switch():
-            battle.player_2_choice = {"action": "attack", "move": battle_state.player_2.get_current_pokemon().moves[0]["move"]}
+            battle.player_2_choice = battle_ai.get_move(battle_state, ai="random_move")
+            #battle.player_2_choice = {"action": "attack", "move": battle_state.player_2.get_current_pokemon().moves[0]["move"]}
 
         # Check that moves are complete; if so, start battle processing
         if battle.player_1_choice is not None and battle.player_2_choice is not None:

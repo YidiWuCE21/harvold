@@ -17,6 +17,7 @@ def get_valid_choices(battle_state):
         if move["pp"] != None:
             if move["pp"] > 0:
                 valid_choices.append(move["move"])
+    return valid_choices
 
 def first_move(battle_state):
     return {"action": "attack", "move": battle_state.player_2.get_current_pokemon().moves[0]["move"]}
