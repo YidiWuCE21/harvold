@@ -4,7 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="content-box">
+<div class="content-box" style="text-align:left;">
     {% if user.is_authenticated %}
     <p><a href="{% url 'password_change' %}">Password Change</a></p>
     <form action="{% url 'logout' %}" method="post">
