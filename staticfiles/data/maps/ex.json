@@ -1,0 +1,27 @@
+{
+    "mapWidth": 40,
+    "mapHeight": 36,
+    "maplinkKey": {
+        "1": {
+            "map": "route_3",
+            "direction": "east",
+            "forcedOffset": {
+                "x": 0,
+                "y": 25
+            },
+            "posOffset": {
+                "y": 8
+            }
+        }
+    },
+    "default_offset": {
+        "x": 20,
+        "y": 13
+    },
+    "trainers": [
+    ],
+    "collisions": [],
+    "battles": "all",
+    "maplink": [],
+    "water": []
+}

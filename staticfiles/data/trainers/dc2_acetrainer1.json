@@ -1,0 +1,154 @@
+{
+    "name": "Ace Trainer Michael",
+    "team": [
+        {
+            "current_hp": 114,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dig",
+                    "pp": 10
+                }, {
+                    "move": "takedown",
+                    "pp": 20
+                }, {
+                    "move": "sandtomb",
+                    "pp": 15
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Stream",
+            "dex_number": "450",
+            "level": 33,
+            "shiny": false,
+            "stats": {
+                "hp": 114,
+                "atk": 72,
+                "def": 89,
+                "spa": 55,
+                "spd": 62,
+                "spe": 44
+            },
+            "id": null,
+            "name": "Hippowdon"
+        }, {
+            "current_hp": 104,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "metalclaw",
+                    "pp": 35
+                }, {
+                    "move": "furycutter",
+                    "pp": 20
+                }, {
+                    "move": "slash",
+                    "pp": 20
+                }, {
+                    "move": "razorwind",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Swarm",
+            "dex_number": "212",
+            "level": 36,
+            "shiny": false,
+            "stats": {
+                "hp": 104,
+                "atk": 103,
+                "def": 79,
+                "spa": 50,
+                "spd": 64,
+                "spe": 52
+            },
+            "id": null,
+            "name": "Scizor"
+        }, {
+            "current_hp": 119,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "leer",
+                    "pp": 30
+                }, {
+                    "move": "twister",
+                    "pp": 20
+                }, {
+                    "move": "icefang",
+                    "pp": 15
+                }, {
+                    "move": "aquatail",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Intimidate",
+            "dex_number": "130",
+            "level": 35,
+            "shiny": false,
+            "stats": {
+                "hp": 119,
+                "atk": 100,
+                "def": 66,
+                "spa": 55,
+                "spd": 75,
+                "spe": 63
+            },
+            "id": null,
+            "name": "Gyarados"
+        }, {
+            "current_hp": 103,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "acrobatics",
+                    "pp": 15
+                }, {
+                    "move": "nightslash",
+                    "pp": 15
+                }, {
+                    "move": "uturn",
+                    "pp": 20
+                }, {
+                    "move": "screech",
+                    "pp": 40
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "472",
+            "level": 36,
+            "shiny": false,
+            "stats": {
+                "hp": 103,
+                "atk": 75,
+                "def": 100,
+                "spa": 44,
+                "spd": 66,
+                "spe": 82
+            },
+            "id": null,
+            "name": "Gliscor"
+        }
+    ],
+    "reward": {
+        "base_payout": 60
+    },
+    "map": "drilbur_cave_2f",
+    "sprite": "ace_trainer_m",
+    "lines": {
+        "lose": "If I had my Excadrill, you would have been toast..."
+    }
+}

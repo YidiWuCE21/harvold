@@ -1,0 +1,134 @@
+{
+    "name": "Erika",
+    "sprite": "erika",
+    "music": "gym",
+    "team": [
+        {
+            "current_hp": 44,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                },
+                {
+                    "move": "vinewhip",
+                    "pp": 25
+                },
+                {
+                    "move": "absorb",
+                    "pp": 25
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Chlorophyll",
+            "dex_number": "114",
+            "level": 14,
+            "shiny": false,
+            "stats": {
+                "hp": 44,
+                "atk": 22,
+                "def": 40,
+                "spa": 35,
+                "spd": 14,
+                "spe": 24
+            },
+            "id": null,
+            "name": "Tangela"
+        },
+        {
+            "current_hp": 52,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "fairywind",
+                    "pp": 30
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                },
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Leaf Guard",
+            "dex_number": "188",
+            "level": 18,
+            "shiny": false,
+            "stats": {
+                "hp": 52,
+                "atk": 20,
+                "def": 23,
+                "spa": 23,
+                "spd": 33,
+                "spe": 34
+            },
+            "id": null,
+            "name": "Skiploom"
+        },
+        {
+            "current_hp": 59,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "wrap",
+                    "pp": 20
+                },
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Chlorophyll",
+            "dex_number": "070",
+            "level": 20,
+            "shiny": false,
+            "stats": {
+                "hp": 59,
+                "atk": 44,
+                "def": 34,
+                "spa": 43,
+                "spd": 25,
+                "spe": 29
+            },
+            "id": null,
+            "name": "Weepinbell"
+        }
+    ],
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "grass": "silver"
+        }
+    },
+    "lines": {
+        "lose": "Looks like I underestimated you.",
+        "start": "Lovely weather, isn't it? It's so pleasant..."
+    }
+}

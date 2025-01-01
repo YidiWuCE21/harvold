@@ -1,0 +1,49 @@
+{
+    "name": "Backpacker Nicole",
+    "team": [
+        {
+            "current_hp": 105,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "bubblebeam",
+                    "pp": 20
+                }, {
+                    "move": "helpinghand",
+                    "pp": 20
+                }, {
+                    "move": "aquatail",
+                    "pp": 10
+                }, {
+                    "move": "doubleedge",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Thick Fat",
+            "dex_number": "184",
+            "level": 30,
+            "shiny": false,
+            "stats": {
+                "hp": 105,
+                "atk": 40,
+                "def": 60,
+                "spa": 50,
+                "spd": 61,
+                "spe": 35
+            },
+            "id": null,
+            "name": "Azumarill"
+        }
+    ],
+    "reward": {
+        "base_payout": 24
+    },
+    "map": "drilbur_cave_1f",
+    "sprite": "backpacker_f",
+    "lines": {
+        "lose": "No! My poor baby!"
+    }
+}

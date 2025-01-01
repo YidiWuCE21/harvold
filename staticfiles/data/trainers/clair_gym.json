@@ -1,0 +1,251 @@
+{
+    "name": "Clair",
+    "sprite": "clair",
+    "music": "gym",
+    "team": [
+        {
+            "current_hp": 187,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "safeguard",
+                    "pp": 25
+                },
+                {
+                    "move": "dragondance",
+                    "pp": 20
+                },
+                {
+                    "move": "outrage",
+                    "pp": 10
+                },
+                {
+                    "move": "hyperbeam",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Shed Skin",
+            "dex_number": "148",
+            "level": 78,
+            "shiny": false,
+            "stats": {
+                "hp": 187,
+                "atk": 140,
+                "def": 106,
+                "spa": 127,
+                "spd": 125,
+                "spe": 127
+            },
+            "id": null,
+            "name": "Dragonair"
+        },
+        {
+            "current_hp": 198,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "slash",
+                    "pp": 20
+                },
+                {
+                    "move": "dragonclaw",
+                    "pp": 15
+                },
+                {
+                    "move": "dig",
+                    "pp": 10
+                },
+                {
+                    "move": "dragonrush",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "444",
+            "level": 79,
+            "shiny": false,
+            "stats": {
+                "hp": 198,
+                "atk": 153,
+                "def": 133,
+                "spa": 85,
+                "spd": 91,
+                "spe": 134
+            },
+            "id": null,
+            "name": "Gabite"
+        },
+        {
+            "current_hp": 191,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "safeguard",
+                    "pp": 25
+                },
+                {
+                    "move": "dragondance",
+                    "pp": 20
+                },
+                {
+                    "move": "outrage",
+                    "pp": 10
+                },
+                {
+                    "move": "hyperbeam",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Marvel Scale",
+            "dex_number": "148",
+            "level": 80,
+            "shiny": false,
+            "stats": {
+                "hp": 191,
+                "atk": 153,
+                "def": 113,
+                "spa": 121,
+                "spd": 121,
+                "spe": 134
+            },
+            "id": null,
+            "name": "Dragonair"
+        },
+        {
+            "current_hp": 233,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dragonpulse",
+                    "pp": 10
+                },
+                {
+                    "move": "perishsong",
+                    "pp": 5
+                },
+                {
+                    "move": "moonblast",
+                    "pp": 15
+                },
+                {
+                    "move": "skyattack",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Cloud Nine",
+            "dex_number": "334",
+            "level": 82,
+            "shiny": false,
+            "stats": {
+                "hp": 233,
+                "atk": 124,
+                "def": 191,
+                "spa": 140,
+                "spd": 161,
+                "spe": 137
+            },
+            "id": null,
+            "name": "Altaria"
+        },
+        {
+            "current_hp": 220,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "brine",
+                    "pp": 10
+                },
+                {
+                    "move": "hydropump",
+                    "pp": 5
+                },
+                {
+                    "move": "dragondance",
+                    "pp": 20
+                },
+                {
+                    "move": "dragonpulse",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sniper",
+            "dex_number": "230",
+            "level": 83,
+            "shiny": false,
+            "stats": {
+                "hp": 220,
+                "atk": 187,
+                "def": 179,
+                "spa": 166,
+                "spd": 173,
+                "spe": 150
+            },
+            "id": null,
+            "name": "Kingdra"
+        },
+        {
+            "current_hp": 247,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dragontail",
+                    "pp": 10
+                },
+                {
+                    "move": "rockclimb",
+                    "pp": 20
+                },
+                {
+                    "move": "superpower",
+                    "pp": 5
+                },
+                {
+                    "move": "outrage",
+                    "pp": 10
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Rough Skin",
+            "dex_number": "621",
+            "level": 84,
+            "shiny": false,
+            "stats": {
+                "hp": 247,
+                "atk": 220,
+                "def": 165,
+                "spa": 143,
+                "spd": 145,
+                "spe": 110
+            },
+            "id": null,
+            "name": "Druddigon"
+        }
+    ],
+    "reward": {
+        "base_payout": 100,
+        "badges": {
+            "dragon": "silver"
+        }
+    },
+    "lines": {
+        "lose": "Way to go, now give it your all!",
+        "start": "I will use my full power against any opponent!"
+    }
+}

@@ -1,0 +1,119 @@
+{
+    "name": "Camper Philip",
+    "team": [
+        {
+            "current_hp": 22,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "howl",
+                    "pp": 40
+                }, {
+                    "move": null,
+                    "pp": null
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Run Away",
+            "dex_number": "261",
+            "level": 7,
+            "shiny": false,
+            "stats": {
+                "hp": 22,
+                "atk": 14,
+                "def": 10,
+                "spa": 9,
+                "spd": 11,
+                "spe": 9
+            },
+            "id": null,
+            "name": "Poochyena"
+        }, {
+            "current_hp": 22,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "foresight",
+                    "pp": 40
+                }, {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "defensecurl",
+                    "pp": 40
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Frisk",
+            "dex_number": "161",
+            "level": 7,
+            "shiny": false,
+            "stats": {
+                "hp": 22,
+                "atk": 14,
+                "def": 9,
+                "spa": 11,
+                "spd": 11,
+                "spe": 9
+            },
+            "id": null,
+            "name": "Sentret"
+        }, {
+            "current_hp": 28,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": null,
+                    "pp": null
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Simple",
+            "dex_number": "399",
+            "level": 8,
+            "shiny": false,
+            "stats": {
+                "hp": 28,
+                "atk": 14,
+                "def": 12,
+                "spa": 10,
+                "spd": 12,
+                "spe": 10
+            },
+            "id": null,
+            "name": "Bidoof"
+        }
+    ],
+    "reward": {
+        "base_payout": 16
+    },
+    "map": "route_3",
+    "sprite": "picnicker_m",
+    "lines": {
+        "lose": "Looks like it was my beating..."
+    }
+}

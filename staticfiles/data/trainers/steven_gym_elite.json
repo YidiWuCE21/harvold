@@ -1,0 +1,251 @@
+{
+    "name": "Steven",
+    "sprite": "steven",
+    "music": "gym",
+    "team": [
+        {
+            "current_hp": 325,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "rapidspin",
+                    "pp": 40
+                },
+                {
+                    "move": "spikes",
+                    "pp": 20
+                },
+                {
+                    "move": "gyroball",
+                    "pp": 5
+                },
+                {
+                    "move": "toxic",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "205",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 325,
+                "atk": 257,
+                "def": 404,
+                "spa": 203,
+                "spd": 212,
+                "spe": 144
+            },
+            "id": null,
+            "name": "Forretress"
+        },
+        {
+            "current_hp": 317,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "spikes",
+                    "pp": 20
+                },
+                {
+                    "move": "roost",
+                    "pp": 10
+                },
+                {
+                    "move": "ironhead",
+                    "pp": 15
+                },
+                {
+                    "move": "bravebird",
+                    "pp": 15
+                }
+            ],
+            "held_item": "rocky-helmet",
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "227",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 317,
+                "atk": 249,
+                "def": 416,
+                "spa": 156,
+                "spd": 233,
+                "spe": 238
+            },
+            "id": null,
+            "name": "Skarmory"
+        },
+        {
+            "current_hp": 315,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "bulletpunch",
+                    "pp": 30
+                },
+                {
+                    "move": "superpower",
+                    "pp": 5
+                },
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "xscissor",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Technician",
+            "dex_number": "212",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 315,
+                "atk": 387,
+                "def": 268,
+                "spa": 165,
+                "spd": 241,
+                "spe": 202
+            },
+            "id": null,
+            "name": "Scizor"
+        },
+        {
+            "current_hp": 343,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                },
+                {
+                    "move": "magnetrise",
+                    "pp": 10
+                },
+                {
+                    "move": "flashcannon",
+                    "pp": 10
+                },
+                {
+                    "move": "chargebeam",
+                    "pp": 10
+                }
+            ],
+            "held_item": "air-balloon",
+            "happiness": 70,
+            "ability": "Magnet Pull",
+            "dex_number": "462",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 343,
+                "atk": 201,
+                "def": 311,
+                "spa": 388,
+                "spd": 271,
+                "spe": 218
+            },
+            "id": null,
+            "name": "Magnezone"
+        },
+        {
+            "current_hp": 350,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "meteormash",
+                    "pp": 10
+                },
+                {
+                    "move": "hammerarm",
+                    "pp": 10
+                },
+                {
+                    "move": "earthquake",
+                    "pp": 10
+                },
+                {
+                    "move": "stealthrock",
+                    "pp": 20
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Clear Body",
+            "dex_number": "376",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 350,
+                "atk": 398,
+                "def": 349,
+                "spa": 245,
+                "spd": 269,
+                "spe": 209
+            },
+            "id": null,
+            "name": "Metagross"
+        },
+        {
+            "current_hp": 303,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "suckerpunch",
+                    "pp": 5
+                },
+                {
+                    "move": "ironhead",
+                    "pp": 15
+                },
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "knockoff",
+                    "pp": 20
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Defiant",
+            "dex_number": "625",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 303,
+                "atk": 367,
+                "def": 281,
+                "spa": 183,
+                "spd": 226,
+                "spe": 211
+            },
+            "id": null,
+            "name": "Bisharp"
+        }
+    ],
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "steel": "gold"
+        }
+    },
+    "lines": {
+        "lose": "You are a truly noble Pokémon trainer!",
+        "start": "Welcome. I was looking forward to seeing you here one day."
+    }
+}

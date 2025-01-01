@@ -1,0 +1,52 @@
+{
+    "bug_catcher_1": {
+        "name": "Bug Catcher Bob",
+        "team": [
+            {
+                "ability": "Chlorophyll",
+                "status": "",
+                "current_hp": 20,
+                "happiness": 70,
+                "held_item": null,
+                "moves": [
+                    {"move": "tackle", "pp": 35},
+                    {"move": "growl", "pp": 40},
+                    {"move": null, "pp": null},
+                    {"move": null, "pp": null}
+                ],
+                "stats": {"atk": 8, "def": 9, "hp": 20, "spa": 7, "spd": 7, "spe": 10},
+                "dex_number": "010",
+                "level": 5,
+                "shiny": false,
+                "id": null,
+                "name": "Caterpie"
+            }
+        ],
+        "reward": 100
+    },
+    "erika_gym": {
+        "name": "Erika",
+        "team": [
+            {
+                "ability": "Chlorophyll",
+                "status": "",
+                "current_hp": 43,
+                "happiness": 70,
+                "held_item": null,
+                "moves": [
+                    {"move": "megadrain", "pp": 15},
+                    {"move": "growth", "pp": 20},
+                    {"move": "stunspore", "pp": null},
+                    {"move": "bind", "pp": null}
+                ],
+                "stats": {"atk": 22, "def": 38, "hp": 43, "spa": 36, "spd": 19, "spe": 22},
+                "dex_number": "114",
+                "level": 14,
+                "shiny": false,
+                "id": null,
+                "name": "Tangela"
+            }
+        ],
+        "reward": 200
+    }
+}

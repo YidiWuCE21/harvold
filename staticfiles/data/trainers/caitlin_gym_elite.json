@@ -1,0 +1,251 @@
+{
+    "name": "Caitlin",
+    "sprite": "caitlin",
+    "music": "gym",
+    "team": [
+        {
+            "current_hp": 406,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "calmmind",
+                    "pp": 20
+                },
+                {
+                    "move": "psyshock",
+                    "pp": 10
+                },
+                {
+                    "move": "focusblast",
+                    "pp": 5
+                },
+                {
+                    "move": "recover",
+                    "pp": 10
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Magic Guard",
+            "dex_number": "579",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 406,
+                "atk": 198,
+                "def": 239,
+                "spa": 340,
+                "spd": 240,
+                "spe": 139
+            },
+            "id": null,
+            "name": "Reuniclus"
+        },
+        {
+            "current_hp": 304,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "shadowball",
+                    "pp": 15
+                },
+                {
+                    "move": "focusblast",
+                    "pp": 5
+                },
+                {
+                    "move": "energyball",
+                    "pp": 10
+                }
+            ],
+            "held_item": "focus-sash",
+            "happiness": 70,
+            "ability": "Magic Guard",
+            "dex_number": "065",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 304,
+                "atk": 159,
+                "def": 173,
+                "spa": 349,
+                "spd": 274,
+                "spe": 338
+            },
+            "id": null,
+            "name": "Alakazam"
+        },
+        {
+            "current_hp": 325,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dazzlinggleam",
+                    "pp": 10
+                },
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "shadowball",
+                    "pp": 15
+                },
+                {
+                    "move": "psyshock",
+                    "pp": 10
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Magic Bounce",
+            "dex_number": "196",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 325,
+                "atk": 196,
+                "def": 193,
+                "spa": 359,
+                "spd": 267,
+                "spe": 324
+            },
+            "id": null,
+            "name": "Espeon"
+        },
+        {
+            "current_hp": 338,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "zenheadbutt",
+                    "pp": 15
+                },
+                {
+                    "move": "closecombat",
+                    "pp": 5
+                },
+                {
+                    "move": "knockoff",
+                    "pp": 20
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Justified",
+            "dex_number": "475",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 338,
+                "atk": 320,
+                "def": 205,
+                "spa": 201,
+                "spd": 304,
+                "spe": 284
+            },
+            "id": null,
+            "name": "Gallade"
+        },
+        {
+            "current_hp": 421,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "calmmind",
+                    "pp": 20
+                },
+                {
+                    "move": "recover",
+                    "pp": 5
+                },
+                {
+                    "move": "psychic",
+                    "pp": 10
+                },
+                {
+                    "move": "signalbeam",
+                    "pp": 15
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Synchronize",
+            "dex_number": "518",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 421,
+                "atk": 187,
+                "def": 291,
+                "spa": 282,
+                "spd": 283,
+                "spe": 157
+            },
+            "id": null,
+            "name": "Musharna"
+        },
+        {
+            "current_hp": 392,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "roost",
+                    "pp": 10
+                },
+                {
+                    "move": "icebeam",
+                    "pp": 10
+                },
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                },
+                {
+                    "move": "psychic",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 0,
+            "ability": "Multiscale",
+            "dex_number": "249",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 392,
+                "atk": 251,
+                "def": 361,
+                "spa": 261,
+                "spd": 398,
+                "spe": 294
+            },
+            "id": null,
+            "name": "Lugia"
+        }
+    ],
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "psychic": "gold"
+        }
+    },
+    "lines": {
+        "lose": "My Pokémon and I learned a lot! I offer you my thanks.",
+        "start": "Be sure not to bore me with a snooze-inducing battle, got it?"
+    }
+}

@@ -1,0 +1,92 @@
+{
+    "name": "Picnicker Eve",
+    "team": [
+        {
+            "current_hp": 21,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "growl",
+                    "pp": 40
+                },
+                {
+                    "move": "scratch",
+                    "pp": 35
+                },
+                {
+                    "move": "bite",
+                    "pp": 25
+                },
+                {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Pickup",
+            "dex_number": "052",
+            "level": 6,
+            "shiny": false,
+            "stats": {
+                "hp": 21,
+                "atk": 11,
+                "def": 9,
+                "spa": 11,
+                "spd": 9,
+                "spe": 15
+            },
+            "id": null,
+            "name": "Meowth"
+        },
+        {
+            "current_hp": 23,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "pound",
+                    "pp": 35
+                },
+                {
+                    "move": "growl",
+                    "pp": 40
+                },
+                {
+                    "move": null,
+                    "pp": null
+                },
+                {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Torrent",
+            "dex_number": "393",
+            "level": 6,
+            "shiny": false,
+            "stats": {
+                "hp": 23,
+                "atk": 12,
+                "def": 11,
+                "spa": 13,
+                "spd": 10,
+                "spe": 10
+            },
+            "id": null,
+            "name": "Piplup"
+        }
+    ],
+    "reward": {
+        "base_payout": 16
+    },
+    "map": "route_1",
+    "sprite": "picnicker_f",
+    "lines": {
+        "lose": "No fair! I said to go easy!",
+        "start": "Go easy on me, I'm new!"
+    }
+}

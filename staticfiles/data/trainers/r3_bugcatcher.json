@@ -1,0 +1,154 @@
+{
+    "name": "Bug Catcher Hubert",
+    "team": [
+        {
+            "current_hp": 22,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "stringshot",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "poisonsting",
+                    "pp": 35
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Shield Dust",
+            "dex_number": "265",
+            "level": 6,
+            "shiny": false,
+            "stats": {
+                "hp": 22,
+                "atk": 10,
+                "def": 8,
+                "spa": 8,
+                "spd": 9,
+                "spe": 8
+            },
+            "id": null,
+            "name": "Wurmple"
+        }, {
+            "current_hp": 24,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "stringshot",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": null,
+                    "pp": null
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Shield Dust",
+            "dex_number": "010",
+            "level": 7,
+            "shiny": false,
+            "stats": {
+                "hp": 24,
+                "atk": 9,
+                "def": 12,
+                "spa": 9,
+                "spd": 8,
+                "spe": 12
+            },
+            "id": null,
+            "name": "Caterpie"
+        }, {
+            "current_hp": 25,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "harden",
+                    "pp": 30
+                }, {
+                    "move": "harden",
+                    "pp": 30
+                }, {
+                    "move": null,
+                    "pp": null
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Shed Skin",
+            "dex_number": "014",
+            "level": 8,
+            "shiny": false,
+            "stats": {
+                "hp": 25,
+                "atk": 9,
+                "def": 13,
+                "spa": 11,
+                "spd": 12,
+                "spe": 12
+            },
+            "id": null,
+            "name": "Kakuna"
+        }, {
+            "current_hp": 27,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "harden",
+                    "pp": 30
+                }, {
+                    "move": "harden",
+                    "pp": 30
+                }, {
+                    "move": null,
+                    "pp": null
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Shed Skin",
+            "dex_number": "011",
+            "level": 8,
+            "shiny": false,
+            "stats": {
+                "hp": 27,
+                "atk": 7,
+                "def": 13,
+                "spa": 11,
+                "spd": 9,
+                "spe": 10
+            },
+            "id": null,
+            "name": "Metapod"
+        }
+    ],
+    "reward": {
+        "base_payout": 16
+    },
+    "map": "route_3",
+    "sprite": "bug_catcher",
+    "lines": {
+        "lose": "My poor bugs!"
+    }
+}

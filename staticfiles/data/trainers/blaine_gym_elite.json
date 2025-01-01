@@ -1,0 +1,251 @@
+{
+    "name": "Blaine",
+    "sprite": "blaine",
+    "music": "gym",
+    "team": [
+        {
+            "current_hp": 339,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "stealthrock",
+                    "pp": 20
+                },
+                {
+                    "move": "rapidspin",
+                    "pp": 40
+                },
+                {
+                    "move": "yawn",
+                    "pp": 10
+                },
+                {
+                    "move": "lavaplume",
+                    "pp": 15
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Shell Armor",
+            "dex_number": "324",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 339,
+                "atk": 237,
+                "def": 398,
+                "spa": 249,
+                "spd": 228,
+                "spe": 114
+            },
+            "id": null,
+            "name": "Torkoal"
+        },
+        {
+            "current_hp": 329,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "flamethrower",
+                    "pp": 15
+                },
+                {
+                    "move": "nastyplot",
+                    "pp": 20
+                },
+                {
+                    "move": "energyball",
+                    "pp": 10
+                },
+                {
+                    "move": "darkpulse",
+                    "pp": 15
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Drought",
+            "dex_number": "038",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 329,
+                "atk": 211,
+                "def": 239,
+                "spa": 249,
+                "spd": 298,
+                "spe": 323
+            },
+            "id": null,
+            "name": "Ninetales"
+        },
+        {
+            "current_hp": 329,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunderbolt",
+                    "pp": 15
+                },
+                {
+                    "move": "flamethrower",
+                    "pp": 15
+                },
+                {
+                    "move": "fireblast",
+                    "pp": 5
+                },
+                {
+                    "move": "focusblast",
+                    "pp": 5
+                }
+            ],
+            "held_item": "assault-vest",
+            "happiness": 70,
+            "ability": "Vital Spirit",
+            "dex_number": "467",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 329,
+                "atk": 264,
+                "def": 209,
+                "spa": 299,
+                "spd": 273,
+                "spe": 268
+            },
+            "id": null,
+            "name": "Magmortar"
+        },
+        {
+            "current_hp": 371,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "morningsun",
+                    "pp": 40
+                },
+                {
+                    "move": "willowisp",
+                    "pp": 15
+                },
+                {
+                    "move": "flareblitz",
+                    "pp": 15
+                },
+                {
+                    "move": "extremespeed",
+                    "pp": 5
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Intimidate",
+            "dex_number": "059",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 371,
+                "atk": 298,
+                "def": 279,
+                "spa": 258,
+                "spd": 252,
+                "spe": 270
+            },
+            "id": null,
+            "name": "Arcanine"
+        },
+        {
+            "current_hp": 356,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "bugbuzz",
+                    "pp": 10
+                },
+                {
+                    "move": "quiverdance",
+                    "pp": 20
+                },
+                {
+                    "move": "roost",
+                    "pp": 5
+                },
+                {
+                    "move": "fierydance",
+                    "pp": 10
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Flame Body",
+            "dex_number": "637",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 356,
+                "atk": 176,
+                "def": 206,
+                "spa": 343,
+                "spd": 287,
+                "spe": 301
+            },
+            "id": null,
+            "name": "Volcarona"
+        },
+        {
+            "current_hp": 349,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "grassknot",
+                    "pp": 20
+                },
+                {
+                    "move": "earthquake",
+                    "pp": 10
+                },
+                {
+                    "move": "closecombat",
+                    "pp": 5
+                },
+                {
+                    "move": "fireblast",
+                    "pp": 15
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Blaze",
+            "dex_number": "392",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 349,
+                "atk": 280,
+                "def": 241,
+                "spa": 286,
+                "spd": 215,
+                "spe": 343
+            },
+            "id": null,
+            "name": "Infernape"
+        }
+    ],
+    "reward": {
+        "base_payout": 200,
+        "badges": {
+            "fire": "gold"
+        }
+    },
+    "lines": {
+        "lose": "My spirit has not been defeated!",
+        "start": "My fiery Pokémon will incinerate all challengers! Ha!"
+    }
+}

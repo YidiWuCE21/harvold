@@ -1,0 +1,49 @@
+{
+  "medicine": {
+    "potion": 300,
+    "super-potion": 700,
+    "hyper-potion": 1200,
+    "max-potion": 2500,
+    "full-restore": 3000,
+    "revive": 1500,
+    "antidote": 100,
+    "paralyze-heal": 200,
+    "awakening": 250,
+    "burn-heal": 250,
+    "ice-heal": 250,
+    "full-heal": 600
+  },
+  "ball": {
+    "pokeball": 200,
+    "great-ball": 600,
+    "ultra-ball": 1200
+  },
+  "machines": {
+    "tm001": 10000,
+    "tm002": 10000,
+    "tm003": 10000,
+    "tm004": 10000,
+    "tm005": 10000,
+    "tm006": 10000
+  },
+  "held_items": {
+    "power-weight": 10000,
+    "power-bracer": 10000,
+    "power-belt": 10000,
+    "power-lens": 10000,
+    "power-band": 10000,
+    "power-anklet": 10000
+  },
+  "general": {
+    "water-stone": 10000,
+    "thunder-stone": 10000,
+    "sun-stone": 10000,
+    "shiny-stone": 10000,
+    "moon-stone": 10000,
+    "leaf-stone": 10000,
+    "ice-stone": 10000,
+    "fire-stone": 10000,
+    "dawn-stone": 10000,
+    "dusk-stone": 10000
+  }
+}

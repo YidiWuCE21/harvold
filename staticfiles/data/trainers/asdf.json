@@ -1,0 +1,244 @@
+{
+    "name": "asdf",
+    "team": [
+        {
+            "current_hp": 64,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "thunderwave",
+                    "pp": 20
+                },
+                {
+                    "move": "flamecharge",
+                    "pp": 20
+                },
+                {
+                    "move": "pursuit",
+                    "pp": 20
+                },
+                {
+                    "move": "spark",
+                    "pp": 20
+                }
+            ],
+            "held_item": "leftovers",
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "522",
+            "level": 28,
+            "shiny": false,
+            "stats": {
+                "hp": 64,
+                "atk": 43,
+                "def": 31,
+                "spa": 36,
+                "spd": 26,
+                "spe": 43
+            },
+            "id": null,
+            "name": "Blitzle"
+        },
+        {
+            "current_hp": 250,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "autotomize",
+                    "pp": 15
+                },
+                {
+                    "move": "airslash",
+                    "pp": 15
+                },
+                {
+                    "move": "slash",
+                    "pp": 20
+                },
+                {
+                    "move": "nightslash",
+                    "pp": 15
+                }
+            ],
+            "held_item": "rocky-helmet",
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "227",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 250,
+                "atk": 189,
+                "def": 327,
+                "spa": 83,
+                "spd": 155,
+                "spe": 165
+            },
+            "id": null,
+            "name": "Skarmory"
+        },
+        {
+            "current_hp": 263,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "doublehit",
+                    "pp": 10
+                },
+                {
+                    "move": "ironhead",
+                    "pp": 15
+                },
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "feint",
+                    "pp": 10
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 70,
+            "ability": "Technician",
+            "dex_number": "212",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 263,
+                "atk": 314,
+                "def": 221,
+                "spa": 118,
+                "spd": 168,
+                "spe": 136
+            },
+            "id": null,
+            "name": "Scizor"
+        },
+        {
+            "current_hp": 255,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "lockon",
+                    "pp": 5
+                },
+                {
+                    "move": "magnetrise",
+                    "pp": 10
+                },
+                {
+                    "move": "gyroball",
+                    "pp": 5
+                },
+                {
+                    "move": "zapcannon",
+                    "pp": 5
+                }
+            ],
+            "held_item": "air-balloon",
+            "happiness": 70,
+            "ability": "Magnet Pull",
+            "dex_number": "462",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 255,
+                "atk": 149,
+                "def": 261,
+                "spa": 310,
+                "spd": 214,
+                "spe": 134
+            },
+            "id": null,
+            "name": "Magnezone"
+        },
+        {
+            "current_hp": 283,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "meteormash",
+                    "pp": 10
+                },
+                {
+                    "move": "hammerarm",
+                    "pp": 10
+                },
+                {
+                    "move": "irondefense",
+                    "pp": 15
+                },
+                {
+                    "move": "hyperbeam",
+                    "pp": 5
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Clear Body",
+            "dex_number": "376",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 283,
+                "atk": 308,
+                "def": 273,
+                "spa": 184,
+                "spd": 214,
+                "spe": 173
+            },
+            "id": null,
+            "name": "Metagross"
+        },
+        {
+            "current_hp": 253,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "nightslash",
+                    "pp": 15
+                },
+                {
+                    "move": "ironhead",
+                    "pp": 15
+                },
+                {
+                    "move": "swordsdance",
+                    "pp": 20
+                },
+                {
+                    "move": "guillotine",
+                    "pp": 5
+                }
+            ],
+            "held_item": "life-orb",
+            "happiness": 35,
+            "ability": "Defiant",
+            "dex_number": "625",
+            "level": 100,
+            "shiny": false,
+            "stats": {
+                "hp": 253,
+                "atk": 305,
+                "def": 236,
+                "spa": 117,
+                "spd": 162,
+                "spe": 163
+            },
+            "id": null,
+            "name": "Bisharp"
+        }
+    ],
+    "reward": {
+        "base_payout": 800
+    },
+    "map": "route_1",
+    "sprite": "bug_catcher"
+}

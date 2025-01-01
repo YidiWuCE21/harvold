@@ -1,0 +1,27 @@
+{
+    "name": "Bug Catcher Jack", "team": [
+    {
+        "current_hp": 15, "status": "", "status_turns": 0, "moves": [
+        {"move": "stringshot", "pp": 40}, {"move": "tackle", "pp": 35}, {"move": null, "pp": null}, {
+            "move": null, "pp": null
+        }
+    ], "held_item": null, "happiness": 70, "ability": "Run Away", "dex_number": "010", "level": 3, "shiny": false,
+        "stats": {"hp": 15, "atk": 6, "def": 7, "spa": 6, "spd": 6, "spe": 8}, "id": null, "name": "Caterpie"
+    }, {
+        "current_hp": 15, "status": "", "status_turns": 0, "moves": [
+            {"move": "poisonsting", "pp": 35}, {"move": "stringshot", "pp": 40}, {"move": null, "pp": null}, {
+                "move": null, "pp": null
+            }
+        ], "held_item": null, "happiness": 70, "ability": "Run Away", "dex_number": "013", "level": 3, "shiny": false,
+        "stats": {"hp": 15, "atk": 7, "def": 7, "spa": 6, "spd": 5, "spe": 8}, "id": null, "name": "Weedle"
+    }, {
+        "current_hp": 18, "status": "", "status_turns": 0, "moves": [
+            {"move": "stringshot", "pp": 40}, {"move": "tackle", "pp": 35}, {"move": null, "pp": null}, {
+                "move": null, "pp": null
+            }
+        ], "held_item": null, "happiness": 70, "ability": "Run Away", "dex_number": "010", "level": 4, "shiny": false,
+        "stats": {"hp": 18, "atk": 7, "def": 8, "spa": 6, "spd": 7, "spe": 8}, "id": null, "name": "Caterpie"
+    }
+], "reward": {"base_payout": 16}, "map": "route_2", "sprite": "bug_catcher",
+    "lines": {"lose": "I would have won if I was taller!"}
+}

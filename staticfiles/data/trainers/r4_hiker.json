@@ -1,0 +1,119 @@
+{
+    "name": "Hiker Robert",
+    "team": [
+        {
+            "current_hp": 30,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "defensecurl",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "mudsport",
+                    "pp": 15
+                }, {
+                    "move": "rockpolish",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "074",
+            "level": 10,
+            "shiny": false,
+            "stats": {
+                "hp": 30,
+                "atk": 22,
+                "def": 27,
+                "spa": 12,
+                "spd": 13,
+                "spe": 9
+            },
+            "id": null,
+            "name": "Geodude"
+        }, {
+            "current_hp": 30,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "defensecurl",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "mudsport",
+                    "pp": 15
+                }, {
+                    "move": "rockpolish",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "074",
+            "level": 10,
+            "shiny": false,
+            "stats": {
+                "hp": 30,
+                "atk": 22,
+                "def": 25,
+                "spa": 13,
+                "spd": 14,
+                "spe": 11
+            },
+            "id": null,
+            "name": "Geodude"
+        }, {
+            "current_hp": 28,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "defensecurl",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "mudsport",
+                    "pp": 15
+                }, {
+                    "move": "rockpolish",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "074",
+            "level": 10,
+            "shiny": false,
+            "stats": {
+                "hp": 28,
+                "atk": 19,
+                "def": 27,
+                "spa": 12,
+                "spd": 13,
+                "spe": 10
+            },
+            "id": null,
+            "name": "Geodude"
+        }
+    ],
+    "reward": {
+        "base_payout": 32
+    },
+    "map": "route_4",
+    "sprite": "hiker",
+    "lines": {
+        "lose": "Make sure to heal before continuing! That's why there's a Pokécenter here!"
+    }
+}

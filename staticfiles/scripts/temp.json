@@ -1,0 +1,199 @@
+{
+    "team": [
+        {
+            "current_hp": 43,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                },
+                {
+                    "move": "vinewhip",
+                    "pp": 25
+                },
+                {
+                    "move": "absorb",
+                    "pp": 25
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Leaf Guard",
+            "dex_number": "114",
+            "level": 14,
+            "shiny": false,
+            "stats": {
+                "hp": 43,
+                "atk": 22,
+                "def": 37,
+                "spa": 33,
+                "spd": 19,
+                "spe": 25
+            },
+            "id": null,
+            "name": "Tangela"
+        },
+        {
+            "current_hp": 46,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "sweetscent",
+                    "pp": 20
+                },
+                {
+                    "move": "acid",
+                    "pp": 30
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Stench",
+            "dex_number": "044",
+            "level": 15,
+            "shiny": false,
+            "stats": {
+                "hp": 46,
+                "atk": 25,
+                "def": 31,
+                "spa": 27,
+                "spd": 30,
+                "spe": 20
+            },
+            "id": null,
+            "name": "Gloom"
+        },
+        {
+            "current_hp": 49,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "fairywind",
+                    "pp": 30
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                },
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Infiltrator",
+            "dex_number": "188",
+            "level": 18,
+            "shiny": false,
+            "stats": {
+                "hp": 49,
+                "atk": 25,
+                "def": 29,
+                "spa": 23,
+                "spd": 30,
+                "spe": 31
+            },
+            "id": null,
+            "name": "Skiploom"
+        },
+        {
+            "current_hp": 62,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "wrap",
+                    "pp": 20
+                },
+                {
+                    "move": "sleeppowder",
+                    "pp": 15
+                },
+                {
+                    "move": "poisonpowder",
+                    "pp": 35
+                },
+                {
+                    "move": "stunspore",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Gluttony",
+            "dex_number": "070",
+            "level": 20,
+            "shiny": false,
+            "stats": {
+                "hp": 62,
+                "atk": 42,
+                "def": 25,
+                "spa": 43,
+                "spd": 27,
+                "spe": 33
+            },
+            "id": null,
+            "name": "Weepinbell"
+        },
+        {
+            "current_hp": 64,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "razorleaf",
+                    "pp": 25
+                },
+                {
+                    "move": "quickattack",
+                    "pp": 30
+                },
+                {
+                    "move": "grasswhistle",
+                    "pp": 15
+                },
+                {
+                    "move": "magicalleaf",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Chlorophyll",
+            "dex_number": "470",
+            "level": 21,
+            "shiny": false,
+            "stats": {
+                "hp": 64,
+                "atk": 50,
+                "def": 71,
+                "spa": 30,
+                "spd": 34,
+                "spe": 47
+            },
+            "id": null,
+            "name": "Leafeon"
+        }
+    ]
+}

@@ -1,0 +1,70 @@
+{
+    "medicine": {
+        "potion": {
+            "valid_targets": "alive",
+            "effects": {"hp": 20}
+        },
+        "super-potion": {
+            "valid_targets": "alive",
+            "effects": {"hp": 60}
+        },
+        "hyper-potion": {
+            "valid_targets": "alive",
+            "effects": {"hp": 120}
+        },
+        "max-potion": {
+            "valid_targets": "alive",
+            "effects": {"hp": "full"}
+        },
+        "full-restore": {
+            "valid_targets": "alive",
+            "effects": {"hp": "full", "status": "any"}
+        },
+        "revive": {
+            "valid_targets": "dead",
+            "effects": {"hp": "half"}
+        },
+        "max-revive": {
+            "valid_targets": "dead",
+            "effects": {"hp": "full"}
+        },
+        "antidote": {
+            "valid_targets": "alive",
+            "effects": {"status": "psn"}
+        },
+        "paralyze-heal": {
+            "valid_targets": "alive",
+            "effects": {"status": "par"}
+        },
+        "awakening": {
+            "valid_targets": "alive",
+            "effects": {"status": "slp"}
+        },
+        "burn-heal": {
+            "valid_targets": "alive",
+            "effects": {"status": "brn"}
+        },
+        "ice-heal": {
+            "valid_targets": "alive",
+            "effects": {"status": "frz"}
+        },
+        "full-heal": {
+            "valid_targets": "alive",
+            "effects": {"status": "any"}
+        }
+    },
+    "ball": {
+        "pokeball": {
+            "catch_rate": 1
+        },
+        "great-ball": {
+            "catch_rate": 1.5
+        },
+        "ultra-ball": {
+            "catch_rate": 2
+        },
+        "master-ball": {
+            "catch_rate": 1000
+        }
+    }
+}
