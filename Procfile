@@ -1,1 +1,1 @@
-web: gunicorn harvoldsite.asgi:application --log-level debug
+web: python manage.py runserver
