@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+import ssl
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,6 +155,8 @@ LOGOUT_REDIRECT_URL = "home"
 
 ASGI_APPLICATION = "harvoldsite.asgi.application"
 
+
+
 if False:
     CHANNEL_LAYERS = {
         "default": {
@@ -164,11 +167,18 @@ if False:
         }
     }
 else:
+    ssl_context = ssl.SSLContext()
+    ssl_context.check_hostname = False
+
+    heroku_redis_ssl_host = {
+        'address': os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379'),
+        'ssl': ssl_context
+    }
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
             "CONFIG": {
-                "hosts": ["{}{}".format(os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379'), "?ssl_cert_reqs=None")],
+                "hosts": (heroku_redis_ssl_host),
             },
         }
     }
