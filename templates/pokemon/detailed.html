@@ -8,9 +8,6 @@
 {% endblock %}
 
 {% block content %}
-{% if message is not None %}
-<p>{{ message }}</p>
-{% endif %}
 <div style="display: grid;grid-template-columns: 190px 260px 170px;grid-template-rows: 220px 240px 140px; gap:5px">
     <div style="grid-column:1;grid-row:1;" class="content-box">
         <h5><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.ball }}.png" style="margin-top:-4px;"> {{ data.name }} {% if info.Sex == "m" %}<span style="color:blue">&#9794;</span>{% elif info.Sex == "f" %}<span style="color:magenta">&#9792;</span>{% endif %}</h5>
@@ -106,6 +103,9 @@
     </div>
     {% if owned %}
     <div style="grid-column:3;grid-row:1 / span 3;" class="content-box">
+    {% if message is not None %}
+    <p style="color:red;">{{ message }}</p>
+    {% endif %}
         <h5>Actions</h5>
         <form method="POST">
             {% csrf_token %}
@@ -231,4 +231,5 @@
         </form>
     </div>
     {% endif %}
+</div>
 {% endblock %}

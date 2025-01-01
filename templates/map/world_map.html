@@ -5,7 +5,7 @@
 
 {% block content %}
 Map list
-<form method="POST" action="{% url 'map' %}">
+<form method="POST" action="{% url 'world_map' %}">
     {% csrf_token %}
     <select name="map">
         {% for map in maps %}

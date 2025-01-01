@@ -1,6 +1,6 @@
 {% if party is not None %}
 {% load static %}
-<div class="content-box party row">
+<div class="content-box party row" {% if msg is not None %}style="height:470px"{% endif %}>
     <h5>Party</h5>
     {% if msg is not None %}
     <p style="color:red;">{{ msg }}</p>
@@ -10,12 +10,12 @@
         {% if pokemon is not None %}
         <div class="party-box" style="width:200px;height:60px;display:flex;position:relative;">
             {% if forloop.counter0 > 0 and pokemon is not None %}
-            <div class="small-button" onclick="moveUp({{ forloop.counter }}, '{% url 'reorder_party_ajax' %}');" style="position:absolute;right:-20px;top:-24px;">&#9660;</div><!-- prev down -->
+            <div class="small-button" onclick="moveUp({{ forloop.counter }}, '{% url 'reorder_party_ajax' %}');" style="position:absolute;right:-20px;top:-30px;">&#9660;</div><!-- prev down -->
             {% endif %}
             {% if forloop.counter0 > 0 and pokemon is not None %}
-            <div class="small-button" onclick="moveUp({{ forloop.counter }}, '{% url 'reorder_party_ajax' %}');" style="position:absolute;right:-20px;top:22px;">&#9650;</div><!-- up -->
+            <div class="small-button" onclick="moveUp({{ forloop.counter }}, '{% url 'reorder_party_ajax' %}');" style="position:absolute;right:-20px;top:8px;">&#9650;</div><!-- up -->
             {% endif %}
-            <div class="small-button button-back" onclick="removeParty({{ forloop.counter }}, '{% url 'remove_party_ajax' %}');" style="position:absolute;right:-20px;top:-1px;">X</div>
+            <div class="small-button button-back" onclick="removeParty({{ forloop.counter }}, '{% url 'remove_party_ajax' %}');" style="position:absolute;right:4px;top:4px;">X</div>
             <div style="width:60px;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;position:relative;">
                 <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ pokemon.ball }}.png" style="position:absolute;top:0;left:0;opacity:50%;">
                 <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ pokemon.dex }}.gif" style="position:absolute;top:0px;left:8px;">
@@ -23,6 +23,9 @@
             </div>
             <div style="width:120px;height:100%;position:relative;text-align:left;">
                 <a href="{% url 'pokemon' %}?id={{ pokemon.id }}" class="clickable">{{ pokemon.name }}</a>
+                {% if pokemon.status %}
+                <p style="margin-top:-4px;"><img src="{% get_static_prefix %}{{ asset_paths.status }}\{{ pokemon.status }}.png"></p>
+                {% endif %}
                 <div class="experience-bar" style="background:red;width:120px;position:absolute;bottom:6px;"><div style="width:{{ pokemon.hp_percent }}%;height:4px;background:lightgreen;"></div></div>
                 <div class="experience-bar" style="width:120px;position:absolute;bottom:2px;"><div style="width:{{ pokemon.experience_progress }}%;height:4px;background:blue;"></div></div>
             </div>

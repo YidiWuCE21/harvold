@@ -162,10 +162,12 @@ def remove_party_ajax(request):
     else:
         try:
             slot = request.GET.get("payload")
-            profile.remove_from_party(getattr(profile, slot))
+            msg = profile.remove_from_party(getattr(profile, slot))
         except:
             msg = "Failed to remove from party!"
     party = profile.get_party(return_none=True)
+    if msg is None:
+        msg = ""
     return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})
 
 

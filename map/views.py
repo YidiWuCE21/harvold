@@ -3,7 +3,7 @@ import os
 import random
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
@@ -47,15 +47,19 @@ def update_pos(request):
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def map(request):
     default_map = request.user.profile.current_map
-    map = request.POST.get("map", default_map)
+    # Check if we have a map stored from redirecting from world map
+    map = request.session.get("map", default_map)
+    # Update current location of user
+    user = request.user.profile
+    user.current_map = map
+    if "map" in request.session:
+        user.current_pos = None
+        del request.session["map"]
+    user.save()
     if map not in consts.MAPS:
         return HttpResponseNotFound("Invalid map")
     with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map)), encoding="utf-8") as map_file:
         map_data = json.load(map_file)
-    # Update current location of user
-    user = request.user.profile
-    user.current_map = map
-    user.save()
     # Add the map name
     map_data["map_name"] = map.replace("_", " ").title()
     # Check for map access permission
@@ -65,13 +69,17 @@ def map(request):
         "map_name": map.replace("_", " ").title(),
         "map_data": json.dumps(map_data),
         "character": user.char_id,
-        "position": json.dumps(user.current_pos if "map" not in request.POST else None)
+        "position": json.dumps(user.current_pos)
     }
     return render(request, "map/map.html", html_render_variables)
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def world_map(request):
+    map = request.POST.get("map", None)
+    if map is not None:
+        request.session["map"] = map
+        return redirect("map")
     html_render_variables = {
         "maps": consts.MAPS
     }
