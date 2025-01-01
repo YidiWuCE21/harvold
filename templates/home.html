@@ -12,21 +12,21 @@
         <button type="submit">Log Out</button>
     </form>
     <h4>Welcome</h4>
-    <p>Brief tutorial. Use the Travel option to access the world map and select the map you want from the dropdown. "Oak village" is the default starting map. Maps that are "complete" should have wild Pokemon in the grass and NPCs to battle or talk to. Battles are all optional. WASD movement, hold B to run.</p>
-    <p>Press enter to interact with NPCs or travel to new maps. Exclamation marks means a battle, ellipses means dialogue. Wild Pokemon appear in bubbles on the map, click them to battle.</p>
-    <p>You can organize your pokemon with your box, and in the party panel. You can look at your items in your bag but currently it isn't usable.</p>
-    <p>Learning moves and evolution can be done on a Pokemon's page.</p>
-    <p>Battling trainers or challenging a gym under the "battle" tab brings you to a battle screen. If the battle is unresponsive, it's likely an issue with the websocket. Ping me and I'll clear your battle but tbh if battles are broken there's not a whole lot to do.</p>
-    <p>Heal yourself at the Pokecenter and buy supplies at the Pokemart in the Town tab. Ignore the swarm alert, it has not been implemented. Trade center is not implemented. You can rebattle trainers and gyms for money but they will only give 10% of the original prize money.</p>
-    <p>Battle mechanics should be a mix of Gen 5 and 6. I'm using my own battle engine so some moves are broken. Mechanics that should work include:</p>
-    <ol>
+    <br><p>Brief tutorial. Use the Travel option to access the world map and select the map you want from the dropdown. "Oak village" is the default starting map. Maps that are "complete" should have wild Pokemon in the grass and NPCs to battle or talk to. Battles are all optional. WASD movement, hold B to run.</p>
+    <br><p>Press enter to interact with NPCs or travel to new maps. Exclamation marks means a battle, ellipses means dialogue. Wild Pokemon appear in bubbles on the map, click them to battle.</p>
+    <br><p>You can organize your pokemon with your box, and in the party panel. You can look at your items in your bag but currently it isn't usable.</p>
+    <br><p>Learning moves and evolution can be done on a Pokemon's page.</p>
+    <br><p>Battling trainers or challenging a gym under the "battle" tab brings you to a battle screen. If the battle is unresponsive, it's likely an issue with the websocket. Ping me and I'll clear your battle but tbh if battles are broken there's not a whole lot to do.</p>
+    <br><p>Heal yourself at the Pokecenter and buy supplies at the Pokemart in the Town tab. Ignore the swarm alert, it has not been implemented. Trade center is not implemented. You can rebattle trainers and gyms for money but they will only give 10% of the original prize money.</p>
+    <br><p>Battle mechanics should be a mix of Gen 5 and 6. I'm using my own battle engine so some moves are broken. Mechanics that should work include:</p>
+    <br><ol>
         <li>Base power (doing damage) and accuracy</li>
         <li>Some status conditions; poison, burn, toxic poison, freeze, paralysis, and confusion</li>
         <li>Stat boosts and drains</li>
         <li>Recoil and lifedrain</li>
         <li>Weather setting MOVES like rain dance, sunny day, etc. Pokemon with abilities like sand rush/snow cloak should receive bonuses. Weather setting ABILITIES like drizzle do not work.</li>
     </ol>
-    <p>There is a currently limited selection of Pokemon. The plan is to have all Pokemon up to gen 5, not counting all legendaries, implemented at some point.</p>
+    <br><p>There is a currently limited selection of Pokemon. The plan is to have all Pokemon up to gen 5, not counting all legendaries, implemented at some point.</p>
     <h4>Rules</h4>
     <img src="{% get_static_prefix %}{{ asset_paths.misc }}\rules.png">
     {% else %}
