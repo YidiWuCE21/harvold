@@ -11,8 +11,10 @@ let buttonsActive = true;
 
 
 // Handle socket stuff
+let ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
 const battleSocket = new WebSocket(
-    'ws://'
+    ws_scheme
+    + '://'
     + window.location.host
     + '/ws/battle/'
     + roomName
