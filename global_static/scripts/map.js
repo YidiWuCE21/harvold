@@ -866,10 +866,10 @@ function animate(looped = true) {
     // Movement logic
     const relevantBoundaries = (onBridge) ? bridgeBounds : boundaries;
     // Draw bounds
-    for (let i = 0; i < relevantBoundaries.length; i++) {
+    /*for (let i = 0; i < relevantBoundaries.length; i++) {
         const ledge = relevantBoundaries[i];
         ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
-    }
+    }*/
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
         player.moving = true;
         player.rows.val = 2;
