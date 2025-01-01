@@ -162,4 +162,4 @@ CHANNEL_LAYERS = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-43b267c0687e.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-43b267c0687e.herokuapp.com"]
