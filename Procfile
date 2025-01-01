@@ -1,1 +1,1 @@
-web: gunicorn harvoldsite.wsgi
+web: gunicorn harvoldsite.asgi:application
