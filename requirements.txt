@@ -7,3 +7,4 @@ whitenoise==6.8.2
 daphne==4.1.2
 trade==1.1.4
 mysqlclient==2.2.4
+gunicorn==23.0.0
