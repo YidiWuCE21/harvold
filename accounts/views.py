@@ -107,6 +107,7 @@ def bag(request):
 
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def pokemart(request):
     mart_data = {}
     message = None
