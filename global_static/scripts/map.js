@@ -204,7 +204,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     maplinkKey = currentData.maplinkKey;
 
     // Set the statics new positions
-    console.log("Moving positions...");
     statics = [player, surfer, surf, camera];
     nonCameraStatics = [player, surfer, surf];
     statics.forEach((static) => {
@@ -612,8 +611,6 @@ function animate(looped = true) {
             const currentSprite = orderedSprites[i];
             currentSprite.draw(cappedCamera);
         }
-        console.log(ledgeFrames);
-        console.log(player.position.y)
         // Jump animation
         if (ledgeFrames > 9) {
             nonCameraStatics.forEach(movable => {movable.position.y -= 2});

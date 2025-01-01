@@ -235,58 +235,35 @@ function toggleButtons(enable) {
 
 function disappear({x, y, div_id}) {
     const sprite = document.getElementById(div_id);
-    console.log('dis');
 
     const originalPosition = {
         x: sprite.getAttribute('data-ox'),
         y: sprite.getAttribute('data-oy')
     };
-    console.log({
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
-    });
 
     sprite.style.transition = `all ${interval / 1000 * 0.8}s ease`;
     sprite.style.left = `${x}px`;
     sprite.style.top = `${y}px`;
     sprite.style.opacity = 0.0
-    console.log({
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
-    });
 
     setTimeout(() => {
         sprite.style.left = `${originalPosition.x}px`;
         sprite.style.top = `${originalPosition.y}px`;
-
-        console.log({
-            x: sprite.offsetLeft,
-            y: sprite.offsetTop
-        });
     }, interval * 0.8);
 }
 
 function reappear({x, y, div_id}) {
-    console.log('reappear');
     const sprite = document.getElementById(div_id);
 
     const originalPosition = {
         x: sprite.getAttribute('data-ox'),
         y: sprite.getAttribute('data-oy')
     };
-    console.log({
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
-    });
 
     sprite.style.transition = null;
     sprite.style.left = `${x}px`;
     sprite.style.top = `${y}px`;
     sprite.style.opacity = 0.0
-    console.log({
-        x: sprite.offsetLeft,
-        y: sprite.offsetTop
-    });
 
 
     setTimeout(() => {
@@ -294,17 +271,11 @@ function reappear({x, y, div_id}) {
         sprite.style.left = `${originalPosition.x}px`;
         sprite.style.top = `${originalPosition.y}px`;
         sprite.style.opacity = 1.0
-
-        console.log({
-            x: sprite.offsetLeft,
-            y: sprite.offsetTop
-        });
     }, 0.1 * interval);
 }
 
 function sendMove({ action, move = null, item = null, target = null}) {
     if (action == null) {
-        console.log("fail");
         return;
     }
     let message = {
@@ -423,9 +394,6 @@ function updateSelector() {
     // Show the image of item being used
     const selectedItemImg = document.createElement('img');
     selectedItemImg.src = itemPath + "/" + selectedItem + ".png";
-    console.log(selectedItem);
-    console.log(itemPath + "/" + selectedItem + ".png");
-    console.log(selectedItemImg.src);
     targetSelector.append(selectedItemImg);
     targetSelector.append(document.createElement('br'));
     // Show the party buttons
