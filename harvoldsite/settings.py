@@ -201,12 +201,8 @@ else:
             "CONFIG": {
                 "hosts": [
                     {
-                        'host': url.hostname,
-                        'port': url.port,
-                        'username': url.username,
-                        'password': url.password,
-                        'connection_class': CustomSSLConnection,
-                        'ssl_context': ssl_context
+                        "address": os.environ.get("REDIS_URL", "rediss://user@host:port"),  # "REDIS_TLS_URL"
+                        "ssl_cert_reqs": None,
                     }
                 ],
             },
