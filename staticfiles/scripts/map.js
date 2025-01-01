@@ -204,7 +204,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     maplinkKey = currentData.maplinkKey;
 
     // Set the statics new positions
-    console.log("Moving positions...");
     statics = [player, surfer, surf, camera];
     nonCameraStatics = [player, surfer, surf];
     statics.forEach((static) => {
@@ -612,8 +611,6 @@ function animate(looped = true) {
             const currentSprite = orderedSprites[i];
             currentSprite.draw(cappedCamera);
         }
-        console.log(ledgeFrames);
-        console.log(player.position.y)
         // Jump animation
         if (ledgeFrames > 9) {
             nonCameraStatics.forEach(movable => {movable.position.y -= 2});
@@ -866,10 +863,10 @@ function animate(looped = true) {
     // Movement logic
     const relevantBoundaries = (onBridge) ? bridgeBounds : boundaries;
     // Draw bounds
-    for (let i = 0; i < relevantBoundaries.length; i++) {
+    /*for (let i = 0; i < relevantBoundaries.length; i++) {
         const ledge = relevantBoundaries[i];
         ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
-    }
+    }*/
     if (keys.w.pressed && (lastKey === 'w' || !keys[lastKey].pressed)) {
         player.moving = true;
         player.rows.val = 2;
