@@ -268,7 +268,7 @@ class BattleState:
                     critical
                 )
                 # Survival checks
-                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active)
+                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active) or (target.ability == "Sturdy" and target.current_hp == target.hp)
                 damage_dealt = self.apply_damage(damage, player.opponent, survive=survived, effect=type_effectiveness)
                 # Apply drain
                 if move_data["drain"] != 0:
