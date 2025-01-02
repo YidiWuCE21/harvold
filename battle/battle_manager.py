@@ -83,13 +83,13 @@ class BattleState:
 
         # Determine move order
         # Case where only P1 moves
-        if p2_move["action"] != "attack":
+        if p2_move["action"] != "attack" and p1_move["action"] == "attack":
             self.attack(self.player_1, p1_move["move"])
         # Case where only P2 moves
-        elif p1_move["action"] != "attack":
+        elif p1_move["action"] != "attack" and p2_move["action"] == "attack":
             self.attack(self.player_2, p2_move["move"])
         # Determine which move goes first
-        else:
+        elif p1_move["action"] == "attack" and p2_move["action"] == "attack":
             if self.check_p1_first(p1_move["move"], p2_move["move"]):
                 self.attack(self.player_1, p1_move["move"])
                 self.attack(self.player_2, p2_move["move"])
@@ -197,7 +197,7 @@ class BattleState:
         return speed
 
 
-    def attack(self, player, move):
+    def attack(self, player, move, multiplier=1):
         user = player.get_current_pokemon()
         target = player.opponent.get_current_pokemon()
         # Check user not fainted
@@ -252,6 +252,8 @@ class BattleState:
             if "protect" in player.opponent.defense_active or "detect" in player.opponent.defense_active:
                 self.output.append({"text": "{} protected itself!".format(target.name)})
                 return
+            # No effect check
+
             if move_data["damage_class"] != "status":
                 # Roll for crit
                 critical = 1.5 if self.roll_crit(player, move) else 1
@@ -261,11 +263,13 @@ class BattleState:
                     user,
                     target,
                     move_data["type"],
-                    move_data["power"],
+                    move_data["power"] * multiplier,
                     move_data["damage_class"],
                     critical
                 )
-                damage_dealt = self.apply_damage(damage, player.opponent, False, effect=type_effectiveness)
+                # Survival checks
+                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active)
+                damage_dealt = self.apply_damage(damage, player.opponent, survive=survived, effect=type_effectiveness)
                 # Apply drain
                 if move_data["drain"] != 0:
                     if move_data["drain"] > 0:
@@ -416,8 +420,8 @@ class BattleState:
         move_data = consts.MOVES[move]
         ailment = move_data["ailment"]
         chance = move_data["ailment_chance"]
-        # Do not apply if already afflicted by similar status
         if ailment in generic_status:
+            # Do not apply if already afflicted by similar status
             if target.status:
                 if move_data["damage_class"] == "status":
                     self.output.append({"text": "But it failed!"})
@@ -590,7 +594,7 @@ class BattleState:
         # Pursuit check and KO check
         used_pursuit = False
         if other_move.get("move", None) == "pursuit":
-            self.attack(player.opponent, "pursuit")
+            self.attack(player.opponent, "pursuit", multiplier=2)
             used_pursuit = True
 
         # Check switch to target is alive

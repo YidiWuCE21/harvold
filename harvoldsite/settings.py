@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*", "https://harvold-alpha-c1e3d777167f.herokuapp.com"]
 
@@ -181,7 +181,7 @@ class RedisSSLContext:
     def get(self):
         return self.context
 
-if False:
+if DEBUG:
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
