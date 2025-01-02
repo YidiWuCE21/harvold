@@ -145,6 +145,7 @@ function processAnim({animMove}) {
     if ((isPlayerOne && animMove == 'p1_faint') || (!isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '70', 'y': '180', 'div_id': 'player_spr'});
         updateBalls();
+        openTab('control-tab', 'switch');
     } else if ((!isPlayerOne && animMove == 'p1_faint') || (isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '300', 'y': '110', 'div_id': 'opp_spr'});
         updateBalls();
