@@ -584,3 +584,15 @@ input, select {
     background-color: var(--battle-log);
     overflow-y: scroll;
 }
+
+.demo h4 {
+    width: 100%;
+    text-align: center;
+    background-color: var(--card);
+}
+
+.demo-img {
+    object-fit: cover;
+    margin: 0px -1px 0px 0px;
+    border: 1px solid var(--border);
+}

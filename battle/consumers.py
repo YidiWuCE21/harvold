@@ -89,7 +89,7 @@ def validate_action(action, player, battle_state):
 
 
 @database_sync_to_async
-def battle_processor(text_data, sender):
+def battle_processor(text_data, sender, first_turn=False):
     action = json.loads(text_data)
     prompt = None
     output_log = None
@@ -110,6 +110,17 @@ def battle_processor(text_data, sender):
         battle = models.Battle.objects.select_for_update().get(pk=battle.pk)
         p1 = battle.player_1
         p2 = battle.player_2
+        # First turn logic
+        if first_turn:
+            battle_state = BattleState(battle.battle_state)
+            is_p1 = p1 == player
+            player_state = battle_state.player_1 if is_p1 else battle_state.player_2
+            battle_state.process_start()
+            battle.battle_state = battle_state.jsonify()
+            battle.save()
+            return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt,
+                              "output": output_log, "turn": battle.current_turn, "send_update": True}}
+
         if battle.battle_end is not None:
             return {"self": {"message": "Battle is already over!"}}
 
@@ -183,12 +194,12 @@ def battle_processor(text_data, sender):
                         true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants))
                         if not battle_state.player_1.party[i].is_alive():
                             break
-                        output_log.append({"text": "{} gained {} experience!".format(pkmn.name, true_exp)})
+                        output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
                         pkmn.happiness += 1
                         # Levelup case
                         if pkmn.add_xp(true_exp, recalculate=True):
                             anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
-                            output_log.append({"text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
+                            output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
                             # Get the new stats
                             new_stats = pkmn.get_battle_info()["stats"]
                             battle_state.player_1.party[i].update_stats(new_stats)
@@ -238,7 +249,7 @@ def battle_processor(text_data, sender):
                         try:
                             with open(trainer_path, encoding="utf-8") as trainer_file:
                                 trainer_json = json.load(trainer_file)
-                                output_log.append({"text": "{}: {}".format(trainer_json["name"], trainer_json["lines"]["lose"])})
+                                output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
                         except:
                             pass
                     # Payout
@@ -248,7 +259,7 @@ def battle_processor(text_data, sender):
                         # If it's not the first victory of the day, divide by 10
                         if player_1.has_beat_trainer(battle.npc_opponent):
                             cash_payout = int(cash_payout / 10)
-                        output_log.append({"text": "You received ${} for winning!".format(cash_payout)})
+                        output_log.append({"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
                         player_1.money += cash_payout
                     # Gym badge
                     if "badges" in battle.battle_prize:
@@ -257,10 +268,10 @@ def battle_processor(text_data, sender):
                         for badge, rank in battle.battle_prize["badges"].items():
                             if player_1.badges[badge] is None:
                                 player_1.badges[badge] = rank
-                                output_log.append({"text": "You earned the {} Badge!".format(badge.capitalize())})
+                                output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the {} Badge!".format(badge.capitalize())})
                             elif player_1.badges[badge] == "silver" and rank == "gold":
                                 player_1.badges[badge] = "gold"
-                                output_log.append({"text": "You earned the Elite {} Badge!".format(badge.capitalize)})
+                                output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the Elite {} Badge!".format(badge.capitalize)})
                 player_1.beat_trainer(battle.npc_opponent, skip_save=True)
                 player_1.save()
 
@@ -268,6 +279,8 @@ def battle_processor(text_data, sender):
 
         # Update battle in DB
         battle.battle_state = battle_state.jsonify()
+        # Update logs
+        battle.output_log += output_log
         # Update each choice; set to None after a process turn, then if a switch is needed, set to idle
         battle.player_1_choice = None
         battle.player_1_choice = None

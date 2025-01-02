@@ -30,9 +30,31 @@
     <h4>Rules</h4>
     <img src="{% get_static_prefix %}{{ asset_paths.misc }}\rules.png">
     {% else %}
-    <p>You are not logged in</p>
-    <a href="{% url 'login' %}">Log In</a>
-    <a href="{% url 'signup' %}">Sign up</a>
+    <h4>Welcome to Project Harvold!</h4>
+    <br>
+    <p>Click the buttons below to get started!</p>
+    <br>
+    <a class="button-2" href="{% url 'login' %}">Log In</a>
+    <br>
+    <a class="button-2" href="{% url 'signup' %}">Sign up</a>
+    <br>
+    <br>
+    <br>
+    <div class="demo">
+        <h4>Explore an amazing world!</h4>
+        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_1.png">
+        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_2.png">
+        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_3.png">
+        <h4>Fight trainers in intense battles!</h4>
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\trainer.png">
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_2.png">
+        <h4>Challenge gym leaders!</h4>
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\gyms.png">
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_1.png">
+        <h4>Catch 'em all!</h4>
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\pokemon.png">
+        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\dex.png">
+    </div>
     {% endif %}
 </div>
 

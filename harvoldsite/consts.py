@@ -59,7 +59,8 @@ ASSET_PATHS = {
     "badges": os.path.join("assets", "badges"),
     "misc": os.path.join("assets", "misc"),
     "scene": os.path.join("assets", "scene"),
-    "status": os.path.join("assets", "status")
+    "status": os.path.join("assets", "status"),
+    "demo": os.path.join("assets", "demo")
 }
 
 # Login-related choicesf
@@ -216,7 +217,8 @@ PLAYER_STATE = {
     "trapped": 0,
     "choice": None,
     "inventory": None,
-    "participants": []
+    "participants": [],
+    "misc": {}
 }
 
 TYPE_EFFECTIVENESS = {

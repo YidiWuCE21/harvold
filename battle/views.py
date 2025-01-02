@@ -104,7 +104,7 @@ def battle(request):
 
     html_render_variables = {
         "battle_state": json.dumps(battle.battle_state),
-        "output_log": battle.output_log,
+        "output_log": json.dumps(battle.output_log).replace("'", "\\'"),
         "move_history": battle.move_history,
         "type": battle.type,
         "self": "player_1" if battle.player_1 == request.user.profile else "player_2",

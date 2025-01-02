@@ -118,6 +118,7 @@ const isPlayerOne = {{ is_p1|yesno:"true,false" }};
 const ballsAllowed = {{ balls_allowed|yesno:"true,false" }};
 const medicinesAllowed = {{ medicines_allowed|yesno:"true,false" }};
 const pokecenterUrl = '{% url 'pokecenter' %}';
+const initialOutput = JSON.parse('{{ output_log|safe }}');
 
 const battleType = '{{ type }}';
 const playerTrainer = '{% get_static_prefix %}{{ asset_paths.player_back|replace:'\|/' }}/{{ player_sprite }}.png';

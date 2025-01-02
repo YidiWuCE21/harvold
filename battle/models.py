@@ -102,6 +102,12 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         battle_state[player]["current_pokemon"] = current
         battle_state[player]["participants"].append(current)
 
+    # Pre-move abilities like intimidate, sand stream, etc.
+    pre_state = BattleState(battle_state)
+    pre_state.process_start()
+    pre_output = pre_state.output
+    pre_state.output = None
+
     # DB opereations
     battle = Battle(
         type=type,
@@ -110,8 +116,9 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         player_2=player_2,
         npc_opponent=npc_opponent,
         wild_opponent=wild_opponent,
-        battle_state=battle_state,
-        battle_prize=reward
+        battle_state=pre_state.jsonify(),
+        battle_prize=reward,
+        output_log=pre_output
     )
 
     # Check that parties are not knocked out
@@ -124,6 +131,7 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         if all([pkmn.current_hp == 0 for pkmn in party_2]):
             for pkmn in party_2:
                 pkmn.full_heal()
+
 
     # Save users and parties together
     with transaction.atomic():

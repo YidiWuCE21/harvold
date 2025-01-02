@@ -55,6 +55,13 @@ class BattleState:
         return not (self.player_1.get_current_pokemon().is_alive() and self.player_1.get_current_pokemon().is_alive()) and self.outcome is None
 
 
+    def process_start(self):
+        if self.player_1.get_current_pokemon().ability in custom_moves.SUPPORTED_ABILITIES:
+            custom_moves.SUPPORTED_ABILITIES[self.player_1.get_current_pokemon().ability](self, self.player_1)
+        if self.player_2.get_current_pokemon().ability in custom_moves.SUPPORTED_ABILITIES:
+            custom_moves.SUPPORTED_ABILITIES[self.player_2.get_current_pokemon().ability](self, self.player_2)
+
+
     def process_battle(self, p1_move, p2_move):
         """
         Function that controls the main turn flow.
@@ -103,6 +110,8 @@ class BattleState:
             self.status_effect(self.player_1)
         if self.player_2.get_current_pokemon().is_alive():
             self.status_effect(self.player_2)
+        # Admin stuff; clear defenses
+        self.player_1.defense_active = []
 
         # Update outcome if one or both teams have no more useable pokemon
         p1_alive = self.player_1.has_pokemon()
@@ -249,44 +258,76 @@ class BattleState:
         self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])]})
         if move_data["target"] not in ["users-field", "user", "opponents-field"]:
             # Protect/detect/endure check
-            if "protect" in player.opponent.defense_active or "detect" in player.opponent.defense_active:
+            if "protect" in player.opponent.defense_active and move != "feint":
                 self.output.append({"text": "{} protected itself!".format(target.name)})
+                player.opponent.misc_change("successful_defense", 1)
                 return
             # No effect check
 
-            if move_data["damage_class"] != "status":
-                # Roll for crit
-                critical = 1.5 if self.roll_crit(player, move) else 1
-                # Roll for damage, if move does damage
-                damage, type_effectiveness = self.move_damage(
-                    player,
-                    user,
-                    target,
-                    move_data["type"],
-                    move_data["power"],
-                    move_data["damage_class"],
-                    critical,
-                    multiplier=multiplier
-                )
-                # Survival checks
-                sturdy = (target.ability == "Sturdy" and target.current_hp == target.hp)
-                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active) or sturdy
-                damage_dealt = self.apply_damage(damage, player.opponent, survive=survived, effect=type_effectiveness)
-                if sturdy:
-                    self.output.append({"text": "{} held on with Sturdy!".format(target.name)})
-                # Apply drain
-                if move_data["drain"] != 0:
-                    if move_data["drain"] > 0:
-                        effect_text = "{} restored its HP!".format(user.name)
+            # Check for hit count
+            attack_count = 1
+            hit_count = 0
+            if move_data["min_hits"] != None and move_data["max_hits"] != None:
+                if user.ability == "Skill Link":
+                    attack_count = move_data["max_hits"]
+                else:
+                    attack_count = random.randint(move_data["min_hits"], move_data["max_hits"])
+            for i in range(attack_count):
+                hit_count += 1
+                if i > 0:
+                    self.output.append({"anim": ["{}_{}_{}".format(player.player, move_data["damage_class"], move_data["type"])]})
+                if move_data["damage_class"] != "status":
+                    # Roll for crit
+                    critical = 1.5 if self.roll_crit(player, move) else 1
+                    # Roll for damage, if move does damage
+                    damage, type_effectiveness = self.move_damage(
+                        player,
+                        user,
+                        target,
+                        move_data["type"],
+                        move_data["power"],
+                        move_data["damage_class"],
+                        critical,
+                        multiplier=multiplier
+                    )
+                    # Survival checks
+                    sturdy = (target.ability == "Sturdy" and target.current_hp == target.hp)
+                    endured = ("endure" in player.opponent.defense_active)
+                    if endured:
+                        # If endured, increment defense success
+                        player.opponent.misc_change("successful_defense", 1)
                     else:
-                        effect_text = "{} took damage from recoil!".format(user.name)
-                    self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False, override_text=effect_text)
-                # Apply struggle
-                if move_data["healing"] != 0:
-                    self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
+                        # Only reach here if did not protect and endure
+                        player.opponent.misc_delete("successful defense")
+
+                    survived = (move == "falseswipe") or endured or sturdy
+                    damage_dealt = self.apply_damage(damage, player.opponent, survive=survived, effect=type_effectiveness)
+                    if sturdy:
+                        self.output.append({"text": "{} held on with Sturdy!".format(target.name)})
+                    elif endured:
+                        self.output.append({"text": "{} endured the hit!".format(target.name)})
+                    # Apply drain
+                    if move_data["drain"] != 0:
+                        if move_data["drain"] > 0:
+                            effect_text = "{} restored its HP!".format(user.name)
+                        else:
+                            effect_text = "{} took damage from recoil!".format(user.name)
+                        self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False, override_text=effect_text)
+                    # Apply struggle
+                    if move_data["healing"] != 0:
+                        self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
+                # Break if fainted
+                if target.current_hp == 0:
+                    break
+            else:
+                # Did not use endure, even if endure was chosen
+                player.opponent.misc_delete("successful defense")
+
             # Apply effects
             self.apply_boosts(player, move)
             self.apply_status(player.opponent, target, move)
+            if attack_count > 1:
+                self.output.append({"text": "Hit {} times!".format(hit_count)})
         else:
             self.apply_boosts(player, move)
             if move_data["healing"] != 0:
@@ -394,17 +435,22 @@ class BattleState:
             target.current_hp -= damage
         target.current_hp = min(target.current_hp, target.hp)
         effect_text = None
+        effect_colour = None
         if effect is not None:
             if effect > 1:
                 effect_text = "It's super effective!"
+                effect_colour = "rgb(0, 153, 0)"
             elif effect == 0:
                 effect_text = "It's completely ineffective!"
+                effect_colour = "rgb(204, 0, 0)"
             elif effect < 1:
                 effect_text = "It's not very effective!"
+                effect_colour = "rgb(204, 102, 0)"
         if override_text is not None:
             effect_text = override_text
+            effect_colour = None
         if effect_text is not None:
-            self.output.append({"text": effect_text, "anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
+            self.output.append({"text": effect_text, "colourBox": effect_colour, "anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
         else:
             self.output.append({"anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
         if target.current_hp == 0:
@@ -621,6 +667,9 @@ class BattleState:
             self.output.append({"text": "Go, {}!".format(player.get_current_pokemon().name), "anim": ["{}_new_sprite".format(player.player), "{}_appear".format(player.player)]})
 
         # TODO - Apply entry hazards
+        # Apply entry abilities
+        if player.get_current_pokemon().ability in custom_moves.SUPPORTED_ABILITIES:
+            custom_moves.SUPPORTED_ABILITIES[player.get_current_pokemon().ability](self, player)
         return used_pursuit
 
 
@@ -777,6 +826,7 @@ class PlayerState:
         self.choice = player_state["choice"]
         self.inventory = player_state["inventory"]
         self.participants = player_state.get("participants", [])
+        self.misc = player_state.get("misc", {})
 
         # Not in state
         self.player = None
@@ -787,6 +837,23 @@ class PlayerState:
 
     def has_pokemon(self):
         return any([pkmn.is_alive() for pkmn in self.party])
+
+
+    def misc_change(self, field, delta):
+        if field not in self.misc:
+            self.misc[field] = delta
+        else:
+            self.misc[field] += delta
+
+    def misc_delete(self, field):
+        if field in self.misc:
+            self.misc.pop(field)
+
+    def end_of_turn(self):
+        """
+        Perform various end of turn functions; decrement random stuff, remove protect, etc.
+        """
+        self.defense_active = []
 
     def jsonify(self):
         return {
@@ -803,7 +870,8 @@ class PlayerState:
             "trapped": self.trapped,
             "choice": self.choice,
             "inventory": self.inventory,
-            "participants": self.participants
+            "participants": self.participants,
+            "misc": self.misc
         }
 
 

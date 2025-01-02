@@ -81,18 +81,37 @@ function endBattle() {
     openTab('control-tab', 'end');
 }
 
-function processOutput({text = null, anim = null, turn = null}) {
-    if (text != null)
-        document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('p'), {innerHTML: text}));
+function processOutput({text = null, anim = null, turn = null, colourBox = null, colour = null, speaker = null, doAnim = true}) {
+    if (text != null) {
+        if (speaker != null) {
+            let speakerText = document.createElement('p');
+            speakerText.appendChild(Object.assign(document.createElement('strong'), {innerHTML: speaker}));
+            speakerText.appendChild(Object.assign(document.createTextNode(': ' + text)));
+            document.querySelector('#chat-log').appendChild(speakerText);
+        } else if (colourBox != null) {
+            let colourText = Object.assign(document.createElement('p'), {innerHTML: text});
+            colourText.style.backgroundColor = colourBox;
+            colourText.style.color = 'rgb(255, 255, 255)';
+            colourText.style.borderRadius = '2px';
+            colourText.style.display = 'inline-block';
+            colourText.style.padding = '0px 4px 0px 4px';
+            document.querySelector('#chat-log').appendChild(colourText);
+        } else if (colour != null) {
+            let colourText = Object.assign(document.createElement('p'), {innerHTML: text});
+            colourText.style.color = colour;
+            document.querySelector('#chat-log').appendChild(colourText);
+        } else {
+            document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('p'), {innerHTML: text}));
+        }
+    }
     if (turn != null)
         document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('h4'), {innerHTML: turn, classList: "battle-header"}));
     document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
-    if (anim != null) {
+    if (anim != null && doAnim) {
         anim.forEach((animMove) => {
             processAnim({"animMove": animMove});
         })
     }
-
 }
 
 function processAnim({animMove}) {
@@ -606,7 +625,8 @@ function battleStart() {
         loadAnim.push({'text': battleState[opp]['name'] + ' sent out ' + oppPokemon['name'] +'!', 'anim': ['p2_new_sprite', 'p2_appear']});
     }
     loadAnim.push({'text': 'Go, ' + playerPokemon['name'] + '!', "anim": ["trainer_retreat"]});
-    loadAnim.push({'anim': ['p1_new_sprite', 'p1_appear']})
+    loadAnim.push({'anim': ['p1_new_sprite', 'p1_appear']});
+    loadAnim.push(...initialOutput);
     loadAnim.push({"anim": ["turnEnd"]});
     let promise = Promise.resolve();
     loadAnim.forEach(function (out) {
@@ -629,5 +649,9 @@ toggleButtons(false);
 if (initialTurn == 1) {
     battleStart();
 } else {
+    initialOutput.forEach(function (out) {
+        out["doAnim"] = false;
+        processOutput(out);
+    })
     toggleButtons(true);
 }
