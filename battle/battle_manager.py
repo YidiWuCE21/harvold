@@ -273,10 +273,10 @@ class BattleState:
                 # Apply drain
                 if move_data["drain"] != 0:
                     if move_data["drain"] > 0:
-                        self.output.append({"text": "{} restored its HP!".format(user.name)})
+                        effect_text = "{} restored its HP!".format(user.name)
                     else:
-                        self.output.append({"text": "{} took damage from recoil!".format(user.name)})
-                    self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False)
+                        effect_text = "{} took damage from recoil!".format(user.name)
+                    self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False, override_text=effect_text)
                 # Apply struggle
                 if move_data["healing"] != 0:
                     self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
@@ -374,7 +374,7 @@ class BattleState:
         return (int(damage), type_effectiveness)
 
 
-    def apply_damage(self, damage, player, survive=False, effect=None):
+    def apply_damage(self, damage, player, survive=False, effect=None, override_text=None):
         """
         Damage and faint a Pokemon
         """
@@ -396,6 +396,8 @@ class BattleState:
                 effect_text = "It's completely ineffective!"
             elif effect < 1:
                 effect_text = "It's not very effective!"
+        if override_text is not None:
+            effect_text = override_text
         if effect_text is not None:
             self.output.append({"text": effect_text, "anim": ["{}_update_hp_{}".format(player.player, target.current_hp)]})
         else:
