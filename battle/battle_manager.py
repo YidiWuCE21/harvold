@@ -590,7 +590,7 @@ class BattleState:
         # Pursuit check and KO check
         used_pursuit = False
         if other_move.get("move", None) == "pursuit":
-            self.attack(player.opponent.get_current_pokemon(), "pursuit")
+            self.attack(player.opponent, "pursuit")
             used_pursuit = True
 
         # Check switch to target is alive
