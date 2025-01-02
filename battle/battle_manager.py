@@ -67,9 +67,11 @@ class BattleState:
 
         # Check for switch with pursuit check
         if p1_move["action"] == "switch":
-            self.switch(self.player_1, p1_move["target"], p2_move)
+            if self.switch(self.player_1, p1_move["target"], p2_move):
+                p2_move = {"action": "idle"}
         if p2_move["action"] == "switch":
-            self.switch(self.player_2, p2_move["target"], p1_move)
+            if self.switch(self.player_2, p2_move["target"], p1_move)
+                p1_move = {"action": "idle"}
 
         # Check for item usage
         if p1_move["action"] == "item":
@@ -586,8 +588,10 @@ class BattleState:
             self.output.append({"text": "{} cannot be switched!"})
             return
         # Pursuit check and KO check
+        used_pursuit = False
         if other_move.get("move", None) == "pursuit":
-            self.attack(player.opponent.get_current_pokemon(), player.get_current_pokemon())
+            self.attack(player.opponent.get_current_pokemon(), "pursuit")
+            used_pursuit = True
 
         # Check switch to target is alive
         if player.party[swap_to].is_alive():
@@ -606,7 +610,7 @@ class BattleState:
             self.output.append({"text": "Go, {}!".format(player.get_current_pokemon().name), "anim": ["{}_new_sprite".format(player.player), "{}_appear".format(player.player)]})
 
         # TODO - Apply entry hazards
-
+        return used_pursuit
 
 
     def check_surrender(self, p1_surrender, p2_surrender):
