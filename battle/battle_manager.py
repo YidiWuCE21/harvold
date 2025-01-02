@@ -70,7 +70,7 @@ class BattleState:
             if self.switch(self.player_1, p1_move["target"], p2_move):
                 p2_move = {"action": "idle"}
         if p2_move["action"] == "switch":
-            if self.switch(self.player_2, p2_move["target"], p1_move)
+            if self.switch(self.player_2, p2_move["target"], p1_move):
                 p1_move = {"action": "idle"}
 
         # Check for item usage
