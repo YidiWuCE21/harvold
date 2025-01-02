@@ -11,7 +11,7 @@
         </canvas>
 
         <div id="wild" style="display:none;position:absolute;top:100px;left:214px;">
-            <form method="POST" action="{% url 'battle_create' %}">
+            <form method="POST" action="{% url 'battle_create' %}" name="wildBattleForm">
                 {% csrf_token %}
                 <input type="hidden" id="wild-id" name="wild">
                 <button class="pokemon-wild-bg">

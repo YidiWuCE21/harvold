@@ -4,6 +4,7 @@ let prevState = initialState;
 let interval = 1000;
 let selectedItem = null;
 let prompt = null;
+let fainted = false;
 
 // Moves
 let moves = new Array(4).fill(null).map(() => ({}));
@@ -26,7 +27,7 @@ battleSocket.onmessage = function(e) {
     const data = JSON.parse(e.data);
     // Display any warnings
     if (data.message != null) {
-        document.querySelector('#chat-log').value += ('Warning: ' + data.message + '\n');
+        document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('p'), {innerHTML: "Warning: " + data.message}));
         document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
         toggleButtons(true);
     }
@@ -47,6 +48,10 @@ battleSocket.onmessage = function(e) {
     if (data.output != null) {
         let promise = Promise.resolve();
         data.output.push({"anim": ["turnEnd"]});
+        // Turn header
+        if ("turn" in data.output[0]) {
+            processOutput(data.output.shift());
+        }
         data.output.forEach(function (out) {
             promise = promise.then(function() {
                 processOutput(out);
@@ -76,20 +81,27 @@ function endBattle() {
     openTab('control-tab', 'end');
 }
 
-function processOutput({text = null, anim = null}) {
+function processOutput({text = null, anim = null, turn = null}) {
     if (text != null)
-        document.querySelector('#chat-log').value += (text + '\n');
-        document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
+        document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('p'), {innerHTML: text}));
+    if (turn != null)
+        document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('h4'), {innerHTML: turn, classList: "battle-header"}));
+    document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
     if (anim != null) {
         anim.forEach((animMove) => {
             processAnim({"animMove": animMove});
         })
     }
+
 }
 
 function processAnim({animMove}) {
     // Re-enable buttons after animations finished
     if (animMove == "turnEnd") {
+        if (fainted) {
+            fainted = false;
+            openTab('control-tab', 'switch');
+        }
         if (battleState.outcome == null) {
             toggleButtons(true);
         } else {
@@ -145,7 +157,7 @@ function processAnim({animMove}) {
     if ((isPlayerOne && animMove == 'p1_faint') || (!isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '70', 'y': '180', 'div_id': 'player_spr'});
         updateBalls();
-        openTab('control-tab', 'switch');
+        fainted = true;
     } else if ((!isPlayerOne && animMove == 'p1_faint') || (isPlayerOne && animMove == 'p2_faint')) {
         disappear({'x': '300', 'y': '110', 'div_id': 'opp_spr'});
         updateBalls();
@@ -409,7 +421,7 @@ function updateSelector() {
             if (selectedItem != null) {
                 sendMove({"action": "item", "item": selectedItem, "target": i});
             } else {
-                document.querySelector('#chat-log').value += ('Select an item first!\n');
+                document.querySelector('#chat-log').appendChild(Object.assign(document.createElement('p'), {innerHTML: "Select an item first!"}));
                 document.querySelector('#chat-log').scrollTop = document.querySelector('#chat-log').scrollHeight;
             }
             targetSelector.style.display = 'none';

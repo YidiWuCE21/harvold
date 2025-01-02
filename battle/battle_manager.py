@@ -263,13 +263,17 @@ class BattleState:
                     user,
                     target,
                     move_data["type"],
-                    move_data["power"] * multiplier,
+                    move_data["power"],
                     move_data["damage_class"],
-                    critical
+                    critical,
+                    multiplier=multiplier
                 )
                 # Survival checks
-                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active) or (target.ability == "Sturdy" and target.current_hp == target.hp)
+                sturdy = (target.ability == "Sturdy" and target.current_hp == target.hp)
+                survived = (move == "falseswipe") or ("endure" in player.opponent.defense_active) or sturdy
                 damage_dealt = self.apply_damage(damage, player.opponent, survive=survived, effect=type_effectiveness)
+                if sturdy:
+                    self.output.append({"text": "{} held on with Sturdy!".format(target.name)})
                 # Apply drain
                 if move_data["drain"] != 0:
                     if move_data["drain"] > 0:
@@ -350,12 +354,13 @@ class BattleState:
         return True
 
 
-    def move_damage(self, player, user, target, type, base_power, damage_class, critical, ignore_type=False):
+    def move_damage(self, player, user, target, type, base_power, damage_class, critical, multiplier=1, ignore_type=False):
         """
         Calculate damage for a move. Crits applied in advance so can be controlled
         """
         if base_power is None:
             base_power = 0
+        base_power *= multiplier
         weather_boost = 1
         randdmg = random.randrange(85, 101) / 100
         stab = 1.5 if type in consts.POKEMON[user.dex]["typing"] else 1

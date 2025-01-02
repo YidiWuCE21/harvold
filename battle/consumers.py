@@ -165,6 +165,7 @@ def battle_processor(text_data, sender):
                     battle_state.switch(battle_state.player_2, battle.player_2_choice["target"], {})
             # Case for standard turn
             else:
+                battle_state.output.append({"turn": "Turn {}".format(battle.current_turn)})
                 battle.current_turn += 1
                 if battle.move_history is None:
                     battle.move_history = []

@@ -801,6 +801,9 @@ function animate(looped = true) {
                 }
             }
         }
+        if (wildHide != null) {
+            document.wildBattleForm.submit();
+        }
     }
     // Also manages enter events but we need to loop this regardless so keep it outside of block
     mapTrainersSprites.forEach((trainer) => {
@@ -1167,6 +1170,7 @@ function animate(looped = true) {
     if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
         if (moving && !dialogueActive) {
             let areaStr = null;
+            // Decrement steps
             if (grass) {
                 if (wildShow == null && wildHide == null)
                     steps -= 1;
@@ -1177,6 +1181,7 @@ function animate(looped = true) {
                     steps -= 1;
                 areaStr = "water";
             }
+            // Pokemon queueed
             if (wildShow != null) {
                 if ((wildArea == 'grass' && grass) || (wildArea == 'water' && surfing)) {
                     wildShow -= 1;
