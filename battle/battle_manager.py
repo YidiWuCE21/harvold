@@ -587,7 +587,7 @@ class BattleState:
             return
         # Pursuit check and KO check
         if other_move.get("move", None) == "pursuit":
-            self.attack(self.player.opponent.get_current_pokemon(), player.get_current_pokemon())
+            self.attack(player.opponent.get_current_pokemon(), player.get_current_pokemon())
 
         # Check switch to target is alive
         if player.party[swap_to].is_alive():
