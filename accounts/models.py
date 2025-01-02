@@ -397,3 +397,25 @@ class Profile(models.Model):
         if self.last_update != date.today():
             return False
         return trainer in self.trainers_beat
+
+
+    def teach_tm(self, tm, target, slot):
+        pokemon = getattr(self, target)
+        if pokemon is None:
+            return "Select a valid Pokémon."
+        if tm not in consts.ITEMS:
+            return "Not a valid TM!"
+        move = consts.ITEMS[tm]["move"]
+        if not tm in self.bag["machines"]:
+            return "You do not have this move!"
+        if self.bag["machines"][tm] > 0:
+            return "You do not have this move!"
+        with transaction.atomic():
+            try:
+                ret = pokemon.learn_move(move, slot, tms=True)
+                if ret is not None:
+                    raise ValueError("Did not learn move")
+                if not self.consume_item(tm, 1):
+                    raise ValueError("Did not consume item")
+            except:
+                return "Failed to teach move."

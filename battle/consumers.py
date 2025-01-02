@@ -186,7 +186,7 @@ def battle_processor(text_data, sender):
                         pkmn.happiness += 1
                         # Levelup case
                         if pkmn.add_xp(true_exp, recalculate=True):
-                            anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle.player_1.get_current_pokemon() else []
+                            anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
                             output_log.append({"text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
                             # Get the new stats
                             new_stats = pkmn.get_battle_info()["stats"]
