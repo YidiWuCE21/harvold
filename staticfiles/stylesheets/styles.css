@@ -22,7 +22,10 @@
     --shiny-hover: rgba(230, 208, 163, 0.8);
 
     --bubble: rgba(210, 244, 246, 0.8);
-    --bubble-border: rgb(162, 234, 238)
+    --bubble-border: rgb(162, 234, 238);
+
+    --battle-log: rgb(230, 232, 233);
+    --battle-header: rgb(183, 212, 223);
 }
 
 @font-face {
@@ -563,4 +566,21 @@ input, select {
 .clickable:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.battle-header {
+    text-align: center;
+    margin: 8px -8px 8px -8px;
+    background-color: var(--battle-header);
+    font-size: 14px;
+}
+
+.battle-log {
+    resize: none;
+    width:100%;
+    border-radius:none;
+    text-align: left;
+    padding: 8px;
+    background-color: var(--battle-log);
+    overflow-y: scroll;
 }
