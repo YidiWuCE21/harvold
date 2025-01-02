@@ -147,7 +147,7 @@
         "base_payout": 24
     },
     "map": "drilbur_cave_1f",
-    "sprite": "scientist_m",
+    "sprite": "scientist_f",
     "lines": {
         "lose": "The pursuit of knowledge is never without setbacks."
     }
