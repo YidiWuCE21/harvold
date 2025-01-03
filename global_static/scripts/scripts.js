@@ -61,3 +61,13 @@ function moveUp(slot, url) {
         }
     });
 }
+
+function clickNthButton(element, n) {
+    // Get all button elements inside the found element
+    const buttons = element.getElementsByTagName("button");
+
+    // Check if the N'th button exists (1-based index)
+    if (n > 0 && n <= buttons.length) {
+        buttons[n - 1].click();
+    }
+}

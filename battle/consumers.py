@@ -171,9 +171,15 @@ def battle_processor(text_data, sender, first_turn=False):
             # Case for switch-in after KO
             if battle_state.requires_switch():
                 if battle.player_1_choice["action"] != "idle":
-                    battle_state.switch(battle_state.player_1, battle.player_1_choice["target"], {})
+                    if battle.player_1_choice["action"] == "switch":
+                        battle_state.switch(battle_state.player_1, battle.player_1_choice["target"], {})
+                    else:
+                        battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
                 if battle.player_2_choice["action"] != "idle":
-                    battle_state.switch(battle_state.player_2, battle.player_2_choice["target"], {})
+                    if battle.player_1_choice["action"] == "switch":
+                        battle_state.switch(battle_state.player_2, battle.player_2_choice["target"], {})
+                    else:
+                        battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
             # Case for standard turn
             else:
                 battle_state.output.append({"turn": "Turn {}".format(battle.current_turn)})

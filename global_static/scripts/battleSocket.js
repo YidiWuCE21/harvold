@@ -692,3 +692,81 @@ if (initialTurn == 1) {
     })
     toggleButtons(true);
 }
+
+
+window.addEventListener('keydown', (e) => {
+    const controlTab = document.getElementById('select');
+    const attackTab = document.getElementById('attack');
+    const switchTab = document.getElementById('switch');
+    const selectTab = document.getElementById('item_target_select');
+    let buttonNo;
+    switch (e.key) {
+        case '1':
+            buttonNo = 1;
+            if (controlTab.style.display == 'block') {
+                clickNthButton(controlTab, buttonNo);
+            } else if (attackTab.style.display == 'block') {
+                clickNthButton(attackTab, buttonNo);
+            } else if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case '2':
+            buttonNo = 2;
+            if (controlTab.style.display == 'block') {
+                clickNthButton(controlTab, buttonNo);
+            } else if (attackTab.style.display == 'block') {
+                clickNthButton(attackTab, buttonNo);
+            } else if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case '3':
+            buttonNo = 3;
+            if (controlTab.style.display == 'block') {
+                clickNthButton(controlTab, buttonNo);
+            } else if (attackTab.style.display == 'block') {
+                clickNthButton(attackTab, buttonNo);
+            } else if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case '4':
+            buttonNo = 4;
+            if (controlTab.style.display == 'block') {
+                clickNthButton(controlTab, buttonNo);
+            } else if (attackTab.style.display == 'block') {
+                clickNthButton(attackTab, buttonNo);
+            } else if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case '5':
+            buttonNo = 5;
+            if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case '6':
+            buttonNo = 6;
+            if (switchTab.style.display == 'block') {
+                clickNthButton(switchTab, buttonNo);
+            } else if (selectTab.style.display == 'block') {
+                clickNthButton(selectTab, buttonNo);
+            }
+            break
+        case 'Escape':
+            openTab('control-tab', 'select');
+            break
+    }
+})
