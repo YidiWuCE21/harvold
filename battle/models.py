@@ -190,6 +190,9 @@ class Battle(models.Model):
     # Prize tracking
     battle_prize = models.JSONField(blank=True, null=True, default=None)
 
+    # Background
+    background = models.CharField(max_length=20, blank=True, null=True, default=None)
+
 
     def get_battle_state(self):
         battle_state = self.battle_state

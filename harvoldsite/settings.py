@@ -158,28 +158,6 @@ LOGOUT_REDIRECT_URL = "home"
 
 ASGI_APPLICATION = "harvoldsite.asgi.application"
 
-class CustomSSLConnection(Connection):
-    def __init__(
-        self,
-        ssl_context: Optional[str] = None,
-        **kwargs,
-    ):
-        super().__init__(**kwargs)
-        self.ssl_context = RedisSSLContext(ssl_context)
-
-class RedisSSLContext:
-    __slots__ = (
-        "context",
-    )
-
-    def __init__(
-        self,
-        ssl_context,
-    ):
-        self.context = ssl_context
-
-    def get(self):
-        return self.context
 
 if DEBUG:
     CHANNEL_LAYERS = {
@@ -191,10 +169,6 @@ if DEBUG:
         }
     }
 else:
-    url = urlparse(os.environ.get('REDIS_URL'))
-    ssl_context = ssl.SSLContext()
-    ssl_context.check_hostname = False
-
     CHANNEL_LAYERS = {
         "default": {
             "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -210,3 +184,5 @@ else:
     }
 
 CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-c1e3d777167f.herokuapp.com"]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
