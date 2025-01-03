@@ -112,7 +112,7 @@ def battle(request):
         "current_turn": battle.current_turn,
         "scene": "default",
         "is_p1": is_p1,
-        "move_data": json.dumps({move: {k: v for k, v in consts.MOVES[move].items() if k in ["damage_class", "name", "power", "accuracy", "category", "type", "pp"]} for move in battle.get_all_moves()}),
+        "move_data": json.dumps({move: {k: v for k, v in consts.MOVES[move].items() if k in ["damage_class", "effects", "name", "power", "accuracy", "category", "type", "pp"]} for move in battle.get_all_moves()}).replace("'", "\\'"),
         "balls_allowed": battle.type == "wild",
         "medicines_allowed": battle.type != "live",
         "player_sprite": player_sprite,

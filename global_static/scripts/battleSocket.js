@@ -365,6 +365,11 @@ function updateMoves() {
             moveButton.children[0].innerHTML = moveInfo["name"] + " - " + move["pp"] + "/" + moveInfo["pp"];
             moveButton.children[2].src = categoryPath + "/" + moveInfo["damage_class"] + ".png";
             moveButton.children[3].src = typePath + "/" + moveInfo["type"] + ".png";
+            moveButton.setAttribute('data-toggle', 'tooltip');
+            const power = (moveInfo['power'] == null) ? '-' : moveInfo['power'];
+            const accuracy = (moveInfo['accuracy'] == null) ? '-' : moveInfo['accuracy'];
+            const tooltipText = moveInfo['effects'] + '\nPower: ' + power + '\nAccuracy: ' + accuracy;
+            moveButton.setAttribute('title', tooltipText);
         }
     });
 }
