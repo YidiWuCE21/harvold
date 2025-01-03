@@ -238,11 +238,11 @@ function attack({x, y, div_id, showSplat = true}) {
     if (showSplat) {
         setTimeout(() => {
             splat.style.opacity = 1;
-        }, 0.15 * interval);
+        }, 0.3 * interval);
 
         setTimeout(() => {
             splat.style.opacity = 0;
-        }, 0.3 * interval);
+        }, 0.45 * interval);
     }
 
     setTimeout(() => {
@@ -432,6 +432,7 @@ function updateSwitches() {
     const backButton = document.createElement('button');
     backButton.classList.add("button-3");
     backButton.classList.add("button-back");
+    backButton.classList.add("battler");
     backButton.innerHTML = 'Back';
     backButton.onclick = function () {openTab('control-tab', 'select')};
     switchPane.append(document.createElement('br'));
@@ -480,6 +481,7 @@ function updateSelector() {
     const backButton = document.createElement('button');
     backButton.classList.add("button-3");
     backButton.classList.add("button-back");
+    backButton.classList.add("battler");
     backButton.innerHTML = 'Back';
     backButton.onclick = function () {openTab('control-tab', 'items')};
     targetSelector.append(document.createElement('br'));
