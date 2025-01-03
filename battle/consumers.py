@@ -147,7 +147,7 @@ def battle_processor(text_data, sender, first_turn=False):
         if battle_state.requires_switch():
             # Case where you need to switch
             if not player_state.get_current_pokemon().is_alive():
-                if action["action"] != "switch":
+                if action["action"] != "switch" and action["action"] != "surrender":
                     return {"self": {"message": "You must switch!"}}
             # Case where you wait for opponent to switch
             else:
@@ -224,11 +224,11 @@ def battle_processor(text_data, sender, first_turn=False):
                 player_1.current_battle = None
                 # Update bag
                 player_1.bag = battle_state.player_1.inventory
+                player_2 = None
                 if battle.type == "live":
                     player_2 = battle.player_2
                     player_2.current_battle = None
                     player_2.bag = battle_state.player_2.inventory
-                    player_2.save()
                 # Caught a wild Pokemon
                 if battle_state.outcome == "caught" and battle.type == "wild":
                     prompt["View Caught Pokemon"] = "{}?id={}".format(reverse("pokemon"), battle.wild_opponent.pk)
@@ -240,10 +240,9 @@ def battle_processor(text_data, sender, first_turn=False):
                     player_1.wild_opponent = None
                 if battle_state.outcome in ["fled_battle", "p1_victory", "p1_surrender", "caught"]:
                     prompt["Last Map"] = reverse("map")
-                # Prizes and money
-                if battle.battle_prize is not None and battle_state.outcome == "p1_victory":
-                    # NPC voiceline
-                    if battle.type == "npc":
+                if battle.type == "npc":
+                    # Player victory
+                    if battle.battle_prize is not None and battle_state.outcome == "p1_victory":
                         trainer_data = "{}.json".format(battle.npc_opponent)
                         trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
                         try:
@@ -252,28 +251,45 @@ def battle_processor(text_data, sender, first_turn=False):
                                 output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
                         except:
                             pass
-                    # Payout
-                    if "base_payout" in battle.battle_prize:
-                        max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
-                        cash_payout = max_level * battle.battle_prize["base_payout"]
-                        # If it's not the first victory of the day, divide by 10
-                        if player_1.has_beat_trainer(battle.npc_opponent):
-                            cash_payout = int(cash_payout / 10)
-                        output_log.append({"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
-                        player_1.money += cash_payout
-                    # Gym badge
-                    if "badges" in battle.battle_prize:
-                        prompt["Gym"] = reverse("gyms")
-                        prompt.pop("Last Map")
-                        for badge, rank in battle.battle_prize["badges"].items():
-                            if player_1.badges[badge] is None:
-                                player_1.badges[badge] = rank
-                                output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the {} Badge!".format(badge.capitalize())})
-                            elif player_1.badges[badge] == "silver" and rank == "gold":
-                                player_1.badges[badge] = "gold"
-                                output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the Elite {} Badge!".format(badge.capitalize)})
-                player_1.beat_trainer(battle.npc_opponent, skip_save=True)
+                        # Payout
+                        if "base_payout" in battle.battle_prize:
+                            max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
+                            cash_payout = max_level * battle.battle_prize["base_payout"]
+                            # If it's not the first victory of the day, divide by 10
+                            if player_1.has_beat_trainer(battle.npc_opponent):
+                                cash_payout = int(cash_payout / 10)
+                            output_log.append({"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
+                            player_1.money += cash_payout
+                        # Gym badge
+                        if "badges" in battle.battle_prize:
+                            prompt["Gym"] = reverse("gyms")
+                            prompt.pop("Last Map")
+                            for badge, rank in battle.battle_prize["badges"].items():
+                                if player_1.badges[badge] is None:
+                                    player_1.badges[badge] = rank
+                                    output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the {} Badge!".format(badge.capitalize())})
+                                elif player_1.badges[badge] == "silver" and rank == "gold":
+                                    player_1.badges[badge] = "gold"
+                                    output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the Elite {} Badge!".format(badge.capitalize)})
+                        player_1.beat_trainer(battle.npc_opponent, skip_save=True)
+                # KO loss
+                if (is_p1 and not battle_state.player_1.has_pokemon()) or (not is_p1 and not battle_state.player_2.has_pokemon()):
+                    output_log.append({"text": "You blacked out!"})
+                    medical_fees = 10 * max([
+                        max([pkmn.level for pkmn in battle_state.player_2.party]),
+                        max([pkmn.level for pkmn in battle_state.player_1.party])
+                    ])
+                    output_log.append({"text": "You paid ${} in medical fees!".format(medical_fees)})
+                    if is_p1:
+                        player_1.money = max([0, player_1.money - medical_fees])
+                    else:
+                        player_2.money = max([0, player_2.money - medical_fees])
+                    output_log.append({"anim": ["recover"]})
+
+
                 player_1.save()
+                if player_2 is not None:
+                    player_2.save()
 
         # Send battle state update and output log to room group
 

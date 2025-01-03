@@ -86,7 +86,9 @@
                     </div>
                     <div class="col-7 content-box">
                         <div class="starter-tab">
-                            <h4></h4>
+                            <h4>Choose a starter to get view its stats!</h4>
+                            <br><br><br><br><br><br>
+                            {% include 'common/stats.html' with max_stat=1 width=220 hp=0 atk=0 def=0 spa=0 spd=0 spe=0 %}
                         </div>
                         {% for pokemon, data in pokemon_data.items %}
                         <div class="starter-tab" id="starter_{{ pokemon }}" style="display:none">

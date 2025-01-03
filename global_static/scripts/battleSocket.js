@@ -127,6 +127,18 @@ function processAnim({animMove}) {
             endBattle();
         }
     }
+    if (animMove == "recover") {
+        $.ajax(
+        {
+            type: "GET",
+            url: healUrl,
+            data: {
+                "payload": {}
+            }
+        }).done(function( response ) {
+            window.location.replace(pokecenterUrl);
+        })
+    }
     if (animMove == 'player_info') {
         const playerInfo = document.getElementById('player_info').children;
         for (let i = 0; i < playerInfo.length; i++) {
@@ -145,14 +157,14 @@ function processAnim({animMove}) {
     if ((isPlayerOne && animMove.startsWith('p1_physical')) || (!isPlayerOne && animMove.startsWith('p2_physical'))) {
         // Translate player
         if (animMove.endsWith('miss')) {
-            attack({'x': '140', 'y': '70', 'div_id': 'player_spr', 'showSplat': false});
+            attack({'x': '220', 'y': '70', 'div_id': 'player_spr', 'showSplat': false});
         } else {
             attack({'x': '280', 'y': '70', 'div_id': 'player_spr'});
         }
     } else if ((!isPlayerOne && animMove.startsWith('p1_physical')) || (isPlayerOne && animMove.startsWith('p2_physical'))) {
         // Translate player
         if (animMove.endsWith('miss')) {
-            attack({'x': '230', 'y': '120', 'div_id': 'opp_spr', 'showSplat': false});
+            attack({'x': '150', 'y': '120', 'div_id': 'opp_spr', 'showSplat': false});
         } else {
             attack({'x': '90', 'y': '120', 'div_id': 'opp_spr'});
         }
@@ -167,7 +179,7 @@ function processAnim({animMove}) {
     } else if ((!isPlayerOne && animMove.startsWith('p1_special')) || (isPlayerOne && animMove.startsWith('p2_special'))) {
         // Translate player
         if (animMove.endsWith('miss')) {
-            attack({'x': '224', 'y': '95', 'div_id': 'player_spr', 'showSplat': false});
+            attack({'x': '224', 'y': '95', 'div_id': 'opp_spr', 'showSplat': false});
         } else {
             attack({'x': '185', 'y': '95', 'div_id': 'opp_spr'});
         }

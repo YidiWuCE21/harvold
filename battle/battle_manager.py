@@ -525,7 +525,7 @@ class BattleState:
                     else:
                         self.output.append({"text": "{}'s {} {}{}!".format(
                             player.opponent.get_current_pokemon().name,
-                            boost[1].replace("-", " "),
+                            boost[1].replace("-", " ").replace("_", " "),
                             "sharply " if boost[0] > 1 else "harshly " if boost[0] < -1 else "",
                             "rose" if boost[0] > 0 else "fell"
                         )})

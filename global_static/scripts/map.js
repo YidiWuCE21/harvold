@@ -525,8 +525,10 @@ function animate(looped = true) {
         y: Math.min(Math.max(camera.position.y, 0), mapHeight * tile_width - canvas.height)
     }
     // Check for loop
-    if (looped)
-        window.requestAnimationFrame(animate);
+    if (looped) {
+        setTimeout(() => {requestAnimationFrame(animate);}, 1000 / 60);
+        //window.requestAnimationFrame(animate);
+    }
     // Order game sprites
     let orderedSprites = [...mapTrainersSprites];
     if (surfing) {
