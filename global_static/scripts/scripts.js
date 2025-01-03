@@ -39,6 +39,9 @@ function removeParty(slot, url) {
         success: function(response)
         {
             $("#party-container").html(response);
+            if (window.location.pathname === '/box') {
+                window.location.reload();
+            }
         }
     });
 }
@@ -58,6 +61,9 @@ function moveUp(slot, url) {
         success: function(response)
         {
             $("#party-container").html(response);
+            if (window.location.pathname === '/bag') {
+                window.location.reload();
+            }
         }
     });
 }
