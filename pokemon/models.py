@@ -556,8 +556,19 @@ class Pokemon(models.Model):
                     if consts.EVOLUTIONS[self.dex][evo_dex]["item"] is not None:
                         self.trainer.consume_item(consts.EVOLUTIONS[self.dex][evo_dex]["item"])
 
+                    # Assign new ability
+                    current_ability_count = len(consts.POKEMON[self.dex]["abilities"])
+                    current_ability_index = consts.POKEMON[self.dex]["abilities"].index(self.ability)
+                    evo_ability_count = len(consts.POKEMON[evo_dex]["abilities"])
+                    if evo_ability_count == current_ability_count:
+                        new_ability = consts.POKEMON[evo_dex]["abilities"][current_ability_index]
+                    else:
+                        new_ability = random.choice(consts.POKEMON[evo_dex]["abilities"])
+
+
                     # Evolve and save
                     self.dex_number = evo_dex
+                    self.ability = new_ability
                     self.recalculate_stats(skip_save=True)
                     self.full_heal()
                     self.save()

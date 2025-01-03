@@ -23,7 +23,7 @@ urlpatterns = [
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
     path("pokedex", pokemon_views.pokedex, name="pokedex"),
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
-    # TODO - path("make", pokemon_views.make, name="make"),
+    path("make", pokemon_views.make, name="make"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
     path("battle", battle_views.battle, name="battle"),
