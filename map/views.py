@@ -121,6 +121,7 @@ def wild_battle(request):
 
     wild_pokemon = random.choices(consts.WILD[map][area]["pokemon"], consts.WILD[map][area]["weights"])[0]
     dex_number = consts.DEX_LOOKUP[wild_pokemon[0]]
+    bg = consts.WILD[map][area].get("bg", "water" if area == "water" else "grass")
 
     # Roll for level, sex, and shininess
     level = random.randrange(wild_pokemon[1], wild_pokemon[2])
@@ -129,7 +130,7 @@ def wild_battle(request):
     sex = "g" if percentage_male < 0 else "m" if random.random() * 100 < percentage_male else "f"
 
     # If there is an existing wild opponent, delete it
-    user.wild_opponent = {"dex": dex_number, "level": level, "shiny": shiny, "sex": sex}
+    user.wild_opponent = {"dex": dex_number, "level": level, "shiny": shiny, "sex": sex, "bg": bg}
     user.save()
 
     # Send the Pokemon species, level, and shininess

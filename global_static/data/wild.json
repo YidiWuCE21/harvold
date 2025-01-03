@@ -6,7 +6,8 @@
         },
         "water": {
             "pokemon": [["Goldeen", 3, 6], ["Lotad", 3, 6]],
-            "weights": [10, 10]
+            "weights": [10, 10],
+            "bg": "pond"
         }
     },
     "synecdoche_city": {
@@ -22,21 +23,25 @@
     "drilbur_cave_1f": {
         "grass1": {
             "pokemon": [["Zubat", 25, 29], ["Geodude", 25, 29], ["Sandshrew", 25, 29], ["Diglett", 25, 29], ["Phanpy", 25, 29], ["Graveler", 27, 29], ["Drilbur", 25, 29]],
-            "weights": [10, 8, 8, 8, 4, 4, 1]
+            "weights": [10, 8, 8, 8, 4, 4, 1],
+            "bg": "gray_cave"
         },
         "water": {
             "pokemon": [["Slowpoke", 25, 29], ["Shellos", 25, 29], ["Wooper", 25, 29]],
-            "weights": [10, 8, 1]
+            "weights": [10, 8, 1],
+            "bg": "gray_cave"
         }
     },
     "drilbur_cave_2f": {
         "grass1": {
             "pokemon": [["Ekans", 27, 31], ["Geodude", 27, 31], ["Paras", 27, 31], ["Machop", 27, 31], ["Onix", 27, 31], ["Graveler", 27, 29], ["Drilbur", 27, 31]],
-            "weights": [8, 10, 10, 4, 2, 4, 1]
+            "weights": [8, 10, 10, 4, 2, 4, 1],
+            "bg": "gray_cave"
         },
         "water": {
             "pokemon": [["Slowpoke", 27, 31], ["Psyduck", 27, 31], ["Barboach", 27, 31], ["Feebas", 2, 4]],
-            "weights": [10, 8, 4, 1]
+            "weights": [10, 8, 4, 1],
+            "bg": "gray_cave"
         }
     },
     "route_1": {
@@ -46,7 +51,8 @@
         },
         "water": {
             "pokemon": [["Goldeen", 2, 5], ["Remoraid", 2, 5], ["Lotad", 2, 5], ["Psyduck", 2, 5], ["Wooper", 2, 5]],
-            "weights": [10, 10, 10, 4, 4]
+            "weights": [10, 10, 10, 4, 4],
+            "bg": "pond"
         }
     },
     "route_2": {
@@ -56,7 +62,8 @@
         },
         "water": {
             "pokemon": [["Goldeen", 2, 5], ["Poliwag", 2, 5], ["Lotad", 2, 5], ["Psyduck", 2, 5]],
-            "weights": [10, 4, 10, 4]
+            "weights": [10, 4, 10, 4],
+            "bg": "pond"
         }
     },
     "route_3": {
@@ -116,7 +123,8 @@
         },
         "water": {
             "pokemon": [["Magikarp", 8, 12], ["Staryu", 8, 12]],
-            "weights": [10, 1]
+            "weights": [10, 1],
+            "bg": "pond"
         }
     },
     "route_9": {
@@ -156,7 +164,8 @@
         },
         "water": {
             "pokemon": [["Carvanha", 14, 18], ["Psyduck", 14, 18], ["Lapras", 14, 18]],
-            "weights": [10, 10, 1]
+            "weights": [10, 10, 1],
+            "bg": "pond"
         }
     },
     "vitur_forest": {

@@ -21,7 +21,7 @@ BATTLE_TYPES = [
 ]
 
 
-def create_battle(p1_id, p2_id, type, ai="default"):
+def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
     """
     Player 2 should either be a player ID, a Pokemon ID, or an NPC ID (stored in data file)
 
@@ -118,7 +118,8 @@ def create_battle(p1_id, p2_id, type, ai="default"):
         wild_opponent=wild_opponent,
         battle_state=pre_state.jsonify(),
         battle_prize=reward,
-        output_log=pre_output
+        output_log=pre_output,
+        background=bg
     )
 
     # Check that parties are not knocked out

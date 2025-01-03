@@ -52,6 +52,7 @@ def battle_create(request):
     if request.user.profile.current_battle is not None:
         return redirect("battle")
     if "trainer" in request.POST:
+        # TODO - trainer bg logic
         trainer = request.POST.get("trainer")
         try:
             models.create_battle(request.user.profile.pk, trainer, "npc")
@@ -64,7 +65,7 @@ def battle_create(request):
         wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"])
         wild.save()
         try:
-            models.create_battle(request.user.profile.pk, wild.pk, "wild")
+            models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
             return redirect("battle")
         except BaseException as e:
             return HttpResponseBadRequest(str(e))
@@ -111,7 +112,7 @@ def battle(request):
         "self": "player_1" if battle.player_1 == request.user.profile else "player_2",
         "battle_id": battle.pk,
         "current_turn": battle.current_turn,
-        "scene": "default",
+        "scene": battle.background if battle.background is not None else "default",
         "is_p1": is_p1,
         "move_data": json.dumps({move: {k: v for k, v in consts.MOVES[move].items() if k in ["damage_class", "effects", "name", "power", "accuracy", "category", "type", "pp"]} for move in battle.get_all_moves()}).replace("'", "\\'"),
         "balls_allowed": battle.type == "wild",
