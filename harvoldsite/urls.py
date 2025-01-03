@@ -36,5 +36,6 @@ urlpatterns = [
     path("pokecenter_heal", pokemon_views.pokecenter_heal, name="pokecenter_heal"),
     path("update_pos", map_views.update_pos, name="update_pos"),
     path("remove_party_ajax", account_views.remove_party_ajax, name="remove_party_ajax"),
-    path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax")
+    path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax"),
+    path("teach_tm_ajax", account_views.teach_tm_ajax, name="teach_tm_ajax")
 ]

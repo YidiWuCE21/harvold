@@ -197,6 +197,10 @@ class Profile(models.Model):
 
 
     def swap_pokemon(self, slot_1, slot_2, skip_save=False):
+        if slot_1 not in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            return
+        if slot_2 not in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            return
         if slot_1 == slot_2:
             return
         slot_1_pkmn = getattr(self, slot_1)
@@ -400,22 +404,27 @@ class Profile(models.Model):
 
 
     def teach_tm(self, tm, target, slot):
+        if target not in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            return "Must be a valid slot"
         pokemon = getattr(self, target)
         if pokemon is None:
             return "Select a valid Pokémon."
         if tm not in consts.ITEMS:
+            return "Not a valid item!"
+        if consts.ITEMS[tm]["category"] != "machines":
             return "Not a valid TM!"
         move = consts.ITEMS[tm]["move"]
         if not tm in self.bag["machines"]:
             return "You do not have this move!"
-        if self.bag["machines"][tm] > 0:
+        if self.bag["machines"][tm] < 1:
             return "You do not have this move!"
         with transaction.atomic():
             try:
                 ret = pokemon.learn_move(move, slot, tms=True)
                 if ret is not None:
-                    raise ValueError("Did not learn move")
-                if not self.consume_item(tm, 1):
-                    raise ValueError("Did not consume item")
+                    return "Did not learn move"
+                if not "hm" in tm:
+                    if not self.consume_item(tm, 1):
+                        return "Did not consume item"
             except:
                 return "Failed to teach move."

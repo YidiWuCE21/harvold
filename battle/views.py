@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -51,24 +52,33 @@ def gyms(request):
 def battle_create(request):
     if request.user.profile.current_battle is not None:
         return redirect("battle")
+    tries = 0
+    retries = 3
+    e = ""
     if "trainer" in request.POST:
         # TODO - trainer bg logic
         trainer = request.POST.get("trainer")
-        try:
-            models.create_battle(request.user.profile.pk, trainer, "npc")
-            return redirect("battle")
-        except BaseException as e:
-            return HttpResponseBadRequest(str(e))
+        while tries < retries:
+            try:
+                models.create_battle(request.user.profile.pk, trainer, "npc")
+                return redirect("battle")
+            except BaseException as e:
+                tries += 1
+                time.sleep(0.2)
+        return HttpResponseBadRequest("Failed to make battle: {}".format(e))
     # Wild battle creation
     elif "wild" in request.POST:
         wild_data = request.user.profile.wild_opponent
         wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"])
         wild.save()
-        try:
-            models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
-            return redirect("battle")
-        except BaseException as e:
-            return HttpResponseBadRequest(str(e))
+        while tries < retries:
+            try:
+                models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
+                return redirect("battle")
+            except BaseException as e:
+                tries += 1
+                time.sleep(0.2)
+        return HttpResponseBadRequest("Failed to make battle: {}".format(e))
     # If valid battle cannot be created, return to pokecenter
     else:
         return redirect("pokecenter")

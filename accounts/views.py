@@ -1,5 +1,6 @@
 import random
 import os
+import json
 from django.shortcuts import render, redirect
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -100,8 +101,13 @@ def bag(request):
             bag_data[category][item]["quantity"] = qty
             if category == "machines":
                 bag_data[category][item]["move_data"] = consts.MOVES[consts.ITEMS[item]["move"]]
+    party_moves = [{"dex": pkmn.dex, "moves": pkmn.get_moves(), "name": pkmn.name, "level": pkmn.level} for pkmn in request.user.profile.get_party()]
     html_render_variables = {
-        "bag": bag_data
+        "bag": bag_data,
+        "bag_data_str": json.dumps(bag_data).replace("'", "\\'"),
+        "tm_compatibility": json.dumps({pkmn.dex: consts.LEARNSETS[pkmn.dex]["tm"] for pkmn in request.user.profile.get_party()}).replace("'", "\\'"),
+        "party_moves": party_moves,
+        "party_moves_str": json.dumps(party_moves).replace("'", "\\'"),
     }
     return render(request, "pokemon/bag.html", html_render_variables)
 
@@ -187,3 +193,12 @@ def reorder_party_ajax(request):
             msg = "Failed to reorder party!"
     party = profile.get_party(return_none=True)
     return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})
+
+@login_required
+def teach_tm_ajax(request):
+    profile = request.user.profile
+    tm = request.GET.get("tm")
+    target = request.GET.get("target")
+    slot = request.GET.get("slot")
+    msg = profile.teach_tm(tm, target, slot)
+    return JsonResponse({"msg": msg})

@@ -1,11 +1,26 @@
 {% extends "base_layout.html" %}
 {% load static %}
+{% load stat_tags %}
 
 {% block header %}
 <link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
 {% endblock %}
 
 {% block title %}Bag{% endblock %}
+
+{% block scripts %}
+<script>
+const bagData = JSON.parse('{{ bag_data_str|safe }}');
+const tmCompat = JSON.parse('{{ tm_compatibility|safe }}');
+const partyMoves = JSON.parse('{{ party_moves_str|safe }}');
+const teachUrl = '{% url 'teach_tm_ajax' %}';
+
+const typePath = '{% get_static_prefix %}{{ asset_paths.typing|replace:'\|/' }}';
+const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' }}';
+
+</script>
+<script src="{% static 'scripts/bag.js' %}"></script>
+{% endblock %}
 
 
 {% block content %}
@@ -44,6 +59,7 @@
                 <th>Type</th>
                 <th>Category</th>
                 <th>Effect</th>
+                <th></th>
                 {% else %}
                 <th>Description</th>
                 {% endif %}
@@ -52,8 +68,8 @@
             {% for item, item_data in items.items %}
             <tr>
                 <td>{% if category != "machines" %}<img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">{% else %}{% endif %}</td>
-                <td>{{ item_data.name }}</td>
                 {% if category == 'machines' %}
+                <td>{{ item_data.name }}</td>
                 <td>{{ item_data.move_data.name }}</td>
                 <td>
                     <img src="{% get_static_prefix %}{{ asset_paths.moves }}\{{ item_data.move_data.damage_class }}.png">
@@ -65,7 +81,9 @@
                     <p>Power: {% if item_data.move_data.power is not None %}{{ item_data.move_data.power }}{% else %}-{% endif %} Accuracy: {% if item_data.move_data.accuracy is not None %}{{ item_data.move_data.accuracy }}{% else %}-{% endif %}</p>
                     <p>{{ item_data.move_data.effects }}</p>
                 </td>
+                <td><button class="button-3" onclick="chooseTm({tm: '{{ item }}'})">Learn</button></td>
                 {% else %}
+                <td>{{ item_data.name }}</td>
                 <td>{{ item_data.description }}</td>
                 {% endif %}
                 <td>{{ item_data.quantity }}</td>
@@ -74,6 +92,22 @@
         </table>
     </div>
     {% endfor %}
+    <div class="bag_tab" id="teach_tm" style="display:none;">
+        <p id="msg"></p>
+        <div class="teach_tab" id="target_select" style="display:none;">
+            <p>Choose a Pokemon:</p>
+            {% for pkmn in party_moves %}
+            <button class="button-3" data-dex="{{ pkmn.dex }}" data-slot="{{ forloop.counter0 }}" style="width:160px;height:80px">
+                <p></p>
+                <p>Level {{ pkmn.level }} {{ pkmn.name }}</p>
+                <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ pkmn.dex }}.gif">
+            </button>
+            <br>
+            {% endfor %}
+        </div>
+        <div class="teach_tab" id="slot_select" style="display:none;">Choose a move to replace:</div>
+        <button class="button-3 button-back" onclick="openTab('bag_tab', 'machines');chosenTm = null;chosenTarget= null;">Cancel</button>
+    </div>
 </div>
 
 {% endblock %}
