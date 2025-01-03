@@ -249,6 +249,10 @@ class BattleState:
         if player.locked_moves:
             print()
         # Struggle check
+        # Subtract PP - committed
+        for i, known_move in enumerate(user.moves):
+            if known_move["move"] == move:
+                user.moves[i]["pp"] -= 1
         # Roll for accuracy for attacking moves
         if not self.roll_accuracy(player, move):
             self.output.append({"text": "{} used {}!".format(user.name, move_data["name"]), "anim": ["{}_{}_{}_miss".format(player.player, move_data["damage_class"], move_data["type"])]})
@@ -335,11 +339,6 @@ class BattleState:
         # Custom effects
         if move in custom_moves.SUPPORTED_MOVES:
             custom_moves.SUPPORTED_MOVES[move](self, player)
-        # Subtract PP
-        for i, known_move in enumerate(user.moves):
-            if known_move["move"] == move:
-                user.moves[i]["pp"] -= 1
-                return
 
 
     def roll_accuracy(self, player, move):

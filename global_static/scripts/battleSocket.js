@@ -144,17 +144,33 @@ function processAnim({animMove}) {
     // Attacks
     if ((isPlayerOne && animMove.startsWith('p1_physical')) || (!isPlayerOne && animMove.startsWith('p2_physical'))) {
         // Translate player
-        attack({'x': '280', 'y': '70', 'div_id': 'player_spr'});
+        if (animMove.endsWith('miss')) {
+            attack({'x': '140', 'y': '70', 'div_id': 'player_spr', 'showSplat': false});
+        } else {
+            attack({'x': '280', 'y': '70', 'div_id': 'player_spr'});
+        }
     } else if ((!isPlayerOne && animMove.startsWith('p1_physical')) || (isPlayerOne && animMove.startsWith('p2_physical'))) {
         // Translate player
-        attack({'x': '90', 'y': '120', 'div_id': 'opp_spr'});
+        if (animMove.endsWith('miss')) {
+            attack({'x': '230', 'y': '120', 'div_id': 'opp_spr', 'showSplat': false});
+        } else {
+            attack({'x': '90', 'y': '120', 'div_id': 'opp_spr'});
+        }
     }
     if ((isPlayerOne && animMove.startsWith('p1_special')) || (!isPlayerOne && animMove.startsWith('p2_special'))) {
         // Translate player
-        attack({'x': '185', 'y': '95', 'div_id': 'player_spr'});
+        if (animMove.endsWith('miss')) {
+            attack({'x': '145', 'y': '95', 'div_id': 'player_spr', 'showSplat': false});
+        } else {
+            attack({'x': '185', 'y': '95', 'div_id': 'player_spr'});
+        }
     } else if ((!isPlayerOne && animMove.startsWith('p1_special')) || (isPlayerOne && animMove.startsWith('p2_special'))) {
         // Translate player
-        attack({'x': '185', 'y': '95', 'div_id': 'opp_spr'});
+        if (animMove.endsWith('miss')) {
+            attack({'x': '224', 'y': '95', 'div_id': 'player_spr', 'showSplat': false});
+        } else {
+            attack({'x': '185', 'y': '95', 'div_id': 'opp_spr'});
+        }
     }
     if ((isPlayerOne && animMove.startsWith('p1_status')) || (!isPlayerOne && animMove.startsWith('p2_status'))) {
         // Translate player
@@ -205,7 +221,7 @@ function processAnim({animMove}) {
     }
 }
 
-function attack({x, y, div_id}) {
+function attack({x, y, div_id, showSplat = true}) {
     const sprite = document.getElementById(div_id);
     const splat = document.getElementById(div_id.replace('spr', 'splat'));
 
@@ -219,13 +235,15 @@ function attack({x, y, div_id}) {
     sprite.style.top = `${y}px`;
     splat.style.transition = `all ${interval / 1000 * 0.2}s linear`;
 
-    setTimeout(() => {
-        splat.style.opacity = 1;
-    }, 0.15 * interval);
+    if (showSplat) {
+        setTimeout(() => {
+            splat.style.opacity = 1;
+        }, 0.15 * interval);
 
-    setTimeout(() => {
-        splat.style.opacity = 0;
-    }, 0.3 * interval);
+        setTimeout(() => {
+            splat.style.opacity = 0;
+        }, 0.3 * interval);
+    }
 
     setTimeout(() => {
         sprite.style.transition = `all ${interval / 1000 * 0.4}s ease-out`;
