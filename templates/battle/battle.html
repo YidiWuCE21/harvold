@@ -43,10 +43,18 @@
         <div style="grid-area: 2 / 1;padding:5px;">
             <div class="control-tab" id="end"></div>
             <div class="control-tab" id="select">
-                <button class="move-box battler" onclick="openTab('control-tab', 'attack')">Attack</button>
-                <button class="move-box battler" onclick="openTab('control-tab', 'switch')">Switch</button>
-                <button class="move-box battler" onclick="openTab('control-tab', 'items')">Items</button>
-                <button class="move-box battler" onclick="sendMove({'action': 'surrender'})">{% if type == 'wild' %}Run Away{% else %}Surrender{% endif %}</button>
+                <button class="move-box battler" onclick="openTab('control-tab', 'attack')">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\attack.png">
+                    Attack</button>
+                <button class="move-box battler" onclick="openTab('control-tab', 'switch')">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\switch.png">
+                    Switch</button>
+                <button class="move-box battler" onclick="openTab('control-tab', 'items')">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\bag.png">
+                    Items</button>
+                <button class="move-box battler" onclick="sendMove({'action': 'surrender'})">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\surrender.png">
+                    {% if type == 'wild' %}Run Away{% else %}Surrender{% endif %}</button>
             </div>
             <div class="control-tab" id="attack" style="display:none;">
                 <table class="center">
