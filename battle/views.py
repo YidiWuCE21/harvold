@@ -3,6 +3,7 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponseBadRequest
 
 from harvoldsite import consts
 from . import models
@@ -56,7 +57,7 @@ def battle_create(request):
             models.create_battle(request.user.profile.pk, trainer, "npc")
             return redirect("battle")
         except BaseException as e:
-            return redirect("pokecenter")
+            return HttpResponseBadRequest(str(e))
     # Wild battle creation
     elif "wild" in request.POST:
         wild_data = request.user.profile.wild_opponent
@@ -66,7 +67,7 @@ def battle_create(request):
             models.create_battle(request.user.profile.pk, wild.pk, "wild")
             return redirect("battle")
         except BaseException as e:
-            return redirect("pokecenter")
+            return HttpResponseBadRequest(str(e))
     # If valid battle cannot be created, return to pokecenter
     else:
         return redirect("pokecenter")
