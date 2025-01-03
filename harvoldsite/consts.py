@@ -60,7 +60,8 @@ ASSET_PATHS = {
     "misc": os.path.join("assets", "misc"),
     "scene": os.path.join("assets", "scene"),
     "status": os.path.join("assets", "status"),
-    "demo": os.path.join("assets", "demo")
+    "demo": os.path.join("assets", "demo"),
+    "menu": os.path.join("assets", "menu")
 }
 
 # Login-related choicesf

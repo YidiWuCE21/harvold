@@ -573,6 +573,7 @@ input, select {
     margin: 8px -8px 8px -8px;
     background-color: var(--battle-header);
     font-size: 14px;
+    padding-top: 4px;
 }
 
 .battle-log {
