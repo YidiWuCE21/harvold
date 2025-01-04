@@ -301,6 +301,8 @@ class Pokemon(models.Model):
             return "Cannot release Pokemon you don't own!"
         if self.location != "box":
             return "Only box pokemon can be released."
+        if self.held_item is not None:
+            self.trainer.take_item(self)
         self.location = "released"
         self.trainer = None
         self.save()

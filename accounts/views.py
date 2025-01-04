@@ -101,7 +101,13 @@ def bag(request):
             bag_data[category][item]["quantity"] = qty
             if category == "machines":
                 bag_data[category][item]["move_data"] = consts.MOVES[consts.ITEMS[item]["move"]]
-    party_moves = [{"dex": pkmn.dex, "moves": pkmn.get_moves(), "name": pkmn.name, "level": pkmn.level} for pkmn in request.user.profile.get_party()]
+    party_moves = [{
+        "dex": pkmn.dex,
+        "moves": pkmn.get_moves(),
+        "held_item": pkmn.held_item,
+        "name": pkmn.name,
+        "level": pkmn.level}
+        for pkmn in request.user.profile.get_party()]
     html_render_variables = {
         "bag": bag_data,
         "bag_data_str": json.dumps(bag_data).replace("'", "\\'"),
@@ -161,6 +167,7 @@ def pokemart(request):
 
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def remove_party_ajax(request):
     profile = request.user.profile
     msg = ""
@@ -179,6 +186,7 @@ def remove_party_ajax(request):
 
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def reorder_party_ajax(request):
     profile = request.user.profile
     msg = ""
@@ -195,10 +203,28 @@ def reorder_party_ajax(request):
     return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def teach_tm_ajax(request):
     profile = request.user.profile
     tm = request.GET.get("tm")
     target = request.GET.get("target")
     slot = request.GET.get("slot")
     msg = profile.teach_tm(tm, target, slot)
+    return JsonResponse({"msg": msg})
+
+@login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+def take_held_item_ajax(request):
+    profile = request.user.profile
+    slot = request.GET.get("slot")
+    msg = profile.take_item(slot)
+    return JsonResponse({"msg": msg})
+
+@login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+def give_held_item_ajax(request):
+    profile = request.user.profile
+    slot = request.GET.get("slot")
+    item = request.GET.get("item")
+    msg = profile.give_item(item, slot)
     return JsonResponse({"msg": msg})

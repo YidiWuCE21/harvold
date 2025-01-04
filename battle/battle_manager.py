@@ -660,7 +660,7 @@ class BattleState:
             player.locked_moves = []
             player.choice = None
             # Reset opponent's participation
-            player.opponent.participants = [player.opponent.current_pokemon]
+            player.opponent.participants = [pkmn for pkmn in range(len(player.opponent.party)) if pkmn == player.opponent.current_pokemon or player.opponent.party[pkmn].held_item == "exp-share"]
             # Reset player's participation
             player.participants.append(swap_to)
             self.output.append({"text": "Go, {}!".format(player.get_current_pokemon().name), "anim": ["{}_new_sprite".format(player.player), "{}_appear".format(player.player)]})
@@ -735,6 +735,12 @@ class BattleState:
         Apply status effects
         """
         pokemon = player.get_current_pokemon()
+        if pokemon.held_item == "leftovers":
+            if pokemon.current_hp < pokemon.hp:
+                heal_amount = int(pokemon.hp / 16)
+                self.output.append({"text": "{} restored HP with leftovers!".format(pokemon.name)})
+                self.apply_damage(-heal_amount, player)
+
         if pokemon.status == "brn":
             burn_damage = int(pokemon.hp / 16)
             self.output.append({"text": "{} was hurt by its burn!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
@@ -745,7 +751,7 @@ class BattleState:
             self.apply_damage(psn_damage, player)
         if pokemon.status == "txc":
             psn_damage = int(pokemon.hp / 16 * min(pokemon.status_turns, 15))
-            self.output.append({"text": "{} was hurt by burn!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
+            self.output.append({"text": "{} was hurt by poison!".format(pokemon.name), "anim": ["{}_brn".format(player.player)]})
             self.apply_damage(psn_damage, player)
             pokemon.status_turns += 1
 

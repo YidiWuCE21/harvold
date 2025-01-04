@@ -37,5 +37,7 @@ urlpatterns = [
     path("update_pos", map_views.update_pos, name="update_pos"),
     path("remove_party_ajax", account_views.remove_party_ajax, name="remove_party_ajax"),
     path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax"),
-    path("teach_tm_ajax", account_views.teach_tm_ajax, name="teach_tm_ajax")
+    path("teach_tm_ajax", account_views.teach_tm_ajax, name="teach_tm_ajax"),
+    path("take_held_item_ajax", account_views.take_held_item_ajax, name="take_held_item_ajax"),
+    path("give_held_item_ajax", account_views.give_held_item_ajax, name="give_held_item_ajax")
 ]

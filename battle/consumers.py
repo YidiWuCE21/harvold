@@ -202,6 +202,7 @@ def battle_processor(text_data, sender, first_turn=False):
                             break
                         output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
                         pkmn.happiness += 1
+                        pkmn.happiness = max(255, pkmn.happiness)
                         # Levelup case
                         if pkmn.add_xp(true_exp, recalculate=True):
                             anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
@@ -212,7 +213,8 @@ def battle_processor(text_data, sender, first_turn=False):
                             battle_state.player_1.party[i].level = pkmn.level
 
                 battle_state.experience_gain = 0
-                battle_state.player_1.participants = [battle_state.player_1.current_pokemon]
+                # battle_state.player_1.participants = [battle_state.player_1.current_pokemon]
+                battle_state.player_1.participants = [pkmn for pkmn in range(len(battle_state.player_1.party)) if pkmn == battle_state.player_1.current_pokemon or battle_state.player_1.party[pkmn].held_item == "exp-share"]
 
             # For NPC battles, if enemy pokemon KO, switch
             if battle.type == "npc" and battle_state.outcome is None and not battle_state.player_2.get_current_pokemon().is_alive():

@@ -100,7 +100,7 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
             except:
                 raise ValueError("All Pokemon are fainted, cannot make battle!")
         battle_state[player]["current_pokemon"] = current
-        battle_state[player]["participants"].append(current)
+        battle_state[player]["participants"] = [pkmn for pkmn in range(len(battle_state[player]["party"])) if pkmn == current or battle_state[player]["party"][pkmn]["held_item"] == "exp-share"]
 
     # Pre-move abilities like intimidate, sand stream, etc.
     pre_state = BattleState(battle_state)

@@ -1,11 +1,14 @@
 let chosenTm = null;
 let chosenTarget = null;
-const msgDiv = document.getElementById('msg');
+let chosenItem = null;
+let itemPage = null;
+const tmMsg = document.getElementById('tm_msg');
+const heldMsg = document.getElementById('held_msg');
 
 function chooseTm({tm}) {
     chosenTm = tm;
     const tmData = bagData.machines[tm];
-    msgDiv.innerHTML = 'Teaching move: ' + tmData.move_data.name;
+    tmMsg.innerHTML = 'Teaching move: ' + tmData.move_data.name;
     // Indicate which pokemon can learn
     for (const [dex, tmSet] of Object.entries(tmCompat)) {
         const allPokes = document.querySelectorAll('[data-dex="' + dex + '"]');
@@ -60,8 +63,7 @@ function choosePokemon({slot}) {
 }
 
 function teachTm({slot}) {
-    $.ajax(
-        {
+    $.ajax({
         type: "GET",
         url: teachUrl,
         data: {
@@ -71,19 +73,51 @@ function teachTm({slot}) {
         }
     }).done(function( response ) {
         if (response.msg != null) {
-            msgDiv.innerHTML = response.msg;
+            tmMsg.innerHTML = response.msg;
             setTimeout(() => {
                 openTab('bag_tab', 'machines');
                 chosenTm = null
                 chosenTarget= null;
             }, 3000);
         } else {
-            msgDiv.innerHTML = 'Successfully taught move. Reloading...';
+            tmMsg.innerHTML = 'Successfully taught move. Reloading...';
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
         }
     }).fail(function() {
-        msgDiv.innerHTML = 'Teach TM request failed to send, please contact dev.';
+        tmMsg.innerHTML = 'Teach TM request failed to send, please contact dev.';
+    });
+}
+
+function chooseItem({item}) {
+    chosenItem = item;
+    openTab('bag_tab', 'held_item_manager');
+}
+
+function giveItem({slot}) {
+    $.ajax({
+        type: "GET",
+        url: giveItemUrl,
+        data: {
+            "slot": slot,
+            "item": chosenItem
+        }
+    }).done(function( response ) {
+        if (response.msg != null) {
+            heldMsg.innerHTML = response.msg;
+            setTimeout(() => {
+                openTab('bag_tab', itemPage);
+                chosenTm = null
+                chosenTarget= null;
+            }, 3000);
+        } else {
+            heldMsg.innerHTML = 'Equipped item.';
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    }).fail(function() {
+        heldMsg.innerHTML = 'Item equip request failed to send, please contact dev.';
     });
 }

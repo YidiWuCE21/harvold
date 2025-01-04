@@ -14,6 +14,8 @@ const bagData = JSON.parse('{{ bag_data_str|safe }}');
 const tmCompat = JSON.parse('{{ tm_compatibility|safe }}');
 const partyMoves = JSON.parse('{{ party_moves_str|safe }}');
 const teachUrl = '{% url 'teach_tm_ajax' %}';
+const takeItemUrl = '{% url 'take_held_item_ajax' %}';
+const giveItemUrl = '{% url 'give_held_item_ajax' %}';
 
 const typePath = '{% get_static_prefix %}{{ asset_paths.typing|replace:'\|/' }}';
 const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' }}';
@@ -49,6 +51,7 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
         {% elif category == "key" %}
         <h5>Key Items</h5>
         {% endif %}
+
         <img src="{% get_static_prefix %}{{ asset_paths.misc }}/bag_{{ category }}.png">
         <table class="center text">
             <tr>
@@ -60,6 +63,9 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
                 <th>Category</th>
                 <th>Effect</th>
                 <th></th>
+                {% elif category == 'held_items' or category == 'berries' %}
+                <th></th>
+                <th>Description</th>
                 {% else %}
                 <th>Description</th>
                 {% endif %}
@@ -68,6 +74,9 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
             {% for item, item_data in items.items %}
             <tr>
                 <td>{% if category != "machines" %}<img src="{% get_static_prefix %}{{ asset_paths.item }}/{{ item }}.png">{% else %}{% endif %}</td>
+
+
+
                 {% if category == 'machines' %}
                 <td>{{ item_data.name }}</td>
                 <td>{{ item_data.move_data.name }}</td>
@@ -82,6 +91,10 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
                     <p>{{ item_data.move_data.effects }}</p>
                 </td>
                 <td><button class="button-3" onclick="chooseTm({tm: '{{ item }}'})">Learn</button></td>
+                {% elif category == 'held_items' or category == 'berries' %}
+                <td>{{ item_data.name }}</td>
+                <td><button class="button-3" onclick="chooseItem({item: '{{ item }}'});itemPage = '{{ category }}';">Give</button></td>
+                <td>{{ item_data.description }}</td>
                 {% else %}
                 <td>{{ item_data.name }}</td>
                 <td>{{ item_data.description }}</td>
@@ -93,7 +106,7 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
     </div>
     {% endfor %}
     <div class="bag_tab" id="teach_tm" style="display:none;">
-        <p id="msg"></p>
+        <p id="tm_msg"></p>
         <div class="teach_tab" id="target_select" style="display:none;">
             <p>Choose a Pokemon:</p>
             {% for pkmn in party_moves %}
@@ -107,6 +120,27 @@ const categoryPath = '{% get_static_prefix %}{{ asset_paths.moves|replace:'\|/' 
         </div>
         <div class="teach_tab" id="slot_select" style="display:none;">Choose a move to replace:</div>
         <button class="button-3 button-back" onclick="openTab('bag_tab', 'machines');chosenTm = null;chosenTarget= null;">Cancel</button>
+    </div>
+    <div class="bag_tab" id="held_item_manager" style="display:none;">
+        <p id="held_msg"></p>
+        <div id="give_item_select">
+            <p>Choose a Pokemon:</p>
+            {% for pkmn in party_moves %}
+            <button class="button-3" style="width:160px;height:80px"
+                onclick="giveItem({slot: 'slot_{{ forloop.counter }}'});">
+                <p></p>
+                <p>Level {{ pkmn.level }} {{ pkmn.name }}</p>
+                <img src="{% get_static_prefix %}{{ asset_paths.icon }}\{{ pkmn.dex }}.gif">
+                {% if pkmn.held_item is not None %}
+                <p>Holding: <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ pkmn.held_item }}.png"></p>
+                {% else %}
+                <p>No item held</p>
+                {% endif %}
+            </button>
+            <br>
+            {% endfor %}
+        </div>
+        <button class="button-3 button-back" onclick="openTab('bag_tab', itemPage);chosenItem = null;itemPage= null;">Cancel</button>
     </div>
 </div>
 

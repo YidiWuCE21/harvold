@@ -418,13 +418,61 @@ class Profile(models.Model):
             return "You do not have this move!"
         if self.bag["machines"][tm] < 1:
             return "You do not have this move!"
-        with transaction.atomic():
-            try:
+        try:
+            with transaction.atomic():
                 ret = pokemon.learn_move(move, slot, tms=True)
                 if ret is not None:
                     return "Did not learn move"
                 if not "hm" in tm:
                     if not self.consume_item(tm, 1):
                         return "Did not consume item"
-            except:
-                return "Failed to teach move."
+        except:
+            return "Failed to teach move."
+
+
+    def take_item(self, pokemon):
+        """
+        Take held item from Pokemon, accepts pokemon object or slot
+        """
+        if pokemon in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            pokemon = getattr(self, pokemon)
+        if pokemon.held_item is None:
+            return "No item to take."
+        item = pokemon.held_item
+        try:
+            with transaction.atomic():
+                self.add_item(item, 1)
+                pokemon.held_item = None
+                self.save()
+                pokemon.save()
+        except IntegrityError:
+            return "Failed to take item."
+
+
+    def give_item(self, item, pokemon, category="held_items"):
+        """
+        Give held item to target, target can be slot or pokemon
+        """
+        if pokemon in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            pokemon = getattr(self, pokemon)
+
+        if pokemon is None:
+            return "Select a valid Pokémon."
+        if item not in consts.ITEMS:
+            return "Not a valid item!"
+        if consts.ITEMS[item]["category"] != category:
+            return "Not a valid held item!"
+        if not item in self.bag[category]:
+            return "You do not have this move!"
+        if self.bag[category][item] < 1:
+            return "You do not have this move!"
+
+        if pokemon.held_item is not None:
+            self.take_item(pokemon)
+        try:
+            with transaction.atomic():
+                self.consume_item(item, 1)
+                pokemon.held_item = item
+                pokemon.save()
+        except IntegrityError:
+            return "Failed to add item"

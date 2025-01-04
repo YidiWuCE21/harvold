@@ -9,7 +9,7 @@
 
 {% block content %}
 <div style="display: grid;grid-template-columns: 190px 260px 170px;grid-template-rows: 220px 240px 140px; gap:5px">
-    <div style="grid-column:1;grid-row:1;" class="content-box">
+    <div style="grid-column:1;grid-row:1;position:relative;" class="content-box">
         <h5><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.ball }}.png" style="margin-top:-4px;"> {{ data.name }} {% if info.Sex == "m" %}<span style="color:blue">&#9794;</span>{% elif info.Sex == "f" %}<span style="color:magenta">&#9792;</span>{% endif %}</h5>
         <p style="margin">Level {{ info.level }}</p>
         <div class="experience-bar center"><div style="width:{{ info.experience_progress }}%;height:4px;background:blue;"></div></div>
@@ -24,6 +24,9 @@
         {% for type in data.typing %}
         <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png" style="display:inline-block;">
         {% endfor %}
+        {% if info.held_item is not None %}
+        <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.held_item }}.png" style="position:absolute;bottom:2px;left:2px;">
+        {% endif %}
     </div>
     <div style="grid-column:2;grid-row:1;" class="content-box">
         <h5>Summary</h5>
@@ -100,6 +103,7 @@
         </table>
     </div>
     <div style="grid-column:1 / span 2;grid-row:3" class="content-box">
+        {{ info }}
     </div>
     {% if owned %}
     <div style="grid-column:3;grid-row:1 / span 3;" class="content-box">
