@@ -202,7 +202,7 @@ def battle_processor(text_data, sender, first_turn=False):
                             break
                         output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
                         pkmn.happiness += 1
-                        pkmn.happiness = max(255, pkmn.happiness)
+                        pkmn.happiness = min(255, pkmn.happiness)
                         # Levelup case
                         if pkmn.add_xp(true_exp, recalculate=True):
                             anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
