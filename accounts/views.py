@@ -8,7 +8,7 @@ from django.http import JsonResponse
 
 from .forms import UserCreateForm, StarterChoiceForm, TrainerSelectForm
 from .models import Profile
-from pokemon.models import create_pokemon
+from pokemon.models import create_pokemon, Pokemon
 from harvoldsite import consts
 
 
@@ -216,8 +216,10 @@ def teach_tm_ajax(request):
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def take_held_item_ajax(request):
     profile = request.user.profile
-    slot = request.GET.get("slot")
-    msg = profile.take_item(slot)
+    pkmn = request.GET.get("slot", None)
+    if pkmn is None:
+        pkmn = Pokemon.objects.get(pk=request.GET.get("id"))
+    msg = profile.take_item(pkmn)
     return JsonResponse({"msg": msg})
 
 @login_required

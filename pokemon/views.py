@@ -62,6 +62,8 @@ def pokemon(request):
 
     # Check for actions
     message = None
+    if "message" in request.POST:
+        message = request.POST.get("message")
     if "action" in request.POST:
         action = request.POST.get("action")
         if action == "release":

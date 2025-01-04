@@ -77,3 +77,16 @@ function clickNthButton(element, n) {
         buttons[n - 1].click();
     }
 }
+
+function takeItem({id, url, onSuccess = null}) {
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: {
+            "id": id
+        }
+    }).done(function( response ) {
+        if (onSuccess != null)
+            onSuccess(response);
+    });
+}

@@ -7,8 +7,16 @@
 <link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
 {% endblock %}
 
+{% block scripts %}
+<script>
+function reload(response) {
+    window.location.reload();
+}
+</script>
+{% endblock %}
+
 {% block content %}
-<div style="display: grid;grid-template-columns: 190px 260px 170px;grid-template-rows: 220px 240px 140px; gap:5px">
+<div style="display: grid;grid-template-columns: 190px 260px 170px;grid-template-rows: 240px 240px 140px; gap:5px">
     <div style="grid-column:1;grid-row:1;position:relative;" class="content-box">
         <h5><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.ball }}.png" style="margin-top:-4px;"> {{ data.name }} {% if info.Sex == "m" %}<span style="color:blue">&#9794;</span>{% elif info.Sex == "f" %}<span style="color:magenta">&#9792;</span>{% endif %}</h5>
         <p style="margin">Level {{ info.level }}</p>
@@ -24,9 +32,6 @@
         {% for type in data.typing %}
         <img src="{% get_static_prefix %}{{ asset_paths.typing }}\{{ type }}.png" style="display:inline-block;">
         {% endfor %}
-        {% if info.held_item is not None %}
-        <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.held_item }}.png" style="position:absolute;bottom:2px;left:2px;">
-        {% endif %}
     </div>
     <div style="grid-column:2;grid-row:1;" class="content-box">
         <h5>Summary</h5>
@@ -61,7 +66,20 @@
             </tr>
             <tr>
                 <th>Status</th>
-                <td>{{ info.status }}</td>
+                <td><img src="{% get_static_prefix %}{{ asset_paths.status }}\{{ info.status }}.png"></td>
+            </tr>
+            <tr>
+                <th>Held item</th>
+                <td style="position:relative;">
+                    {% if info.held_item is not None %}
+                    <img style="position:absolute;bottom:-6px;left:0px" src="{% get_static_prefix %}{{ asset_paths.item }}\{{ info.held_item }}.png">
+                    {% if owned %}
+                    <input type="hidden" name="message" value="Retrieved item from {{ data.name }}">
+                    <button style="width:65px;position:absolute;bottom:-7px;right:0px" class="button-3"
+                            onclick="takeItem({id: {{ metadata.id }}, url: '{% url 'take_held_item_ajax' %}', onSuccess: reload});">Remove</button>
+                    {% endif %}
+                    {% endif %}
+                </td>
             </tr>
         </table>
 

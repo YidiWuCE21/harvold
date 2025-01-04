@@ -438,6 +438,8 @@ class Profile(models.Model):
             pokemon = getattr(self, pokemon)
         if pokemon.held_item is None:
             return "No item to take."
+        if pokemon.trainer != self:
+            return "Cannot take someone else's item."
         item = pokemon.held_item
         try:
             with transaction.atomic():
@@ -466,6 +468,8 @@ class Profile(models.Model):
             return "You do not have this move!"
         if self.bag[category][item] < 1:
             return "You do not have this move!"
+        if pokemon.trainer != self:
+            return "Cannot give someone else's Pokemon an item."
 
         if pokemon.held_item is not None:
             self.take_item(pokemon)
