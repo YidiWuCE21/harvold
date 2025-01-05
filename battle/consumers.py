@@ -6,6 +6,7 @@ from . import models
 from .battle_manager import BattleState
 from harvoldsite import consts
 from . import battle_ai
+from accounts.models import send_message
 
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
@@ -276,6 +277,11 @@ def battle_processor(text_data, sender, first_turn=False):
                                 if player_1.badges[badge] is None:
                                     player_1.badges[badge] = rank
                                     output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the {} Badge!".format(badge.capitalize())})
+                                    # Send prize
+                                    send_message(player_1, trainer_json["name"],
+                                                 trainer_json["reward"]["message"],
+                                                 "Congratulations on beating the {} gym!".format(badge.capitalize()), None, trainer_json["sprite"],
+                                                 gift_items={trainer_json["reward"]["first"][0]: 1})
                                 elif player_1.badges[badge] == "silver" and rank == "gold":
                                     player_1.badges[badge] = "gold"
                                     output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the Elite {} Badge!".format(badge.capitalize)})

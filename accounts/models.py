@@ -1,8 +1,10 @@
 from datetime import datetime, date
+import pandas as pd
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.db import IntegrityError, transaction
+from django.urls import reverse
 from pokemon.models import Pokemon
 from harvoldsite import consts
 
@@ -98,6 +100,9 @@ class Profile(models.Model):
     last_update = models.DateField(blank=True, null=True, auto_now_add=True)
     trainers_beat = models.JSONField(blank=True, null=True, default=None)
 
+    # Messages
+    inbox_flag = models.BooleanField(default=False)
+
     @property
     def char_id(self):
         return str(self.character).zfill(2)
@@ -105,6 +110,17 @@ class Profile(models.Model):
     @property
     def dex_entries(self):
         return sum(self.pokedex_progress.values())
+
+    def tradeable_items(self):
+        tradeable = {}
+        for category, grouped_items in self.bag.items():
+            if category in ["general", "key"]:
+                continue
+            for item_name, quantity in grouped_items.items():
+                if category in ["machines"] and "hm" in item_name:
+                    continue
+                tradeable[item_name] = quantity
+        return tradeable
 
     def add_to_party(self, pokemon):
         """
@@ -480,3 +496,100 @@ class Profile(models.Model):
                 pokemon.save()
         except IntegrityError:
             return "Failed to add item"
+
+
+    def has_unread(self):
+        received = Messages.objects.filter(recipient=self, read=False)
+        return bool(len(received))
+
+
+def send_message(recipient, sender_name, body, title, sender, sender_spr, gift_items=None):
+    message = Messages(
+        recipient=recipient,
+        sender_name=sender_name,
+        sender=sender,
+        body=body,
+        title=title,
+        gift_items=gift_items,
+        sender_spr=sender_spr
+    )
+    # If the sender is a user, attempt to remove the items from their inventory
+    try:
+        with transaction.atomic():
+            if sender is not None:
+                if gift_items is not None:
+                    for gift_item, quantity in gift_items.items:
+                        if not sender.consume_item(gift_item, quantity=quantity):
+                            return "You don't have: {}".format(gift_item)
+            message.save()
+            recipient.inbox_flag = True
+            recipient.save()
+    except IntegrityError:
+        return "Failed to send message."
+
+
+class Messages(models.Model):
+    # Administrative fields
+    recipient = models.ForeignKey(
+        Profile,
+        on_delete=models.CASCADE,
+        related_name="recipient"
+    )
+    sender_name = models.CharField(max_length=20)
+    sender = models.ForeignKey(
+        Profile,
+        blank=True, null=True, default=None,
+        related_name="sender",
+        on_delete=models.SET_NULL
+    )
+    time = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+    accepted = models.BooleanField(default=False)
+    body = models.TextField(blank=True, null=True, default=None)
+    title = models.TextField(blank=True, null=True, default=None)
+    gift_items = models.JSONField(blank=True, null=True, default=None)
+    sender_spr = models.CharField(max_length=20)
+
+    def read_message(self):
+        self.read = True
+        self.save()
+        if self.gift_items is not None:
+            if not self.accepted:
+                self.accepted = True
+                for gift_item, quantity in self.gift_items.items():
+                    self.recipient.add_item(gift_item, quantity)
+                self.recipient.save()
+        if not self.recipient.has_unread():
+            self.recipient.inbox_flag = False
+
+
+def process_messages(messages):
+    """
+    Processes messages for display in inbox
+    """
+    if not len(messages):
+        return pd.DataFrame(columns=["From", "Title", "Date", "To"])
+    messages = [{
+        "From": msg.sender_name,
+        "sender": msg.sender.pk if msg.sender is not None else "",
+        "To": msg.recipient.user.username,
+        "recipient": msg.recipient.pk,
+        "Title": msg.title,
+        "body": msg.body,
+        "read": msg.read,
+        "accepted": msg.accepted,
+        "gift_items": msg.gift_items,
+        "time": msg.time,
+        "Date": msg.time.strftime("%x %X"),
+        "key": msg.pk
+    } for msg in messages]
+    msg_df = pd.DataFrame(messages)
+    # Add link to sender and receiver
+    profile_link = reverse("view_profile")
+    msg_df["From"] = msg_df.apply(lambda x: "<a href='{}?id={}'>{}</a>".format(profile_link, x["sender"], x["From"]), axis=1)
+    msg_df["To"] = msg_df.apply(lambda x: "<a href='{}?id={}'>{}</a>".format(profile_link, x["recipient"], x["To"]), axis=1)
+    msg_df["Title"] = msg_df.apply(
+        lambda x: "<strong onclick='openMessage(\"{}\");'>{}</strong>".format(x["key"], x["Title"]) \
+            if not x["read"] else \
+            "<p onclick='openMessage(\"{}\");'>{}</p>".format(x["key"], x["Title"]), axis=1)
+    return msg_df

@@ -1,199 +1,178 @@
 {
     "name": "Blaine",
-    "sprite": "blaine",
-    "music": "gym",
     "team": [
         {
-            "current_hp": 120,
+            "current_hp": 110,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
-                    "move": "crunch",
+                    "move": "amnesia",
+                    "pp": 20
+                }, {
+                    "move": "lavaplume",
                     "pp": 15
-                },
-                {
-                    "move": "heatwave",
-                    "pp": 10
-                },
-                {
-                    "move": "outrage",
-                    "pp": 10
-                },
-                {
-                    "move": "flareblitz",
+                }, {
+                    "move": "shellsmash",
                     "pp": 15
+                }, {
+                    "move": "rockslide",
+                    "pp": 10
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Flash Fire",
-            "dex_number": "058",
-            "level": 51,
+            "ability": "Weak Armor",
+            "dex_number": "219",
+            "level": 44,
             "shiny": false,
             "stats": {
-                "hp": 120,
-                "atk": 75,
-                "def": 61,
-                "spa": 91,
-                "spd": 63,
-                "spe": 83
+                "hp": 110,
+                "atk": 60,
+                "def": 104,
+                "spa": 105,
+                "spd": 83,
+                "spe": 33
             },
             "id": null,
-            "name": "Growlithe"
-        },
-        {
-            "current_hp": 161,
+            "name": "Magcargo"
+        }, {
+            "current_hp": 128,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "firefang",
+                    "pp": 15
+                }, {
+                    "move": "flameburst",
+                    "pp": 15
+                }, {
+                    "move": "wingattack",
+                    "pp": 35
+                }, {
+                    "move": "slash",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Solar Power",
+            "dex_number": "006",
+            "level": 45,
+            "shiny": false,
+            "stats": {
+                "hp": 128,
+                "atk": 81,
+                "def": 84,
+                "spa": 114,
+                "spd": 84,
+                "spe": 93
+            },
+            "id": null,
+            "name": "Charizard"
+        }, {
+            "current_hp": 123,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
                     "move": "flamethrower",
-                    "pp": 15
-                },
-                {
-                    "move": "headsmash",
-                    "pp": 5
-                },
-                {
-                    "move": "roar",
+                    "pp": 10
+                }, {
+                    "move": "nastyplot",
                     "pp": 20
-                },
-                {
-                    "move": "flareblitz",
-                    "pp": 15
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }, {
+                    "move": "flameburst",
+                    "pp": 25
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Thick Fat",
-            "dex_number": "499",
-            "level": 53,
+            "ability": "Flash Fire",
+            "dex_number": "038",
+            "level": 45,
             "shiny": false,
             "stats": {
-                "hp": 161,
-                "atk": 117,
-                "def": 72,
-                "spa": 102,
-                "spd": 63,
-                "spe": 77
+                "hp": 123,
+                "atk": 74,
+                "def": 77,
+                "spa": 89,
+                "spd": 98,
+                "spe": 93
             },
             "id": null,
-            "name": "Pignite"
-        },
-        {
-            "current_hp": 143,
+            "name": "Ninetales"
+        }, {
+            "current_hp": 125,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
+                    "move": "agility",
+                    "pp": 30
+                }, {
                     "move": "furyattack",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "fireblast",
                     "pp": 5
-                },
-                {
+                }, {
                     "move": "bounce",
                     "pp": 5
-                },
-                {
-                    "move": "flareblitz",
-                    "pp": 15
                 }
             ],
             "held_item": null,
             "happiness": 70,
             "ability": "Flame Body",
             "dex_number": "078",
-            "level": 54,
+            "level": 47,
             "shiny": false,
             "stats": {
-                "hp": 143,
-                "atk": 116,
-                "def": 84,
+                "hp": 125,
+                "atk": 99,
+                "def": 75,
                 "spa": 99,
-                "spd": 100,
-                "spe": 131
+                "spd": 87,
+                "spe": 105
             },
             "id": null,
             "name": "Rapidash"
-        },
-        {
-            "current_hp": 155,
+        }, {
+            "current_hp": 128,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
-                    "move": "lavaplume",
-                    "pp": 15
-                },
-                {
-                    "move": "sunnyday",
-                    "pp": 5
-                },
-                {
-                    "move": "flamethrower",
-                    "pp": 15
-                },
-                {
-                    "move": "fireblast",
-                    "pp": 5
-                }
-            ],
-            "held_item": null,
-            "happiness": 70,
-            "ability": "Flame Body",
-            "dex_number": "126",
-            "level": 56,
-            "shiny": false,
-            "stats": {
-                "hp": 155,
-                "atk": 117,
-                "def": 74,
-                "spa": 133,
-                "spd": 115,
-                "spe": 124
-            },
-            "id": null,
-            "name": "Magmar"
-        },
-        {
-            "current_hp": 159,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
+                    "move": "takedown",
+                    "pp": 20
+                }, {
                     "move": "rockslide",
                     "pp": 10
-                },
-                {
-                    "move": "yawn",
+                }, {
+                    "move": "lavaplume",
                     "pp": 10
-                },
-                {
+                }, {
                     "move": "earthquake",
                     "pp": 10
-                },
-                {
-                    "move": "eruption",
-                    "pp": 5
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Magma Armor",
+            "ability": "Solid Rock",
             "dex_number": "323",
-            "level": 56,
+            "level": 48,
             "shiny": false,
             "stats": {
-                "hp": 159,
-                "atk": 121,
-                "def": 92,
-                "spa": 135,
-                "spd": 104,
-                "spe": 60
+                "hp": 128,
+                "atk": 97,
+                "def": 72,
+                "spa": 118,
+                "spd": 82,
+                "spe": 49
             },
             "id": null,
             "name": "Camerupt"
@@ -203,10 +182,12 @@
         "base_payout": 100,
         "badges": {
             "fire": "silver"
-        }
+        },
+        "first": ["lucky-egg"],
+        "message": "Congrats on beating the gym! Take this Lucky Egg. It increases the experience received by a Pokemon by 50% when holding it."
     },
+    "sprite": "blaine",
     "lines": {
-        "lose": "You have ambition, kid!",
-        "start": "My fiery Pokémon will incinerate all challengers! Ha!"
+        "lose": "You have ambition, kid!"
     }
 }

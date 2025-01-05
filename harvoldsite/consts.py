@@ -169,16 +169,16 @@ MAPS = [
 ]
 
 GYM_LEADERS = {
-    "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 21},
-    "electric": {"npc": "elesa", "name": "Elesa", "reg": "522", "elite": "466", "level": 28},
-    "water": {"npc": "marlon", "name": "Marlon", "reg": "364", "elite": "130", "level": 35},
-    "ground": {"npc": "giovanni", "name": "Giovanni", "reg": "095", "elite": "530", "level": 42},
-    "fighting": {"npc": "bruno", "name": "Bruno", "reg": "107", "elite": "534", "level": 49},
-    "fire": {"npc": "blaine", "name": "Blaine", "reg": "126", "elite": "059", "level": 56},
-    "ghost": {"npc": "shauntal", "name": "Shauntal", "reg": "356", "elite": "609", "level": 63},
-    "psychic": {"npc": "caitlin", "name": "Caitlin", "reg": "281", "elite": "579", "level": 70},
-    "steel": {"npc": "steven", "name": "Steven", "reg": "305", "elite": "376", "level": 77},
-    "dragon": {"npc": "clair", "name": "Clair", "reg": "148", "elite": "445", "level": 84}
+    "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 15},
+    "electric": {"npc": "elesa", "name": "Elesa", "reg": "522", "elite": "466", "level": 22},
+    "water": {"npc": "marlon", "name": "Marlon", "reg": "364", "elite": "130", "level": 28},
+    "ground": {"npc": "giovanni", "name": "Giovanni", "reg": "031", "elite": "530", "level": 35},
+    "fighting": {"npc": "bruno", "name": "Bruno", "reg": "107", "elite": "534", "level": 41},
+    "fire": {"npc": "blaine", "name": "Blaine", "reg": "059", "elite": "257", "level": 48},
+    "ghost": {"npc": "shauntal", "name": "Shauntal", "reg": "609", "elite": "094", "level": 54},
+    "psychic": {"npc": "caitlin", "name": "Caitlin", "reg": "518", "elite": "488", "level": 61},
+    "steel": {"npc": "steven", "name": "Steven", "reg": "227", "elite": "376", "level": 67},
+    "dragon": {"npc": "clair", "name": "Clair", "reg": "621", "elite": "445", "level": 74}
 }
 
 STAT_BOOSTS = {

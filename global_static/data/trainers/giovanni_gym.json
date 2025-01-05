@@ -1,26 +1,91 @@
 {
     "name": "Giovanni",
-    "sprite": "giovanni",
-    "music": "gym",
     "team": [
         {
-            "current_hp": 116,
+            "current_hp": 88,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "dig",
+                    "pp": 10
+                }, {
+                    "move": "takedown",
+                    "pp": 20
+                }, {
+                    "move": "sandtomb",
+                    "pp": 15
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Stream",
+            "dex_number": "449",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 88,
+                "atk": 57,
+                "def": 59,
+                "spa": 34,
+                "spd": 39,
+                "spe": 35
+            },
+            "id": null,
+            "name": "Hippopotas"
+        }, {
+            "current_hp": 75,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "smackdown",
+                    "pp": 15
+                }, {
+                    "move": "dragonbreath",
+                    "pp": 20
+                }, {
+                    "move": "slam",
+                    "pp": 20
+                }, {
+                    "move": "screech",
+                    "pp": 40
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "095",
+            "level": 33,
+            "shiny": false,
+            "stats": {
+                "hp": 75,
+                "atk": 36,
+                "def": 120,
+                "spa": 23,
+                "spd": 39,
+                "spe": 58
+            },
+            "id": null,
+            "name": "Onix"
+        }, {
+            "current_hp": 103,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
                     "move": "scaryface",
                     "pp": 10
-                },
-                {
+                }, {
                     "move": "rockblast",
                     "pp": 10
-                },
-                {
+                }, {
                     "move": "bulldoze",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "chipaway",
                     "pp": 20
                 }
@@ -29,145 +94,65 @@
             "happiness": 70,
             "ability": "Lightningrod",
             "dex_number": "111",
-            "level": 37,
+            "level": 34,
             "shiny": false,
             "stats": {
-                "hp": 116,
-                "atk": 77,
-                "def": 76,
-                "spa": 28,
-                "spd": 24,
-                "spe": 26
+                "hp": 103,
+                "atk": 63,
+                "def": 74,
+                "spa": 38,
+                "spd": 35,
+                "spe": 25
             },
             "id": null,
             "name": "Rhyhorn"
-        },
-        {
-            "current_hp": 101,
+        }, {
+            "current_hp": 111,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
-                    "move": "furyswipes",
+                    "move": "earthpower",
+                    "pp": 5
+                }, {
+                    "move": "tailwhip",
+                    "pp": 30
+                }, {
+                    "move": "doublekick",
+                    "pp": 20
+                }, {
+                    "move": "bodyslam",
                     "pp": 15
-                },
-                {
-                    "move": "bite",
-                    "pp": 25
-                },
-                {
-                    "move": "helpinghand",
-                    "pp": 20
-                },
-                {
-                    "move": "toxicspikes",
-                    "pp": 20
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Hustle",
-            "dex_number": "030",
-            "level": 37,
+            "ability": "Poison Point",
+            "dex_number": "031",
+            "level": 35,
             "shiny": false,
             "stats": {
-                "hp": 101,
-                "atk": 61,
-                "def": 68,
-                "spa": 45,
-                "spd": 51,
-                "spe": 51
-            },
-            "id": null,
-            "name": "Nidorina"
-        },
-        {
-            "current_hp": 108,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
-                    "move": "takedown",
-                    "pp": 20
-                },
-                {
-                    "move": "sandtomb",
-                    "pp": 15
-                },
-                {
-                    "move": "crunch",
-                    "pp": 15
-                },
-                {
-                    "move": "earthquake",
-                    "pp": 10
-                }
-            ],
-            "held_item": null,
-            "happiness": 70,
-            "ability": "Sand Force",
-            "dex_number": "449",
-            "level": 40,
-            "shiny": false,
-            "stats": {
-                "hp": 108,
-                "atk": 56,
+                "hp": 111,
+                "atk": 71,
                 "def": 74,
-                "spa": 51,
-                "spd": 51,
-                "spe": 33
+                "spa": 67,
+                "spd": 68,
+                "spe": 66
             },
             "id": null,
-            "name": "Hippopotas"
-        },
-        {
-            "current_hp": 81,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
-                    "move": "screech",
-                    "pp": 40
-                },
-                {
-                    "move": "rockslide",
-                    "pp": 10
-                },
-                {
-                    "move": "sandtomb",
-                    "pp": 15
-                },
-                {
-                    "move": "irontail",
-                    "pp": 15
-                }
-            ],
-            "held_item": null,
-            "happiness": 70,
-            "ability": "Rock Head",
-            "dex_number": "095",
-            "level": 42,
-            "shiny": false,
-            "stats": {
-                "hp": 81,
-                "atk": 42,
-                "def": 144,
-                "spa": 45,
-                "spd": 50,
-                "spe": 75
-            },
-            "id": null,
-            "name": "Onix"
+            "name": "Nidoqueen"
         }
     ],
     "reward": {
         "base_payout": 100,
         "badges": {
             "ground": "silver"
-        }
+        },
+        "first": ["exp-share"],
+        "message": "Congrats on beating the gym! Take this Exp. Share. It allows the Pokemon holding it to receive experience when other Pokemon fight. Navigate to the Bag page and click the Held Items tab to use it."
     },
+    "sprite": "giovanni",
     "lines": {
-        "lose": "I see that you raise Pokémon with utmost care.",
-        "start": "Time to experience a world of pain!"
+        "lose": "I see that you raise Pok\u00e9mon with utmost care."
     }
 }

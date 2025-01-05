@@ -1,221 +1,161 @@
 {
     "name": "Steven",
-    "sprite": "steven",
-    "music": "gym",
     "team": [
         {
-            "current_hp": 176,
+            "current_hp": 179,
             "status": "",
             "status_turns": 0,
             "moves": [
-                {
-                    "move": "psychic",
-                    "pp": 10
-                },
-                {
-                    "move": "meteormash",
-                    "pp": 10
-                },
                 {
                     "move": "irondefense",
                     "pp": 15
-                },
-                {
-                    "move": "hyperbeam",
+                }, {
+                    "move": "spikes",
                     "pp": 5
-                }
-            ],
-            "held_item": null,
-            "happiness": 35,
-            "ability": "Clear Body",
-            "dex_number": "375",
-            "level": 71,
-            "shiny": false,
-            "stats": {
-                "hp": 176,
-                "atk": 124,
-                "def": 173,
-                "spa": 87,
-                "spd": 129,
-                "spe": 74
-            },
-            "id": null,
-            "name": "Metang"
-        },
-        {
-            "current_hp": 189,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
-                    "move": "autotomize",
-                    "pp": 15
-                },
-                {
-                    "move": "heavyslam",
-                    "pp": 10
-                },
-                {
+                }, {
                     "move": "doubleedge",
                     "pp": 15
-                },
-                {
-                    "move": "metalburst",
+                }, {
+                    "move": "gyroball",
                     "pp": 10
                 }
             ],
             "held_item": null,
-            "happiness": 35,
-            "ability": "Rock Head",
-            "dex_number": "305",
-            "level": 73,
+            "happiness": 70,
+            "ability": "Sturdy",
+            "dex_number": "205",
+            "level": 63,
             "shiny": false,
             "stats": {
-                "hp": 189,
-                "atk": 159,
-                "def": 213,
-                "spa": 85,
-                "spd": 99,
-                "spe": 83
+                "hp": 179,
+                "atk": 128,
+                "def": 214,
+                "spa": 82,
+                "spd": 85,
+                "spe": 63
             },
             "id": null,
-            "name": "Lairon"
-        },
-        {
-            "current_hp": 163,
+            "name": "Forretress"
+        }, {
+            "current_hp": 174,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
+                    "move": "irondefense",
+                    "pp": 15
+                }, {
                     "move": "nightslash",
                     "pp": 15
-                },
-                {
+                }, {
                     "move": "ironhead",
                     "pp": 15
-                },
-                {
+                }, {
                     "move": "swordsdance",
                     "pp": 20
-                },
-                {
-                    "move": "guillotine",
-                    "pp": 5
                 }
             ],
             "held_item": null,
             "happiness": 35,
-            "ability": "Defiant",
-            "dex_number": "624",
-            "level": 75,
+            "ability": "Pressure",
+            "dex_number": "625",
+            "level": 64,
             "shiny": false,
             "stats": {
-                "hp": 163,
-                "atk": 167,
-                "def": 103,
-                "spa": 65,
-                "spd": 74,
-                "spe": 99
+                "hp": 174,
+                "atk": 172,
+                "def": 144,
+                "spa": 99,
+                "spd": 104,
+                "spe": 91
             },
             "id": null,
-            "name": "Pawniard"
-        },
-        {
-            "current_hp": 232,
+            "name": "Bisharp"
+        }, {
+            "current_hp": 197,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
-                    "move": "whirlpool",
+                    "move": "brine",
                     "pp": 15
-                },
-                {
-                    "move": "mist",
+                }, {
+                    "move": "metalclaw",
                     "pp": 30
-                },
-                {
+                }, {
                     "move": "drillpeck",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "hydropump",
                     "pp": 5
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Defiant",
+            "ability": "Torrent",
             "dex_number": "395",
-            "level": 75,
+            "level": 65,
             "shiny": false,
             "stats": {
-                "hp": 232,
-                "atk": 170,
-                "def": 143,
-                "spa": 156,
-                "spd": 174,
-                "spe": 100
+                "hp": 197,
+                "atk": 122,
+                "def": 137,
+                "spa": 172,
+                "spd": 142,
+                "spe": 102
             },
             "id": null,
             "name": "Empoleon"
-        },
-        {
-            "current_hp": 215,
+        }, {
+            "current_hp": 181,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
+                    "move": "irontail",
+                    "pp": 15
+                }, {
+                    "move": "autotomize",
+                    "pp": 15
+                }, {
+                    "move": "ironhead",
+                    "pp": 10
+                }, {
                     "move": "doubleedge",
                     "pp": 15
-                },
-                {
-                    "move": "magnetrise",
-                    "pp": 10
-                },
-                {
-                    "move": "zapcannon",
-                    "pp": 5
-                },
-                {
-                    "move": "heavyslam",
-                    "pp": 10
                 }
             ],
             "held_item": null,
-            "happiness": 70,
-            "ability": "Overcoat",
-            "dex_number": "205",
-            "level": 76,
+            "happiness": 35,
+            "ability": "Rock Head",
+            "dex_number": "306",
+            "level": 67,
             "shiny": false,
             "stats": {
-                "hp": 215,
-                "atk": 137,
-                "def": 237,
-                "spa": 116,
-                "spd": 112,
-                "spe": 74
+                "hp": 181,
+                "atk": 183,
+                "def": 261,
+                "spa": 95,
+                "spd": 100,
+                "spe": 82
             },
             "id": null,
-            "name": "Forretress"
-        },
-        {
-            "current_hp": 194,
+            "name": "Aggron"
+        }, {
+            "current_hp": 174,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
                     "move": "autotomize",
                     "pp": 15
-                },
-                {
-                    "move": "airslash",
+                }, {
+                    "move": "steelwing",
                     "pp": 15
-                },
-                {
+                }, {
                     "move": "slash",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "nightslash",
                     "pp": 15
                 }
@@ -224,15 +164,15 @@
             "happiness": 70,
             "ability": "Keen Eye",
             "dex_number": "227",
-            "level": 77,
+            "level": 67,
             "shiny": false,
             "stats": {
-                "hp": 194,
-                "atk": 130,
-                "def": 232,
-                "spa": 82,
-                "spd": 118,
-                "spe": 132
+                "hp": 174,
+                "atk": 124,
+                "def": 195,
+                "spa": 76,
+                "spd": 102,
+                "spe": 104
             },
             "id": null,
             "name": "Skarmory"
@@ -242,10 +182,12 @@
         "base_payout": 100,
         "badges": {
             "steel": "silver"
-        }
+        },
+        "first": ["hm04"],
+        "message": "Congrats on beating the gym! Take this HM. It contains Dive, which can be used to go underwater."
     },
+    "sprite": "steven",
     "lines": {
-        "lose": "I see ... Your battle style is intriguing.",
-        "start": "Welcome. I was looking forward to seeing you here one day."
+        "lose": "I see ... Your battle style is intriguing."
     }
 }

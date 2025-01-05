@@ -1,13 +1,14 @@
 import random
 import os
 import json
+import pandas as pd
 from django.shortcuts import render, redirect
 from django.db import IntegrityError, transaction
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 
 from .forms import UserCreateForm, StarterChoiceForm, TrainerSelectForm
-from .models import Profile
+from .models import Profile, Messages, send_message, process_messages
 from pokemon.models import create_pokemon, Pokemon
 from harvoldsite import consts
 
@@ -165,6 +166,27 @@ def pokemart(request):
     }
     return render(request, "pokemon/pokemart.html", html_render_variables)
 
+@login_required
+def inbox(request):
+    profile = request.user.profile
+    sent = Messages.objects.filter(sender=profile)
+    received = Messages.objects.filter(recipient=profile)
+    sent = process_messages(sent)
+    sent = sent[["To", "Title", "Date"]]
+    received = process_messages(received)
+    received = received[["From", "Title", "Date"]]
+
+
+    # Gather tradeable items
+    tradeables = profile.tradeable_items()
+
+    html_render_variables = {
+        "sent": sent.to_html(escape=False, table_id="sentMsg", classes=["display", "compact"], index=False),
+        "received": received.to_html(escape=False, table_id="receivedMsg", classes=["display", "compact"], index=False),
+        "tradeables": tradeables
+    }
+    return render(request, "pokemon/inbox.html", html_render_variables)
+
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
@@ -230,3 +252,44 @@ def give_held_item_ajax(request):
     item = request.GET.get("item")
     msg = profile.give_item(item, slot)
     return JsonResponse({"msg": msg})
+
+@login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+def read_message_ajax(request):
+    message_id = request.GET.get("msg")
+    message = Messages.objects.get(pk=message_id)
+    if message:
+        body = message.body
+        title = message.title
+        sender = message.sender_name
+        recipient = message.recipient.user.username
+        gifts = None
+        is_receiver = message.recipient == request.user.profile
+
+        processed_gifts = None
+        if is_receiver:
+            message.read_message()
+            gifts = message.gift_items
+            processed_gifts = {}
+            for gift, qty in gifts.items():
+                if "tm" in gift or "hm" in gift:
+                    move = consts.ITEMS[gift]["move"]
+                    type = consts.MOVES[move]["type"]
+                    processed_gifts["tm-{}".format(type)] = qty
+                else:
+                    processed_gifts[gift] = qty
+        sender_url = os.path.join(consts.ASSET_PATHS["trainer_sprite"], "{}.png".format(message.sender_spr))
+        if message.sender is not None:
+            sender_url = os.path.join(consts.ASSET_PATHS["player_sprite"], "{}.png".format(message.sender_spr))
+        html_render_variables = {
+            "body": body,
+            "title": title,
+            "sender": sender,
+            "recipient": recipient,
+            "gifts": processed_gifts,
+            "is_receiver": is_receiver,
+            "sender_url": sender_url,
+            "date": message.time.strftime("%x %X")
+        }
+        return render(request, "common/inbox_message.html", html_render_variables)
+    raise ValueError("Failed to find message")

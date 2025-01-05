@@ -1,0 +1,29 @@
+{% load static %}
+<div style="text-align:left">
+    <table>
+        <tr>
+            <td>
+                <img src="{% get_static_prefix %}{{ sender_url }}">
+            </td>
+            <td>
+                <h5>{{ title }}</h5>
+                <p><strong>From:</strong> {{ sender }}</p>
+                <p><strong>To:</strong> {{ recipient }}</p>
+                <p><strong>Date:</strong> {{ date }}</p>
+                <br>
+                <div style="border:1px solid gray;padding:20px; width:400px;min-height:300px;">
+                    {{ body }}
+                    {% if gifts is not None %}
+                    <br>
+                    <br>
+                    <strong>The following items were delivered to your bag:</strong>
+                    {% for gift, quantity in gifts.items %}
+                    <p><img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ gift }}.png"> x{{quantity}}</p>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</div>

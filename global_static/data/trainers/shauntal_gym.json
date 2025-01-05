@@ -1,182 +1,91 @@
 {
     "name": "Shauntal",
-    "sprite": "shauntal",
-    "music": "gym",
     "team": [
         {
-            "current_hp": 130,
+            "current_hp": 110,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
-                    "move": "dreameater",
+                    "move": "willowisp",
                     "pp": 15
-                },
-                {
-                    "move": "darkpulse",
-                    "pp": 15
-                },
-                {
-                    "move": "destinybond",
-                    "pp": 5
-                },
-                {
-                    "move": "hex",
-                    "pp": 10
-                }
-            ],
-            "held_item": null,
-            "happiness": 70,
-            "ability": "Levitate",
-            "dex_number": "093",
-            "level": 57,
-            "shiny": false,
-            "stats": {
-                "hp": 130,
-                "atk": 64,
-                "def": 59,
-                "spa": 141,
-                "spd": 69,
-                "spe": 115
-            },
-            "id": null,
-            "name": "Haunter"
-        },
-        {
-            "current_hp": 142,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
-                    "move": "memento",
-                    "pp": 10
-                },
-                {
-                    "move": "inferno",
-                    "pp": 5
-                },
-                {
-                    "move": "curse",
-                    "pp": 10
-                },
-                {
-                    "move": "shadowball",
-                    "pp": 15
-                }
-            ],
-            "held_item": null,
-            "happiness": 70,
-            "ability": "Flame Body",
-            "dex_number": "608",
-            "level": 59,
-            "shiny": false,
-            "stats": {
-                "hp": 142,
-                "atk": 58,
-                "def": 81,
-                "spa": 127,
-                "spd": 86,
-                "spe": 76
-            },
-            "id": null,
-            "name": "Lampent"
-        },
-        {
-            "current_hp": 132,
-            "status": "",
-            "status_turns": 0,
-            "moves": [
-                {
+                }, {
                     "move": "shadowpunch",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "hex",
                     "pp": 10
-                },
-                {
+                }, {
                     "move": "meanlook",
                     "pp": 5
-                },
-                {
-                    "move": "payback",
-                    "pp": 10
                 }
             ],
             "held_item": null,
             "happiness": 35,
             "ability": "Frisk",
-            "dex_number": "356",
-            "level": 59,
+            "dex_number": "477",
+            "level": 50,
             "shiny": false,
             "stats": {
-                "hp": 132,
-                "atk": 88,
-                "def": 150,
-                "spa": 89,
-                "spd": 166,
-                "spe": 45
+                "hp": 110,
+                "atk": 114,
+                "def": 169,
+                "spa": 82,
+                "spd": 129,
+                "spe": 55
             },
             "id": null,
-            "name": "Dusclops"
-        },
-        {
-            "current_hp": 155,
+            "name": "Dusknoir"
+        }, {
+            "current_hp": 129,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
                     "move": "shadowball",
                     "pp": 15
-                },
-                {
-                    "move": "grudge",
-                    "pp": 5
-                },
-                {
-                    "move": "meanlook",
-                    "pp": 5
-                },
-                {
+                }, {
+                    "move": "dreameater",
+                    "pp": 15
+                }, {
+                    "move": "darkpulse",
+                    "pp": 15
+                }, {
                     "move": "destinybond",
                     "pp": 5
                 }
             ],
             "held_item": null,
             "happiness": 70,
-            "ability": "Mummy",
-            "dex_number": "563",
-            "level": 60,
+            "ability": "Levitate",
+            "dex_number": "094",
+            "level": 52,
             "shiny": false,
             "stats": {
-                "hp": 155,
-                "atk": 74,
-                "def": 213,
-                "spa": 131,
-                "spd": 135,
-                "spe": 48
+                "hp": 129,
+                "atk": 81,
+                "def": 75,
+                "spa": 143,
+                "spd": 90,
+                "spe": 127
             },
             "id": null,
-            "name": "Cofagrigus"
-        },
-        {
-            "current_hp": 159,
+            "name": "Gengar"
+        }, {
+            "current_hp": 136,
             "status": "",
             "status_turns": 0,
             "moves": [
                 {
                     "move": "phantomforce",
                     "pp": 10
-                },
-                {
+                }, {
                     "move": "powergem",
                     "pp": 20
-                },
-                {
+                }, {
                     "move": "psywave",
                     "pp": 15
-                },
-                {
+                }, {
                     "move": "spite",
                     "pp": 10
                 }
@@ -185,28 +94,100 @@
             "happiness": 35,
             "ability": "Levitate",
             "dex_number": "429",
-            "level": 63,
+            "level": 52,
             "shiny": false,
             "stats": {
-                "hp": 159,
-                "atk": 87,
-                "def": 86,
-                "spa": 133,
-                "spd": 137,
-                "spe": 169
+                "hp": 136,
+                "atk": 80,
+                "def": 73,
+                "spa": 117,
+                "spd": 118,
+                "spe": 129
             },
             "id": null,
             "name": "Mismagius"
+        }, {
+            "current_hp": 139,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scaryface",
+                    "pp": 10
+                }, {
+                    "move": "shadowball",
+                    "pp": 15
+                }, {
+                    "move": "grudge",
+                    "pp": 5
+                }, {
+                    "move": "meanlook",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Mummy",
+            "dex_number": "563",
+            "level": 53,
+            "shiny": false,
+            "stats": {
+                "hp": 139,
+                "atk": 74,
+                "def": 168,
+                "spa": 126,
+                "spd": 116,
+                "spe": 33
+            },
+            "id": null,
+            "name": "Cofagrigus"
+        }, {
+            "current_hp": 145,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "flameburst",
+                    "pp": 15
+                }, {
+                    "move": "hex",
+                    "pp": 10
+                }, {
+                    "move": "painsplit",
+                    "pp": 20
+                }, {
+                    "move": "smog",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Flame Body",
+            "dex_number": "609",
+            "level": 54,
+            "shiny": false,
+            "stats": {
+                "hp": 145,
+                "atk": 76,
+                "def": 118,
+                "spa": 163,
+                "spd": 115,
+                "spe": 105
+            },
+            "id": null,
+            "name": "Chandelure"
         }
     ],
     "reward": {
         "base_payout": 100,
         "badges": {
             "ghost": "silver"
-        }
+        },
+        "first": ["hm04"],
+        "message": "Congrats on beating the gym! Take this HM. It contains Rock Smash, which can be used to break apart rocks."
     },
+    "sprite": "shauntal",
     "lines": {
-        "lose": "Fortitude is needed if you're going to battle, don't you think?",
-        "start": "Beginnings are important, whether in a good novel or a good battle!"
+        "lose": "Fortitude is needed if you're going to battle, don't you think?"
     }
 }

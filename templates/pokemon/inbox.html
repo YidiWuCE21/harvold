@@ -1,0 +1,43 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block title %}Pokémart{% endblock %}
+
+{% block scripts %}
+<script>
+const openUrl = '{% url 'read_message_ajax' %}';
+new DataTable('#sentMsg', {
+    fixedColumns: true,
+    paging: false,
+    scrollCollapse: true,
+    scrollX: true
+});
+new DataTable('#receivedMsg', {
+    columnDefs: [{ width: 40, targets: 0 }],
+    fixedColumns: true,
+    paging: false,
+    scrollCollapse: true,
+    scrollX: true
+});
+</script>
+
+<script src="{% static 'scripts/inbox.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="content-box">
+    <button class="button-3" onclick="openTab('inbox_tab', 'inbox');">Inbox</button>
+    <br>
+    <div class="inbox_tab" id="inbox">
+        {{ received|safe }}
+    </div>
+    <div class="inbox_tab" id="message" style="display:none;">
+    </div>
+    <div class="inbox_tab" id="items" style="display:none;"></div>
+</div>
+
+{% endblock %}

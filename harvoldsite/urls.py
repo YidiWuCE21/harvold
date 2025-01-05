@@ -18,6 +18,7 @@ urlpatterns = [
     path("profile", account_views.view_profile, name="view_profile"),
     path("bag", account_views.bag, name="bag"),
     path("pokemart", account_views.pokemart, name="pokemart"),
+    path("inbox", account_views.inbox, name="inbox"),
     # Trainer related views
     path("box", pokemon_views.box, name="box"),
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
@@ -39,5 +40,6 @@ urlpatterns = [
     path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax"),
     path("teach_tm_ajax", account_views.teach_tm_ajax, name="teach_tm_ajax"),
     path("take_held_item_ajax", account_views.take_held_item_ajax, name="take_held_item_ajax"),
-    path("give_held_item_ajax", account_views.give_held_item_ajax, name="give_held_item_ajax")
+    path("give_held_item_ajax", account_views.give_held_item_ajax, name="give_held_item_ajax"),
+    path("read_message_ajax", account_views.read_message_ajax, name="read_message_ajax")
 ]
