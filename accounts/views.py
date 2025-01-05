@@ -265,7 +265,6 @@ def read_message_ajax(request):
         title = message.title
         sender = message.sender_name
         recipient = message.recipient.user.username
-        gifts = None
         is_receiver = message.recipient == request.user.profile
 
         processed_gifts = None
