@@ -71,13 +71,10 @@ function endBattle() {
     const endPane = document.getElementById('end');
     if (prompt == null)
         return;
-    for (const [displayText, nextUrl] of Object.entries(prompt)) {
-        const endButton = document.createElement('a');
-        endButton.href = nextUrl;
-        endButton.innerHTML = displayText;
-        endButton.classList.add('move-box');
-        endPane.append(endButton);
-    }
+    prompt.forEach((btn) => {
+        const endButton = document.getElementById(btn + 'End');
+        endButton.style.display = 'inline-block';
+    })
     openTab('control-tab', 'end');
 }
 

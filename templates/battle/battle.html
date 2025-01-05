@@ -41,7 +41,29 @@
             </div>
         </div>
         <div style="grid-area: 2 / 1;padding:5px;">
-            <div class="control-tab" id="end"></div>
+            <div class="control-tab" id="end" style="display:none;">
+                <a href="{% url 'pokecenter' %}" id="pokecenterEnd" class="button-3" style="display:none;width:140px;height:40px;padding:12px;">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokecenter.png">
+                    Pokécenter</a>
+                <a href="{% url 'map' %}" id="mapEnd" class="button-3" style="display:none;width:140px;height:40px;padding:12px;">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\map.png">
+                    Last Map</a>
+                {% if wild_pk is not None %}
+                <a href="{% url 'pokemon' %}?id={{ wild_pk }}" id="caughtEnd" class="button-3" style="display:none;width:140px;height:40px;padding:12px;">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.item }}\pokeball.png">
+                    Pokémon</a>
+                {% endif %}
+                {% if rebattle is not None %}
+                <button class="button-3" form="rebattle" style="width:140px;height:40px;padding:12px;display:inline-block;">
+                    <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\attack.png">
+                    Rematch
+                </button>
+                <form method="POST" id="rebattle" action="{% url 'battle_create' %}" display="inline-block;">
+                    {% csrf_token %}
+                    <input type="hidden" name="trainer" value="{{ rebattle }}">
+                </form>
+                {% endif %}
+            </div>
             <div class="control-tab" id="select" style="display:block;">
                 <button class="move-box battler" onclick="openTab('control-tab', 'attack')">
                     <img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\attack.png">

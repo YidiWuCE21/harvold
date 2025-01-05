@@ -232,7 +232,7 @@ def battle_processor(text_data, sender, first_turn=False):
             # Check the battle outcome and process if outcome
             if battle_state.outcome is not None:
                 # Generic info
-                prompt = {"Pokecenter": reverse("pokecenter")}
+                prompt = ["pokecenter"]
                 battle.status = battle_state.outcome
                 battle.battle_end = datetime.datetime.now()
                 player_1 = battle.player_1
@@ -246,7 +246,7 @@ def battle_processor(text_data, sender, first_turn=False):
                     player_2.bag = battle_state.player_2.inventory
                 # Caught a wild Pokemon
                 if battle_state.outcome == "caught" and battle.type == "wild":
-                    prompt["View Caught Pokemon"] = "{}?id={}".format(reverse("pokemon"), battle.wild_opponent.pk)
+                    prompt.append("caught")
                     battle.wild_opponent.status = battle_state.player_2.get_current_pokemon().status
                     battle.wild_opponent.current_hp = battle_state.player_2.get_current_pokemon().current_hp
                     battle.wild_opponent.assign_trainer(battle.player_1)
@@ -254,18 +254,23 @@ def battle_processor(text_data, sender, first_turn=False):
                     player_1.add_to_party(battle.wild_opponent)
                     player_1.wild_opponent = None
                 if battle_state.outcome in ["fled_battle", "p1_victory", "p1_surrender", "caught"]:
-                    prompt["Last Map"] = reverse("map")
+                    prompt.append("map")
                 if battle.type == "npc":
+                    trainer_data = "{}.json".format(battle.npc_opponent)
+                    trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+                    try:
+                        with open(trainer_path, encoding="utf-8") as trainer_file:
+                            trainer_json = json.load(trainer_file)
+                    except:
+                        pass
+                    # Not a map trainer
+                    if "map" not in trainer_json:
+                        if "map" in prompt:
+                            prompt.remove("map")
                     # Player victory
+                    if battle_state.outcome == "p1_victory":
+                        output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
                     if battle.battle_prize is not None and battle_state.outcome == "p1_victory":
-                        trainer_data = "{}.json".format(battle.npc_opponent)
-                        trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
-                        try:
-                            with open(trainer_path, encoding="utf-8") as trainer_file:
-                                trainer_json = json.load(trainer_file)
-                                output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
-                        except:
-                            pass
                         # Payout
                         if "base_payout" in battle.battle_prize:
                             max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
@@ -277,8 +282,6 @@ def battle_processor(text_data, sender, first_turn=False):
                             player_1.money += cash_payout
                         # Gym badge
                         if "badges" in battle.battle_prize:
-                            prompt["Gym"] = reverse("gyms")
-                            prompt.pop("Last Map")
                             for badge, rank in battle.battle_prize["badges"].items():
                                 if player_1.badges[badge] is None:
                                     player_1.badges[badge] = rank

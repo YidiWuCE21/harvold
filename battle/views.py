@@ -107,6 +107,7 @@ def battle(request):
     player_sprite = str(request.user.profile.character).zfill(2)
     opp_sprite = None
     music = "wild"
+    rebattle = None
     if battle.type == "npc":
         music = "trainer"
         trainer_data = "{}.json".format(battle.npc_opponent)
@@ -117,12 +118,17 @@ def battle(request):
                 opp_sprite = trainer_json["sprite"]
                 if "music" in trainer_json:
                     music = trainer_json["music"]
+                if "gym" in battle.npc_opponent or "ev_dojo" in battle.npc_opponent:
+                    rebattle = battle.npc_opponent
 
         except:
             pass
     if battle.type == "live":
         music = "trainer"
         opp_sprite = str(battle.get_opp(request.user.profile).character).zfill(2)
+    wild = None
+    if battle.type == "wild":
+        wild = battle.wild_opponent.pk
 
     html_render_variables = {
         "battle_state": json.dumps(battle.battle_state),
@@ -139,6 +145,8 @@ def battle(request):
         "medicines_allowed": battle.type != "live",
         "player_sprite": player_sprite,
         "opp_sprite": opp_sprite,
-        "music": music
+        "music": music,
+        "wild_pk": wild,
+        "rebattle": rebattle
     }
     return render(request, "battle/battle.html", html_render_variables)
