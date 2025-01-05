@@ -29,3 +29,10 @@ def party(request):
         return {
             "party": None
         }
+
+
+def inbox(request):
+    try:
+        return {"message_flash": request.user.profile.inbox_flag}
+    except AttributeError:
+        return {"message_flash": False}

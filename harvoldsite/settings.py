@@ -79,7 +79,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'pokemon.template_consts.asset_paths',
                 'pokemon.template_consts.party',
-                'pokemon.template_consts.uid'
+                'pokemon.template_consts.uid',
+                'pokemon.template_consts.inbox'
             ],
         },
     },

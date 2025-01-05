@@ -39,10 +39,15 @@
         <div class="dropdown-content">
             <a href="{% url 'view_profile' %}?id={{ id_self }}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\profile.png">Profile</a>
             <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\friends.png">Friends</a>
-            <a href="{% url 'inbox' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\inbox.png">Inbox</a>
+
             <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\find.png">Find Trainers</a>
         </div>
     </div>
+    {% if message_flash %}
+    <a href="{% url 'inbox' %}" style="float:right;margin:12px;"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\inbox_flash.gif"></a>
+    {% else %}
+    <a href="{% url 'inbox' %}" style="float:right;margin:12px;"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\inbox.png"></a>
+    {% endif %}
     <!--div class="dropdown">
         <button class="dropbtn">Devtools</button>
         <div class="dropdown-content">

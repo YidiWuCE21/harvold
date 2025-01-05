@@ -41,6 +41,7 @@ def signup(request):
 
                     # Add the starter to the user's party
                     error_msg = user_profile.add_to_party(user_starter)
+                    send_message(user_profile, "Professor Oak", "Welcome to Project Harvold! Your first goals in the game should be to complete the 10 gyms. Make sure to catch and train your team first. Good luck!", "Welcome to Project Harvold!", None, "professor_oak", gift_items={"pokeball": 10})
 
                     # This situation shouldn't ever happen but if it does, cancel signup
                     if error_msg is not None:
