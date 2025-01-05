@@ -170,6 +170,9 @@ def pokemart(request):
 @login_required
 def inbox(request):
     profile = request.user.profile
+    if profile.inbox_flag != profile.has_unread():
+        profile.inbox_flag = profile.has_unread()
+        profile.save()
     sent = Messages.objects.filter(sender=profile)
     received = Messages.objects.filter(recipient=profile)
     sent = process_messages(sent)
