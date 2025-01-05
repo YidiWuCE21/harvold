@@ -181,6 +181,15 @@ GYM_LEADERS = {
     "dragon": {"npc": "clair", "name": "Clair", "reg": "621", "elite": "445", "level": 74}
 }
 
+EV_COACHES = {
+    "hp": {"npc": "norman", "name": "HP Training", "pokemon": "242", "level": 25},
+    "atk": {"npc": "chuck", "name": "Attack Training", "pokemon": "068", "level": 25},
+    "def": {"npc": "brock", "name": "Defense Training", "pokemon": "306", "level": 25},
+    "spa": {"npc": "sabrina", "name": "Special Attack Training", "pokemon": "065", "level": 25},
+    "spd": {"npc": "wake", "name": "Special Defense Training", "pokemon": "272", "level": 25},
+    "spe": {"npc": "winona", "name": "Speed Training", "pokemon": "018", "level": 25}
+}
+
 STAT_BOOSTS = {
     6: 4,
     5: 3.5,

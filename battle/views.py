@@ -49,6 +49,16 @@ def gyms(request):
 
 
 @login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+def ev_dojo(request):
+    coaches = [[stat, consts.EV_COACHES[stat]] for stat in consts.STATS]
+    html_render_variables = {
+        "coaches": coaches
+    }
+    return render(request, "battle/ev_dojo.html", html_render_variables)
+
+
+@login_required
 def battle_create(request):
     if request.user.profile.current_battle is not None:
         return redirect("battle")

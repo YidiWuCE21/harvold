@@ -1,0 +1,43 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box" style="margin-left:25;margin-right:25px;">
+    <h5>EV Dojo</h5>
+    <p>EVs stand for Effort Values. Your Pokémon gain EVs as you battle, and they slightly increase their stats. The Dojo is a place for concentrated training on one stat.</p>
+    <br>
+    <p>Pokémon can earn up to 252 EVs for a single stat, and have a cap of 510 EVs across all stats combined. At level 100, every 4 EVs in a stat translate to 1 stat point.</p>
+    <br>
+    <table class="center">
+        <tr>
+            {% for stat, coach_info in coaches %}
+            <td>
+                <form method="POST" action="{% url 'battle_create' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="trainer" value="ev_dojo_{{ stat }}">
+                    <button class="party-box hoverable" style="width:240px;height:100px;margin-left:2px;">
+                        <div class="pokemon-img-bg" style="position:relative;margin:4px 10px;display:inline-block;">
+                            <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ coach_info.pokemon }}.png" style="position:absolute;top:-5px;left:-25px">
+                            <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\{{ coach_info.npc }}.png" style="position:absolute;top:5px;left:25px">
+                        </div>
+                        <div style="display:inline-block;margin-left:5px;vertical-align:top;width:40%">
+                            <p style="margin-bottom:0px">{{ coach_info.name }}</p>
+                            <p style="font-size: 10px">Level: {{ coach_info.level }}</p>
+                        </div>
+                    </button>
+                </form>
+            </td>
+            {% if forloop.counter|divisibleby:2 %}
+        </tr><tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+
+</div>
+
+{% endblock %}

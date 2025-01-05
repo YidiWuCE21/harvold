@@ -49,6 +49,7 @@ class BattleState:
         # it is added when battle is processed and immediately updated and set back to 0
         # Only relevant for P1
         self.experience_gain = 0
+        self.ev_yield = []
 
 
     def requires_switch(self):
@@ -801,12 +802,11 @@ class BattleState:
         Function to apply experience to a winning team. This can be written as though p1 always gets exp as live battles award nothing
         """
         ko_pokemon = self.player_2.get_current_pokemon()
-        winning_pokemon = self.player_1.get_current_pokemon()
         base_experience = consts.POKEMON[ko_pokemon.dex]["base_experience"]
         trainer_multiplier = 1.5 if self.type == "npc" else 1 if self.type == "wild" else 0
-        egg_multiplier = 1.5 if winning_pokemon.held_item == "lucky-egg" else 1
-        experience_gain = base_experience * ko_pokemon.level / 7 * trainer_multiplier * egg_multiplier
+        experience_gain = base_experience * ko_pokemon.level / 7 * trainer_multiplier
         self.experience_gain = int(experience_gain)
+        self.ev_yield = consts.POKEMON[ko_pokemon.dex]["ev_yield"]
 
 
 

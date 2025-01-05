@@ -338,10 +338,10 @@ class Pokemon(models.Model):
             "spd": self.spd_ev,
             "spe": self.spe_ev
         }
-        for stat in consts.STATS:
+        for i, stat in enumerate(consts.STATS):
             total = sum(ev_map.values())
             current_val = ev_map[stat]
-            to_add = evs[stat]
+            to_add = evs[i]
             # Ensure individual EV does not exceed 252 and total does not exceed 510
             max_gain = min(252 - current_val, 510 - total, to_add)
             # Ensure individual EV does not dip below 0 for EV reducers

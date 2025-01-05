@@ -27,6 +27,7 @@ urlpatterns = [
     path("make", pokemon_views.make, name="make"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
+    path("ev_dojo", battle_views.ev_dojo, name="ev_dojo"),
     path("battle", battle_views.battle, name="battle"),
     path("battle_create", battle_views.battle_create, name="battle_create"),
     #path('', include('users.urls'))

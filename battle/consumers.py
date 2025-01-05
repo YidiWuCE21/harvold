@@ -198,13 +198,18 @@ def battle_processor(text_data, sender, first_turn=False):
             if battle_state.experience_gain != 0 and battle_state.type != "live":
                 for i, pkmn in enumerate(battle.player_1.get_party()):
                     if i in battle_state.player_1.participants:
-                        true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants))
+                        # Lucky egg multiplier
+                        egg_multiplier = 1.5 if pkmn.held_item == "lucky-egg" else 1
+                        true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants) * egg_multiplier)
+
                         if not battle_state.player_1.party[i].is_alive():
                             break
                         output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
                         pkmn.happiness += 1
                         pkmn.happiness = min(255, pkmn.happiness)
+
                         # Levelup case
+                        pkmn.add_evs(battle_state.ev_yield)
                         if pkmn.add_xp(true_exp, recalculate=True):
                             anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
                             output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
@@ -214,6 +219,7 @@ def battle_processor(text_data, sender, first_turn=False):
                             battle_state.player_1.party[i].level = pkmn.level
 
                 battle_state.experience_gain = 0
+                battle_state.ev_yield = []
                 # battle_state.player_1.participants = [battle_state.player_1.current_pokemon]
                 battle_state.player_1.participants = [pkmn for pkmn in range(len(battle_state.player_1.party)) if pkmn == battle_state.player_1.current_pokemon or battle_state.player_1.party[pkmn].held_item == "exp-share"]
 

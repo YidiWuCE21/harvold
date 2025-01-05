@@ -23,7 +23,7 @@
         <div class="dropdown-content">
             <a href="{% url 'gyms' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\gym.png">Gyms</a>
             <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Battle Mansion</a>
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\dojo.png">EV Dojo</a>
+            <a href="{% url 'ev_dojo' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\dojo.png">EV Dojo</a>
         </div>
     </div>
     <div class="dropdown">
