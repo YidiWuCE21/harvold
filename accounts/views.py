@@ -189,7 +189,6 @@ def inbox(request):
 
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def remove_party_ajax(request):
     profile = request.user.profile
     msg = ""
@@ -208,7 +207,6 @@ def remove_party_ajax(request):
 
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def reorder_party_ajax(request):
     profile = request.user.profile
     msg = ""
