@@ -800,16 +800,20 @@ function animate(looped = true) {
                     }
                     mapInit(newMap);
                     stopTravel = true;
+                    document.getElementById("wild").style.display = "none";
+                    wildHide = null;
+                    wildShow = null;
+                    wildArea = null;
                 }
             }
         }
-        if (wildHide != null) {
+        if (wildHide != null && !stopTravel) {
             document.wildBattleForm.submit();
         }
     }
     // Also manages enter events but we need to loop this regardless so keep it outside of block
     mapTrainersSprites.forEach((trainer) => {
-        if (trainer.solid) {
+        if (trainer.solid && !stopTravel) {
             // Trainer battle/dialogue activation
             if (trainer.battle != null && !dialogueActive && keys.enter.pressed) {
                 updatePos();
@@ -850,7 +854,7 @@ function animate(looped = true) {
                 toggleDialogueWindow({'open': true});
                 writeDialogue(trainer.dialogue);
             }
-        } else if(dialogueActive && trainer.battle == null) {
+        } else if(dialogueActive && trainer.battle == null && !stopTravel) {
             if (document.getElementById("speaker_name").innerHTML == trainer.name) {
                 toggleDialogueWindow({'open': false});
                 dialogueActive = false;

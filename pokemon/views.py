@@ -135,8 +135,14 @@ def pokecenter_heal(request):
 
 @login_required
 def pokedex(request):
+    progress = request.user.profile.pokedex_progress
+    pokeball_icon = "<img src='/static/{path}/pokeball.png'>".format(path=consts.ASSET_PATHS["item"])
+    pokeball_icon_grayscale = "<img src='/static/{path}/pokeball.png' class='grayscale'>".format(path=consts.ASSET_PATHS["item"])
     pokedex_dict = {
-        "<p>{dex}</p><img src='/static/{path}/{dex}.gif'>".format(path=consts.ASSET_PATHS["icon"], dex=dex): {
+        "<p>{ball} {dex}</p><img src='/static/{path}/{dex}.gif'>".format(
+            ball=pokeball_icon if progress[dex] else pokeball_icon_grayscale,
+            path=consts.ASSET_PATHS["icon"],
+            dex=dex): {
             "Name": "<a onclick=\"getDex({{dex: '{dex}'}})\">{name}</a>".format(name=data["name"], dex=dex),
             "Type": "".join(["<p><img src='/static/{path}/{type}.png'></p>".format(path=consts.ASSET_PATHS["typing"], type=type) for type in data["typing"]]),
             "HP": data["hp"],
