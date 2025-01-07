@@ -586,7 +586,7 @@ def process_messages(messages):
     msg_df = pd.DataFrame(messages)
     # Add link to sender and receiver
     profile_link = reverse("view_profile")
-    msg_df["From"] = msg_df.apply(lambda x: "<a href='{}?id={}'>{}</a>".format(profile_link, x["sender"], x["From"]), axis=1)
+    msg_df["From"] = msg_df.apply(lambda x: "<a href='{}?id={}'>{}</a>".format(profile_link, x["sender"], x["From"]) if x["sender"] != "" else "<span>{}</span>".format(x["From"]), axis=1)
     msg_df["To"] = msg_df.apply(lambda x: "<a href='{}?id={}'>{}</a>".format(profile_link, x["recipient"], x["To"]), axis=1)
     msg_df["Title"] = msg_df.apply(
         lambda x: "<strong onclick='openMessage(\"{}\");'>{}</strong>".format(x["key"], x["Title"]) \

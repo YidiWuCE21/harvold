@@ -809,11 +809,6 @@ class BattleState:
         self.ev_yield = consts.POKEMON[ko_pokemon.dex]["ev_yield"]
 
 
-
-
-
-
-
 class PlayerState:
     def __init__(self, player_state):
         # Stat boosts are in order: attack, defense, sp. attack, sp. defense, speed, accuracy, evasion
