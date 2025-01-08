@@ -14,18 +14,18 @@
             }
         },
         "2": {
-            "map": "route_12",
-            "direction": "east",
+            "map": "route_17",
+            "direction": "south",
             "forcedOffset": {
-                "x": 83,
-                "y": 27
+                "x": 0,
+                "y": 0
             },
             "posOffset": {
-                "y": 0
+                "x": 0
             }
         },
         "3": {
-            "map": "route_12",
+            "map": "notavailable",
             "direction": "west",
             "forcedOffset": {
                 "x": 83,

@@ -147,6 +147,7 @@ MAPS = [
     "snorlax_island",
     "drilbur_cave_1f",
     "drilbur_cave_2f",
+    "fletcher_village",
     "route_1",
     "route_2",
     "route_3",
@@ -166,6 +167,8 @@ MAPS = [
     "route_17",
     "route_18",
     "route_19",
+    "route_20",
+    "route_21"
 ]
 
 GYM_LEADERS = {
