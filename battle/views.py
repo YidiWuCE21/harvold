@@ -78,11 +78,11 @@ def battle_create(request):
         return HttpResponseBadRequest("Failed to make battle: {}".format(e))
     # Wild battle creation
     elif "wild" in request.POST:
-        wild_data = request.user.profile.wild_opponent
-        wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"])
-        wild.save()
         while tries < retries:
             try:
+                wild_data = request.user.profile.wild_opponent
+                wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"])
+                wild.save()
                 models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
                 return redirect("battle")
             except BaseException as e:
@@ -91,7 +91,7 @@ def battle_create(request):
         return HttpResponseBadRequest("Failed to make battle: {}".format(e))
     # If valid battle cannot be created, return to pokecenter
     else:
-        return redirect("pokecenter")
+        return HttpResponseBadRequest("Failed process post request")
 
 
 @login_required

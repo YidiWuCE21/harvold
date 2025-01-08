@@ -75,7 +75,7 @@
                     <th>Type</th>
                     <th>Class</th>
                 </tr>
-                {% for level, move_data in moves.items %}
+                {% for level, move_data in moves %}
                 <tr data-toggle="tooltip"
                     title="{{ move_data.effects }}&#10;Power: {% if move_data.power is None %}-{% else %}{{ move_data.power }}{% endif %}&#10;Accuracy: {% if move_data.accuracy is None %}-{% else %}{{ move_data.accuracy }}{% endif %}">
                     <td>{{ level }}<br></td>

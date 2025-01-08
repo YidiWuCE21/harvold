@@ -1,265 +1,307 @@
 {
     "kaguya_town": {
         "grass1": {
-            "pokemon": [["Bellsprout", 3, 6], ["Oddish", 3, 6], ["Bidoof", 3, 6], ["Sunkern", 3, 6], ["Budew", 2, 5]],
+            "pokemon": ["Bellsprout", "Oddish", "Bidoof", "Sunkern", "Budew"],
             "weights": [10, 10, 10, 8, 1]
         },
         "water": {
-            "pokemon": [["Goldeen", 3, 6], ["Lotad", 3, 6]],
+            "pokemon": ["Goldeen", "Lotad"],
             "weights": [10, 10],
             "bg": "pond"
-        }
+        },
+        "levels": [4, 7]
     },
     "synecdoche_city": {
         "grass1": {
-            "pokemon": [["Rattata", 5, 10], ["Lillipup", 5, 10], ["Zigzagoon", 5, 10], ["Pidgey", 5, 10], ["Meowth", 5, 10]],
+            "pokemon": ["Rattata", "Lillipup", "Zigzagoon", "Pidgey", "Meowth"],
             "weights": [10, 10, 10, 10, 10]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [8, 12]
     },
     "drilbur_cave_1f": {
         "grass1": {
-            "pokemon": [["Zubat", 25, 29], ["Geodude", 25, 29], ["Sandshrew", 25, 29], ["Diglett", 25, 29], ["Phanpy", 25, 29], ["Graveler", 27, 29], ["Drilbur", 25, 29]],
+            "pokemon": ["Zubat", "Geodude", "Sandshrew", "Diglett", "Phanpy", "Graveler", "Drilbur"],
             "weights": [10, 8, 8, 8, 4, 4, 1],
             "bg": "gray_cave"
         },
         "water": {
-            "pokemon": [["Slowpoke", 25, 29], ["Shellos", 25, 29], ["Wooper", 25, 29]],
+            "pokemon": ["Slowpoke", "Shellos", "Wooper"],
             "weights": [10, 8, 1],
             "bg": "gray_cave"
-        }
+        },
+        "levels": [25, 29]
     },
     "drilbur_cave_2f": {
         "grass1": {
-            "pokemon": [["Ekans", 27, 31], ["Geodude", 27, 31], ["Paras", 27, 31], ["Machop", 27, 31], ["Onix", 27, 31], ["Graveler", 27, 29], ["Drilbur", 27, 31]],
+            "pokemon": ["Ekans", "Geodude", "Paras", "Machop", "Onix", "Graveler", "Drilbur"],
             "weights": [8, 10, 10, 4, 2, 4, 1],
             "bg": "gray_cave"
         },
         "water": {
-            "pokemon": [["Slowpoke", 27, 31], ["Psyduck", 27, 31], ["Barboach", 27, 31], ["Feebas", 2, 4]],
+            "pokemon": ["Slowpoke", "Psyduck", "Barboach", "Feebas"],
             "weights": [10, 8, 4, 1],
             "bg": "gray_cave"
-        }
+        },
+        "levels": [27, 31]
     },
     "route_1": {
         "grass1": {
-            "pokemon": [["Pidgey", 2, 5], ["Rattata", 2, 5], ["Weedle", 2, 5], ["Nidoran-F", 2, 5], ["Nidoran-M", 2, 5], ["Shinx", 2, 5]],
+            "pokemon": ["Pidgey", "Rattata", "Weedle", "Nidoran-F", "Nidoran-M", "Shinx"],
             "weights": [10, 10, 10, 8, 8, 2]
         },
         "water": {
-            "pokemon": [["Goldeen", 2, 5], ["Remoraid", 2, 5], ["Lotad", 2, 5], ["Psyduck", 2, 5], ["Wooper", 2, 5]],
+            "pokemon": ["Goldeen", "Remoraid", "Lotad", "Psyduck", "Wooper"],
             "weights": [10, 10, 10, 4, 4],
             "bg": "pond"
-        }
+        },
+        "levels": [2, 5]
     },
     "route_2": {
         "grass1": {
-            "pokemon": [["Pidgey", 2, 5], ["Rattata", 2, 5], ["Weedle", 2, 5], ["Bellsprout", 2, 5], ["Spearow", 2, 5]],
+            "pokemon": ["Pidgey", "Rattata", "Weedle", "Bellsprout", "Spearow"],
             "weights": [10, 10, 10, 8, 8]
         },
         "water": {
-            "pokemon": [["Goldeen", 2, 5], ["Poliwag", 2, 5], ["Lotad", 2, 5], ["Psyduck", 2, 5]],
+            "pokemon": ["Goldeen", "Poliwag", "Lotad", "Psyduck"],
             "weights": [10, 4, 10, 4],
             "bg": "pond"
-        }
+        },
+        "levels": [4, 7]
     },
     "route_3": {
         "grass1": {
-            "pokemon": [["Spearow", 4, 7], ["Bidoof", 4, 7], ["Hoothoot", 4, 7], ["Poochyena", 4, 7], ["Sentret", 4, 7], ["Starly", 4, 7]],
+            "pokemon": ["Spearow", "Bidoof", "Hoothoot", "Poochyena", "Sentret", "Starly"],
             "weights": [10, 10, 10, 8, 10, 4]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [5, 9]
     },
     "route_4": {
         "grass1": {
-            "pokemon": [["Spearow", 4, 7], ["Bidoof", 4, 7], ["Sandshrew", 4, 7], ["Mankey", 4, 7], ["Hoothoot", 4, 7]],
+            "pokemon": ["Spearow", "Bidoof", "Sandshrew", "Mankey", "Hoothoot"],
             "weights": [10, 10, 8, 4, 8]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [6, 10]
     },
     "route_5": {
         "grass1": {
-            "pokemon": [["Starly", 5, 9], ["Sentret", 5, 9], ["Poochyena", 5, 9], ["Growlithe", 6, 9], ["Oddish", 5, 9], ["Bellsprout", 5, 9]],
+            "pokemon": ["Starly", "Sentret", "Poochyena", "Growlithe", "Oddish", "Bellsprout"],
             "weights": [4, 10, 10, 2, 8, 8]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [8, 12]
     },
     "route_6": {
         "grass1": {
-            "pokemon": [["Pidgey", 7, 11], ["Sentret", 7, 11], ["Caterpie", 7, 11], ["Spinarak", 7, 11], ["Tauros", 7, 11], ["Ralts", 7, 11]],
+            "pokemon": ["Pidgey", "Sentret", "Caterpie", "Spinarak", "Tauros", "Ralts"],
             "weights": [10, 10, 10, 10, 4, 2]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [9, 13]
     },
     "route_7": {
         "grass1": {
-            "pokemon": [["Pidgey", 5, 9], ["Bidoof", 5, 9], ["Doduo", 5, 9], ["Hoppip", 6, 9], ["Oddish", 5, 9], ["Nincada", 5, 9]],
+            "pokemon": ["Pidgey", "Bidoof", "Doduo", "Hoppip", "Oddish", "Nincada"],
             "weights": [10, 10, 10, 6, 8, 2]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [8, 12]
     },
     "route_8": {
         "grass1": {
-            "pokemon": [["Rattata", 8, 12], ["Sandshrew", 8, 12], ["Machop", 8, 12], ["Timburr", 8, 12], ["Munchlax", 8, 12], ["Darumaka", 8, 12]],
+            "pokemon": ["Rattata", "Sandshrew", "Machop", "Timburr", "Munchlax", "Darumaka"],
             "weights": [10, 10, 10, 6, 8, 2]
         },
         "water": {
-            "pokemon": [["Magikarp", 8, 12], ["Staryu", 8, 12]],
+            "pokemon": ["Magikarp", "Staryu"],
             "weights": [10, 1],
             "bg": "pond"
-        }
+        },
+        "levels": [11, 15]
     },
     "route_9": {
         "grass1": {
-            "pokemon": [["Caterpie", 8, 12], ["Weedle", 8, 12], ["Wurmple", 8, 12], ["Gastly", 8, 12], ["Electrike", 8, 12], ["Bagon", 8, 12]],
+            "pokemon": ["Caterpie", "Weedle", "Wurmple", "Gastly", "Electrike", "Bagon"],
             "weights": [10, 10, 10, 6, 4, 2]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [12, 16]
     },
     "route_10": {
         "grass1": {
-            "pokemon": [["Bellsprout", 11, 15], ["Meowth", 11, 15], ["Sewaddle", 11, 15], ["Magnemite", 11, 15], ["Electrike", 11, 15], ["Larvitar", 11, 15]],
+            "pokemon": ["Bellsprout", "Meowth", "Sewaddle", "Magnemite", "Electrike", "Larvitar"],
             "weights": [10, 10, 10, 6, 4, 2]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [14, 19]
     },
     "route_11": {
         "grass1": {
-            "pokemon": [["Zubat", 13, 17], ["Hoothoot", 13, 17], ["Riolu", 13, 17], ["Numel", 13, 17], ["Beldum", 13, 17]],
+            "pokemon": ["Zubat", "Hoothoot", "Riolu", "Numel", "Beldum"],
             "weights": [10, 10, 2, 6, 2]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [15, 20]
     },
     "route_12": {
         "grass1": {
-            "pokemon": [["Pidgey", 14, 18], ["Rattata", 14, 18], ["Swinub", 14, 18], ["Ferroseed", 14, 18], ["Pichu", 14, 18], ["Eevee", 14, 18]],
+            "pokemon": ["Pidgey", "Rattata", "Swinub", "Ferroseed", "Pichu", "Eevee"],
             "weights": [10, 10, 10, 6, 4, 2]
         },
         "water": {
-            "pokemon": [["Carvanha", 14, 18], ["Psyduck", 14, 18], ["Lapras", 14, 18]],
+            "pokemon": ["Carvanha", "Psyduck", "Lapras"],
             "weights": [10, 10, 1],
             "bg": "pond"
-        }
+        },
+        "levels": [16, 21]
     },
     "route_13": {
         "grass1": {
-            "pokemon": [["Pidove", 15, 20], ["Patrat", 15, 20], ["Shroomish", 15, 20], ["Ralts", 15, 20], ["Weedle", 15, 20], ["Wurmple", 15, 20]],
+            "pokemon": ["Pidove", "Patrat", "Shroomish", "Ralts", "Weedle", "Wurmple"],
             "weights": [10, 10, 4, 2, 10, 10]
-        }
+        },
+        "levels": [17, 22]
     },
     "route_14": {
         "grass1": {
-            "pokemon": [["Pidgey", 15, 20], ["Patrat", 15, 20], ["Starly", 15, 20], ["Weedle", 15, 20], ["Pidgeotto", 15, 20], ["Darumaka", 15, 20]],
+            "pokemon": ["Pidgey", "Patrat", "Starly", "Weedle", "Pidgeotto", "Darumaka"],
             "weights": [10, 10, 10, 6, 4, 2]
         },
         "water": {
-            "pokemon": [["Slowpoke", 15, 20], ["Psyduck", 15, 20], ["Shellos", 15, 20]],
+            "pokemon": ["Slowpoke", "Psyduck", "Shellos"],
             "weights": [10, 10, 8],
             "bg": "pond"
-        }
+        },
+        "levels": [19, 24]
     },
     "route_15": {
         "grass1": {
-            "pokemon": [["Doduo", 16, 21], ["Patrat", 16, 21], ["Wingull", 16, 21], ["Ponyta", 16, 21], ["Diglett", 16, 21], ["Axew", 16, 21]],
+            "pokemon": ["Doduo", "Patrat", "Wingull", "Ponyta", "Diglett", "Axew"],
             "weights": [10, 10, 10, 6, 4, 2]
         },
         "water": {
-            "pokemon": [["Magikarp", 16, 21], ["Wingull", 16, 21], ["Magikarp", 16, 21], ["Wailmer", 16, 21], ["Goldeen", 16, 21]],
+            "pokemon": ["Magikarp", "Wingull", "Magikarp", "Wailmer", "Goldeen"],
             "weights": [10, 10, 8, 4, 10]
-        }
+        },
+        "levels": [21, 26]
     },
     "route_16": {
         "water": {
-            "pokemon": [["Magikarp", 18, 23], ["Goldeen", 18, 23], ["Carvanha", 18, 23], ["Mantyke", 18, 23], ["Barboach", 18, 23], ["Gyarados", 18, 23]],
+            "pokemon": ["Magikarp", "Goldeen", "Carvanha", "Mantyke", "Barboach", "Gyarados"],
             "weights": [10, 10, 8, 4, 10, 4]
-        }
+        },
+        "levels": [23, 28]
     },
     "route_17": {
         "water": {
-            "pokemon": [["Magikarp", 18, 23], ["Corsola", 18, 23], ["Carvanha", 18, 23], ["Mantyke", 18, 23], ["Finneon", 18, 23], ["Gyarados", 18, 23]],
+            "pokemon": ["Magikarp", "Corsola", "Carvanha", "Mantyke", "Finneon", "Gyarados"],
             "weights": [10, 10, 8, 4, 10, 4]
-        }
+        },
+        "levels": [23, 28]
     },
     "route_18": {
         "grass1": {
-            "pokemon": [["Swinub", 29, 35], ["Snorunt", 29, 35], ["Machop", 29, 35], ["Cubchoo", 29, 35], ["Snover", 29, 35], ["Mamoswine", 29, 35]],
-            "weights": [10, 10, 4, 4, 10, 4]
-        }
+            "pokemon": ["Swinub", "Snorunt", "Machop", "Cubchoo", "Snover", "Mamoswine"],
+            "weights": [10, 10, 4, 4, 10, 4],
+            "bg": "snow"
+        },
+        "levels": [29, 33]
     },
     "route_19": {
         "grass1": {
-            "pokemon": [["Meditite", 32, 37], ["Stantler", 32, 37], ["Sneasel", 32, 37], ["Cubchoo", 32, 37], ["Snover", 32, 37], ["Smoochum", 32, 37]],
-            "weights": [10, 10, 4, 4, 10, 4]
-        }
+            "pokemon": ["Meditite", "Stantler", "Sneasel", "Cubchoo", "Snover", "Smoochum"],
+            "weights": [10, 10, 4, 4, 10, 4],
+            "bg": "snow"
+        },
+        "levels": [31, 34]
     },
     "route_20": {
         "grass1": {
-            "pokemon": [["Meditite", 34, 39], ["Stantler", 34, 39], ["Machop", 34, 39], ["Cubchoo", 34, 39], ["Snover", 34, 39], ["Smoochum", 34, 39]],
-            "weights": [10, 10, 4, 4, 10, 4]
-        }
+            "pokemon": ["Meditite", "Stantler", "Machop", "Cubchoo", "Snover", "Smoochum"],
+            "weights": [10, 10, 4, 4, 10, 4],
+            "bg": "snow"
+        },
+        "levels": [32, 35]
     },
     "route_21": {
         "grass1": {
-            "pokemon": [["Meditite", 32, 37], ["Snover", 32, 37], ["Makuhita", 32, 37], ["Cubchoo", 32, 37], ["Snover", 32, 37], ["Abomasnow", 32, 37]],
-            "weights": [10, 10, 4, 4, 10, 4]
-        }
+            "pokemon": ["Meditite", "Snover", "Makuhita", "Cubchoo", "Snover", "Abomasnow"],
+            "weights": [10, 10, 4, 4, 10, 4],
+            "bg": "snow"
+        },
+        "levels": [31, 34]
     },
     "vitur_forest": {
         "grass1": {
-            "pokemon": [["Caterpie", 9, 13], ["Metapod", 9, 13], ["Weedle", 9, 13], ["Kakuna", 9, 13], ["Wurmple", 9, 13],
-                ["Kricketot", 9, 13], ["Ledyba", 9, 13], ["Spinarak", 9, 13], ["Yanma", 9, 13], ["Heracross", 9, 13]],
+            "pokemon": ["Caterpie", "Metapod", "Weedle", "Kakuna", "Wurmple", "Kricketot", "Ledyba", "Spinarak", "Yanma", "Heracross"],
             "weights": [8, 2, 8, 2, 10, 8, 8, 8, 8, 1]
         },
         "water": {
             "pokemon": [],
             "weights": []
-        }
+        },
+        "levels": [9, 15]
     },
     "pacific_lake": {
         "grass1": {
-            "pokemon": [["Oddish", 11, 14], ["Krabby", 11, 14], ["Spearow", 11, 14], ["Starly", 11, 14], ["Larvesta", 11, 14]],
+            "pokemon": ["Oddish", "Krabby", "Spearow", "Starly", "Larvesta"],
             "weights": [10, 10, 10, 8, 1]
         },
         "water": {
-            "pokemon": [["Magikarp", 11, 14], ["Wooper", 11, 14], ["Psyduck", 11, 14], ["Goldeen", 11, 14], ["Kyogre", 11, 14]],
+            "pokemon": ["Magikarp", "Wooper", "Psyduck", "Goldeen", "Kyogre"],
             "weights": [10, 10, 10, 10, 1]
-        }
+        },
+        "levels": [13, 17]
+    },
+    "mountain_grove": {
+        "grass1": {
+            "pokemon": ["Stantler", "Aipom", "Starly", "Zigzagoon", "Linoone"],
+            "weights": [10, 10, 10, 8, 1]
+        },
+        "water": {
+            "pokemon": [],
+            "weights": []
+        },
+        "levels": [13, 17]
     },
     "snorlax_island": {
         "grass1": {
-            "pokemon": [["Munchlax", 18, 23], ["Slakoth", 18, 23], ["Lickitung", 18, 23], ["Vigoroth", 18, 23], ["Snorlax", 18, 23]],
+            "pokemon": ["Munchlax", "Slakoth", "Lickitung", "Vigoroth", "Snorlax"],
             "weights": [10, 10, 10, 8, 8]
         },
         "water": {
-            "pokemon": [["Magikarp", 18, 23], ["Corsola", 18, 23], ["Carvanha", 18, 23], ["Mantyke", 18, 23], ["Krabby", 18, 23], ["Starmie", 18, 23]],
+            "pokemon": ["Magikarp", "Corsola", "Carvanha", "Mantyke", "Krabby", "Starmie"],
             "weights": [10, 10, 8, 4, 10, 4]
-        }
+        },
+        "levels": [24, 28]
     }
 }

@@ -170,7 +170,7 @@ def pokedex_detailed(request):
         "dex_data": dex_data,
         "maps": maps,
         "dex": dex,
-        "moves": {level: consts.MOVES[move] for level, move in consts.LEARNSETS[dex]["level"]},
+        "moves": [(level, consts.MOVES[move]) for level, move in consts.LEARNSETS[dex]["level"]],
         "description": consts.DESCRIPTIONS[dex]
     }
     return render(request, "pokemon/pokedex_detailed.html", html_render_variables)

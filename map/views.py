@@ -119,12 +119,12 @@ def wild_battle(request):
     if area not in consts.WILD[map]:
         return JsonResponse({"status": "false", "message": "{} not recognized as a valid area".format(area)}, status=500)
 
-    wild_pokemon = random.choices(consts.WILD[map][area]["pokemon"], consts.WILD[map][area]["weights"])[0]
+    wild_pokemon = random.choices(consts.WILD[map][area]["pokemon"], consts.WILD[map][area]["weights"])
     dex_number = consts.DEX_LOOKUP[wild_pokemon[0]]
     bg = consts.WILD[map][area].get("bg", "water" if area == "water" else "grass")
 
     # Roll for level, sex, and shininess
-    level = random.randrange(wild_pokemon[1], wild_pokemon[2])
+    level = random.randrange(consts.WILD[map]["levels"][0], consts.WILD[map]["levels"][1])
     shiny = random.random() < 0.001
     percentage_male = consts.POKEMON[dex_number]["percentage_male"]
     sex = "g" if percentage_male < 0 else "m" if random.random() * 100 < percentage_male else "f"
@@ -141,5 +141,4 @@ def wild_battle(request):
         "sex": sex,
         "shiny": shiny
     }
-    print("Completed in: {}".format((datetime.datetime.now() - now).total_seconds()))
     return JsonResponse(pokeinfo)
