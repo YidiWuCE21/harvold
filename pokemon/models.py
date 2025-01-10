@@ -645,10 +645,12 @@ class Pokemon(models.Model):
         return stats
 
 
-    def get_moves(self, pp=False):
+    def get_moves(self, pp=False, names=False):
         """
         Function to return Pokemon info in a dict format
         """
+        if names:
+            return [self.move1, self.move2, self.move3, self.move4]
         moveset = {
             "move1": consts.MOVES.get(self.move1, None),
             "move2": consts.MOVES.get(self.move2, None),

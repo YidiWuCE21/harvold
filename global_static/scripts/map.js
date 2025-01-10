@@ -324,11 +324,20 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
 
     waterMap.forEach((row, i) => {
         row.forEach((col, j) => {
-            if (col != 0)
-                waterTiles.push(new Boundary({position: {
-                    x: j * tile_width,
-                    y: i * tile_width
-                }}))
+            if (col != 0) {
+                // Only surf if surf enabled, otherwise set water as barrier
+                if (hms['surf']) {
+                    waterTiles.push(new Boundary({position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    }}))
+                } else {
+                    boundaries.push(new Boundary({position: {
+                        x: j * tile_width,
+                        y: i * tile_width
+                    }}))
+                }
+            }
         })
     })
 

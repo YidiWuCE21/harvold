@@ -503,6 +503,29 @@ class Profile(models.Model):
         return bool(len(received))
 
 
+    def has_move_in_party(self, move):
+        for pkmn in self.get_party():
+            moves = pkmn.get_moves(names=True)
+            if move in moves:
+                return True
+        return False
+
+
+    def can_use_hm(self, move):
+        hm_reqs = {
+            "surf": "water",
+            "cut": "grass",
+            "flash": "electric",
+            "fly": "dragon",
+            "dive": "steel",
+            "rocksmash": "ghost"
+        }
+        if move not in hm_reqs:
+            return False
+        badge = hm_reqs[move]
+        return self.badges[badge] is not None and self.has_move_in_party(move)
+
+
 def send_message(recipient, sender_name, body, title, sender, sender_spr, gift_items=None):
     message = Messages(
         recipient=recipient,

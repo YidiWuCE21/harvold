@@ -63,13 +63,22 @@ def map(request):
     # Add the map name
     map_data["map_name"] = map.replace("_", " ").title()
     # Check for map access permission
+    # HM usage
+    hms = {
+        "surf": user.can_use_hm("surf"),
+        "flash": user.can_use_hm("flash"),
+        "cut": user.can_use_hm("cut"),
+        "dive": user.can_use_hm("dive"),
+        "rocksmash": user.can_use_hm("rocksmash")
+    }
     # Convert to JSON
     html_render_variables = {
         "map": map,
         "map_name": map.replace("_", " ").title(),
         "map_data": json.dumps(map_data),
         "character": user.char_id,
-        "position": json.dumps(user.current_pos)
+        "position": json.dumps(user.current_pos),
+        "hms": json.dumps(hms)
     }
     return render(request, "map/map.html", html_render_variables)
 
