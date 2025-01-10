@@ -39,7 +39,7 @@ function removeParty(slot, url) {
         success: function(response)
         {
             $("#party-container").html(response);
-            if (window.location.pathname === '/box') {
+            if (window.location.pathname === '/box' || window.location.pathname === '/map') {
                 window.location.reload();
             }
         }

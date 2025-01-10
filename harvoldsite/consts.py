@@ -141,13 +141,13 @@ MAPS = [
     "port_inisherin",
     "baxter_city",
     "juvet_town",
+    "fletcher_village",
     "vitur_forest",
     "pacific_lake",
     "mountain_grove",
     "snorlax_island",
     "drilbur_cave_1f",
     "drilbur_cave_2f",
-    "fletcher_village",
     "route_1",
     "route_2",
     "route_3",
@@ -170,6 +170,25 @@ MAPS = [
     "route_20",
     "route_21"
 ]
+
+CITIES = [
+    "oak_village",
+    "kaguya_town",
+    "synecdoche_city",
+    "zubrowka_city",
+    "port_inisherin",
+    "baxter_city",
+    "juvet_town",
+    "fletcher_village",
+]
+
+MAP_REQS = {
+    "surf": ["route_16", "route_17", "snorlax_island"],
+    "flash": ["drilbur_cave_1f", "drilbur_cave_2f"],
+    "cut": ["vitur_forest"],
+    "rocksmash": [],
+    "dive": []
+}
 
 GYM_LEADERS = {
     "grass": {"npc": "erika", "name": "Erika", "reg": "070", "elite": "003", "level": 15},

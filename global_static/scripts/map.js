@@ -181,7 +181,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
 
     mapHeight = currentData.mapHeight;
     mapWidth = currentData.mapWidth;
-    default_offset = currentData.default_offset;
+    default_offset = JSON.parse(JSON.stringify(currentData.default_offset));
     if (Object.keys(forcedOffset).length === 0) {
         offset = default_offset;
     } else {
@@ -336,6 +336,27 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
                         x: j * tile_width,
                         y: i * tile_width
                     }}))
+                    // check for collision in case party was modified on water; don't modify surfer because we cant surf
+                    for (let i = 0; i < boundaries.length; i++) {
+                        const boundary = boundaries[i];
+                        if (
+                            pointCollision({
+                                rectangle1: player,
+                                rectangle2: {...boundary, position: {
+                                    x: boundary.position.x,
+                                    y: boundary.position.y
+                                }}
+                            })
+                        ) {
+                            statics.forEach((static) => {
+                                static.position.x = currentData.default_offset.x * tile_width;
+                                static.position.y = currentData.default_offset.y * tile_width;
+                            })
+                            // Move the camera further up by 1/2 the screen
+                            camera.position.x -= canvas.width / 2;
+                            camera.position.y -= canvas.height / 2;
+                        }
+                    }
                 }
             }
         })
@@ -445,9 +466,19 @@ function mapInit({map, forcedOffset = {}, preload = null, playerOffset = {}, sta
                 }
             }).done(function( response ) {
                 mapSetup({map: map, mapData: response, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
-            }).fail(function() {
-                alert("This map is not valid! Returning to world map...");
-                window.location.href = worldMapUrl;
+            }).fail(function( response ) {
+
+                dialogueActive = true;
+                // Prepare speaker name and image
+                document.getElementById("speaker_name").innerHTML = "Me";
+                document.getElementById("speaker_sprite").src = playerImage.src;
+                document.getElementById("speaker_sprite").style.top = '2px';
+                toggleDialogueWindow({'open': true});
+                writeDialogue(response.responseJSON.error);
+                // Refresh
+                setTimeout(() => {
+                    window.location.reload();
+                }, Math.max(response.responseJSON.error.length * delayPerCharacter - 300, 0));
             });
         } else {
             mapSetup({map: map, mapData: preload, forcedOffset: forcedOffset, playerOffset: playerOffset, startingPos: startingPos});
@@ -795,6 +826,7 @@ function animate(looped = true) {
                 ) {
                     const newMap = maplinkKey[maplinkTile.value];
                     // Play the map travel animation
+                    updatePos();
                     player.moving = true;
                     travelDir = maplinkTile.direction;
                     // Use current position to overwrite positional offset
@@ -849,7 +881,7 @@ function animate(looped = true) {
                     csrfElem.value = csrf_val;
                     form.append(csrfElem);
                     form.submit();
-                }, Math.max(trainer.dialogue.length * delayPerCharacter - 500, 0));
+                }, Math.max(trainer.dialogue.length * delayPerCharacter - 300, 0));
 
             } else if(trainer.dialogue != null && !dialogueActive && keys.enter.pressed) {
                 // Remove wild Pokemon

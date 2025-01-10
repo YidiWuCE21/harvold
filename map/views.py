@@ -14,6 +14,24 @@ from harvoldsite import consts
 from pokemon.models import create_pokemon
 
 # Create your views here.
+def helper_check_map_access(map, user, msg=False):
+    messages = {
+        "surf": "The route ahead is filled with water. I should have a Pokémon with Surf before venturing onwards.",
+        "cut": "The forest is thick with vines and cobwebs. I should have a Pokémon with Cut before venturing onwards.",
+        "rocksmash": "The cave is blocked by debris. I should have a Pokémon with Rock Smash before venturing onwards.",
+        "dive": "The water is too deep. I should have a Pokémon with Dive before venturing onwards.",
+        "flash": "The cave is too dark to see in. I should have a Pokémon with Flash before venturing onwards.",
+        "fly": "Can't."
+    }
+    for hm, maps in consts.MAP_REQS.items():
+        if map in maps:
+            if not user.can_use_hm(hm):
+                if msg:
+                    return messages[hm]
+                return False
+    return True
+
+
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 @csrf_exempt
@@ -46,12 +64,18 @@ def update_pos(request):
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def map(request):
-    default_map = request.user.profile.current_map
+    user = request.user.profile
+    default_map = user.current_map
     # Check if we have a map stored from redirecting from world map
     map = request.session.get("map", default_map)
+    # Go to last city if we are on inaccessible map
+    if not helper_check_map_access(map, user):
+        map = user.last_city
+        user.current_pos = None
     # Update current location of user
-    user = request.user.profile
     user.current_map = map
+    if map in consts.CITIES:
+        user.last_city = map
     if "map" in request.session:
         user.current_pos = None
         del request.session["map"]
@@ -98,13 +122,18 @@ def world_map(request):
 @login_required
 def map_data(request):
     map = request.GET.get("payload[map]")
+    user = request.user.profile
+    msg = helper_check_map_access(map, user, msg=True)
+    if msg is not True:
+        return JsonResponse({"error": msg}, status=400)
     if map not in consts.MAPS:
-        return JsonResponse({"status": "false", "message": "Invalid map"}, status=500)
+        return JsonResponse({"error": "Invalid map"}, status=500)
     with open(os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map)), encoding="utf-8") as map_file:
         map_data = json.load(map_file)
     # Update current location of user
-    user = request.user.profile
     user.current_map = map
+    if map in consts.CITIES:
+        user.last_city = map
     user.current_pos = None
     user.save()
     # Add the map name
