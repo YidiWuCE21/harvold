@@ -165,7 +165,14 @@ def pokedex_detailed(request):
     if dex not in consts.POKEMON:
         return HttpResponseNotFound("Not a valid number!")
     dex_data = consts.POKEMON[dex]
-    maps = [route for route, spawns in consts.WILD.items() if any([dex_data["name"] in [wildspawn[0] for wildspawn in spawn_list["pokemon"]] for spawn_area, spawn_list in spawns.items()])]
+    maps = []
+    for route, spawn_data in consts.WILD.items():
+        for spawn_area, spawn_list in spawn_data.items():
+            if spawn_area == "levels":
+                continue
+            if dex_data["name"] in [wildspawn for wildspawn in spawn_list["pokemon"]]:
+                maps.append(route)
+                break
     html_render_variables = {
         "dex_data": dex_data,
         "maps": maps,
