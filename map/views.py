@@ -36,27 +36,22 @@ def helper_check_map_access(map, user, msg=False):
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 @csrf_exempt
 def update_pos(request):
+    """
+    Function to update a player's position on its current map
+    """
     if request.method == 'POST':
         try:
-            # Parse the incoming JSON data from the request body
             position = json.loads(request.body)['pos']
             player = request.user.profile
             map = position.pop('map')
+            # Check that player is still on the map
             if map != player.current_map:
                 return HttpResponse(status=400)
             player.current_pos = position
-            print(position)
             player.save()
-            print(position)
-            print("saved")
-            # Update your database with the data here (e.g., saving to models)
-            # Example: MyModel.objects.create(field1=data['field1'], field2=data['field2'])
-
-            # Since you don't need any content in the response, return 204 No Content
             return HttpResponse(status=204)
         except Exception as e:
-            # You can return an error status if needed, but as per your request, we don't need to send back any response.
-            return HttpResponse(status=400)  # Bad request in case of error
+            return HttpResponse(status=400)
 
     return HttpResponse(status=405)
 
@@ -64,6 +59,11 @@ def update_pos(request):
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def map(request):
+    """
+    Function to open the map. Defaults to current map, but also checks session for new map in case was sent here from world map
+
+    If map is not accessible, boot the user back to the last city and clear the current position
+    """
     user = request.user.profile
     default_map = user.current_map
     # Check if we have a map stored from redirecting from world map
@@ -109,6 +109,9 @@ def map(request):
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def world_map(request):
+    """
+    Function to open the world map. Can also be used to redirect to a specific map via session info
+    """
     map = request.POST.get("map", None)
     if map is not None:
         request.session["map"] = map
@@ -121,6 +124,9 @@ def world_map(request):
 
 @login_required
 def map_data(request):
+    """
+    Function for map transition while already on map
+    """
     map = request.GET.get("payload[map]")
     user = request.user.profile
     msg = helper_check_map_access(map, user, msg=True)
@@ -144,10 +150,12 @@ def map_data(request):
 
 @login_required
 def wild_battle(request):
+    """
+    Function to generate a wild battle
+    """
     map = request.GET.get("payload[map]")
     area = request.GET.get("payload[area]")
     user = request.user.profile
-    now = datetime.datetime.now()
 
     # Check if user is actually on the map
     if user.current_map != map:

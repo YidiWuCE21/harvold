@@ -576,13 +576,13 @@ class Messages(models.Model):
 
     def read_message(self):
         self.read = True
-        self.save()
         if self.gift_items is not None:
             if not self.accepted:
                 self.accepted = True
                 for gift_item, quantity in self.gift_items.items():
                     self.recipient.add_item(gift_item, quantity)
                 self.recipient.save()
+        self.save()
         if not self.recipient.has_unread():
             self.recipient.inbox_flag = False
 
