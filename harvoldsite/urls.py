@@ -10,6 +10,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
+    path("credits", TemplateView.as_view(template_name="common/credits.html"), name="credits"),
     #path("map/", include("map.urls")),
     path("map", map_views.map, name="map"),
     path("world_map", map_views.world_map, name="world_map"),
