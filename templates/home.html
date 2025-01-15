@@ -6,11 +6,6 @@
 {% block content %}
 <div class="content-box" style="text-align:left;">
     {% if user.is_authenticated %}
-    <p><a href="{% url 'password_change' %}">Password Change</a></p>
-    <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Log Out</button>
-    </form>
     <h4>Welcome</h4>
     <br><p>Brief tutorial. Use the Travel option to access the world map and select the map you want from the dropdown. "Oak village" is the default starting map. Maps that are "complete" should have wild Pokemon in the grass and NPCs to battle or talk to. Battles are all optional. WASD movement, hold B to run.</p>
     <br><p>Press enter to interact with NPCs or travel to new maps. Exclamation marks means a battle, ellipses means dialogue. Wild Pokemon appear in bubbles on the map, click them to battle.</p>

@@ -5,45 +5,51 @@
     <div class="dropdown">
         <button class="dropbtn">Travel</button>
         <div class="dropdown-content">
-            <a href="{% url 'map' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\map.png">Last Map</a>
-            <a href="{% url 'world_map' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\world.png">World Map</a>
+            <a href="{% url 'map' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\map.png">Last Map</a>
+            <a href="{% url 'world_map' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\world.png">World Map</a>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Trainer</button>
         <div class="dropdown-content">
-            <a href="{% url 'box' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\box.png">Box</a>
-            <a href="{% url 'bag' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\bag.png">Bag</a>
-            <a href="{% url 'pokedex' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokedex.png">Pokédex</a>
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\garden.png">Berry Garden</a>
+            <a href="{% url 'box' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\box.png">Box</a>
+            <a href="{% url 'bag' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\bag.png">Bag</a>
+            <a href="{% url 'pokedex' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokedex.png">Pokédex</a>
+            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\garden.png">Berry Garden</a>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Battle</button>
         <div class="dropdown-content">
-            <a href="{% url 'gyms' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\gym.png">Gyms</a>
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Battle Mansion</a>
-            <a href="{% url 'ev_dojo' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\dojo.png">EV Dojo</a>
+            <a href="{% url 'gyms' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\gym.png">Gyms</a>
+            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Battle Mansion</a>
+            <a href="{% url 'ev_dojo' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\dojo.png">EV Dojo</a>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Town</button>
         <div class="dropdown-content">
-            <a href="{% url 'pokecenter' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokecenter.png">Pokécenter</a>
-            <a href="{% url 'pokemart' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokemart.png">Pokémart</a>
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\trade.png">Trade Center</a>
+            <a href="{% url 'pokecenter' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokecenter.png">Pokécenter</a>
+            <a href="{% url 'pokemart' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\pokemart.png">Pokémart</a>
+            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\trade.png">Trade Center</a>
         </div>
     </div>
     <div class="dropdown">
         <button class="dropbtn">Social</button>
         <div class="dropdown-content">
-            <a href="{% url 'view_profile' %}?id={{ id_self }}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\profile.png">Profile</a>
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\friends.png">Friends</a>
+            <a href="{% url 'view_profile' %}?id={{ id_self }}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\profile.png">Profile</a>
+            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\friends.png">Friends</a>
 
-            <a href="#"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\find.png">Find Trainers</a>
-            <a href="{% url 'credits' %}"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\find.png">Credits</a>
+            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\find.png">Find Trainers</a>
+            <a href="{% url 'credits' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\find.png">Credits</a>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="dropelem" style="width:158px">Log Out</button>
+            </form>
         </div>
     </div>
+
+
     {% if message_flash %}
     <a href="{% url 'inbox' %}" style="float:right;margin:12px;"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\inbox_flash.gif"></a>
     {% else %}

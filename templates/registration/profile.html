@@ -92,6 +92,7 @@
     <div style="grid-column:1 / span 3;grid-row:3" class="content-box">
         {% if self_view %}
         <button class="button-3">Edit Profile</button>
+        <a href="{% url 'password_change' %}" class="button-3" style="width:120px;">Password Change</a>
         {% else %}
         <button class="button-3">Live Battle</button>
         <button class="button-3">View Box</button>

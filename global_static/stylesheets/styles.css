@@ -92,7 +92,11 @@ a {
 }
 
 /* Links inside the dropdown */
-.dropdown-content a {
+.dropelem {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 0;
     color: black;
     padding: 6px 8px;
     text-decoration: none;
@@ -103,7 +107,7 @@ a {
 }
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+.dropelem:hover {
     transition: all linear 0.1s;
     background-color: var(--hover);
 }
