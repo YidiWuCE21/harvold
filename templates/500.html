@@ -1,0 +1,14 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Server Error{% endblock %}
+
+{% block content %}
+<div class="content-box content-text" style="text-align:left;">
+    <h4>Server Error (500)</h4>
+    <p>Please be patient. Our code mankeys are working really hard to fix this...</p>
+    <img src="{% get_static_prefix %}assets\pokemon\front\056.png">
+    <img src="{% get_static_prefix %}assets\pokemon\front\056.png">
+    <img src="{% get_static_prefix %}assets\pokemon\front\056.png">
+</div>
+{% endblock %}
