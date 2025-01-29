@@ -453,7 +453,12 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles, ...mapTrainersSprites];
     boundaryPartition = partitionList(boundaries);
     boundaryPartition["bounding"] = [northBound, southBound, eastBound, westBound];
+    ledgePartition = partitionList(ledges);
+    waterPartition = partitionList(waterTiles);
+    maplinkPartition = partitionList(maplinkTiles);
     bridgeBoundPartition = partitionList(bridgeBounds);
+    bridgePartition = partitionList(bridgeTiles);
+    battlePartition = partitionList(battleTiles);
     mapLoad = false;
 }
 
@@ -547,8 +552,8 @@ Additional division by 3 as we check in a 3x3 grid around player
 
 function getCellPartition(cell) {
     // Function to get the key for the partition a cell belongs to
-    const partitionX = Math.floor(cell.position.x / (tile_width / 4 * Math.max(2, Math.ceil(Math.sqrt(mapWidth)))));
-    const partitionY = Math.floor(cell.position.y / (tile_width / 4 * Math.max(2, Math.ceil(Math.sqrt(mapHeight)))));
+    const partitionX = Math.floor(cell.position.x / (tile_width * 3));
+    const partitionY = Math.floor(cell.position.y / (tile_width * 3));
     return [partitionX, partitionY];
 }
 
@@ -558,16 +563,14 @@ function partitionList(objectList) {
     objectList.forEach((boundary) => {
         const [partitionX, partitionY] = getCellPartition(boundary);
         const partitionKey = `${partitionX}-${partitionY}`;
-        if (partitionKey in partitionedList) {
-            partitionedList[partitionKey].push(boundary);
-        } else {
-            partitionedList[partitionKey] = [boundary];
-        }
+        // Push to boundary
+        partitionedList[partitionKey] ??= [];
+        partitionedList[partitionKey].push(boundary);
     })
     return partitionedList;
 }
 
-function detectCollision({playerObj, collisionPartitions, collisionFunc, offset = {x: 0, y: 0}}) {
+function detectCollision({collisionPartitions, collisionFunc, playerObj = player, offset = {x: 0, y: 0}}) {
     // Find the player's partition
     const [partitionX, partitionY] = getCellPartition(playerObj);
     const relevantPartitions = [
@@ -576,21 +579,6 @@ function detectCollision({playerObj, collisionPartitions, collisionFunc, offset 
         `${partitionX - 1}-${partitionY}`, `${partitionX}-${partitionY}`, `${partitionX + 1}-${partitionY}`,
         `${partitionX - 1}-${partitionY + 1}`, `${partitionX}-${partitionY + 1}`, `${partitionX + 1}-${partitionY + 1}`,
     ]
-    // Debug draw boundaries
-    let cappedCamera = {
-        x: Math.min(Math.max(camera.position.x, 0), mapWidth * tile_width - canvas.width),
-        y: Math.min(Math.max(camera.position.y, 0), mapHeight * tile_width - canvas.height)
-    }
-    relevantPartitions.forEach((partitionKey) => {
-        const collidables = collisionPartitions[partitionKey];
-        if (collidables != null) {
-            for (let i = 0; i < collidables.length; i++) {
-                const boundary = collidables[i];
-                boundary.drawBox(cappedCamera, 'rgba(0, 255, 0, 0.3)');
-            }
-        } else {
-        }
-    })
     // Iterate through each partition
     let collided = null
     relevantPartitions.forEach((partitionKey) => {
@@ -806,79 +794,43 @@ function animate(looped = true) {
     // Detect if on water
     surfing = false;
     if (!onBridge) {
-        for (let i = 0; i < waterTiles.length; i++) {
-            const waterTile = waterTiles[i];
-            if (
-                pointCollision({
-                    rectangle1: player,
-                    rectangle2: {...waterTile, position: {
-                        x: waterTile.position.x,
-                        y: waterTile.position.y
-                    }}
-                })
-            ) {
-                surfing = true;
-                break;
-            }
+        let waterTile = detectCollision({
+            collisionPartitions: waterPartition,
+            collisionFunc: pointCollision
+        })
+        if (waterTile != null) {
+            surfing = true;
         }
     }
     // Detect if on battle
     currentArea = null;
     grass = false;
     if (!onBridge) {
-        for (let i = 0; i < battleTiles.length; i++) {
-            const battleTile = battleTiles[i];
-            if (
-                pointCollision({
-                    rectangle1: player,
-                    rectangle2: {...battleTile, position: {
-                        x: battleTile.position.x,
-                        y: battleTile.position.y
-                    }}
-                })
-            ) {
-                grass = true;
-                currentArea = battleTile.value;
-                break;
-            }
+        let battleTile = detectCollision({
+            collisionPartitions: battlePartition,
+            collisionFunc: pointCollision
+        })
+        if (battleTile != null) {
+            grass = true;
+            currentArea = battleTile.value;
         }
     }
     // Detect if on bridge
     const currentOnBridge = onBridge;
     onBridge = false;
-    for (let i = 0; i < bridgeTiles.length; i++) {
-        const bridgeTile = bridgeTiles[i];
-        if (bridgeTile.value == 3)
-            continue;
-        if (
-            pointCollision({
-                rectangle1: player,
-                rectangle2: {...bridgeTile, position: {
-                    x: bridgeTile.position.x,
-                    y: bridgeTile.position.y
-                }}
-            })
-        ) {
-            if (bridgeTile.value == 2) {
-                onBridge = true;
-            } else if (bridgeTile.value == 1 && currentOnBridge) {
-                onBridge = true;
-            } else {
-                onBridge = false;
-            }
+    let bridgeTile = detectCollision({
+        collisionPartitions: bridgePartition,
+        collisionFunc: pointCollision
+    })
+    if (bridgeTile != null) {
+        if (bridgeTile.value == 2) {
+            onBridge = true;
+        } else if (bridgeTile.value == 1 && currentOnBridge) {
+            onBridge = true;
+        } else {
+            onBridge = false;
         }
     }
-    /*// Draw ledges
-    for (let i = 0; i < ledges.length; i++) {
-        const ledge = ledges[i];
-        ledge.drawBox(cappedCamera, 'rgba(255, 0, 0, 0.3)');
-    }
-    // Draw collision
-    for (let i = 0; i < boundaries.length; i++) {
-        const boundary = boundaries[i];
-        boundary.drawBox(cappedCamera, 'rgba(0, 255, 0, 0.3)');
-
-    }*/
     // Draw trainers in order
     for (let i = 0; i < orderedSprites.length; i++) {
         const currentSprite = orderedSprites[i];
@@ -898,39 +850,32 @@ function animate(looped = true) {
     if (keys.enter.pressed) {
         // Map travel
         if (!stopTravel) {
-            for (let i = 0; i < maplinkTiles.length; i++) {
-                const maplinkTile = maplinkTiles[i];
-                if (
-                    pointCollision({
-                        rectangle1: player,
-                        rectangle2: {...maplinkTile, position: {
-                            x: maplinkTile.position.x,
-                            y: maplinkTile.position.y
-                        }}
-                    })
-                ) {
-                    const newMap = maplinkKey[maplinkTile.value];
-                    // Play the map travel animation
-                    updatePos();
-                    player.moving = true;
-                    travelDir = maplinkTile.direction;
-                    // Use current position to overwrite positional offset
-                    if ("posOffset" in newMap) {
-                        newMap["playerOffset"] = {};
-                        if ("x" in newMap["posOffset"]) {
-                            newMap["playerOffset"]["x"] = player.position.x + newMap["posOffset"]["x"] * tile_width;
-                        }
-                        if ("y" in newMap["posOffset"]) {
-                            newMap["playerOffset"]["y"] = player.position.y + newMap["posOffset"]["y"] * tile_width;
-                        }
+            let traveling = detectCollision({
+                collisionPartitions: maplinkPartition,
+                collisionFunc: pointCollision
+            })
+            if (traveling != null) {
+                const newMap = maplinkKey[traveling.value];
+                // Play the map travel animation
+                updatePos();
+                player.moving = true;
+                travelDir = traveling.direction;
+                // Use current position to overwrite positional offset
+                if ("posOffset" in newMap) {
+                    newMap["playerOffset"] = {};
+                    if ("x" in newMap["posOffset"]) {
+                        newMap["playerOffset"]["x"] = player.position.x + newMap["posOffset"]["x"] * tile_width;
                     }
-                    mapInit(newMap);
-                    stopTravel = true;
-                    document.getElementById("wild").style.display = "none";
-                    wildHide = null;
-                    wildShow = null;
-                    wildArea = null;
+                    if ("y" in newMap["posOffset"]) {
+                        newMap["playerOffset"]["y"] = player.position.y + newMap["posOffset"]["y"] * tile_width;
+                    }
                 }
+                mapInit(newMap);
+                stopTravel = true;
+                document.getElementById("wild").style.display = "none";
+                wildHide = null;
+                wildShow = null;
+                wildArea = null;
             }
         }
         if (wildHide != null && !stopTravel) {
@@ -1010,45 +955,21 @@ function animate(looped = true) {
 
         // Collisions
         let collided = detectCollision({
-            playerObj: player,
             collisionPartitions: relevantBoundaries,
             collisionFunc: rectangularCollision,
             offset: {x: 0, y: movespeed}
         })
-        console.log(collided);
         if (collided != null) {
             moving = false;
-        }
-        /*for (let i = 0; i < relevantBoundaries.length; i++) {
-            const boundary = relevantBoundaries[i];
-            if (
-                rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: {...boundary, position: {
-                        x: boundary.position.x,
-                        y: boundary.position.y + movespeed
-                    }}
-                })
-            ) {
-            }
-        }*/
-        if (moving) {
+        } else {
             // Check ledges second
-            for (let i = 0; i < ledges.length; i++) {
-                const ledge = ledges[i];
-                if (
-                    rectangularCollision({
-                        rectangle1: player,
-                        rectangle2: {...ledge, position: {
-                            x: ledge.position.x,
-                            y: ledge.position.y + movespeed
-                        }}
-                    })
-                ) {
-                    moving = false;
-                    break;
-                }
-
+            let collided = detectCollision({
+                collisionPartitions: ledgePartition,
+                collisionFunc: rectangularCollision,
+                offset: {x: 0, y: movespeed}
+            })
+            if (collided != null) {
+                moving = false;
             }
         }
 
@@ -1082,44 +1003,24 @@ function animate(looped = true) {
         surfer.rows.val = 1;
 
         let collided = detectCollision({
-            playerObj: player,
             collisionPartitions: relevantBoundaries,
             collisionFunc: rectangularCollision,
             offset: {x: movespeed, y: 0}
         })
         if (collided != null) {
             moving = false;
-        }
-        if (moving) {
+        } else {
             // Check ledges second
-            for (let i = 0; i < ledges.length; i++) {
-                const ledge = ledges[i];
-                if (ledge.value == 3) {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x + movespeed,
-                                y: ledge.position.y
-                            }}
-                        })
-                    ) {
-                        ledgeActive = 'west';
-                        break;
-                    }
+            let collided = detectCollision({
+                collisionPartitions: ledgePartition,
+                collisionFunc: rectangularCollision,
+                offset: {x: movespeed, y: 0}
+            })
+            if (collided != null) {
+                if (collided.value == 3) {
+                    ledgeActive = 'west';
                 } else {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x + movespeed,
-                                y: ledge.position.y
-                            }}
-                        })
-                    ) {
-                        moving = false;
-                        break;
-                    }
+                    moving = false;
                 }
             }
         }
@@ -1154,44 +1055,24 @@ function animate(looped = true) {
         surfer.rows.val = 0;
 
         let collided = detectCollision({
-            playerObj: player,
             collisionPartitions: relevantBoundaries,
             collisionFunc: rectangularCollision,
             offset: {x: 0, y: -movespeed}
         })
         if (collided != null) {
             moving = false;
-        }
-        if (moving) {
+        } else {
             // Check ledges second
-            for (let i = 0; i < ledges.length; i++) {
-                const ledge = ledges[i];
-                if (ledge.value == 2) {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x,
-                                y: ledge.position.y - movespeed
-                            }}
-                        })
-                    ) {
-                        ledgeActive = 'south';
-                        break;
-                    }
+            let collided = detectCollision({
+                collisionPartitions: ledgePartition,
+                collisionFunc: rectangularCollision,
+                offset: {x: 0, y: -movespeed}
+            })
+            if (collided != null) {
+                if (collided.value == 2) {
+                    ledgeActive = 'south';
                 } else {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x,
-                                y: ledge.position.y - movespeed
-                            }}
-                        })
-                    ) {
-                        moving = false;
-                        break;
-                    }
+                    moving = false;
                 }
             }
         }
@@ -1226,44 +1107,24 @@ function animate(looped = true) {
         surfer.rows.val = 3;
 
         let collided = detectCollision({
-            playerObj: player,
             collisionPartitions: relevantBoundaries,
             collisionFunc: rectangularCollision,
             offset: {x: -movespeed, y: 0}
         })
         if (collided != null) {
             moving = false;
-        }
-        // Check ledges second
-        if (moving) {
-            for (let i = 0; i < ledges.length; i++) {
-                const ledge = ledges[i];
-                if (ledge.value == 4) {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x - movespeed,
-                                y: ledge.position.y
-                            }}
-                        })
-                    ) {
-                        ledgeActive = 'east';
-                        break;
-                    }
+        } else {
+            // Check ledges second
+            let collided = detectCollision({
+                collisionPartitions: ledgePartition,
+                collisionFunc: rectangularCollision,
+                offset: {x: -movespeed, y: 0}
+            })
+            if (collided != null) {
+                if (collided.value == 4) {
+                    ledgeActive = 'east';
                 } else {
-                    if (
-                        rectangularCollision({
-                            rectangle1: player,
-                            rectangle2: {...ledge, position: {
-                                x: ledge.position.x - movespeed,
-                                y: ledge.position.y
-                            }}
-                        })
-                    ) {
-                        moving = false;
-                        break;
-                    }
+                    moving = false;
                 }
             }
         }
