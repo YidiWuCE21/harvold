@@ -36,16 +36,26 @@ let mapTrainersSprites = [];
 // Variables declared for collision logic
 let offset = {};
 let boundaries = [];
+let boundaryPartition = {};
 let ledges = [];
+let ledgePartition = {}
 let waterMap = [];
 let waterTiles = [];
+let waterPartition = {};
 let maplinkMap = [];
 let maplinkTiles = [];
+let maplinkPartition = {}
 let battleMap = [];
 let battleTiles = [];
+let battlePartition = {};
 let bridgeTiles = [];
+let bridgePartition = {};
 let bridgeMap = [];
 let bridgeBounds = [];
+let bridgeBoundPartition = {};
+
+
+
 // Bounding boxes
 let northBound = null;
 let southBound = null;
@@ -291,7 +301,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         width: (mapWidth + 2) * tile_width
     });
-    boundaries.push(northBound);
     southBound = new Boundary({
         position: {
             x: -16,
@@ -299,7 +308,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         width: (mapWidth + 2) * tile_width
     });
-    boundaries.push(southBound);
     westBound = new Boundary({
         position: {
             x: -16,
@@ -307,7 +315,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         height: (mapHeight + 2) * tile_width
     });
-    boundaries.push(westBound);
     eastBound = new Boundary({
         position: {
             x: mapWidth * tile_width,
@@ -315,7 +322,6 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         height: (mapHeight + 2) * tile_width
     });
-    boundaries.push(eastBound);
 
     // Create water objects
     for (let i = 0; i < water.length; i += mapWidth) {
@@ -445,6 +451,9 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     }
     // Create movables
     movables = [background, foreground, ...boundaries, ...ledges, ...waterTiles, ...maplinkTiles, ...mapTrainersSprites];
+    boundaryPartition = partitionList(boundaries);
+    boundaryPartition["bounding"] = [northBound, southBound, eastBound, westBound];
+    bridgeBoundPartition = partitionList(bridgeBounds);
     mapLoad = false;
 }
 
@@ -528,6 +537,82 @@ function pointCollision({rectangle1, rectangle2}) {
         rectangle1.position.y + rectangle1.height / 2 + rectangle1.offset.y <= rectangle2.position.y + rectangle2.offset.y + rectangle2.height
     )
 }
+
+/*
+Partitioned collision detection
+Assign each stationary object to a large grid with each cell being the square root of the map size.
+We use the ceil function to ensure that the last row/column capture as much of the map as possible, instead of just being a sliver
+Additional division by 3 as we check in a 3x3 grid around player
+*/
+
+function getCellPartition(cell) {
+    // Function to get the key for the partition a cell belongs to
+    const partitionX = Math.floor(cell.position.x / (tile_width / 4 * Math.max(2, Math.ceil(Math.sqrt(mapWidth)))));
+    const partitionY = Math.floor(cell.position.y / (tile_width / 4 * Math.max(2, Math.ceil(Math.sqrt(mapHeight)))));
+    return [partitionX, partitionY];
+}
+
+function partitionList(objectList) {
+    // Partition a list of boundary objects
+    let partitionedList = {};
+    objectList.forEach((boundary) => {
+        const [partitionX, partitionY] = getCellPartition(boundary);
+        const partitionKey = `${partitionX}-${partitionY}`;
+        if (partitionKey in partitionedList) {
+            partitionedList[partitionKey].push(boundary);
+        } else {
+            partitionedList[partitionKey] = [boundary];
+        }
+    })
+    return partitionedList;
+}
+
+function detectCollision({playerObj, collisionPartitions, collisionFunc, offset = {x: 0, y: 0}}) {
+    // Find the player's partition
+    const [partitionX, partitionY] = getCellPartition(playerObj);
+    const relevantPartitions = [
+        "bounding",
+        `${partitionX - 1}-${partitionY - 1}`, `${partitionX}-${partitionY - 1}`, `${partitionX + 1}-${partitionY - 1}`,
+        `${partitionX - 1}-${partitionY}`, `${partitionX}-${partitionY}`, `${partitionX + 1}-${partitionY}`,
+        `${partitionX - 1}-${partitionY + 1}`, `${partitionX}-${partitionY + 1}`, `${partitionX + 1}-${partitionY + 1}`,
+    ]
+    // Debug draw boundaries
+    let cappedCamera = {
+        x: Math.min(Math.max(camera.position.x, 0), mapWidth * tile_width - canvas.width),
+        y: Math.min(Math.max(camera.position.y, 0), mapHeight * tile_width - canvas.height)
+    }
+    relevantPartitions.forEach((partitionKey) => {
+        const collidables = collisionPartitions[partitionKey];
+        if (collidables != null) {
+            for (let i = 0; i < collidables.length; i++) {
+                const boundary = collidables[i];
+                boundary.drawBox(cappedCamera, 'rgba(0, 255, 0, 0.3)');
+            }
+        } else {
+        }
+    })
+    // Iterate through each partition
+    let collided = null
+    relevantPartitions.forEach((partitionKey) => {
+        const collidables = collisionPartitions[partitionKey];
+        if (collidables != null) {
+            // Iterate through collidables in partition
+            collidables.forEach((collidable) => {
+                if (collisionFunc({
+                    rectangle1: playerObj,
+                    rectangle2: {...collidable, position: {
+                        x: collidable.position.x + offset.x,
+                        y: collidable.position.y + offset.y
+                    }}
+                })) {
+                    collided = collidable;
+                }
+            })
+        }
+    })
+    return collided;
+}
+
 
 function applyFilter() {
     switch (timeOfDay) {
@@ -911,7 +996,7 @@ function animate(looped = true) {
 
 
     // Movement logic
-    const relevantBoundaries = (onBridge) ? bridgeBounds : boundaries;
+    const relevantBoundaries = (onBridge) ? bridgeBoundPartition : boundaryPartition;
     // Draw bounds
     /*for (let i = 0; i < relevantBoundaries.length; i++) {
         const ledge = relevantBoundaries[i];
@@ -924,7 +1009,17 @@ function animate(looped = true) {
         surfer.rows.val = 2;
 
         // Collisions
-        for (let i = 0; i < relevantBoundaries.length; i++) {
+        let collided = detectCollision({
+            playerObj: player,
+            collisionPartitions: relevantBoundaries,
+            collisionFunc: rectangularCollision,
+            offset: {x: 0, y: movespeed}
+        })
+        console.log(collided);
+        if (collided != null) {
+            moving = false;
+        }
+        /*for (let i = 0; i < relevantBoundaries.length; i++) {
             const boundary = relevantBoundaries[i];
             if (
                 rectangularCollision({
@@ -935,10 +1030,8 @@ function animate(looped = true) {
                     }}
                 })
             ) {
-                moving = false;
-                break;
             }
-        }
+        }*/
         if (moving) {
             // Check ledges second
             for (let i = 0; i < ledges.length; i++) {
@@ -987,20 +1080,15 @@ function animate(looped = true) {
         player.rows.val = 1;
         surf.rows.val = 1;
         surfer.rows.val = 1;
-        for (let i = 0; i < relevantBoundaries.length; i++) {
-            const boundary = relevantBoundaries[i];
-            if (
-                rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: {...boundary, position: {
-                        x: boundary.position.x + movespeed,
-                        y: boundary.position.y
-                    }}
-                })
-            ) {
-                moving = false;
-                break;
-            }
+
+        let collided = detectCollision({
+            playerObj: player,
+            collisionPartitions: relevantBoundaries,
+            collisionFunc: rectangularCollision,
+            offset: {x: movespeed, y: 0}
+        })
+        if (collided != null) {
+            moving = false;
         }
         if (moving) {
             // Check ledges second
@@ -1064,20 +1152,15 @@ function animate(looped = true) {
         player.rows.val = 0;
         surf.rows.val = 0;
         surfer.rows.val = 0;
-        for (let i = 0; i < relevantBoundaries.length; i++) {
-            const boundary = relevantBoundaries[i];
-            if (
-                rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: {...boundary, position: {
-                        x: boundary.position.x,
-                        y: boundary.position.y - movespeed
-                    }}
-                })
-            ) {
-                moving = false;
-                break;
-            }
+
+        let collided = detectCollision({
+            playerObj: player,
+            collisionPartitions: relevantBoundaries,
+            collisionFunc: rectangularCollision,
+            offset: {x: 0, y: -movespeed}
+        })
+        if (collided != null) {
+            moving = false;
         }
         if (moving) {
             // Check ledges second
@@ -1141,20 +1224,15 @@ function animate(looped = true) {
         player.rows.val = 3;
         surf.rows.val = 2;
         surfer.rows.val = 3;
-        for (let i = 0; i < relevantBoundaries.length; i++) {
-            const boundary = relevantBoundaries[i];
-            if (
-                rectangularCollision({
-                    rectangle1: player,
-                    rectangle2: {...boundary, position: {
-                        x: boundary.position.x - movespeed,
-                        y: boundary.position.y
-                    }}
-                })
-            ) {
-                moving = false;
-                break;
-            }
+
+        let collided = detectCollision({
+            playerObj: player,
+            collisionPartitions: relevantBoundaries,
+            collisionFunc: rectangularCollision,
+            offset: {x: -movespeed, y: 0}
+        })
+        if (collided != null) {
+            moving = false;
         }
         // Check ledges second
         if (moving) {
