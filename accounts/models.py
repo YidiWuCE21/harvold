@@ -248,7 +248,7 @@ class Profile(models.Model):
             return "Cannot order by field {}!".format(order_by)
         if descending:
             order_by = "-{}".format(order_by)
-        box = list(self.trainer.all().order_by(order_by))
+        box = list(Pokemon.objects.filter(**filters).order_by(order_by))
         # Convert to dict and save names
         names = [pkmn.name for pkmn in box]
         box = [pkmn.__dict__ for pkmn in box]
