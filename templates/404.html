@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base_layout.html" %}
+{% load static %}
+{% block title %}Not Found{% endblock %}
+{% block content %}
+<div class="content-box content-text" style="text-align:left;">
+    <h4>Page Not Found (404)</h4>
+</div>
+{% endblock %}
