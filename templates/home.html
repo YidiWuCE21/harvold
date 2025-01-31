@@ -4,7 +4,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="content-box" style="text-align:left;">
+<div class="content-box content-text" style="text-align:left;">
     {% if user.is_authenticated %}
     <h4>Welcome</h4>
     <br><p>Brief tutorial. Use the Travel option to access the world map and select the map you want from the dropdown. "Oak village" is the default starting map. Maps that are "complete" should have wild Pokemon in the grass and NPCs to battle or talk to. Battles are all optional. WASD movement, hold B to run.</p>
@@ -37,18 +37,18 @@
     <br>
     <div class="demo">
         <h4>Explore an amazing world!</h4>
-        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_1.png">
-        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_2.png">
-        <img class="demo-img" style="width: 210px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_3.png">
+        <img class="demo-img" style="width: 200px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_1.png">
+        <img class="demo-img" style="width: 200px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_2.png">
+        <img class="demo-img" style="width: 200px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\map_3.png">
         <h4>Fight trainers in intense battles!</h4>
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\trainer.png">
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_2.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\trainer.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_2.png">
         <h4>Challenge gym leaders!</h4>
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\gyms.png">
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_1.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\gyms.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\battle_1.png">
         <h4>Catch 'em all!</h4>
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\pokemon.png">
-        <img class="demo-img" style="width: 315px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\dex.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\pokemon.png">
+        <img class="demo-img" style="width: 300px; height: 200px;" src="{% get_static_prefix %}{{ asset_paths.demo }}\dex.png">
     </div>
     {% endif %}
 </div>
