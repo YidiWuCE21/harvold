@@ -1,5 +1,6 @@
+// Basic world object
 class Boundary {
-    constructor({position, width = tile_width, height = tile_width, value = null, direction = null, frames = {max: 1}}) {
+    constructor({position, width = tileWidth, height = tileWidth, value = null, direction = null, frames = {max: 1}}) {
         this.position = position;
         this.width = width;
         this.height = height;
@@ -44,6 +45,7 @@ class Boundary {
     }
 }
 
+// Animated sprites
 class Sprite {
     constructor({ position, velocity, image, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, offset = {x: 0, y: 0}}) {
         this.position = position;
@@ -86,6 +88,7 @@ class Sprite {
     }
 }
 
+// NPC trainers
 class Trainer extends Sprite {
     constructor({
         position, velocity, image, wanderPoints, delay, battle = null, dialogue = null, name = null, frameTick = 10,

@@ -61,6 +61,9 @@ const hms = JSON.parse('{{ hms|escapejs }}');
 
 
 </script>
-<script src="{% static 'scripts/map_classes.js' %}"></script>
-<script src="{% static 'scripts/map.js' %}"></script>
+<script src="{% static 'scripts/map_scripts/map_classes.js' %}"></script>
+<script src="{% static 'scripts/map_scripts/map_globals.js' %}"></script>
+<script src="{% static 'scripts/map_scripts/map_initializers.js' %}"></script>
+<script src="{% static 'scripts/map_scripts/collision_detection.js' %}"></script>
+<script src="{% static 'scripts/map_scripts/map.js' %}"></script>
 {% endblock %}
