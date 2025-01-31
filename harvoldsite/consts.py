@@ -142,12 +142,19 @@ MAPS = [
     "baxter_city",
     "juvet_town",
     "fletcher_village",
+    "vanya_town",
     "vitur_forest",
     "pacific_lake",
     "mountain_grove",
     "snorlax_island",
     "drilbur_cave_1f",
     "drilbur_cave_2f",
+    "blackwood",
+    "hidden_pond",
+    "baxter_graveyard",
+    "abandoned_mineshaft_1f",
+    "oshi_tunnel",
+    "desert_oasis",
     "route_1",
     "route_2",
     "route_3",
@@ -168,7 +175,11 @@ MAPS = [
     "route_18",
     "route_19",
     "route_20",
-    "route_21"
+    "route_21",
+    "route_22",
+    "route_23",
+    "route_24",
+    "route_25"
 ]
 
 CITIES = [

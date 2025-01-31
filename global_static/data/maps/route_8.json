@@ -36,14 +36,14 @@
             }
         },
         "4": {
-            "map": "kaguya_town",
-            "direction": "east",
+            "map": "hidden_pond",
+            "direction": "north",
             "forcedOffset": {
                 "x": 0,
-                "y": 25
+                "y": 42
             },
             "posOffset": {
-                "y": -12
+                "x": 40
             }
         }
     },

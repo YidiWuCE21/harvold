@@ -14,14 +14,14 @@
             }
         },
         "2": {
-            "map": "zubrowka_city",
-            "direction": "east",
+            "map": "blackwood",
+            "direction": "west",
             "forcedOffset": {
-                "x": 0,
+                "x": 79,
                 "y": 46
             },
             "posOffset": {
-                "y": 40
+                "y": 0
             }
         }
     },

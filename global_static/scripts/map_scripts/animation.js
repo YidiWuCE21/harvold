@@ -2,19 +2,27 @@
 let animatePlayer = {
     "w": {
         "row": 2,
-        "offset": {x: 0, y: movespeed}
+        "offset": {x: 0, y: movespeed},
+        "ledge": 99,
+        "direction": "north"
     },
     "a": {
         "row": 1,
-        "offset": {x: movespeed, y: 0}
+        "offset": {x: movespeed, y: 0},
+        "ledge": 3,
+        "direction": "west"
     },
     "s": {
         "row": 0,
-        "offset": {x: 0, y: -movespeed}
+        "offset": {x: 0, y: -movespeed},
+        "ledge": 2,
+        "direction": "south"
     },
     "d": {
         "row": 3,
-        "offset": {x: -movespeed, y: 0}
+        "offset": {x: -movespeed, y: 0},
+        "ledge": 4,
+        "direction": "east"
     }
 };
 
@@ -147,15 +155,15 @@ function animate(looped = true) {
                 break;
             case "south":
                 statics.forEach(movable => {movable.position.y += 2});
-                nonCameraStatics.forEach(movable => {movable.rows.val = 1});
+                nonCameraStatics.forEach(movable => {movable.rows.val = 0});
                 break;
             case "east":
                 statics.forEach(movable => {movable.position.x += 2});
-                nonCameraStatics.forEach(movable => {movable.rows.val = 1});
+                nonCameraStatics.forEach(movable => {movable.rows.val = 3});
                 break;
             case "west":
                 statics.forEach(movable => {movable.position.x -= 2});
-                nonCameraStatics.forEach(movable => {movable.rows.val = 1});
+                nonCameraStatics.forEach(movable => {movable.rows.val = 2});
                 break;
         }
         foreground.draw(cappedCamera);
@@ -358,7 +366,11 @@ function animate(looped = true) {
                     offset: animatePlayer[dir]["offset"]
                 })
                 if (collided != null) {
-                    moving = false;
+                    if (collided.value == animatePlayer[dir]["ledge"]) {
+                        ledgeActive = animatePlayer[dir]["direction"];
+                    } else {
+                        moving = false;
+                    }
                 }
             }
 

@@ -32,7 +32,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
     bridgeExists = bridge.length > 0;
     // Set to zero where water is not None
     if (battles == "all")
-        battles = water.map(num => num === 0 ? 1 : 0);
+        battles = collisions.map(num => num === 0 ? 1 : 0);
         //battles = new Array(mapWidth * mapHeight).fill(1)
     maplink = currentData.maplink;
 
