@@ -14,25 +14,25 @@
             }
         },
         "2": {
-            "map": "route_3",
-            "direction": "east",
+            "map": "sky_tower_entrance",
+            "direction": "north",
             "forcedOffset": {
                 "x": 0,
-                "y": 25
+                "y": 38
             },
             "posOffset": {
-                "y": 8
+                "x": -136
             }
         },
         "3": {
-            "map": "route_3",
+            "map": "port_endurance",
             "direction": "east",
             "forcedOffset": {
                 "x": 0,
                 "y": 25
             },
             "posOffset": {
-                "y": 8
+                "y": -12
             }
         }
     },

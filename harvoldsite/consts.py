@@ -143,6 +143,9 @@ MAPS = [
     "juvet_town",
     "fletcher_village",
     "vanya_town",
+    "port_endurance",
+    "grenoble_city",
+    "sen_village",
     "vitur_forest",
     "pacific_lake",
     "mountain_grove",
@@ -155,6 +158,10 @@ MAPS = [
     "abandoned_mineshaft_1f",
     "oshi_tunnel",
     "desert_oasis",
+    "ancient_forest",
+    "dragons_den_1f",
+    "mount_beoning_1f",
+    "sky_tower_entrance",
     "route_1",
     "route_2",
     "route_3",
@@ -179,7 +186,17 @@ MAPS = [
     "route_22",
     "route_23",
     "route_24",
-    "route_25"
+    "route_25",
+    "route_26",
+    "route_27",
+    "route_28",
+    "route_29",
+    "route_30",
+    "route_31",
+    "route_32",
+    "route_33",
+    "route_34",
+    "route_35"
 ]
 
 CITIES = [
