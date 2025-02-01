@@ -4,15 +4,17 @@
 {% block title %}Explore{% endblock %}
 
 {% block content %}
-Map list
-<form method="POST" action="{% url 'world_map' %}">
+<form method="POST" id="mapForm" action="{% url 'world_map' %}">
     {% csrf_token %}
-    <select name="map">
-        {% for map in maps %}
-        <option value="{{ map }}">{{ map }}</option>
-        {% endfor %}
-
-    </select>
-    <button>Go</button>
+    <input type="hidden" name="map" id="mapInput" value="">
 </form>
+<div class="world-map">
+    <img src="{% get_static_prefix %}assets\maps\world_map.png">
+    {% for city, data in cities.items %}
+    <button style="position: absolute; top:{{ data.position.y }}px;left:{{ data.position.x}}px;width:{{ data.size.x }}px;height:{{ data.size.y }}px"
+        onclick="submitForm({val: '{{city}}', input: 'mapInput', form: 'mapForm'})"
+        data-toggle="tooltip"
+        title="{{ data.name }}"></button>
+    {% endfor %}
+</div>
 {% endblock %}

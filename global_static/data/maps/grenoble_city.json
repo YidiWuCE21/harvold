@@ -14,36 +14,36 @@
             }
         },
         "2": {
-            "map": "route_3",
-            "direction": "east",
+            "map": "route_35",
+            "direction": "north",
             "forcedOffset": {
                 "x": 0,
-                "y": 25
+                "y": 50
             },
             "posOffset": {
-                "y": 8
+                "x": -24
             }
         },
         "3": {
-            "map": "route_3",
+            "map": "route_29",
             "direction": "east",
             "forcedOffset": {
                 "x": 0,
                 "y": 25
             },
             "posOffset": {
-                "y": 8
+                "y": 0
             }
         },
         "4": {
-            "map": "route_3",
-            "direction": "east",
+            "map": "route_31",
+            "direction": "south",
             "forcedOffset": {
                 "x": 0,
-                "y": 25
+                "y": 0
             },
             "posOffset": {
-                "y": 8
+                "x": -32
             }
         }
     },

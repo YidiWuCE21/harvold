@@ -117,7 +117,8 @@ def world_map(request):
         request.session["map"] = map
         return redirect("map")
     html_render_variables = {
-        "maps": consts.MAPS
+        "maps": consts.MAPS,
+        "cities": consts.CITIES
     }
     return render(request, "map/world_map.html", html_render_variables)
 

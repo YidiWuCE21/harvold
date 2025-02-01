@@ -619,3 +619,20 @@ input, select {
 .icon {
     margin-right: 6px;
 }
+
+.world-map {
+    position: relative;
+}
+
+.world-map img {
+    position: absolute;
+}
+
+.world-map button {
+    position: absolute;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    overflow: hidden;
+    outline: none;
+}

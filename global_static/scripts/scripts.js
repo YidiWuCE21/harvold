@@ -90,3 +90,12 @@ function takeItem({id, url, onSuccess = null}) {
             onSuccess(response);
     });
 }
+
+
+function submitForm({val, input, form}) {
+    console.log(val);
+    console.log(input);
+    document.getElementById(input).value = val;
+    console.log(document.getElementById(input).value);
+    document.getElementById(form).submit();
+}

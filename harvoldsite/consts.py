@@ -199,16 +199,68 @@ MAPS = [
     "route_35"
 ]
 
-CITIES = [
-    "oak_village",
-    "kaguya_town",
-    "synecdoche_city",
-    "zubrowka_city",
-    "port_inisherin",
-    "baxter_city",
-    "juvet_town",
-    "fletcher_village",
-]
+CITIES = {
+    "oak_village": {
+        "position": {"x": 119, "y": 95},
+        "size": {"x": 20, "y": 12},
+        "name": "Oak Village"
+    },
+    "kaguya_town": {
+        "position": {"x": 91, "y": 95},
+        "size": {"x": 12, "y": 20},
+        "name": "Kaguya Town"
+    },
+    "synecdoche_city": {
+        "position": {"x": 119, "y": 131},
+        "size": {"x": 28, "y": 28},
+        "name": "Synecdoche City"
+    },
+    "zubrowka_city": {
+        "position": {"x": 67, "y": 139},
+        "size": {"x": 20, "y": 20},
+        "name": "Zubrowka City"
+    },
+    "port_inisherin": {
+        "position": {"x": 195, "y": 147},
+        "size": {"x": 28, "y": 20},
+        "name": "Port Inisherin"
+    },
+    "baxter_city": {
+        "position": {"x": 135, "y": 199},
+        "size": {"x": 28, "y": 20},
+        "name": "Baxter City"
+    },
+    "juvet_town": {
+        "position": {"x": 83, "y": 27},
+        "size": {"x": 20, "y": 12},
+        "name": "Juvet Town"
+    },
+    "fletcher_village": {
+        "position": {"x": 125, "y": 45},
+        "size": {"x": 20, "y": 12},
+        "name": "Fletcher Village"
+    },
+    "vanya_town": {
+        "position": {"x": 135, "y": 267},
+        "size": {"x": 28, "y": 20},
+        "name": "Vanya Town"
+    },
+    "port_endurance": {
+        "position": {"x": 287, "y": 147},
+        "size": {"x": 20, "y": 20},
+        "name": "Port Endurance"
+    },
+    "grenoble_city": {
+        "position": {"x": 339, "y": 163},
+        "size": {"x": 28, "y": 20},
+        "name": "Grenoble City"
+    },
+    "sen_village": {
+        "position": {"x": 365, "y": 213},
+        "size": {"x": 20, "y": 12},
+        "name": "Sen Village"
+    }
+}
 
 MAP_REQS = {
     "surf": ["route_16", "route_17", "snorlax_island"],
