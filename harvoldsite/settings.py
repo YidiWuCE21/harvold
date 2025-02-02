@@ -29,7 +29,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
-DEBUG = True
 
 ALLOWED_HOSTS = ["*", "https://harvold-alpha-c1e3d777167f.herokuapp.com"]
 
@@ -92,7 +91,7 @@ WSGI_APPLICATION = 'harvoldsite.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-if False:
+if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
