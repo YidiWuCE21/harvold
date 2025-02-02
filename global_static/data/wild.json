@@ -129,7 +129,7 @@
     },
     "baxter_graveyard": {
         "grass1": {
-            "pokemon": ["Gastly", "Duskull", "Mismagius", "Shuppet", "Drifloon", "Litwick"],
+            "pokemon": ["Gastly", "Duskull", "Misdreavus", "Shuppet", "Drifloon", "Litwick"],
             "weights": [16, 16, 16, 16, 5, 2]
         },
         "levels": [25, 31]
