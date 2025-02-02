@@ -199,6 +199,59 @@ MAPS = [
     "route_35"
 ]
 
+SWARMS = [
+    "083", # Farfetch'd
+    "088", # Grimer
+    "100", # Voltorb
+    "109", # Koffing
+    "128", # Tauros
+    "201", # Unown
+    "360", # Wynaut
+    "203", # Girafarig
+    "206", # Dunsparce
+    "209", # Snubbull
+    "302", # Sableye
+    "311", # Plusle
+    "312", # Minun
+    "351", # Castform
+    "417", # Pachirisu
+    "479", # Rotom
+    "511", # Pansage
+    "513", # Pansear
+    "515", # Panpour
+    "561", # Sigilyph
+    "568", # Trubbish
+    "587", # Emolga
+    "588", # Karrablast
+    "592", # Frillish
+    "599", # Klink
+    "605", # Elgyem
+    "616", # Shelmet
+    "626", # Bouffalant
+    "631", # Heatmor
+    "632" # Durant
+]
+
+SWARM_ROUTES = [
+    "route_1",
+    "route_2",
+    "route_3",
+    "route_4",
+    "route_5",
+    "route_6",
+    "route_7",
+    "route_8",
+    "route_9",
+    "route_10",
+    "route_11",
+    "route_12",
+    "route_13",
+    "route_14",
+    "route_15",
+    "route_22",
+    "route_23"
+]
+
 CITIES = {
     "oak_village": {
         "position": {"x": 119, "y": 95},

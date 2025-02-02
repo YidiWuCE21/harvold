@@ -1,6 +1,7 @@
 import os
 import math
 import random
+import copy
 from datetime import datetime
 
 from django.db import models
@@ -78,6 +79,26 @@ def get_nature_multiplier(nature, stat):
     Get the nature multiplier for a given stat, default to 1.0 if no effect
     """
     return consts.NATURES[nature].get(stat, 1.0)
+
+
+def swarm(date_seed):
+    """
+    Returns a random route and swarm schedule
+    """
+    swarm_choices = consts.SWARMS
+    swarm_routes = consts.SWARM_ROUTES
+
+    # Generate the seed; each month has a set swarm list
+    epoch = datetime(2000, 1, 1)
+    swarm_seed = (date_seed - epoch).days
+
+    schedule = random.Random(int(swarm_seed / len(swarm_choices))).sample(swarm_choices, len(swarm_choices))
+    route = random.Random(swarm_seed).choice(swarm_routes)
+    day_of_schedule = swarm_seed % len(swarm_choices)
+    swarm_pokemon = schedule[day_of_schedule]
+
+    return swarm_pokemon, route
+
 
 
 def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=False, iv_override=None,
@@ -663,4 +684,3 @@ class Pokemon(models.Model):
                     moveset[move]["current_pp"] = getattr(self, "{}_pp".format(move))
 
         return moveset
-

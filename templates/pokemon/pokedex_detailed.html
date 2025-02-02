@@ -53,8 +53,8 @@
     <div style="grid-column:1;grid-row:2;" class="content-box">
         <h4>Locations</h4>
         {% if maps %}
-        {% for map in maps %}
-        <p>{{ map|field_name_to_label }}</p>
+        {% for evo, map in maps %}
+        <p>{{ evo }}: {{ map|field_name_to_label }}</p>
         {% endfor %}
         {% else %}
         Not obtainable on maps

@@ -1,5 +1,5 @@
 import json
-import datetime
+from datetime import datetime
 import pandas as pd
 import os
 
@@ -10,7 +10,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 # Create your views here.
 
 from harvoldsite import consts
-from .models import Pokemon, populate_moveset, get_progress_to_next_level, create_pokemon
+from .models import Pokemon, populate_moveset, get_progress_to_next_level, create_pokemon, swarm
 from battle import battle_manager
 
 
@@ -113,11 +113,11 @@ def pokemon(request):
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def pokecenter(request):
+    swarm_pokemon, route = swarm(datetime.now())
     html_render_variables = {
-        "swarm_dex": "100",
-        "time_of_day": "day",
-        "next_time_of_day": "evening",
-        "time_countdown": datetime.timedelta(minutes=6)
+        "swarm_dex": swarm_pokemon,
+        "swarm_name": consts.POKEMON[swarm_pokemon]["name"],
+        "route": route.replace("_", " ").capitalize()
     }
     return render(request, "pokemon/pokecenter.html", html_render_variables)
 
@@ -171,8 +171,11 @@ def pokedex_detailed(request):
             if spawn_area == "levels":
                 continue
             if dex_data["name"] in [wildspawn for wildspawn in spawn_list["pokemon"]]:
-                maps.append(route)
-                break
+                maps.append((dex_data["name"], route))
+            # Pre-evos
+            for family_dex in dex_data["family"][:dex_data["family"].index(dex)]:
+                if consts.POKEMON[family_dex]["name"] in [wildspawn for wildspawn in spawn_list["pokemon"]]:
+                    maps.append((consts.POKEMON[family_dex]["name"], route))
     html_render_variables = {
         "dex_data": dex_data,
         "maps": maps,

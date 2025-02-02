@@ -2043,7 +2043,19 @@
     }
   },
   "267": null,
-  "268": null,
+  "268": {
+    "269": {
+      "gender": null,
+      "held_item": null,
+      "item": null,
+      "known_move": null,
+      "known_move_type": null,
+      "min_happiness": null,
+      "min_level": 10,
+      "time_of_day": "",
+      "trade_species": null
+    }
+  },
   "269": null,
   "270": {
     "271": {

@@ -1,7 +1,7 @@
 import json
 import os
 import random
-import datetime
+from datetime import datetime
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -11,7 +11,7 @@ from django.http import JsonResponse, HttpResponseNotFound, HttpResponse
 # Create your views here.
 
 from harvoldsite import consts
-from pokemon.models import create_pokemon
+from pokemon.models import create_pokemon, swarm
 
 # Create your views here.
 def helper_check_map_access(map, user, msg=False):
@@ -166,7 +166,17 @@ def wild_battle(request):
     if area not in consts.WILD[map]:
         return JsonResponse({"status": "false", "message": "{} not recognized as a valid area".format(area)}, status=500)
 
-    wild_pokemon = random.choices(consts.WILD[map][area]["pokemon"], consts.WILD[map][area]["weights"])
+    wild_choices = consts.WILD[map][area]["pokemon"]
+    weights = consts.WILD[map][area]["weights"]
+
+    # Check if swarming, append swarm to list
+    swarm_pokemon, route = swarm(datetime.now())
+    if route == map:
+        wild_choices.append(consts.POKEMON[swarm_pokemon]["name"])
+        # 1/5a chance of swarm appearing
+        weights.append(sum(weights) / 4)
+
+    wild_pokemon = random.choices(wild_choices, weights)
     dex_number = consts.DEX_LOOKUP[wild_pokemon[0]]
     bg = consts.WILD[map][area].get("bg", "water" if area == "water" else "grass")
 

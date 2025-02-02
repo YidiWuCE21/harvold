@@ -28,7 +28,7 @@ function heal() {
 <div style="display: grid;grid-template-columns: 190px 240px 190px;grid-template-rows: 230px 250px; gap:5px">
     <div style="grid-column:1;grid-row:1;" class="content-box padded">
         <h5>Swarm Alert</h5>
-        <p>A swarm of ??? has appeared in Route 1</p>
+        <p>A swarm of {{ swarm_name }} has appeared in {{ route }}</p>
         <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ swarm_dex }}.png">
 
     </div>
