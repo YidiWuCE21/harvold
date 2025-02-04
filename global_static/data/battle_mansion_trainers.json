@@ -1,0 +1,68 @@
+{
+    "floor_1": {
+        "bug_catcher": ["Butterfree", "Beedrill", "Beautifly", "Dustox", "Kricketune", "Ledian", "Ariados"],
+        "picnicker_m": ["Sudowoodo", "Plusle", "Wormadam", "Pidgeotto", "Nidorino", "Cherrim"],
+        "picnicker_f": ["Butterfree", "Minun", "Tranquill", "Sunflora", "Parasect", "Nidorina"],
+        "youngster": ["Raticate", "Furret", "Linoone", "Bibarel", "Emolga"],
+        "lass": ["Minccino", "Luvdisc", "Farfetch'd", "Mawile", "Swoobat"],
+        "school_kid_m": ["Nidorino", "Nidorina", "Flaaffy", "Herdier", "Bibarel", "Gloom", "Linoone"],
+        "school_kid_f": ["Luxio", "Staravia", "Krokorok", "Pidgeotto", "Raticate", "Weepinbell", "Furret"]
+    },
+    "floor_2": {
+        "backpacker_m": ["Fearow", "Primeape", "Sawsbuck", "Zangoose", "Vileplume", "Sandslash"],
+        "backpacker_f": ["Pidgeot", "Victreebel", "Stantler", "Swellow", "Ludicolo", "Seviper"],
+        "pokefan_m": ["Jumpluff", "Wigglytuff", "Espeon", "Amoonguss", "Jolteon", "Chansey"],
+        "pokefan_f": ["Whimsicott", "Umbreon", "Mr. Mime", "Audino", "Leafeon", "Pikachu"],
+        "swimmer_m": ["Lanturn", "Sharpedo", "Crawdaunt", "Whiscash", "Lumineon", "Basculin"],
+        "swimmer_f": ["Seaking", "Poliwrath", "Sharpedo", "Kingler", "Swanna", "Mantine"],
+        "socialite": ["Persian", "Delcatty", "Purugly", "Lopunny", "Roserade", "Ninetales"],
+        "gentleman": ["Granbull", "Noctowl", "Zangoose", "Golduck", "Manectric", "Stoutland"],
+        "breeder_m": ["Volbeat", "Illumise", "Jumpluff", "Azumarill", "Magcargo", "Mightyena", "Pelipper"],
+        "cyclist_f": ["Ninjask", "Swellow", "Dugtrio", "Floatzel", "Raichu", "Dodrio", "Liepard"]
+    },
+    "floor_3": {
+        "blackbelt": ["Machamp", "Hitmonlee", "Hitmonchan", "Hitmontop", "Heracross", "Breloom", "Gallade"],
+        "psychic_m": ["Gallade", "Slowking", "Musharna", "Sigilyph", "Hypno", "Mismagius"],
+        "psychic_f": ["Alakazam", "Espeon", "Slowbro", "Gardevoir", "Gothitelle", "Spiritomb"],
+        "firebreather": ["Ninetales", "Rapidash", "Houndoom", "Torkoal", "Heatmor", "Camerupt"],
+        "skier_m": ["Walrein", "Cloyster", "Glalie", "Cryogonal", "Beartic", "Mamoswine"],
+        "skier_f": ["Dewgong", "Jynx", "Cryogonal", "Vanilluxe", "Abomasnow", "Froslass"],
+        "rocket_grunt_m": ["Nidoking", "Rhydon", "Machamp", "Muk", "Arbok", "Hypno"],
+        "rocket_grunt_f": ["Raichu", "Nidoqueen", "Crobat", "Weezing", "Sandslash", "Marowak"],
+        "plasma_grunt_m": ["Klinklang", "Garbodor", "Scrafty", "Liepard", "Watchog", "Primeape", "Zangoose"],
+        "plasma_grunt_f": ["Krookodile", "Absol", "Seviper", "Crobat", "Watchog", "Drapion", "Scolipede"],
+        "galactic_grunt_m": ["Gyarados", "Weavile", "Purugly", "Bronzong", "Houndoom"],
+        "galactic_grunt_f": ["Crobat", "Skuntank", "Toxicroak", "Alakazam", "Honchkrow"],
+        "scientist_m": ["Electrode", "Weezing", "Ampharos", "Probopass", "Muk"],
+        "scientist_f": ["Accelgor", "Klinklang", "Metang", "Magnezone", "Porygon2"]
+    },
+    "floor_4": {
+        "veteran_m": ["Venusaur", "Blastoise", "Arcanine", "Gengar", "Snorlax", "Tauros", "Starmie"],
+        "veteran_f": ["Charizard", "Gyarados", "Alakazam", "Aerodactyl", "Cloyster", "Exeggutor", "Aerodactyl"],
+        "bounty_hunter_m": ["Meganium", "Ampharos", "Scizor", "Blissey", "Politoed", "Skarmory", "Espeon"],
+        "bounty_hunter_f": ["Typhlosion", "Feraligatr", "Steelix", "Kingdra", "Crobat", "Umbreon", "Heracross"],
+        "elite_trainer_m": ["Swampert", "Aggron", "Flygon", "Claydol", "Walrein", "Manectric", "Medicham"],
+        "elite_trainer_f": ["Sceptile", "Blaziken", "Gardevoir", "Milotic", "Wailord", "Altaria", "Slaking"],
+        "cool_trainer_m": ["Torterra", "Empoleon", "Luxray", "Electivire", "Magmortar", "Gliscor", "Mamoswine"],
+        "cool_trainer_f": ["Infernape", "Roserade", "Rhyperior", "Magnezone", "Togekiss", "Porygon-Z", "Lucario"],
+        "ace_trainer_m": ["Emboar", "Excadrill", "Haxorus", "Eelektross", "Beartic", "Bisharp", "Chandelure"],
+        "ace_trainer_f": ["Serperior", "Samurott", "Darmanitan", "Braviary", "Zoroark", "Volcarona", "Gigalith"]
+    },
+    "floor_5": {
+        "cynthia": ["Garchomp", "Lucario", "Togekiss", "Roserade", "Spiritomb"],
+        "alder": ["Volcarona", "Escavalier", "Reuniclus", "Krookodile", "Conkeldurr"],
+        "iris": ["Aggron", "Hydreigon", "Archeops", "Haxorus", "Lapras"],
+        "lance": ["Gyarados", "Dragonite", "Aerodactyl", "Altaria", "Salamence"],
+        "will": ["Bronzong", "Gardevoir", "Clefable", "Xatu", "Slowbro"],
+        "koga": ["Forretress", "Toxicroak", "Crobat", "Muk", "Tentacruel"],
+        "karen": ["Gengar", "Houndoom", "Vileplume", "Spiritomb", "Weavile"],
+        "phoebe": ["Dusknoir", "Banette", "Drifblim", "Chandelure", "Mismagius"],
+        "glacia": ["Glalie", "Walrein", "Vanilluxe", "Beartic", "Abomasnow"],
+        "aaron": ["Scizor", "Heracross", "Drapion", "Flygon", "Yanmega"],
+        "bertha": ["Quagsire", "Hippowdon", "Rhyperior", "Mamoswine", "Gliscor"],
+        "flint": ["Magmortar", "Houndoom", "Steelix", "Arcanine", "Drifblim"],
+        "lucian": ["Medicham", "Alakazam", "Bronzong", "Gallade", "Slowbro"],
+        "marshal": ["Conkeldurr", "Mienshao", "Lucario", "Breloom", "Medicham"],
+        "grimsley": ["Krookodile", "Bisharp", "Tyranitar", "Scrafty", "Honchkrow"]
+    }
+}

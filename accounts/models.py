@@ -95,6 +95,7 @@ class Profile(models.Model):
     last_city = models.TextField(max_length=20, default="oak_village")
     current_pos = models.JSONField(default=None, blank=True, null=True)
     current_battle = models.ForeignKey("battle.Battle", blank=True, null=True, on_delete=models.SET_NULL)
+    current_gauntlet = models.ForeignKey("battle.Gauntlet", blank=True, null=True, on_delete=models.SET_NULL)
     wild_opponent = models.JSONField(blank=True, null=True, default=None)
 
     # Daily tracker

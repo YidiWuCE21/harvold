@@ -511,4 +511,8 @@ TYPE_EFFECTIVENESS = {
 
 # Functions for checking that the user passes some test
 def user_not_in_battle(user):
-    return user.profile.current_battle is None
+    if user.profile.current_battle is not None:
+        return False
+    if user.profile.current_gauntlet is not None:
+        return False
+    return True

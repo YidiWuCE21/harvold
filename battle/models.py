@@ -19,6 +19,10 @@ BATTLE_TYPES = [
     ("wild", "Wild Battle"),
     ("npc", "Trainer Battle")
 ]
+SERIES_TYPES = [
+    ("bounty", "Bounty"),
+    ("mansion", "Battle Mansion")
+]
 
 
 def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
@@ -44,6 +48,8 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
     player_1 = Profile.objects.get(pk=p1_id)
     if player_1.current_battle is not None:
         raise ValueError("Player 1 is already in battle!")
+    if player_1.current_gauntlet is not None:
+        raise ValueError("Player 1 is in a gauntlet!")
     party_1 = player_1.get_party()
     battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1]
     battle_state["player_1"]["name"] = player_1.user.username
@@ -82,6 +88,8 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
         player_2 = Profile.objects.get(pk=p2_id)
         if player_2.current_battle is not None:
             raise ValueError("Player 2 is already in battle!")
+        if player_2.current_gauntlet is not None:
+            raise ValueError("Player 2 is in a gauntlet!")
         party_2 = player_2.get_party()
         battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
         battle_state["player_2"]["name"] = player_2.user.username
@@ -220,3 +228,45 @@ class Battle(models.Model):
         elif player == self.player_2:
             return self.player_1
         return None
+
+class Gauntlet(models.Model):
+    # Generic model to track any event that consists of a series of battles; bounties, Battle Mansion, etc
+    gauntlet_type = models.CharField(max_length=10, choices=SERIES_TYPES)
+    status = models.CharField(max_length=10)
+    player = models.ForeignKey(
+        "accounts.Profile",
+        on_delete=models.CASCADE
+    )
+    # Flags
+    team_mutable = models.BooleanField(default=False)
+    can_heal = models.BooleanField(default=False)
+
+    # State to track team throughout series
+    team_state = models.JSONField(blank=True, null=True, default=None)
+    # State to track all info about series; include stuff like inventory, buffs/debuffs, trainers to fight, progress
+    gauntlet_state = models.JSONField(blank=True, null=True, default=None)
+
+
+def create_gauntlet(player, gauntlet_type, gauntlet_state, team_state=None, mutable=False, heal=False):
+    if not consts.user_not_in_battle(player):
+        return False, "User is already in a battle or gauntlet."
+
+    if team_state is None:
+        team_state = "blah"
+    new_gauntlet = Gauntlet(
+        gauntlet_type=gauntlet_type,
+        status="ongoing",
+        player=player,
+        team_mutable=mutable,
+        can_heal=heal,
+        team_state=team_state,
+        gauntlet_state=gauntlet_state
+    )
+    with transaction.atomic():
+        try:
+            new_gauntlet.save()
+            player.current_gauntlet = new_gauntlet
+            player.save()
+            return True, ""
+        except:
+            return False, "Failed to create gauntlet"
