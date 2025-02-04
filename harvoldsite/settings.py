@@ -48,9 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "django.contrib.staticfiles",
-    'django_extensions',
+    "django.contrib.staticfiles"
 ]
+if DEBUG:
+    INSTALLED_APPS += ['django_extensions', ]
 
 #AUTH_USER_MODEL = 'accounts.User'
 
