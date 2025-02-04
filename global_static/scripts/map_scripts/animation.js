@@ -46,6 +46,11 @@ function applyFilter() {
 
 
 function animate(looped = true) {
+    // Check for loop
+    if (looped) {
+        setTimeout(() => {requestAnimationFrame(animate);}, 1000 / 60);
+        //window.requestAnimationFrame(animate);
+    }
     // Increment game tick
     gameTick += 1;
     trainerTick();
@@ -62,11 +67,6 @@ function animate(looped = true) {
     let cappedCamera = {
         x: Math.min(Math.max(camera.position.x, 0), mapWidth * tileWidth - canvas.width),
         y: Math.min(Math.max(camera.position.y, 0), mapHeight * tileWidth - canvas.height)
-    }
-    // Check for loop
-    if (looped) {
-        setTimeout(() => {requestAnimationFrame(animate);}, 1000 / 60);
-        //window.requestAnimationFrame(animate);
     }
     // Order game sprites
     let orderedSprites = [...mapTrainersSprites];
@@ -180,8 +180,8 @@ function animate(looped = true) {
     c.fillRect(0, 0, canvas.width, canvas.height);
     background.draw(cappedCamera);
     // Detect maplink nearby
-    for (let i = 0; i < maplinkTiles.length; i++) {
-        const maplinkTile = maplinkTiles[i];
+    for (let i = 0; i < maplinkUnpartitioned.length; i++) {
+        const maplinkTile = maplinkUnpartitioned[i];
         if (
             inRadius({point1: player.position, point2: maplinkTile.position, radius: 50, offset: 0})
         ) {

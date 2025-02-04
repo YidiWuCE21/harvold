@@ -27,7 +27,59 @@ function inRadius({point1, point2, radius, offset}) {
 }
 
 
+function getCellPartition(cell) {
+    // Function to get the key for the partition a cell belongs to
+    const partitionX = Math.floor(cell.position.x / (tileWidth * 3));
+    const partitionY = Math.floor(cell.position.y / (tileWidth * 3));
+    return [partitionX, partitionY];
+}
+
+function partitionList(objectList) {
+    // Partition a list of boundary objects
+    let partitionedList = {};
+    objectList.forEach((boundary) => {
+        const [partitionX, partitionY] = getCellPartition(boundary);
+        const partitionKey = `${partitionX}-${partitionY}`;
+        // Push to boundary
+        partitionedList[partitionKey] ??= [];
+        partitionedList[partitionKey].push(boundary);
+    })
+    return partitionedList;
+}
+
 function detectCollision({collidables, collisionFunc, playerObj = player, offset = {x: 0, y: 0}}) {
+    // Find the player's partition
+    const [partitionX, partitionY] = getCellPartition(playerObj);
+    const relevantPartitions = [
+        "bounding",
+        `${partitionX - 1}-${partitionY - 1}`, `${partitionX}-${partitionY - 1}`, `${partitionX + 1}-${partitionY - 1}`,
+        `${partitionX - 1}-${partitionY}`, `${partitionX}-${partitionY}`, `${partitionX + 1}-${partitionY}`,
+        `${partitionX - 1}-${partitionY + 1}`, `${partitionX}-${partitionY + 1}`, `${partitionX + 1}-${partitionY + 1}`,
+    ]
+    // Iterate through each partition
+    let collided = null
+    relevantPartitions.forEach((partitionKey) => {
+        const partitionedCollidables = collidables[partitionKey];
+        if (partitionedCollidables != null) {
+            // Iterate through collidables in partition
+            partitionedCollidables.forEach((collidable) => {
+                if (collisionFunc({
+                    rectangle1: playerObj,
+                    rectangle2: {...collidable, position: {
+                        x: collidable.position.x + offset.x,
+                        y: collidable.position.y + offset.y
+                    }}
+                })) {
+                    collided = collidable;
+                }
+            })
+        }
+    })
+    return collided;
+}
+
+
+/*function detectCollision({collidables, collisionFunc, playerObj = player, offset = {x: 0, y: 0}}) {
     // Iterate through each partition
     let collided = null
     collidables.forEach((collidable) => {
@@ -42,4 +94,4 @@ function detectCollision({collidables, collisionFunc, playerObj = player, offset
         }
     })
     return collided;
-}
+}*/

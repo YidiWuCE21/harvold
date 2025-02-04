@@ -14,6 +14,8 @@ let movespeed = 2; // Movement speed
 
 let gameTick = 0; // Game tick tracker
 
+const enablePartitioning = true;
+
 // Variables to be filled from map JSON
 let mapWidth = 0;
 let mapHeight = 0;
@@ -31,13 +33,15 @@ let timeOfDay = 'night';
 
 // Variables declared for collision logic
 let offset = {};
+
 let boundaries = [];
-let ledges = [];
-let waterTiles = [];
-let maplinkTiles = [];
-let battleTiles = [];
-let bridgeTiles = [];
-let bridgeBounds = [];
+let ledges = null;
+let waterTiles = null;
+let maplinkTiles = null;
+let battleTiles = null;
+let bridgeTiles = null;
+let bridgeBounds = null;
+let maplinkUnpartitioned = null;
 
 // Bounding boxes
 let northBound = null;

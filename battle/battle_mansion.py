@@ -6,7 +6,7 @@ import json
 from harvoldsite import consts
 from pokemon.models import create_pokemon
 from trainer_names import gen_name
-from models import create_gauntlet
+from models import create_gauntlet, create_battle
 
 class MansionTrainer():
     floor_ev = {
@@ -68,6 +68,13 @@ class MansionFloor():
         floor_trainers = [MansionTrainer(trainer, random.sample(floor_pool[trainer], 3), floor) for trainer in random.sample(floor_pool, 3)]
         return cls(*floor_trainers)
 
+    def get_trainer(self, trainer_no):
+        if trainer_no == 1:
+            return self.trainer_1
+        if trainer_no == 2:
+            return self.trainer_1
+        if trainer_no == 3:
+            return self.trainer_1
 
     @classmethod
     def from_json(cls, json_obj):
@@ -87,6 +94,35 @@ class MansionFloor():
 
 
 class BattleMansion():
+    bm_prizes = {
+        "t1": ["protein", "iron", "hp-up", "zinc", "carbos", "calcium"],
+        "t2": ["qualot-berry", "tamato-berry", "grepa-berry", "hondew-berry", "kelpsy-berry", "pomeg-berry"],
+        "t3": ["electirizer", "magmarizer", "kings-rock", "metal-coat", "protector", "oval-stone",
+               "deep-sea-tooth", "deep-sea-scale", "prism-scale", "razor-claw", "razor-fang", "reaper-cloth"],
+        "completion": [
+            "tm002", # Dragon Claw
+            "tm013", # ice beam
+            "tm019", # roost
+            "tm024", # thunderbolt
+            "tm026", # earthquake
+            "tm029", # psychic
+            "tm030", # shadow ball
+            "tm031", # brick break
+            "tm035", # flamethrower
+            "tm036", # sludge bomb
+            "tm053", # energy ball
+            "tm080", # rock slide
+            "tm081", # x scissor
+            "tm091", # flash cannon
+            "tm099" # dazzling gleam
+        ]
+    }
+    prize_qty = {
+        "t1": (1, 3),
+        "t2": (5, 7),
+        "t3": (1, 1),
+        "t4": (1, 1)
+    }
     def __init__(self, floor_1=None, floor_2=None, floor_3=None, floor_4=None, floor_5=None):
         self.floor_1 = floor_1
         self.floor_2 = floor_2
@@ -95,13 +131,32 @@ class BattleMansion():
         self.floor_5 = floor_5
         self.invent = {}
         self.progress = {}
+        self.challenger = None
 
     @classmethod
     def generate(cls):
         floors = [MansionFloor.generate("floor_{}".format(floor)) for floor in range(1, 6)]
         invent = {}
-        progress = {"floor": 1, "trainer": 1}
+        progress = {"floor": 1, "trainer": 1, "prizes": {}}
         return cls(*floors, invent, progress)
+
+    def set_challenger(self, player_id):
+        if self.challenger is None:
+            self.challenger = player_id
+        else:
+            raise ValueError("Challenger cannot be changed!")
+
+    def get_floor(self, floor_no):
+        if floor_no == 1:
+            return self.floor_1
+        if floor_no == 2:
+            return self.floor_1
+        if floor_no == 3:
+            return self.floor_1
+        if floor_no == 4:
+            return self.floor_1
+        if floor_no == 5:
+            return self.floor_1
 
     @classmethod
     def from_json(cls, json_obj):
@@ -142,8 +197,69 @@ class BattleMansion():
         return False
 
 
+    def fight_trainer(self):
+        """
+        Returns the data of the current trainer
+        """
+        trainer_no = self.progress["trainer"]
+        floor_no = self.progress["floor"]
+        if not 1 <= trainer_no <= 3:
+            return None
+        if not 1 <= floor_no <= 5:
+            return None
+        mansion_floor = self.get_floor(floor_no)
+        trainer_obj = mansion_floor.get_trainer(trainer_no)
+        opp_info = {
+            "name": trainer_obj.name,
+            "team": trainer_obj.team
+        }
+        battle = create_battle(self.challenger, "mansion_trainer_{}_{}".format(floor_no, trainer_no), opp_override=opp_info)
+        return battle
+
+
+    def beat_trainer(self):
+        """
+        Update the progress after a trainer was beat
+
+        Return True if complete, otherwise False
+        """
+        trainer_no = self.progress["trainer"]
+        floor_no = self.progress["floor"]
+        trainer_no += 1
+        if trainer_no > 3:
+            trainer_no = 1
+            floor_no += 1
+            self.progress["trainer"] = trainer_no
+            self.progress["floor"] = floor_no
+            if floor_no == 6:
+                return "complete"
+            else:
+                return "new_floor"
+        self.progress["trainer"] = trainer_no
+        return "continue"
+
+
+    def generate_prize(self, floor):
+        """
+        Generate a random prize based on the floor
+        """
+
+
+    def cash_out(self):
+        """
+        Return the rewards
+        """
+        default_prize = {}
+        return self.progress.get("prizes", default_prize)
+
+
 def start_battle_mansion(player):
-    # Check if player is in battle or in existing gauntlet
+    # Check if player has completed their daily mansion run
+    if "battle_mansion" in player.trainers_beat:
+        return False, "You have already used up your battle mansion runs for today"
+    # Attempt to create a battle mansion run
     battle_mansion = BattleMansion.generate()
     battle_mansion_state = battle_mansion.jsonify()
     success, message = create_gauntlet(player, "mansion", battle_mansion_state)
+    if not success:
+        return False, message

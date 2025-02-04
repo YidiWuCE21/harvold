@@ -147,7 +147,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         width: (mapWidth + 2) * tileWidth
     });
-    boundaries.push(northBound);
+    //boundaries.push(northBound);
     southBound = new Boundary({
         position: {
             x: -16,
@@ -155,7 +155,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         width: (mapWidth + 2) * tileWidth
     });
-    boundaries.push(southBound);
+    //boundaries.push(southBound);
     westBound = new Boundary({
         position: {
             x: -16,
@@ -163,7 +163,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         height: (mapHeight + 2) * tileWidth
     });
-    boundaries.push(westBound);
+    //boundaries.push(westBound);
     eastBound = new Boundary({
         position: {
             x: mapWidth * tileWidth,
@@ -171,7 +171,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
         },
         height: (mapHeight + 2) * tileWidth
     });
-    boundaries.push(eastBound);
+    //boundaries.push(eastBound);
 
     // Create water objects
     for (let i = 0; i < water.length; i += mapWidth) {
@@ -298,6 +298,20 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
             position: {x: 0, y: 0},
             image: bridgeImage
         })
+    }
+    //waterPartition = partitionList(waterTiles);
+    maplinkUnpartitioned = maplinkTiles;
+    if (enablePartitioning) {
+        waterTiles = partitionList(waterTiles);
+        ledges = partitionList(ledges);
+        maplinkTiles = partitionList(maplinkTiles);
+        boundaries = partitionList(boundaries);
+        boundaries["bounding"] = [northBound, southBound, eastBound, westBound];
+        bridgeBounds = partitionList(bridgeBounds);
+        bridgeTiles = partitionList(bridgeTiles);
+        battleTiles = partitionList(battleTiles);
+    } else {
+        boundaries += [northBound, southBound, eastBound, westBound]
     }
     mapLoad = false;
 }

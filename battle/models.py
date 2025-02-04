@@ -25,7 +25,7 @@ SERIES_TYPES = [
 ]
 
 
-def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
+def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=None):
     """
     Player 2 should either be a player ID, a Pokemon ID, or an NPC ID (stored in data file)
 
@@ -54,6 +54,7 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
     battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1]
     battle_state["player_1"]["name"] = player_1.user.username
     battle_state["player_1"]["inventory"] = copy.deepcopy(player_1.bag)
+    battle_state["player_2"]["inventory"] = None
 
     # Attempt to find opponent and team data
     player_2 = None
@@ -67,23 +68,25 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default"):
         battle_state["player_2"]["party"] = [wild_opponent.get_battle_info()]
         battle_state["escapes"] = 0
         battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
-        battle_state["player_2"]["inventory"] = None
     elif type == "npc":
-        trainer_data = "{}.json".format(p2_id)
-        trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
-        if not os.path.isfile(trainer_path):
-            raise KeyError("{} not recognized as a trainer".format(p2_id))
-        with open(trainer_path) as trainer_file:
-            trainer_json = json.load(trainer_file)
-            battle_state["player_2"]["party"] = trainer_json["team"]
-            npc_opponent = p2_id
-            battle_state["player_2"]["name"] = trainer_json["name"]
-            reward = trainer_json["reward"]
-            # If the trainer requires the user be on a map, perform check now
-            if "map" in trainer_json:
-                if trainer_json["map"] != player_1.current_map:
-                    raise ValueError("Trainer is not on the right map!")
-        battle_state["player_2"]["inventory"] = None
+        if opp_override:
+            battle_state["player_2"]["party"] = opp_override["party"]
+            battle_state["player_2"]["name"] = opp_override["name"]
+        else:
+            trainer_data = "{}.json".format(p2_id)
+            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+            if not os.path.isfile(trainer_path):
+                raise KeyError("{} not recognized as a trainer".format(p2_id))
+            with open(trainer_path) as trainer_file:
+                trainer_json = json.load(trainer_file)
+                battle_state["player_2"]["party"] = trainer_json["team"]
+                npc_opponent = p2_id
+                battle_state["player_2"]["name"] = trainer_json["name"]
+                reward = trainer_json["reward"]
+                # If the trainer requires the user be on a map, perform check now
+                if "map" in trainer_json:
+                    if trainer_json["map"] != player_1.current_map:
+                        raise ValueError("Trainer is not on the right map!")
     elif type == "live":
         player_2 = Profile.objects.get(pk=p2_id)
         if player_2.current_battle is not None:
