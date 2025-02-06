@@ -6,6 +6,8 @@ https://harvold-alpha-c1e3d777167f.herokuapp.com/
 
 ##### Table of Contents  
 [Tech Stack Choices](#choices) 
+[Implementation Details](#details) 
+[Hurdles](#hurdles) 
 
 ## Motivation
 
@@ -32,6 +34,7 @@ Daphne was chosen because Channels required an ASGI server.
 
 Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was used for dynamically updating the Pokémon box.
 
+<a name="details"></a>
 ## Implementation Details
 
 ### Turn-Based Battles
@@ -54,6 +57,7 @@ Static NPCs were treated as simple Boundary objects for collision detection. Mov
 
 When a player left a map, the server would remember their location on the map and place them there when they started. If an NPC moved off of their spawn point and a player walked on to it, the player could reload the map and be stuck inside the NPC. This was just resolved by setting a flag where the NPC would not become solid until the player did not collide with them; in the case where a player spawned on an NPC, they could freely move off before the NPC became "solid" and interactable.
 
+<a name="hurdles"></a>
 ## Hurdles
 
 ### FPS Capping
