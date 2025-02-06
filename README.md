@@ -4,6 +4,9 @@ Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing
 
 https://harvold-alpha-c1e3d777167f.herokuapp.com/
 
+##### Table of Contents  
+[Tech Stack Choices](#choices) 
+
 ## Motivation
 
 The motivation behind Pokémon Harvold is twofold; the first is to improve as a developer by deepening my understanding of certain frameworks and tools. The second is because creating a Pokémon has been a personal goal of mine ever since my favourite browser-based game, Pokémon Omega, was nuked from orbit by Nintendo in 2014.
@@ -18,6 +21,7 @@ The game is not as railroaded as the handheld games in that there is no explicit
 
 The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle Facility, where you challenge 5 floors of trainers to fight. This activity can award rare TMs and evolution items unobtainable in the shop.
 
+<a name="choices"/>
 ## Tech Stack Choices
 
 Django was an obvious choice for me as it was the web framework I used at my job. This was not a choice made for the sake of comfort, but because my work didn't let me fully explore the use of the framework. I wanted to understand how a web server actually functioned, how to use Django's ORM (we preferred raw SQL), and so on. I wanted the flexibility to play with all the tools in the Django environment and commit to my own design choices without going through the usual pipelines at work.
