@@ -51,8 +51,7 @@ class MansionTrainer():
 
 class MansionFloor():
     # Trainers
-    with open(os.path.join(consts.STATIC_PATH, "data", "battle_mansion_trainers.json")) as trainer_file:
-        trainers_pool = json.load(trainer_file)
+    trainers_pool = consts.BM_POOL
     def __init__(self, trainer_1=None, trainer_2=None, trainer_3=None):
         self.trainer_1 = trainer_1
         self.trainer_2 = trainer_2

@@ -31,6 +31,8 @@ with open(os.path.join(STATIC_PATH, "data", "item_usage.json"), encoding="utf-8"
     ITEM_USAGE = json.load(item_usage)
 with open(os.path.join(STATIC_PATH, "data", "pokemon_descriptions.json"), encoding="utf-8") as desc:
     DESCRIPTIONS = json.load(desc)
+with open(os.path.join(STATIC_PATH, "data", "battle_mansion_trainers.json")) as trainer_file:
+    BM_POOL = json.load(trainer_file)
 
 # Asset paths
 ASSET_PATHS = {
