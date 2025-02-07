@@ -169,29 +169,32 @@ def wild_battle(request):
     if area not in consts.WILD[map]:
         return JsonResponse({"status": "false", "message": "{} not recognized as a valid area".format(area)}, status=500)
 
-    wild_choices = consts.WILD[map][area]["pokemon"]
-    weights = consts.WILD[map][area]["weights"]
+    try:
+        wild_choices = consts.WILD[map][area]["pokemon"]
+        weights = consts.WILD[map][area]["weights"]
 
-    # Check if swarming, append swarm to list
-    swarm_pokemon, route = swarm(datetime.now())
-    if route == map:
-        wild_choices.append(consts.POKEMON[swarm_pokemon]["name"])
-        # 1/5a chance of swarm appearing
-        weights.append(sum(weights) / 4)
+        # Check if swarming, append swarm to list
+        swarm_pokemon, route = swarm(datetime.now())
+        if route == map:
+            wild_choices.append(consts.POKEMON[swarm_pokemon]["name"])
+            # 1/5a chance of swarm appearing
+            weights.append(sum(weights) / 4)
 
-    wild_pokemon = random.choices(wild_choices, weights)
-    dex_number = consts.DEX_LOOKUP[wild_pokemon[0]]
-    bg = consts.WILD[map][area].get("bg", "water" if area == "water" else "grass")
+        wild_pokemon = random.choices(wild_choices, weights)
+        dex_number = consts.DEX_LOOKUP[wild_pokemon[0]]
+        bg = consts.WILD[map][area].get("bg", "water" if area == "water" else "grass")
 
-    # Roll for level, sex, and shininess
-    level = random.randrange(consts.WILD[map]["levels"][0], consts.WILD[map]["levels"][1])
-    shiny = random.random() < 0.001
-    percentage_male = consts.POKEMON[dex_number]["percentage_male"]
-    sex = "g" if percentage_male < 0 else "m" if random.random() * 100 < percentage_male else "f"
+        # Roll for level, sex, and shininess
+        level = random.randrange(consts.WILD[map]["levels"][0], consts.WILD[map]["levels"][1])
+        shiny = random.random() < 0.001
+        percentage_male = consts.POKEMON[dex_number]["percentage_male"]
+        sex = "g" if percentage_male < 0 else "m" if random.random() * 100 < percentage_male else "f"
 
-    # If there is an existing wild opponent, delete it
-    user.wild_opponent = {"dex": dex_number, "level": level, "shiny": shiny, "sex": sex, "bg": bg}
-    user.save()
+        # If there is an existing wild opponent, delete it
+        user.wild_opponent = {"dex": dex_number, "level": level, "shiny": shiny, "sex": sex, "bg": bg}
+        user.save()
+    except Exception as e:
+        JsonResponse({"status": "false", "message": str(e)})
 
     # Send the Pokemon species, level, and shininess
     pokeinfo = {
