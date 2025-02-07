@@ -30,7 +30,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ["*", "https://harvold-alpha-c1e3d777167f.herokuapp.com"]
+ALLOWED_HOSTS = ["*", "https://harvold-alpha-c1e3d777167f.herokuapp.com", "https://harvold-fa155374a9eb.herokuapp.com/"]
 
 
 # Application definition
@@ -188,6 +188,6 @@ else:
         }
     }
 
-CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-c1e3d777167f.herokuapp.com"]
+CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-c1e3d777167f.herokuapp.com", "https://harvold-fa155374a9eb.herokuapp.com/"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
