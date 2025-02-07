@@ -90,7 +90,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'harvoldsite.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 if DEBUG:
@@ -102,17 +101,13 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
+        "default": {
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ["DB_NAME"],
             'USER': os.environ["DB_USER"],
             'PASSWORD': os.environ["DB_PW"],
             'HOST': os.environ["DB_HOST"],
-            'PORT': os.environ["DB_PORT"],
-            "OPTIONS": {
-                "charset": "utf8mb4",
-                "init_command": "SET sql_mode='STRICT_TRANS_TABLES'"
-            }
+            'PORT': os.environ["DB_PORT"]
         }
     }
 

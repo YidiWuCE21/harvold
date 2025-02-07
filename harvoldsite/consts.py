@@ -319,9 +319,9 @@ CITIES = {
 }
 
 MAP_REQS = {
-    "surf": ["route_16", "route_17", "snorlax_island"],
-    "flash": ["drilbur_cave_1f", "drilbur_cave_2f"],
-    "cut": ["vitur_forest"],
+    "surf": ["route_16", "route_17", "snorlax_island", "route_25", "sky_tower_entrance"],
+    "flash": ["drilbur_cave_1f", "drilbur_cave_2f", "abandoned_mineshaft_1f", "oshi_tunnel", "dragons_den_1f"],
+    "cut": ["vitur_forest", "blackwood", "ancient_forest"],
     "rocksmash": [],
     "dive": []
 }

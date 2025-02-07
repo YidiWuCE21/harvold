@@ -10,7 +10,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.RemoveField(
+            model_name='profile',
+            name='wild_opponent',
+        ),
+        migrations.AddField(
             model_name='profile',
             name='wild_opponent',
             field=models.JSONField(blank=True, default=None, null=True),
