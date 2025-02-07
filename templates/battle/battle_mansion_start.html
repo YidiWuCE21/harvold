@@ -1,0 +1,34 @@
+{% extends 'base_layout.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="content-box content-text" style="margin-left:25;margin-right:25px;">
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <img src="{% get_static_prefix %}{{ asset_paths.misc }}\mansion.png">
+    <br>
+    <br>
+    <h5>Battle Mansion</h5>
+    <p>Welcome to the Battle Mansion!</p>
+    <br>
+    <p>Battle Mansion is a repeatable challenge. You must fight through a gauntlet of 5 floors with 3 trainers each, acquiring rewards at the end of each floor. Later floors have better rewards, but also stronger trainers. Non-fainted Pokémon will recover a bit of HP at the end of each floor.</p>
+    <br>
+    <p>Your team can have up to 3 Pokémon. Your Pokémon may hold items, but you cannot use items in between battles or visit the Pokécenter. You will also be restricted from other map travel and battles. If your entire team is knocked out, you lose. You can also cash out at any time to end the run, although you will have to wait a day to try again.</p>
+    <br>
+    <form method="POST" action="{% url 'battle_mansion' %}">
+        {% csrf_token %}
+        <button class="button-2 button-forward" {% if not eligible %}disabled{% endif %}>Start Challenge</button>
+    </form>
+</div>
+
+{% endblock %}

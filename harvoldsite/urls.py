@@ -30,7 +30,10 @@ urlpatterns = [
     path("gyms", battle_views.gyms, name="gyms"),
     path("ev_dojo", battle_views.ev_dojo, name="ev_dojo"),
     path("battle", battle_views.battle, name="battle"),
+    path("gauntlet", battle_views.gauntlet, name="gauntlet"),
     path("battle_create", battle_views.battle_create, name="battle_create"),
+    path("battle_mansion_start", battle_views.battle_mansion_start, name="battle_mansion_start"),
+    path("battle_mansion", battle_views.battle_mansion_page, name="battle_mansion"),
     #path('', include('users.urls'))
     # AJAX/fetch requests
     path("map_data/", map_views.map_data, name="map_data"),

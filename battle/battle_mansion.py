@@ -5,8 +5,8 @@ import json
 
 from harvoldsite import consts
 from pokemon.models import create_pokemon
-from trainer_names import gen_name
-from models import create_gauntlet, create_battle
+from .trainer_names import gen_name
+from .models import create_gauntlet, create_battle
 
 class MansionTrainer():
     floor_ev = {
@@ -65,16 +65,16 @@ class MansionFloor():
             raise ValueError("Floor must be between 1 and 5")
         # Generate 3 random trainers
         floor_pool = cls.trainers_pool[floor]
-        floor_trainers = [MansionTrainer(trainer, random.sample(floor_pool[trainer], 3), floor) for trainer in random.sample(floor_pool, 3)]
+        floor_trainers = [MansionTrainer(trainer, random.sample(floor_pool[trainer], 3), floor) for trainer in random.sample(floor_pool.keys(), 3)]
         return cls(*floor_trainers)
 
     def get_trainer(self, trainer_no):
         if trainer_no == 1:
             return self.trainer_1
         if trainer_no == 2:
-            return self.trainer_1
+            return self.trainer_2
         if trainer_no == 3:
-            return self.trainer_1
+            return self.trainer_3
 
     @classmethod
     def from_json(cls, json_obj):
@@ -117,20 +117,27 @@ class BattleMansion():
             "tm099" # dazzling gleam
         ]
     }
+    prize_dist = {
+        1: "t1",
+        2: "t2",
+        3: "t2",
+        4: "t3",
+        5: "completion"
+    }
     prize_qty = {
         "t1": (1, 3),
         "t2": (5, 7),
         "t3": (1, 1),
-        "t4": (1, 1)
+        "completion": (1, 1)
     }
-    def __init__(self, floor_1=None, floor_2=None, floor_3=None, floor_4=None, floor_5=None):
+    def __init__(self, floor_1=None, floor_2=None, floor_3=None, floor_4=None, floor_5=None, invent=None, progress=None):
         self.floor_1 = floor_1
         self.floor_2 = floor_2
         self.floor_3 = floor_3
         self.floor_4 = floor_4
         self.floor_5 = floor_5
-        self.invent = {}
-        self.progress = {}
+        self.invent = invent
+        self.progress = progress
         self.challenger = None
 
     @classmethod
@@ -139,6 +146,7 @@ class BattleMansion():
         invent = {}
         progress = {"floor": 1, "trainer": 1, "prizes": {}}
         return cls(*floors, invent, progress)
+
 
     def set_challenger(self, player_id):
         if self.challenger is None:
@@ -150,13 +158,13 @@ class BattleMansion():
         if floor_no == 1:
             return self.floor_1
         if floor_no == 2:
-            return self.floor_1
+            return self.floor_2
         if floor_no == 3:
-            return self.floor_1
+            return self.floor_3
         if floor_no == 4:
-            return self.floor_1
+            return self.floor_4
         if floor_no == 5:
-            return self.floor_1
+            return self.floor_5
 
     @classmethod
     def from_json(cls, json_obj):
@@ -168,6 +176,7 @@ class BattleMansion():
         mansion_obj.floor_5 = MansionFloor.from_json(json_obj["floor_5"])
         mansion_obj.invent = json_obj["invent"]
         mansion_obj.progress = json_obj["progress"]
+        mansion_obj.challenger = json_obj["challenger"]
         return mansion_obj
 
 
@@ -178,7 +187,9 @@ class BattleMansion():
             "floor_3": self.floor_3.jsonify(),
             "floor_4": self.floor_4.jsonify(),
             "floor_5": self.floor_5.jsonify(),
-            "invent": self.invent
+            "invent": self.invent,
+            "progress": self.progress,
+            "challenger": self.challenger
         }
 
 
@@ -189,15 +200,7 @@ class BattleMansion():
             self.invent[item] = quantity
 
 
-    def consume_item(self, item, quantity):
-        if item in self.invent:
-            if self.invent[item] >= quantity:
-                self.invent[item] -= quantity
-                return True
-        return False
-
-
-    def fight_trainer(self):
+    def get_current_trainer(self):
         """
         Returns the data of the current trainer
         """
@@ -208,12 +211,20 @@ class BattleMansion():
         if not 1 <= floor_no <= 5:
             return None
         mansion_floor = self.get_floor(floor_no)
-        trainer_obj = mansion_floor.get_trainer(trainer_no)
+        return mansion_floor.get_trainer(trainer_no)
+
+
+    def fight_trainer(self, team, gauntlet):
+        """
+        Creates a battle with the current trainer
+        """
+        floor_no = self.progress["floor"]
+        trainer_obj = self.get_current_trainer()
         opp_info = {
             "name": trainer_obj.name,
-            "team": trainer_obj.team
+            "party": trainer_obj.get_team()
         }
-        battle = create_battle(self.challenger, "mansion_trainer_{}_{}".format(floor_no, trainer_no), opp_override=opp_info)
+        battle = create_battle(self.challenger, trainer_obj.sprite, "npc", bg="mansion_floor_{}".format(floor_no), opp_override=opp_info, team_override=team, no_items=True, gauntlet=gauntlet)
         return battle
 
 
@@ -234,15 +245,24 @@ class BattleMansion():
             if floor_no == 6:
                 return "complete"
             else:
+                # Heal non-fainted Pokemon
                 return "new_floor"
         self.progress["trainer"] = trainer_no
         return "continue"
 
 
-    def generate_prize(self, floor):
+    def generate_prize(self, floor_no):
         """
         Generate a random prize based on the floor
         """
+        prize_tier = self.prize_dist[floor_no]
+        prize = random.choice(self.bm_prizes[prize_tier])
+        quantity = random.randint(*self.prize_qty[prize_tier])
+        if prize in self.progress["prizes"]:
+            self.progress["prizes"][prize] += quantity
+        else:
+            self.progress["prizes"][prize] = quantity
+        return prize, quantity
 
 
     def cash_out(self):
@@ -253,13 +273,27 @@ class BattleMansion():
         return self.progress.get("prizes", default_prize)
 
 
+def battle_mansion_eligible(player):
+    # Check if player has not already beat BM for the day
+    if player.has_beat_trainer("battle_mansion"):
+        return False, "You have already used up your battle mansion runs for today"
+    # Check if player has only 3 team members
+    if player.slot_4 is not None:
+        return False, "You can only bring a team of 3!"
+    return True, ""
+
+
+
 def start_battle_mansion(player):
     # Check if player has completed their daily mansion run
-    if "battle_mansion" in player.trainers_beat:
-        return False, "You have already used up your battle mansion runs for today"
+    eligible, message = battle_mansion_eligible(player)
+    if not eligible:
+        return False, message
     # Attempt to create a battle mansion run
     battle_mansion = BattleMansion.generate()
+    battle_mansion.set_challenger(player.pk)
     battle_mansion_state = battle_mansion.jsonify()
-    success, message = create_gauntlet(player, "mansion", battle_mansion_state)
-    if not success:
+    gauntlet, message = create_gauntlet(player, "mansion", battle_mansion_state)
+    if not gauntlet:
         return False, message
+    return gauntlet, ""

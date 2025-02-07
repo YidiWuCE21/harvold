@@ -21,7 +21,7 @@ def validate_attack(action, player):
     current_pokemon = player.get_current_pokemon()
 
     # Struggle check
-    if action["move"] == "struggle" and current_pokemon.struggling():
+    if current_pokemon.struggling():
         return True
 
     # Generic move check
@@ -88,6 +88,16 @@ def validate_action(action, player, battle_state):
     return False
 
 
+def need_to_process(battle, action):
+    if battle is None:
+        return "You are not in a battle!"
+    if battle.status != "ongoing":
+        return "The battle is finished!"
+    # Exit if wrong turn
+    if action["current_turn"] != battle.current_turn:
+        return "The current turn is {}, you submitted a move for {}.".format(battle.current_turn, action["current_turn"])
+
+
 
 @database_sync_to_async
 def battle_processor(text_data, sender, first_turn=False):
@@ -96,17 +106,13 @@ def battle_processor(text_data, sender, first_turn=False):
     output_log = None
     # Get a lock on the battle row
     with transaction.atomic():
-
         # Get the player's battle
         player = sender.profile
         battle = player.current_battle
-        if battle is None:
-            return {"self": {"message": "You are not in a battle!"}}
-        if battle.status != "ongoing":
-            return {"self": {"message": "The battle is finished!"}}
-        # Exit if wrong turn
-        if action["current_turn"] != battle.current_turn:
-            return {"self": {"message": "The current turn is {}, you submitted a move for {}.".format(battle.current_turn, action["current_turn"])}}
+        ret_message = need_to_process(battle, action)
+        if ret_message is not None:
+            return {"self": {"nessage": ret_message}}
+
         # Acquire lock on the battle
         battle = models.Battle.objects.select_for_update().get(pk=battle.pk)
         p1 = battle.player_1
@@ -238,12 +244,14 @@ def battle_processor(text_data, sender, first_turn=False):
                 player_1 = battle.player_1
                 player_1.current_battle = None
                 # Update bag
-                player_1.bag = battle_state.player_1.inventory
+                if battle.save_inventory:
+                    player_1.bag = battle_state.player_1.inventory
                 player_2 = None
                 if battle.type == "live":
                     player_2 = battle.player_2
                     player_2.current_battle = None
-                    player_2.bag = battle_state.player_2.inventory
+                    if battle.save_inventory:
+                        player_2.bag = battle_state.player_2.inventory
                 # Caught a wild Pokemon
                 if battle_state.outcome == "caught" and battle.type == "wild":
                     prompt.append("caught")
@@ -262,14 +270,15 @@ def battle_processor(text_data, sender, first_turn=False):
                         with open(trainer_path, encoding="utf-8") as trainer_file:
                             trainer_json = json.load(trainer_file)
                     except:
-                        pass
+                        trainer_json = {}
                     # Not a map trainer
                     if "map" not in trainer_json:
                         if "map" in prompt:
                             prompt.remove("map")
                     # Player victory
                     if battle_state.outcome == "p1_victory":
-                        output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
+                        if trainer_json:
+                            output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
                     if battle.battle_prize is not None and battle_state.outcome == "p1_victory":
                         # Payout
                         if "base_payout" in battle.battle_prize:
@@ -314,6 +323,13 @@ def battle_processor(text_data, sender, first_turn=False):
                 if player_2 is not None:
                     player_2.save()
 
+                # Gauntlet case; return to gauntlet page
+                if battle.gauntlet is not None:
+                    prompt = [battle.gauntlet.gauntlet_type]
+                    battle.send_state_to_gauntlet()
+                    battle.gauntlet.current_battle = "victory" if battle_state.outcome == "p1_victory" else "defeat"
+                    battle.gauntlet.save()
+
         # Send battle state update and output log to room group
 
         # Update battle in DB
@@ -329,9 +345,15 @@ def battle_processor(text_data, sender, first_turn=False):
             if battle_state.player_2.get_current_pokemon().is_alive():
                 battle.player_2_choice = {"action": "idle"}
         battle.save()
-        # TODO - Update items in DB
 
-        # TODO - Update Pokemon status in DB
+        # If needed, update Pokemon status
+        save_team(battle, battle_state)
+
+        return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt, "output": output_log, "turn": battle.current_turn, "send_update": send_update}}
+
+
+def save_team(battle, battle_state):
+    if battle.save_team:
         for i, pkmn in enumerate(battle.player_1.get_party()):
             # When catching pokemon, break here so we don't try to index into battle with new pokemon in party
             if i == len(battle_state.player_1.party):
@@ -344,8 +366,6 @@ def battle_processor(text_data, sender, first_turn=False):
                 pkmn_state = battle_state.player_2.party[i].jsonify()
                 if pkmn_state["id"] == pkmn.pk:
                     pkmn.set_battle_info(pkmn_state)
-
-        return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt, "output": output_log, "turn": battle.current_turn, "send_update": send_update}}
 
 
 class ChatConsumer(AsyncWebsocketConsumer):

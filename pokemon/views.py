@@ -112,6 +112,7 @@ def pokemon(request):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 def pokecenter(request):
     swarm_pokemon, route = swarm(datetime.now())
     html_render_variables = {
@@ -125,7 +126,7 @@ def pokecenter(request):
 @login_required
 def pokecenter_heal(request):
     # Check if user is eligible for heal
-    if request.user.profile.state == "idle" and request.user.profile.current_battle is None:
+    if request.user.profile.current_gauntlet is None and request.user.profile.current_battle is None:
         party = request.user.profile.get_party()
         for pkmn in party:
             pkmn.full_heal()

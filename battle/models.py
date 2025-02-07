@@ -25,7 +25,29 @@ SERIES_TYPES = [
 ]
 
 
-def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=None):
+def players_battle_eligible(p1_id, p2_id, gauntlet):
+    """
+    Get the players, check if they are eligible for the battle, and return their Profile objects
+    """
+    player_1 = Profile.objects.get(pk=p1_id)
+    if player_1.current_battle is not None:
+        raise ValueError("Player 1 is already in battle!")
+    if player_1.current_gauntlet is not None and gauntlet is None:
+        raise ValueError("Player 1 is in a gauntlet!")
+
+    # Player 2 is None default case
+    player_2 = None
+    if type == "live":
+        player_2 = Profile.objects.get(pk=p2_id)
+        if player_2.current_battle is not None:
+            raise ValueError("Player 1 is already in battle!")
+        if player_2.current_gauntlet is not None and gauntlet is None:
+            raise ValueError("Player 1 is in a gauntlet!")
+
+    return player_1, player_2
+
+
+def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_override=None, no_items=False, gauntlet=None, save_team=True):
     """
     Player 2 should either be a player ID, a Pokemon ID, or an NPC ID (stored in data file)
 
@@ -44,20 +66,14 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
         "gravity": None,
     }
 
-    # Attempt to finder player 1 and team data
-    player_1 = Profile.objects.get(pk=p1_id)
-    if player_1.current_battle is not None:
-        raise ValueError("Player 1 is already in battle!")
-    if player_1.current_gauntlet is not None:
-        raise ValueError("Player 1 is in a gauntlet!")
+    player_1, player_2 = players_battle_eligible(p1_id, p2_id, gauntlet)
     party_1 = player_1.get_party()
-    battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1]
+    battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1] if team_override is None else team_override
     battle_state["player_1"]["name"] = player_1.user.username
     battle_state["player_1"]["inventory"] = copy.deepcopy(player_1.bag)
     battle_state["player_2"]["inventory"] = None
 
     # Attempt to find opponent and team data
-    player_2 = None
     npc_opponent = None
     wild_opponent = None
     reward = None
@@ -69,6 +85,7 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
         battle_state["escapes"] = 0
         battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
     elif type == "npc":
+        npc_opponent = p2_id
         if opp_override:
             battle_state["player_2"]["party"] = opp_override["party"]
             battle_state["player_2"]["name"] = opp_override["name"]
@@ -80,7 +97,6 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
             with open(trainer_path) as trainer_file:
                 trainer_json = json.load(trainer_file)
                 battle_state["player_2"]["party"] = trainer_json["team"]
-                npc_opponent = p2_id
                 battle_state["player_2"]["name"] = trainer_json["name"]
                 reward = trainer_json["reward"]
                 # If the trainer requires the user be on a map, perform check now
@@ -96,7 +112,7 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
         party_2 = player_2.get_party()
         battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
         battle_state["player_2"]["name"] = player_2.user.username
-        battle_state["player_1"]["inventory"] = copy.deepcopy(player_2.bag)
+        battle_state["player_2"]["inventory"] = copy.deepcopy(player_2.bag)
     else:
         raise ValueError("Type of battle must be 'wild', 'npc', or 'live'")
 
@@ -113,11 +129,19 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
         battle_state[player]["current_pokemon"] = current
         battle_state[player]["participants"] = [pkmn for pkmn in range(len(battle_state[player]["party"])) if pkmn == current or battle_state[player]["party"][pkmn]["held_item"] == "exp-share"]
 
+
+    # Wipe inventories
+    if no_items:
+        battle_state["player_1"]["inventory"] = {"medicine": {}, "berries": {}}
+        battle_state["player_2"]["inventory"] = {"medicine": {}, "berries": {}}
+
     # Pre-move abilities like intimidate, sand stream, etc.
     pre_state = BattleState(battle_state)
     pre_state.process_start()
     pre_output = pre_state.output
     pre_state.output = None
+
+    save_inventory = not no_items
 
     # DB opereations
     battle = Battle(
@@ -130,7 +154,10 @@ def create_battle(p1_id, p2_id, type, ai="default", bg="default", opp_override=N
         battle_state=pre_state.jsonify(),
         battle_prize=reward,
         output_log=pre_output,
-        background=bg
+        background=bg,
+        gauntlet=gauntlet,
+        save_inventory=save_inventory,
+        save_team=save_team
     )
 
     # Check that parties are not knocked out
@@ -205,6 +232,19 @@ class Battle(models.Model):
     # Background
     background = models.CharField(max_length=20, blank=True, null=True, default=None)
 
+    # Flags to sasve
+    save_team = models.BooleanField(default=True)
+    save_inventory = models.BooleanField(default=True)
+
+    # Gauntlet if applicable
+    gauntlet = models.ForeignKey(
+        "battle.Gauntlet",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        default=None
+    )
+
 
     def get_battle_state(self):
         battle_state = self.battle_state
@@ -232,6 +272,12 @@ class Battle(models.Model):
             return self.player_1
         return None
 
+
+    def send_state_to_gauntlet(self):
+        if self.gauntlet is not None:
+            current_team_state = self.battle_state["player_1"]["party"]
+            self.gauntlet.team_state = current_team_state
+
 class Gauntlet(models.Model):
     # Generic model to track any event that consists of a series of battles; bounties, Battle Mansion, etc
     gauntlet_type = models.CharField(max_length=10, choices=SERIES_TYPES)
@@ -248,14 +294,32 @@ class Gauntlet(models.Model):
     team_state = models.JSONField(blank=True, null=True, default=None)
     # State to track all info about series; include stuff like inventory, buffs/debuffs, trainers to fight, progress
     gauntlet_state = models.JSONField(blank=True, null=True, default=None)
+    # Var to track the state of the current battle; can be pending, victory, or defeat
+    current_battle = models.CharField(max_length=10, default="pending")
+
+
+    def heal(self, percent, revive_percent, status=False):
+        team = []
+        for pokemon in self.team_state:
+            if pokemon["current_hp"] == 0:
+                pokemon["current_hp"] = int(revive_percent * pokemon["stats"]["hp"])
+            else:
+                boosted_hp = max(
+                    int(revive_percent * pokemon["stats"]["hp"]),
+                    int(pokemon["current_hp"] * (1 + percent)))
+                pokemon["current_hp"] = min(boosted_hp, pokemon["stats"]["hp"])
+            if status:
+                pokemon["status"] = ""
+            team.append(pokemon)
+        self.team_state = team
 
 
 def create_gauntlet(player, gauntlet_type, gauntlet_state, team_state=None, mutable=False, heal=False):
-    if not consts.user_not_in_battle(player):
+    if player.current_battle is not None or player.current_gauntlet is not None:
         return False, "User is already in a battle or gauntlet."
 
     if team_state is None:
-        team_state = "blah"
+        team_state = [pkmn.get_battle_info() for pkmn in player.get_party()]
     new_gauntlet = Gauntlet(
         gauntlet_type=gauntlet_type,
         status="ongoing",
@@ -270,6 +334,6 @@ def create_gauntlet(player, gauntlet_type, gauntlet_state, team_state=None, muta
             new_gauntlet.save()
             player.current_gauntlet = new_gauntlet
             player.save()
-            return True, ""
-        except:
+            return new_gauntlet, ""
+        except BaseException as e:
             return False, "Failed to create gauntlet"

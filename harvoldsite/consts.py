@@ -59,6 +59,7 @@ ASSET_PATHS = {
     "badges": os.path.join("assets", "badges"),
     "misc": os.path.join("assets", "misc"),
     "scene": os.path.join("assets", "scene"),
+    "ui_scene": os.path.join("assets", "ui_scene"),
     "status": os.path.join("assets", "status"),
     "demo": os.path.join("assets", "demo"),
     "menu": os.path.join("assets", "menu")
@@ -513,6 +514,10 @@ TYPE_EFFECTIVENESS = {
 def user_not_in_battle(user):
     if user.profile.current_battle is not None:
         return False
+    return True
+
+
+def user_not_in_gauntlet(user):
     if user.profile.current_gauntlet is not None:
         return False
     return True

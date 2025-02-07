@@ -22,7 +22,7 @@
         <button class="dropbtn">Battle</button>
         <div class="dropdown-content">
             <a href="{% url 'gyms' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\gym.png">Gyms</a>
-            <a href="#" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Battle Mansion</a>
+            <a href="{% url 'battle_mansion_start' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Battle Mansion</a>
             <a href="{% url 'ev_dojo' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\dojo.png">EV Dojo</a>
         </div>
     </div>

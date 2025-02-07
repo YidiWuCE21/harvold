@@ -122,6 +122,7 @@ def bag(request):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 def pokemart(request):
     mart_data = {}
     message = None
@@ -257,6 +258,7 @@ def give_held_item_ajax(request):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 def read_message_ajax(request):
     message_id = request.GET.get("msg")
     message = Messages.objects.get(pk=message_id)

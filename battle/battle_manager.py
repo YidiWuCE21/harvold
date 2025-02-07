@@ -112,7 +112,8 @@ class BattleState:
         if self.player_2.get_current_pokemon().is_alive():
             self.status_effect(self.player_2)
         # Admin stuff; clear defenses
-        self.player_1.defense_active = []
+        self.player_1.end_of_turn()
+        self.player_2.end_of_turn()
 
         # Update outcome if one or both teams have no more useable pokemon
         p1_alive = self.player_1.has_pokemon()
@@ -245,11 +246,13 @@ class BattleState:
             if user.ability != "Magic Guard" and random.random() < 0.25:
                 self.output.append({"text": "{} is paralyzed! It cannot move!".format(user.name), "anim": ["{}_paralyze".format(player.player)]})
                 return
+        # Struggle check
+        if user.struggling():
+            move = "struggle"
         # Locked move check; outrage, choice items, taunt, etc.
         move_data = consts.MOVES[move]
         if player.locked_moves:
             print()
-        # Struggle check
         # Subtract PP - committed
         for i, known_move in enumerate(user.moves):
             if known_move["move"] == move:
@@ -320,7 +323,7 @@ class BattleState:
                         self.apply_damage(int(damage_dealt * -move_data["drain"] / 100), player, False, override_text=effect_text)
                     # Apply struggle
                     if move_data["healing"] != 0:
-                        self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
+                        self.apply_damage(int(user.hp * -move_data["healing"] / 100), player, False)
                 # Break if fainted
                 if target.current_hp == 0:
                     break
@@ -336,7 +339,7 @@ class BattleState:
         else:
             self.apply_boosts(player, move)
             if move_data["healing"] != 0:
-                self.apply_damage(int(user.hp * -move_data["healing"]), player, False)
+                self.apply_damage(int(user.hp * -move_data["healing"] / 100), player, False)
         # Custom effects
         if move in custom_moves.SUPPORTED_MOVES:
             custom_moves.SUPPORTED_MOVES[move](self, player)
@@ -908,7 +911,7 @@ class PokemonState:
 
 
     def struggling(self):
-        return not any([self.has_pp(move) for move in self.moves])
+        return not any([self.has_pp(move["move"]) for move in self.moves])
 
 
     def update_stats(self, new_stats):

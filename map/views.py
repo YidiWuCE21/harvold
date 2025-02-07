@@ -34,6 +34,7 @@ def helper_check_map_access(map, user, msg=False):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 @csrf_exempt
 def update_pos(request):
     """
@@ -58,6 +59,7 @@ def update_pos(request):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 def map(request):
     """
     Function to open the map. Defaults to current map, but also checks session for new map in case was sent here from world map
@@ -108,6 +110,7 @@ def map(request):
 
 @login_required
 @user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
 def world_map(request):
     """
     Function to open the world map. Can also be used to redirect to a specific map via session info

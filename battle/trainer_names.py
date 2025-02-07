@@ -96,6 +96,6 @@ def gen_name(trainer, name=None):
     if trainer in mapping:
         prefix = mapping[trainer][0]
         if name is None:
-            name = random.choice(names[mapping][trainer][1])
+            name = random.choice(names[mapping[trainer][1]])
         return "{} {}".format(prefix, name)
     return trainer.replace("_", " ").capitalize()
