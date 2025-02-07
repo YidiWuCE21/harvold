@@ -10,4 +10,4 @@ trade==1.1.4
 mysqlclient==2.2.4
 gunicorn==23.0.0
 redis==5.0.8
-psycopg==3.2.4
+psycopg==3.2.4U
