@@ -39,7 +39,7 @@ def gyms(request):
             if elite:
                 prev_gym_done = gym_badges[prev_gym] == "gold"
             else:
-                prev_gym_done = gym_badges[prev_gym] == "silver"
+                prev_gym_done = gym_badges[prev_gym] is not None
         return map_visited and prev_gym_done
 
 

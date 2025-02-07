@@ -904,6 +904,8 @@ class PokemonState:
 
 
     def has_pp(self, selected_move):
+        if selected_move is None:
+            return False
         for move in self.moves:
             if move["move"] == selected_move:
                 return move["pp"] > 0

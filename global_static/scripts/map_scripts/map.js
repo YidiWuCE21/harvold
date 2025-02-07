@@ -9,18 +9,22 @@ animate();
 let lastKey = '';
 window.addEventListener('keydown', (e) => {
     switch (e.key) {
+        case 'ArrowUp':
         case 'w':
             keys.w.pressed = true;
             lastKey = 'w';
             break
+        case 'ArrowLeft':
         case 'a':
             keys.a.pressed = true;
             lastKey = 'a';
             break
+        case 'ArrowDown':
         case 's':
             keys.s.pressed = true;
             lastKey = 's';
             break
+        case 'ArrowRight':
         case 'd':
             keys.d.pressed = true;
             lastKey = 'd';
@@ -36,15 +40,19 @@ window.addEventListener('keydown', (e) => {
 
 window.addEventListener('keyup', (e) => {
     switch (e.key) {
+        case 'ArrowUp':
         case 'w':
             keys.w.pressed = false;
             break
+        case 'ArrowLeft':
         case 'a':
             keys.a.pressed = false;
             break
+        case 'ArrowDown':
         case 's':
             keys.s.pressed = false;
             break
+        case 'ArrowRight':
         case 'd':
             keys.d.pressed = false;
             break

@@ -98,258 +98,293 @@ def need_to_process(battle, action):
         return "The current turn is {}, you submitted a move for {}.".format(battle.current_turn, action["current_turn"])
 
 
+def get_battle_state(battle, player):
+    p1 = battle.player_1
+    is_p1 = p1 == player
+    battle_state = BattleState(battle.battle_state)
+    player_state = battle_state.player_1 if is_p1 else battle_state.player_2
+    return battle_state, player_state, is_p1
+
+def process_first_turn(battle, battle_state):
+    battle_state.process_start()
+    battle.battle_state = battle_state.jsonify()
+    battle.save()
+    return {
+        "group": {
+            "type": "chat.message",
+            "state": battle_state.jsonify(),
+            "prompt": None,
+            "output": None,
+            "turn": battle.current_turn,
+            "send_update": True
+        }
+    }
+
+
+def has_player_already_moved(is_p1, battle):
+    return (is_p1 and battle.player_1_choice is not None) or (not is_p1 and battle.player_2_hoice is not None)
+
+
+def is_valid_action(battle_state, player_state, action):
+    if battle_state.requires_switch():
+        # Player is fainted, must either switch or surrender
+        if not player_state.get_current_pokemon().is_alive() and action["action"] not in ["switch", "surrender"]:
+            return False
+        # If battle requires switch and user is not fainted, cannot move until opponent switches
+        if player_state.get_current_pokemon().is_alive():
+            return False
+    return validate_action(action, player_state, battle_state)
+
+
+def store_player_action(is_p1, battle, action):
+    if is_p1:
+        battle.player_1_choice = action
+    else:
+        battle.player_2_choice = action
+
+
+def call_process_battle(battle, battle_state):
+    # Switch case
+    if battle_state.requires_switch():
+        if battle.player_1_choice["action"] != "idle":
+            if battle.player_1_choice["action"] == "switch":
+                battle_state.switch(battle_state.player_1, battle.player_1_choice["target"], {})
+            else:
+                battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
+        if battle.player_2_choice["action"] != "idle":
+            if battle.player_1_choice["action"] == "switch":
+                battle_state.switch(battle_state.player_2, battle.player_2_choice["target"], {})
+            else:
+                battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
+    # Case for standard turn
+    else:
+        battle_state.output.append({"turn": "Turn {}".format(battle.current_turn)})
+        battle.current_turn += 1
+        if battle.move_history is None:
+            battle.move_history = []
+        battle.move_history.append({"player_1": battle.player_1_choice, "player_2": battle.player_2_choice})
+        battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
+
+
+def handle_experience_gain(battle_state, battle, output_log):
+    """
+    Handle all experience gain functionality
+    """
+    if battle_state.experience_gain != 0 and battle_state.type != "live":
+        for i, pkmn in enumerate(battle.player_1.get_party()):
+            if i in battle_state.player_1.participants:
+                # Lucky egg multiplier
+                egg_multiplier = 1.5 if pkmn.held_item == "lucky-egg" else 1
+                true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants) * egg_multiplier)
+
+                if not battle_state.player_1.party[i].is_alive():
+                    continue
+
+                output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
+                pkmn.happiness = min(255, pkmn.happiness + 1)
+                pkmn.add_evs(battle_state.ev_yield)
+
+                if pkmn.add_xp(true_exp, recalculate=True):
+                    anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
+                    output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
+                    # Get the new stats
+                    battle_state.player_1.party[i].update_stats(pkmn.get_battle_info()["stats"])
+                    battle_state.player_1.party[i].level = pkmn.level
+
+        battle_state.experience_gain = 0
+        battle_state.ev_yield = []
+        battle_state.player_1.participants = [pkmn for pkmn in range(len(battle_state.player_1.party)) if pkmn == battle_state.player_1.current_pokemon or battle_state.player_1.party[pkmn].held_item == "exp-share"]
+
+
+def opponent_switch(battle_state, battle, output_log):
+    if battle.type == "npc" and battle_state.outcome is None and not battle_state.player_2.get_current_pokemon().is_alive():
+        battle_state.switch(battle_state.player_2, battle_state.player_2.current_pokemon + 1, {})
+        output_log += battle_state.output
+        battle_state.output = []
+
+
+def handle_outcome(battle_state, battle, output_log, is_p1):
+    # Generic info
+    prompt = ["pokecenter", "map"]
+    battle.status = battle_state.outcome
+    battle.battle_end = datetime.datetime.now()
+    player_1, player_2 = battle.player_1, None
+    player_1.current_battle = None
+
+    if battle.save_inventory:
+        player_1.bag = battle_state.player_1.inventory
+
+    if battle.type == "live":
+        player_2 = battle.player_2
+        player_2.current_battle = None
+        if battle.save_inventory:
+            player_2.bag = battle_state.player_2.inventory
+
+    # Caught a wild Pokemon
+    if battle_state.outcome == "caught" and battle.type == "wild":
+        handle_wild_catch(battle_state, battle, prompt, player_1)
+
+    if battle.type == "npc":
+        handle_npc_battle(battle_state, battle, output_log, player_1, prompt)
+    # KO loss
+    if (is_p1 and not battle_state.player_1.has_pokemon()) or (
+            not is_p1 and not battle_state.player_2.has_pokemon()):
+        ko_loss(battle_state, output_log, player_1, player_2, is_p1)
+
+    player_1.save()
+    if player_2 is not None:
+        player_2.save()
+
+    # Gauntlet case; return to gauntlet page
+    if battle.gauntlet is not None:
+        prompt = [battle.gauntlet.gauntlet_type]
+        battle.send_state_to_gauntlet()
+        battle.gauntlet.current_battle = "victory" if battle_state.outcome == "p1_victory" else "defeat"
+        battle.gauntlet.save()
+    return prompt
+
+
+def handle_wild_catch(battle_state, battle, prompt, player_1):
+    prompt.append("caught")
+    battle.wild_opponent.status = battle_state.player_2.get_current_pokemon().status
+    battle.wild_opponent.current_hp = battle_state.player_2.get_current_pokemon().current_hp
+    battle.wild_opponent.assign_trainer(battle.player_1)
+    battle.wild_opponent.save()
+    player_1.add_to_party(battle.wild_opponent)
+    player_1.wild_opponent = None
+
+
+def save_battle_to_db(battle_state, battle, output_log):
+    battle.battle_state = battle_state.jsonify()
+    battle.output_log += output_log
+    battle.player_1_choice = None
+    battle.player_1_choice = None
+    if battle_state.requires_switch():
+        if battle_state.player_1.get_current_pokemon().is_alive():
+            battle.player_1_choice = {"action": "idle"}
+        if battle_state.player_2.get_current_pokemon().is_alive():
+            battle.player_2_choice = {"action": "idle"}
+    battle.save()
+
+
+def handle_npc_battle(battle_state, battle, output_log, player_1, prompt):
+    trainer_json = load_trainer_data(battle.npc_opponent)
+    # Not a map trainer
+
+    if "map" not in trainer_json and "map" in prompt:
+            prompt.remove("map")
+    # Player victory
+    if battle_state.outcome == "p1_victory":
+        handle_player_victory(battle_state, battle, output_log, player_1, trainer_json)
+
+
+def load_trainer_data(npc_opponent):
+    trainer_data = "{}.json".format(npc_opponent)
+    trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+    try:
+        with open(trainer_path, encoding="utf-8") as trainer_file:
+            return json.load(trainer_file)
+    except:
+        return {}
+
+
+def handle_player_victory(battle_state, battle, output_log, player_1, trainer_json):
+    if trainer_json:
+        output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
+    if battle.battle_prize is not None:
+        process_battle_prizes(battle_state, battle, output_log, player_1, trainer_json)
+
+
+def process_battle_prizes(battle_state, battle, output_log, player_1, trainer_json):
+    # Payout
+    if "base_payout" in battle.battle_prize:
+        max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
+        cash_payout = max_level * battle.battle_prize["base_payout"]
+        if player_1.has_beat_trainer(battle.npc_opponent):
+            cash_payout = int(cash_payout / 10)
+        output_log.append(
+            {"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
+        player_1.money += cash_payout
+
+    if "badges" in battle.battle_prize:
+        award_gym_badge(battle.battle_prize["badges"], output_log, player_1, trainer_json)
+
+    player_1.beat_trainer(battle.npc_opponent, skip_save=True)
+
+
+def award_gym_badge(badges, output_log, player_1, trainer_json):
+    for badge, rank in badges.items():
+        if player_1.badges.get(badge) is None:
+            player_1.badges[badge] = rank
+            output_log.append({"colour": "rgb(0, 51, 153)", "text": f"You earned the {badge.capitalize()} Badge!"})
+            send_message(player_1, trainer_json["name"], trainer_json["reward"]["message"],
+                         f"Congratulations on beating the {badge.capitalize()} gym!", None,
+                         trainer_json["sprite"], gift_items={trainer_json["reward"]["first"][0]: 1})
+        elif player_1.badges[badge] == "silver" and rank == "gold":
+            player_1.badges[badge] = "gold"
+            output_log.append({"colour": "rgb(0, 51, 153)", "text": f"You earned the Elite {badge.capitalize()} Badge!"})
+
 
 @database_sync_to_async
 def battle_processor(text_data, sender, first_turn=False):
     action = json.loads(text_data)
     prompt = None
-    output_log = None
+    output_log = []
+    player = sender.profile
+    battle = player.current_battle
+
+    # Get the player's battle
+    ret_message = need_to_process(battle, action)
+    if ret_message:
+        return {"self": {"nessage": ret_message}}
+
     # Get a lock on the battle row
     with transaction.atomic():
-        # Get the player's battle
-        player = sender.profile
-        battle = player.current_battle
-        ret_message = need_to_process(battle, action)
-        if ret_message is not None:
-            return {"self": {"nessage": ret_message}}
-
-        # Acquire lock on the battle
         battle = models.Battle.objects.select_for_update().get(pk=battle.pk)
-        p1 = battle.player_1
-        p2 = battle.player_2
+        battle_state, player_state, is_p1 = get_battle_state(battle, player)
+
         # First turn logic
         if first_turn:
-            battle_state = BattleState(battle.battle_state)
-            is_p1 = p1 == player
-            player_state = battle_state.player_1 if is_p1 else battle_state.player_2
-            battle_state.process_start()
-            battle.battle_state = battle_state.jsonify()
-            battle.save()
-            return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt,
-                              "output": output_log, "turn": battle.current_turn, "send_update": True}}
+            return process_first_turn
 
         if battle.battle_end is not None:
             return {"self": {"message": "Battle is already over!"}}
 
-        # Check that move is actually needed
-        is_p1 = p1 == player
-        p1_moved = battle.player_1_choice
-        p2_moved = battle.player_2_choice
-
-        # Player 1 case
-        if is_p1:
-            if p1_moved is not None:
-                return {"self": {"message": "Move has already been made!"}}
-
-        # Player 2 case
-        else:
-            if p2_moved is not None:
-                return {"self": {"message": "Move has already been made!"}}
+        if has_player_already_moved(is_p1, battle):
+            return {"self": {"message": "Move has already been made!"}}
 
         # Initialize battle manager
-        battle_state = BattleState(battle.battle_state)
-        player_state = battle_state.player_1 if is_p1 else battle_state.player_2
-
-        # Validate move
-        if battle_state.requires_switch():
-            # Case where you need to switch
-            if not player_state.get_current_pokemon().is_alive():
-                if action["action"] != "switch" and action["action"] != "surrender":
-                    return {"self": {"message": "You must switch!"}}
-            # Case where you wait for opponent to switch
-            else:
-                 return {"self": {"message": "You must wait for your opponent!"}}
-        if not validate_action(action, player_state, battle_state):
+        if not is_valid_action(battle_state, player_state, action):
             return {"self": {"message": "Invalid action!"}}
 
-        # Submit move
-        if is_p1:
-            battle.player_1_choice = action
-        else:
-            battle.player_2_choice = action
+        store_player_action(is_p1, battle, action)
+
         # If non-PVP battle, submit other move as well
         if battle.type != "live" and not battle_state.requires_switch():
             battle.player_2_choice = battle_ai.get_move(battle_state, ai="random_move")
-            #battle.player_2_choice = {"action": "attack", "move": battle_state.player_2.get_current_pokemon().moves[0]["move"]}
 
         # Check that moves are complete; if so, start battle processing
-        if battle.player_1_choice is not None and battle.player_2_choice is not None:
-            send_update = True
-            # Case for switch-in after KO
-            if battle_state.requires_switch():
-                if battle.player_1_choice["action"] != "idle":
-                    if battle.player_1_choice["action"] == "switch":
-                        battle_state.switch(battle_state.player_1, battle.player_1_choice["target"], {})
-                    else:
-                        battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
-                if battle.player_2_choice["action"] != "idle":
-                    if battle.player_1_choice["action"] == "switch":
-                        battle_state.switch(battle_state.player_2, battle.player_2_choice["target"], {})
-                    else:
-                        battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
-            # Case for standard turn
-            else:
-                battle_state.output.append({"turn": "Turn {}".format(battle.current_turn)})
-                battle.current_turn += 1
-                if battle.move_history is None:
-                    battle.move_history = []
-                battle.move_history.append({"player_1": battle.player_1_choice, "player_2": battle.player_2_choice})
-                battle_state.process_battle(battle.player_1_choice, battle.player_2_choice)
+        if battle.player_1_choice and battle.player_2_choice:
+            # Call function depending on whether switch-in after KO or standard turn
+            call_process_battle(battle, battle_state)
 
             # Remove the output to send to client
             output_log = battle_state.output
             battle_state.output = []
 
             # Dole out experience for turn if applicable; add prompts for leveling and exp gain
-            if battle_state.experience_gain != 0 and battle_state.type != "live":
-                for i, pkmn in enumerate(battle.player_1.get_party()):
-                    if i in battle_state.player_1.participants:
-                        # Lucky egg multiplier
-                        egg_multiplier = 1.5 if pkmn.held_item == "lucky-egg" else 1
-                        true_exp = int(battle_state.experience_gain / len(battle_state.player_1.participants) * egg_multiplier)
-
-                        if not battle_state.player_1.party[i].is_alive():
-                            break
-                        output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} gained {} experience!".format(pkmn.name, true_exp)})
-                        pkmn.happiness += 1
-                        pkmn.happiness = min(255, pkmn.happiness)
-
-                        # Levelup case
-                        pkmn.add_evs(battle_state.ev_yield)
-                        if pkmn.add_xp(true_exp, recalculate=True):
-                            anim = ["p1_new_sprite", "p1_update_hp_{}".format(battle_state.player_1.party[i].current_hp)] if pkmn == battle_state.player_1.get_current_pokemon() else []
-                            output_log.append({"colour": "rgb(0, 51, 153)", "text": "{} has leveled up to {}!".format(pkmn.name, pkmn.level), "anim": anim})
-                            # Get the new stats
-                            new_stats = pkmn.get_battle_info()["stats"]
-                            battle_state.player_1.party[i].update_stats(new_stats)
-                            battle_state.player_1.party[i].level = pkmn.level
-
-                battle_state.experience_gain = 0
-                battle_state.ev_yield = []
-                # battle_state.player_1.participants = [battle_state.player_1.current_pokemon]
-                battle_state.player_1.participants = [pkmn for pkmn in range(len(battle_state.player_1.party)) if pkmn == battle_state.player_1.current_pokemon or battle_state.player_1.party[pkmn].held_item == "exp-share"]
-
-            # For NPC battles, if enemy pokemon KO, switch
-            if battle.type == "npc" and battle_state.outcome is None and not battle_state.player_2.get_current_pokemon().is_alive():
-                battle_state.switch(battle_state.player_2, battle_state.player_2.current_pokemon + 1, {})
-                output_log += battle_state.output
-                battle_state.output = []
+            handle_experience_gain(battle_state, battle, output_log)
+            opponent_switch(battle_state, battle, output_log)
 
             # Check the battle outcome and process if outcome
             if battle_state.outcome is not None:
-                # Generic info
-                prompt = ["pokecenter"]
-                battle.status = battle_state.outcome
-                battle.battle_end = datetime.datetime.now()
-                player_1 = battle.player_1
-                player_1.current_battle = None
-                # Update bag
-                if battle.save_inventory:
-                    player_1.bag = battle_state.player_1.inventory
-                player_2 = None
-                if battle.type == "live":
-                    player_2 = battle.player_2
-                    player_2.current_battle = None
-                    if battle.save_inventory:
-                        player_2.bag = battle_state.player_2.inventory
-                # Caught a wild Pokemon
-                if battle_state.outcome == "caught" and battle.type == "wild":
-                    prompt.append("caught")
-                    battle.wild_opponent.status = battle_state.player_2.get_current_pokemon().status
-                    battle.wild_opponent.current_hp = battle_state.player_2.get_current_pokemon().current_hp
-                    battle.wild_opponent.assign_trainer(battle.player_1)
-                    battle.wild_opponent.save()
-                    player_1.add_to_party(battle.wild_opponent)
-                    player_1.wild_opponent = None
-                if battle_state.outcome in ["fled_battle", "p1_victory", "p1_surrender", "caught"]:
-                    prompt.append("map")
-                if battle.type == "npc":
-                    trainer_data = "{}.json".format(battle.npc_opponent)
-                    trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
-                    try:
-                        with open(trainer_path, encoding="utf-8") as trainer_file:
-                            trainer_json = json.load(trainer_file)
-                    except:
-                        trainer_json = {}
-                    # Not a map trainer
-                    if "map" not in trainer_json:
-                        if "map" in prompt:
-                            prompt.remove("map")
-                    # Player victory
-                    if battle_state.outcome == "p1_victory":
-                        if trainer_json:
-                            output_log.append({"speaker": trainer_json["name"], "text": trainer_json["lines"]["lose"]})
-                    if battle.battle_prize is not None and battle_state.outcome == "p1_victory":
-                        # Payout
-                        if "base_payout" in battle.battle_prize:
-                            max_level = max([pkmn.level for pkmn in battle_state.player_2.party])
-                            cash_payout = max_level * battle.battle_prize["base_payout"]
-                            # If it's not the first victory of the day, divide by 10
-                            if player_1.has_beat_trainer(battle.npc_opponent):
-                                cash_payout = int(cash_payout / 10)
-                            output_log.append({"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
-                            player_1.money += cash_payout
-                        # Gym badge
-                        if "badges" in battle.battle_prize:
-                            for badge, rank in battle.battle_prize["badges"].items():
-                                if player_1.badges[badge] is None:
-                                    player_1.badges[badge] = rank
-                                    output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the {} Badge!".format(badge.capitalize())})
-                                    # Send prize
-                                    send_message(player_1, trainer_json["name"],
-                                                 trainer_json["reward"]["message"],
-                                                 "Congratulations on beating the {} gym!".format(badge.capitalize()), None, trainer_json["sprite"],
-                                                 gift_items={trainer_json["reward"]["first"][0]: 1})
-                                elif player_1.badges[badge] == "silver" and rank == "gold":
-                                    player_1.badges[badge] = "gold"
-                                    output_log.append({"colour": "rgb(0, 51, 153)", "text": "You earned the Elite {} Badge!".format(badge.capitalize)})
-                        player_1.beat_trainer(battle.npc_opponent, skip_save=True)
-                # KO loss
-                if (is_p1 and not battle_state.player_1.has_pokemon()) or (not is_p1 and not battle_state.player_2.has_pokemon()):
-                    output_log.append({"text": "You blacked out!"})
-                    medical_fees = 10 * max([
-                        max([pkmn.level for pkmn in battle_state.player_2.party]),
-                        max([pkmn.level for pkmn in battle_state.player_1.party])
-                    ])
-                    output_log.append({"text": "You paid ${} in medical fees!".format(medical_fees)})
-                    if is_p1:
-                        player_1.money = max([0, player_1.money - medical_fees])
-                    else:
-                        player_2.money = max([0, player_2.money - medical_fees])
-                    output_log.append({"anim": ["recover"]})
+                prompt = handle_outcome(battle_state, battle, output_log, is_p1)
 
-
-                player_1.save()
-                if player_2 is not None:
-                    player_2.save()
-
-                # Gauntlet case; return to gauntlet page
-                if battle.gauntlet is not None:
-                    prompt = [battle.gauntlet.gauntlet_type]
-                    battle.send_state_to_gauntlet()
-                    battle.gauntlet.current_battle = "victory" if battle_state.outcome == "p1_victory" else "defeat"
-                    battle.gauntlet.save()
-
-        # Send battle state update and output log to room group
-
-        # Update battle in DB
-        battle.battle_state = battle_state.jsonify()
-        # Update logs
-        battle.output_log += output_log
-        # Update each choice; set to None after a process turn, then if a switch is needed, set to idle
-        battle.player_1_choice = None
-        battle.player_1_choice = None
-        if battle_state.requires_switch():
-            if battle_state.player_1.get_current_pokemon().is_alive():
-                battle.player_1_choice = {"action": "idle"}
-            if battle_state.player_2.get_current_pokemon().is_alive():
-                battle.player_2_choice = {"action": "idle"}
-        battle.save()
-
-        # If needed, update Pokemon status
+        # Perform DB updates
+        save_battle_to_db(battle_state, battle, output_log)
         save_team(battle, battle_state)
 
-        return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt, "output": output_log, "turn": battle.current_turn, "send_update": send_update}}
+        return {"group": {"type": "chat.message", "state": battle_state.jsonify(), "prompt": prompt, "output": output_log, "turn": battle.current_turn, "send_update": True}}
 
 
 def save_team(battle, battle_state):
@@ -366,6 +401,21 @@ def save_team(battle, battle_state):
                 pkmn_state = battle_state.player_2.party[i].jsonify()
                 if pkmn_state["id"] == pkmn.pk:
                     pkmn.set_battle_info(pkmn_state)
+
+
+def ko_loss(battle_state, output_log, player_1, player_2, is_p1):
+    output_log.append({"text": "You blacked out!"})
+    medical_fees = 10 * max([
+        max([pkmn.level for pkmn in battle_state.player_2.party]),
+        max([pkmn.level for pkmn in battle_state.player_1.party])
+    ])
+    output_log.append({"text": "You paid ${} in medical fees!".format(medical_fees)})
+    if is_p1:
+        player_1.money = max([0, player_1.money - medical_fees])
+    else:
+        player_2.money = max([0, player_2.money - medical_fees])
+    output_log.append({"anim": ["recover"]})
+
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
