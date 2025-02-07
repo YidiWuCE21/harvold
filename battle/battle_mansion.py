@@ -64,7 +64,7 @@ class MansionFloor():
             raise ValueError("Floor must be between 1 and 5")
         # Generate 3 random trainers
         floor_pool = cls.trainers_pool[floor]
-        floor_trainers = [MansionTrainer(trainer, random.sample(floor_pool[trainer], 3), floor) for trainer in random.sample(floor_pool.keys(), 3)]
+        floor_trainers = [MansionTrainer(trainer, random.sample(floor_pool[trainer], 3), floor) for trainer in random.sample(list(floor_pool.keys()), 3)]
         return cls(*floor_trainers)
 
     def get_trainer(self, trainer_no):
