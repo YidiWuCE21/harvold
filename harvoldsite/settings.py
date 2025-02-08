@@ -188,6 +188,6 @@ else:
         }
     }
 
-CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-c1e3d777167f.herokuapp.com", "https://harvold-fa155374a9eb.herokuapp.com/"]
+CSRF_TRUSTED_ORIGINS = ["https://harvold-alpha-c1e3d777167f.herokuapp.com", "https://harvold-fa155374a9eb.herokuapp.com"]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
