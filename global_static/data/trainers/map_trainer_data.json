@@ -1,0 +1,12 @@
+{
+    "camper_1": {
+        "team": [["Caterpie", 3], ["Poochyena", 3]],
+        "name": "Adam",
+        "lose": "No fair! You must have cheated!"
+    },
+    "picnicker_1": {
+        "team": [["Bidoof", 3], ["Pidgey", 3]],
+        "name": "Eve",
+        "lose": "I told you to go easy!"
+    }
+}

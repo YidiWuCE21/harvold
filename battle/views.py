@@ -2,6 +2,7 @@ import json
 import os
 import time
 import re
+import random
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -92,7 +93,13 @@ def battle_create(request):
         while tries < retries:
             try:
                 wild_data = request.user.profile.wild_opponent
-                wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"])
+                # Attempt synchronize
+                nature_override = None
+                first_pokemon = request.user.profile.slot_1
+                if first_pokemon.ability == "Synchronize":
+                    if random.random() < 0.5:
+                        nature_override = first_pokemon.nature
+                wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"], nature_override=nature_override)
                 wild.save()
                 models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
                 return redirect("battle")
