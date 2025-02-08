@@ -161,10 +161,6 @@ def wild_battle(request):
     area = request.GET.get("payload[area]")
     user = request.user.profile
 
-    # Check if user is actually on the map
-    if user.current_map != map:
-        return JsonResponse({"status": "false", "message": "You are not on this map!"}, status=500)
-
     # Find the list of available Pokemon and get one randomly
     if area not in consts.WILD[map]:
         return JsonResponse({"status": "false", "message": "{} not recognized as a valid area".format(area)}, status=500)
