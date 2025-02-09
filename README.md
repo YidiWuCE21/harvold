@@ -67,7 +67,7 @@ One of my first alpha testers mentioned that his character would "zoom" across m
 
 ### Spatial Partitioning
 
-<img src="(https://github.com/user-attachments/assets/a92e8e76-f4de-4547-9725-aad5088663ad" width="300">
+<img src="https://i.imgur.com/xms97Uu.png" width="300">
 
 If you explore the map for a bit, you will notice that the size of the maps get bigger. This culminated in Route 25, a 240x160 tile monstrosity with over 30 000 instantiated Boundary objects, each of which were checked individually. A previous boundary-dense map took about 0.1ms took as much as 0.9ms. The obvious solution was some form of partitioning, where only Boundary objects close to the player would get checked for collisions.
 
