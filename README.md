@@ -36,7 +36,7 @@ Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was 
 
 ### Turn-Based Battles
 
-![Battle](https://i.imgur.com/05k1Xei.png)
+<img src="https://i.imgur.com/05k1Xei.png" width="300">
 
 Pokémon battles are turn based. In the case of an NPC battle, the server could simply receive a move from the player, choose a move for the opponent, process the game state, and update the player's client. For live battles, this was a bit more complex.
 
@@ -46,7 +46,7 @@ My approach was to allow for the individual consumers to execute a battle state 
 
 ### Collision Detection
 
-![Map scene](https://i.imgur.com/gepUYQV.png)
+<img src="https://i.imgur.com/gepUYQV.png" width="300">
 
 Collision detection was implemented by creating square Boundary objects with coordinates and dimensions. Collisions were detected by projecting the player forward in the direction of travel, checking for overlap with a Boundary object, and stopping movement if there was. A similar approach was used to detect if a player was on grass or on water, or if a player was within interaction distance of an NPC.
 
@@ -67,7 +67,7 @@ One of my first alpha testers mentioned that his character would "zoom" across m
 
 ### Spatial Partitioning
 
-![image](https://github.com/user-attachments/assets/a92e8e76-f4de-4547-9725-aad5088663ad)
+<img src="(https://github.com/user-attachments/assets/a92e8e76-f4de-4547-9725-aad5088663ad" width="300">
 
 If you explore the map for a bit, you will notice that the size of the maps get bigger. This culminated in Route 25, a 240x160 tile monstrosity with over 30 000 instantiated Boundary objects, each of which were checked individually. A previous boundary-dense map took about 0.1ms took as much as 0.9ms. The obvious solution was some form of partitioning, where only Boundary objects close to the player would get checked for collisions.
 
