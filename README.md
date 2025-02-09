@@ -1,12 +1,8 @@
 # Pokémon Harvold
 
-Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing, it features 63 unique maps, 500+ obtainable Pokémon, and 400+ supported moves. It is a Django web app running on an ASGI server, hosted on Heroku, with a MySQL DB hosted on AWS RDS. You can play the game here:
+Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing, it features 63 unique maps, 500+ obtainable Pokémon, and 400+ supported moves. It is a Django web app running on an ASGI server, hosted on Heroku, with a PostgreSQL database. You can play the game here:
 
 https://harvold-fa155374a9eb.herokuapp.com/
-
-![Map scene](https://i.imgur.com/gepUYQV.png)
-
-![Battle](https://i.imgur.com/05k1Xei.png)
 
 ![Pokemon](https://i.imgur.com/LPiFMoK.png)
 
@@ -29,7 +25,7 @@ The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle F
 
 Django was an obvious choice for me as it was the web framework I used at my job. This was not a choice made for the sake of comfort, but because my work didn't let me fully explore the use of the framework. I wanted to understand how a web server actually functioned, how to use Django's ORM (we preferred raw SQL), and so on. I wanted the flexibility to play with all the tools in the Django environment and commit to my own design choices without going through the usual pipelines at work.
 
-MySQL was chosen because it happened to be the database I clicked when I was exploring RDS. Migrating to Postgres is on the backlog for better write performance, feature richness, support from Django, and parity with the SQLite DB I use for development and testing.
+MySQL was initially chosen because it happened to be the database I clicked when I was exploring RDS. Migrating to Postgres was done for better write performance, feature richness, support from Django, and parity with the SQLite DB I use for development and testing.
 
 Daphne was chosen because Channels required an ASGI server.
 
@@ -40,6 +36,8 @@ Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was 
 
 ### Turn-Based Battles
 
+![Battle](https://i.imgur.com/05k1Xei.png)
+
 Pokémon battles are turn based. In the case of an NPC battle, the server could simply receive a move from the player, choose a move for the opponent, process the game state, and update the player's client. For live battles, this was a bit more complex.
 
 Player clients were built using WebSockets, connected to Consumer objects on the backend. My initial approach to a battle server was to instantiate a worker process that would handle the state update. The problem was that worker tasks in Channels trade feature richness for speed, and don't have a retry mechanism. Stalling a battle in this way was very bad, as players are locked out of basic game features like using the Pokécenter when they were in battle.
@@ -47,6 +45,8 @@ Player clients were built using WebSockets, connected to Consumer objects on the
 My approach was to allow for the individual consumers to execute a battle state update. When a player submitted a move, the consumer would authenticate the player and validate the move, before acquiring a lock on a shared buffer and storing the move. If the buffer has two moves, the consumer proceeded with the state update. If not, it would release the lock, and the state update would be executed when the second player submits their move. The lock is to ensure that both consumers do not try to independently update the states, as Pokémon battles are non-deterministic (you can miss, for instance).
 
 ### Collision Detection
+
+![Map scene](https://i.imgur.com/gepUYQV.png)
 
 Collision detection was implemented by creating square Boundary objects with coordinates and dimensions. Collisions were detected by projecting the player forward in the direction of travel, checking for overlap with a Boundary object, and stopping movement if there was. A similar approach was used to detect if a player was on grass or on water, or if a player was within interaction distance of an NPC.
 
@@ -66,6 +66,8 @@ When a player left a map, the server would remember their location on the map an
 One of my first alpha testers mentioned that his character would "zoom" across maps when he pressed a movement key. This was the result of my naive implementation of map animation, where my animate() function directly called requestAnimationFrame(). The frequency this function is called generally matches the display refresh rate, and his was over 120Hz. My initial fix involved a setTimeout() on calling the function, which then evolved to manually tracking the elapsed time since the last animation frame and only executing if it exceeded a set interval. The second approach was favoured as setTimeout() had inaccuracies and inconsistent implementations across browsers.
 
 ### Spatial Partitioning
+
+![image](https://github.com/user-attachments/assets/a92e8e76-f4de-4547-9725-aad5088663ad)
 
 If you explore the map for a bit, you will notice that the size of the maps get bigger. This culminated in Route 25, a 240x160 tile monstrosity with over 30 000 instantiated Boundary objects, each of which were checked individually. A previous boundary-dense map took about 0.1ms took as much as 0.9ms. The obvious solution was some form of partitioning, where only Boundary objects close to the player would get checked for collisions.
 
