@@ -4,6 +4,10 @@ Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing
 
 https://harvold-fa155374a9eb.herokuapp.com/
 
+![Map scene](https://i.imgur.com/gepUYQV.png)
+![Battle](https://i.imgur.com/05k1Xei.png)
+![Pokemon](https://i.imgur.com/LPiFMoK.png)
+
 ## Motivation
 
 The motivation behind Pokémon Harvold is twofold; the first is to improve as a developer by deepening my understanding of certain frameworks and tools. The second is because creating a Pokémon has been a personal goal of mine ever since my favourite browser-based game, Pokémon Omega, was nuked from orbit by Nintendo in 2014.
