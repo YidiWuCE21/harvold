@@ -5,7 +5,9 @@ Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing
 https://harvold-fa155374a9eb.herokuapp.com/
 
 ![Map scene](https://i.imgur.com/gepUYQV.png)
+
 ![Battle](https://i.imgur.com/05k1Xei.png)
+
 ![Pokemon](https://i.imgur.com/LPiFMoK.png)
 
 ## Motivation
