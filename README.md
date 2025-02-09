@@ -29,7 +29,7 @@ MySQL was initially chosen because it happened to be the database I clicked when
 
 Daphne was chosen because Channels required an ASGI server.
 
-Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was used for dynamically updating the Pokémon box.
+Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was used for the Pokémon box.
 
 <a name="details"></a>
 ## Implementation Details
