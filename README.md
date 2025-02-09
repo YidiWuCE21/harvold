@@ -2,7 +2,7 @@
 
 Pokémon Harvold is a browser-based, fan-made game by me. At the time of writing, it features 63 unique maps, 500+ obtainable Pokémon, and 400+ supported moves. It is a Django web app running on an ASGI server, hosted on Heroku, with a MySQL DB hosted on AWS RDS. You can play the game here:
 
-https://harvold-alpha-c1e3d777167f.herokuapp.com/
+https://harvold-fa155374a9eb.herokuapp.com/
 
 ## Motivation
 
