@@ -20,7 +20,6 @@ The game is not as railroaded as the handheld games in that there is no explicit
 
 The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle Facility, where you challenge 5 floors of trainers to fight. This activity can award rare TMs and evolution items unobtainable in the shop.
 
-<a name="choices"></a>
 ## Tech Stack Choices
 
 Django was an obvious choice for me as it was the web framework I used at my job. This was not a choice made for the sake of comfort, but because my work didn't let me fully explore the use of the framework. I wanted to understand how a web server actually functioned, how to use Django's ORM (we preferred raw SQL), and so on. I wanted the flexibility to play with all the tools in the Django environment and commit to my own design choices without going through the usual pipelines at work.
@@ -31,7 +30,6 @@ Daphne was chosen because Channels required an ASGI server.
 
 Most of the frontend is written in vanilla HTML, CSS, and JavaScript. React was used for the Pokémon box.
 
-<a name="details"></a>
 ## Implementation Details
 
 ### Turn-Based Battles
@@ -58,7 +56,6 @@ Static NPCs were treated as simple Boundary objects for collision detection. Mov
 
 When a player left a map, the server would remember their location on the map and place them there when they started. If an NPC moved off of their spawn point and a player walked on to it, the player could reload the map and be stuck inside the NPC. This was just resolved by setting a flag where the NPC would not become solid until the player did not collide with them; in the case where a player spawned on an NPC, they could freely move off before the NPC became "solid" and interactable.
 
-<a name="hurdles"></a>
 ## Hurdles
 
 ### FPS Capping
