@@ -78,57 +78,16 @@ def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_over
     wild_opponent = None
     reward = None
     if type == "wild":
-        wild_opponent = Pokemon.objects.get(pk=p2_id)
-        if wild_opponent.original_trainer is not None:
-            raise ValueError("You cannot catch someone else's Pokémon!")
-        battle_state["player_2"]["party"] = [wild_opponent.get_battle_info()]
-        battle_state["escapes"] = 0
-        battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
+        wild_opponent = create_wild_battle(p2_id, battle_state)
     elif type == "npc":
-        npc_opponent = p2_id
-        if opp_override:
-            battle_state["player_2"]["party"] = opp_override["party"]
-            battle_state["player_2"]["name"] = opp_override["name"]
-        else:
-            trainer_data = "{}.json".format(p2_id)
-            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
-            if not os.path.isfile(trainer_path):
-                raise KeyError("{} not recognized as a trainer".format(p2_id))
-            with open(trainer_path) as trainer_file:
-                trainer_json = json.load(trainer_file)
-                battle_state["player_2"]["party"] = trainer_json["team"]
-                battle_state["player_2"]["name"] = trainer_json["name"]
-                reward = trainer_json["reward"]
-                # If the trainer requires the user be on a map, perform check now
-                if "map" in trainer_json:
-                    if trainer_json["map"] != player_1.current_map:
-                        raise ValueError("Trainer is not on the right map!")
+        npc_opponent, reward = create_npc_battle(p2_id, battle_state, opp_override, player_1)
     elif type == "live":
-        player_2 = Profile.objects.get(pk=p2_id)
-        if player_2.current_battle is not None:
-            raise ValueError("Player 2 is already in battle!")
-        if player_2.current_gauntlet is not None:
-            raise ValueError("Player 2 is in a gauntlet!")
-        party_2 = player_2.get_party()
-        battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
-        battle_state["player_2"]["name"] = player_2.user.username
-        battle_state["player_2"]["inventory"] = copy.deepcopy(player_2.bag)
+        player_2, party_2 = create_live_battle(battle_state, p2_id)
     else:
         raise ValueError("Type of battle must be 'wild', 'npc', or 'live'")
 
     # For case when first Pokemon is fainted, increment until we reach a living Pokemon
-    for player in ["player_1", "player_2"]:
-        current = 0
-        while True:
-            try:
-                if battle_state[player]["party"][current]["current_hp"] > 0:
-                    break
-                current += 1
-            except:
-                raise ValueError("All Pokemon are fainted, cannot make battle!")
-        battle_state[player]["current_pokemon"] = current
-        battle_state[player]["participants"] = [pkmn for pkmn in range(len(battle_state[player]["party"])) if pkmn == current or battle_state[player]["party"][pkmn]["held_item"] == "exp-share"]
-
+    set_first_pokemon(battle_state)
 
     # Wipe inventories
     if no_items:
@@ -181,6 +140,69 @@ def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_over
             player_2.current_battle = battle
             player_2.save()
     return battle
+
+
+def create_wild_battle(p2_id, battle_state):
+    wild_opponent = Pokemon.objects.get(pk=p2_id)
+    if wild_opponent.original_trainer is not None:
+        raise ValueError("You cannot catch someone else's Pokémon!")
+    battle_state["player_2"]["party"] = [wild_opponent.get_battle_info()]
+    battle_state["escapes"] = 0
+    battle_state["player_2"]["name"] = "wild {}".format(wild_opponent.name)
+    return wild_opponent
+
+
+def create_npc_battle(p2_id, battle_state, opp_override, player_1):
+    npc_opponent = p2_id
+    reward = None
+    if opp_override:
+        battle_state["player_2"]["party"] = opp_override["party"]
+        battle_state["player_2"]["name"] = opp_override["name"]
+        if "reward" in opp_override:
+            reward = opp_override["reward"]
+    else:
+        trainer_data = "{}.json".format(p2_id)
+        trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+        if not os.path.isfile(trainer_path):
+            raise KeyError("{} not recognized as a trainer".format(p2_id))
+        with open(trainer_path) as trainer_file:
+            trainer_json = json.load(trainer_file)
+            battle_state["player_2"]["party"] = trainer_json["team"]
+            battle_state["player_2"]["name"] = trainer_json["name"]
+            reward = trainer_json["reward"]
+            # If the trainer requires the user be on a map, perform check now
+            if "map" in trainer_json:
+                if trainer_json["map"] != player_1.current_map:
+                    raise ValueError("Trainer is not on the right map!")
+    return npc_opponent, reward
+
+
+def create_live_battle(battle_state, p2_id):
+    player_2 = Profile.objects.get(pk=p2_id)
+    if player_2.current_battle is not None:
+        raise ValueError("Player 2 is already in battle!")
+    if player_2.current_gauntlet is not None:
+        raise ValueError("Player 2 is in a gauntlet!")
+    party_2 = player_2.get_party()
+    battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
+    battle_state["player_2"]["name"] = player_2.user.username
+    battle_state["player_2"]["inventory"] = copy.deepcopy(player_2.bag)
+    return player_2, party_2
+
+
+def set_first_pokemon(battle_state):
+    for player in ["player_1", "player_2"]:
+        current = 0
+        while True:
+            try:
+                if battle_state[player]["party"][current]["current_hp"] > 0:
+                    break
+                current += 1
+            except:
+                raise ValueError("All Pokemon are fainted, cannot make battle!")
+        battle_state[player]["current_pokemon"] = current
+        battle_state[player]["participants"] = [pkmn for pkmn in range(len(battle_state[player]["party"])) if pkmn == current or battle_state[player]["party"][pkmn]["held_item"] == "exp-share"]
+
 
 
 # Create your models here.

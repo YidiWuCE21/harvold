@@ -77,21 +77,3 @@ function detectCollision({collidables, collisionFunc, playerObj = player, offset
     })
     return collided;
 }
-
-
-/*function detectCollision({collidables, collisionFunc, playerObj = player, offset = {x: 0, y: 0}}) {
-    // Iterate through each partition
-    let collided = null
-    collidables.forEach((collidable) => {
-        if (collisionFunc({
-            rectangle1: playerObj,
-            rectangle2: {...collidable, position: {
-                x: collidable.position.x + offset.x,
-                y: collidable.position.y + offset.y
-            }}
-        })) {
-            collided = collidable;
-        }
-    })
-    return collided;
-}*/

@@ -74,42 +74,50 @@ def ev_dojo(request):
 def battle_create(request):
     if request.user.profile.current_battle is not None:
         return redirect("battle")
-    tries = 0
-    retries = 3
-    e = ""
     if "trainer" in request.POST:
-        # TODO - trainer bg logic
-        trainer = request.POST.get("trainer")
-        while tries < retries:
-            try:
-                models.create_battle(request.user.profile.pk, trainer, "npc")
-                return redirect("battle")
-            except BaseException as e:
-                tries += 1
-                time.sleep(0.2)
-        return HttpResponseBadRequest("Failed to make battle: {}".format(e))
+        return create_trainer_battle(request)
     # Wild battle creation
     elif "wild" in request.POST:
-        while tries < retries:
-            try:
-                wild_data = request.user.profile.wild_opponent
-                # Attempt synchronize
-                nature_override = None
-                first_pokemon = request.user.profile.slot_1
-                if first_pokemon.ability == "Synchronize":
-                    if random.random() < 0.5:
-                        nature_override = first_pokemon.nature
-                wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"], nature_override=nature_override)
-                wild.save()
-                models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
-                return redirect("battle")
-            except BaseException as e:
-                tries += 1
-                time.sleep(0.2)
-        return HttpResponseBadRequest("Failed to make battle: {}".format(e))
+        return create_wild_battle(request)
     # If valid battle cannot be created, return to pokecenter
     else:
         return HttpResponseBadRequest("Failed process post request")
+
+
+def create_trainer_battle(request):
+    tries = 0
+    retries = 3
+    trainer = request.POST.get("trainer")
+    while tries < retries:
+        try:
+            models.create_battle(request.user.profile.pk, trainer, "npc")
+            return redirect("battle")
+        except BaseException as e:
+            tries += 1
+            time.sleep(0.2)
+    return HttpResponseBadRequest("Failed to make battle.")
+
+
+def create_wild_battle(request):
+    tries = 0
+    retries = 3
+    while tries < retries:
+        try:
+            wild_data = request.user.profile.wild_opponent
+            # Attempt synchronize
+            nature_override = None
+            first_pokemon = request.user.profile.slot_1
+            if first_pokemon.ability == "Synchronize":
+                if random.random() < 0.5:
+                    nature_override = first_pokemon.nature
+            wild = create_pokemon(wild_data["dex"], wild_data["level"], wild_data["sex"], shiny=wild_data["shiny"], nature_override=nature_override)
+            wild.save()
+            models.create_battle(request.user.profile.pk, wild.pk, "wild", bg=wild_data["bg"])
+            return redirect("battle")
+        except BaseException as e:
+            tries += 1
+            time.sleep(0.2)
+    return HttpResponseBadRequest("Failed to make battle.")
 
 
 @login_required
