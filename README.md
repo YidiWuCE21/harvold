@@ -39,7 +39,7 @@
 
 The motivation behind Pokémon Harvold is twofold; the first is to improve as a developer by deepening my understanding of certain frameworks and tools. The second is because creating a Pokémon has been a personal goal of mine ever since my favourite browser-based game, Pokémon Omega, was nuked from orbit by Nintendo in 2014.
 
-The game generally uses Gen VI as a guideline for battle mechanics, although some mechanics like Mega Evolution are deliberately not supported. Pokémon past Gen V are not obtainable for nostalgia reasons. The battle engine was written from scratch with game data being pulled from PokéAPI, so some mechanics (e.g. terrain, certain abilities) are not yet implemented.
+The game generally uses Gen VI as a guideline for battle mechanics, although some mechanics like Mega Evolution are deliberately not supported. Pokémon past Gen V are not obtainable for nostalgia reasons. The battle engine was written from scratch with game data being pulled from PokéAPI, so some mechanics (terrain, certain abilities, entry hazards, etc.) are not yet implemented.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -87,8 +87,6 @@ The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle F
 - [ ] More map trainers and roaming Pokémon
 - [ ] Settings and tutorial
 - [ ] Trading feature
-- [ ] All moves/abilities implemented
-- [ ] Day/night cycle
 - [ ] Item improvements
     - [ ] EV reducing berries
     - [ ] Separate in battle medicine from supplements
@@ -97,8 +95,10 @@ The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle F
     - [ ] Mass release
     - [ ] Tagging and filtering
     - [ ] Custom right click menu
-- [ ] Mecha Tyranitar raid
+- [ ] All moves/abilities implemented
 - [ ] Live PVP
+- [ ] Day/night cycle
+- [ ] Mecha Tyranitar raid
 - [ ] Roguelike battle facility
 - [ ] Procedurally generated dungeon
 
