@@ -4,8 +4,9 @@
 
 <br />
 <div align="center">
-  <h3 align="center">Pokémon Harvold</h3>
-
+  <a href="https://harvold-fa155374a9eb.herokuapp.com/">
+    <img src="global_static/harvold_logo.png" alt="Logo" width="330" height="120">
+  </a>
   <p align="center">
     A web-based multiplayer Pokémon game.
     <br />
