@@ -302,8 +302,9 @@ def process_battle_prizes(battle_state, battle, output_log, player_1, trainer_js
         cash_payout = max_level * battle.battle_prize["base_payout"]
         if player_1.has_beat_trainer(battle.npc_opponent):
             cash_payout = int(cash_payout / 10)
-        output_log.append(
-            {"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
+        if cash_payout > 0:
+            output_log.append(
+                {"colour": "rgb(0, 51, 153)", "text": "You received ${} for winning!".format(cash_payout)})
         player_1.money += cash_payout
 
     if "badges" in battle.battle_prize:
