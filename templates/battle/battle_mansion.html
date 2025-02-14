@@ -14,8 +14,8 @@
     <div style="position:relative;width:482px;height:226px;display:inline-block;">
         <img src="{% get_static_prefix %}{{ asset_paths.ui_scene }}/mansion_floor_{{ current_floor }}.png"
              style="border: 1px solid black; position:absolute;left:0">
-        {% for trainer, info in floor_info.items %}
-        <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}/{{ info.sprite }}.png"
+        {% for trainer in floor_info.trainers %}
+        <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}/{{ trainer.sprite }}.png"
              style="position:absolute;top:60px;left:{% widthratio forloop.counter 1 100 %}px"
              {% if forloop.counter < round_progress %}class="grayscale"{% endif %}>
         {% endfor %}

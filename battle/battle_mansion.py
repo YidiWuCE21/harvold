@@ -8,7 +8,7 @@ from pokemon.models import create_pokemon
 from .trainer_names import gen_name
 from .models import create_gauntlet, create_battle
 
-class MansionTrainer():
+class MansionTrainer:
     floor_ev = {
         "floor_1": {stat: 0 for stat in consts.STATS},
         "floor_2": {stat: 40 if stat == "hp" else 0 for stat in consts.STATS},
@@ -49,13 +49,11 @@ class MansionTrainer():
         ]
 
 
-class MansionFloor():
+class MansionFloor:
     # Trainers
     trainers_pool = consts.BM_POOL
     def __init__(self, trainer_1=None, trainer_2=None, trainer_3=None):
-        self.trainer_1 = trainer_1
-        self.trainer_2 = trainer_2
-        self.trainer_3 = trainer_3
+        self.trainers = [trainer_1, trainer_2, trainer_3]
 
 
     @classmethod
@@ -68,27 +66,19 @@ class MansionFloor():
         return cls(*floor_trainers)
 
     def get_trainer(self, trainer_no):
-        if trainer_no == 1:
-            return self.trainer_1
-        if trainer_no == 2:
-            return self.trainer_2
-        if trainer_no == 3:
-            return self.trainer_3
+        if trainer_no in range(1, 4):
+            return self.trainers[trainer_no - 1]
 
     @classmethod
     def from_json(cls, json_obj):
         floor_obj = cls()
-        floor_obj.trainer_1 = MansionTrainer.from_json(json_obj["trainer_1"])
-        floor_obj.trainer_2 = MansionTrainer.from_json(json_obj["trainer_2"])
-        floor_obj.trainer_3 = MansionTrainer.from_json(json_obj["trainer_3"])
+        floor_obj.trainers = [MansionTrainer.from_json(trainer) for trainer in json_obj["trainers"]]
         return floor_obj
 
 
     def jsonify(self):
         return {
-            "trainer_1": self.trainer_1.jsonify(),
-            "trainer_2": self.trainer_2.jsonify(),
-            "trainer_3": self.trainer_3.jsonify()
+            "trainers": [trainer.jsonify() for trainer in self.trainers]
         }
 
 
@@ -130,11 +120,7 @@ class BattleMansion():
         "completion": (1, 1)
     }
     def __init__(self, floor_1=None, floor_2=None, floor_3=None, floor_4=None, floor_5=None, invent=None, progress=None):
-        self.floor_1 = floor_1
-        self.floor_2 = floor_2
-        self.floor_3 = floor_3
-        self.floor_4 = floor_4
-        self.floor_5 = floor_5
+        self.floors = [floor_1, floor_2, floor_3, floor_4, floor_5]
         self.invent = invent
         self.progress = progress
         self.challenger = None
@@ -154,25 +140,13 @@ class BattleMansion():
             raise ValueError("Challenger cannot be changed!")
 
     def get_floor(self, floor_no):
-        if floor_no == 1:
-            return self.floor_1
-        if floor_no == 2:
-            return self.floor_2
-        if floor_no == 3:
-            return self.floor_3
-        if floor_no == 4:
-            return self.floor_4
-        if floor_no == 5:
-            return self.floor_5
+        if floor_no in range(1, 6):
+            return self.floors[floor_no - 1]
 
     @classmethod
     def from_json(cls, json_obj):
         mansion_obj = cls()
-        mansion_obj.floor_1 = MansionFloor.from_json(json_obj["floor_1"])
-        mansion_obj.floor_2 = MansionFloor.from_json(json_obj["floor_2"])
-        mansion_obj.floor_3 = MansionFloor.from_json(json_obj["floor_3"])
-        mansion_obj.floor_4 = MansionFloor.from_json(json_obj["floor_4"])
-        mansion_obj.floor_5 = MansionFloor.from_json(json_obj["floor_5"])
+        mansion_obj.floors = [MansionFloor.from_json(floor) for floor in json_obj["floors"]]
         mansion_obj.invent = json_obj["invent"]
         mansion_obj.progress = json_obj["progress"]
         mansion_obj.challenger = json_obj["challenger"]
@@ -181,11 +155,7 @@ class BattleMansion():
 
     def jsonify(self):
         return {
-            "floor_1": self.floor_1.jsonify(),
-            "floor_2": self.floor_2.jsonify(),
-            "floor_3": self.floor_3.jsonify(),
-            "floor_4": self.floor_4.jsonify(),
-            "floor_5": self.floor_5.jsonify(),
+            "floors": [floor.jsonify() for floor in self.floors],
             "invent": self.invent,
             "progress": self.progress,
             "challenger": self.challenger
