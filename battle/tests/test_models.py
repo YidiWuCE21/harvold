@@ -137,7 +137,7 @@ class TestBattleManager(TestCase):
             "outcome": None,
             "type": "npc",
             "trick_room": 0,
-            "gravity": 0,
+            "gravity": None,
         }
         self.std_battle["player_1"]["name"] = "P1"
         self.std_battle["player_2"]["name"] = "P2"
@@ -173,16 +173,16 @@ class TestBattleManager(TestCase):
         battle_state = self.std_battle.copy()
 
         battle = BattleState(battle_state)
-        ret = battle.check_p1_first({"move": "tackle"}, {"move": "tackle"})
+        ret = battle.check_p1_first("tackle", "tackle")
         self.assertFalse(ret)
 
         battle = BattleState(battle_state)
-        ret = battle.check_p1_first({"move": "quickattack"}, {"move": "tackle"})
+        ret = battle.check_p1_first("quickattack", "tackle")
         self.assertTrue(ret)
 
         battle = BattleState(battle_state)
         battle.player_1.current_pokemon = 1
-        ret = battle.check_p1_first({"move": "tackle"}, {"move": "tackle"})
+        ret = battle.check_p1_first("tackle", "tackle")
         self.assertTrue(ret)
 
     def test_get_priority(self):
@@ -556,10 +556,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 136)
         self.assertLessEqual(max_dmg, 162)
 
@@ -578,10 +578,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 205)
         self.assertLessEqual(max_dmg, 243)
 
@@ -600,10 +600,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 93)
         self.assertLessEqual(max_dmg, 109)
 
@@ -622,10 +622,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 205)
         self.assertLessEqual(max_dmg, 243)
 
@@ -643,10 +643,10 @@ class TestBattleManager(TestCase):
                 "special",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 78)
         self.assertLessEqual(max_dmg, 93)
 
@@ -664,10 +664,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 162)
         self.assertLessEqual(max_dmg, 192)
 
@@ -685,10 +685,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1.5
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 205)
         self.assertLessEqual(max_dmg, 243)
 
@@ -706,10 +706,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 0)
         self.assertLessEqual(max_dmg, 0)
 
@@ -728,10 +728,10 @@ class TestBattleManager(TestCase):
                 "physical",
                 1
             )
-            if ret > max_dmg:
-                max_dmg = ret
-            if ret < min_dmg:
-                min_dmg = ret
+            if ret[0] > max_dmg:
+                max_dmg = ret[0]
+            if ret[0] < min_dmg:
+                min_dmg = ret[0]
         self.assertGreaterEqual(min_dmg, 68)
         self.assertLessEqual(max_dmg, 81)
 
@@ -749,13 +749,19 @@ class TestBattleManager(TestCase):
         battle = BattleState(battle_state)
         battle.apply_damage(461, battle.player_1)
         self.assertEqual(0, battle.player_1.get_current_pokemon().current_hp)
-        self.assertEqual([{"text": "Snorlax has fainted!", "anim": "p1_faint"}], battle.output)
+        self.assertEqual([
+            {"anim": ["p1_update_hp_0"]},
+            {"text": "Snorlax has fainted!", "anim": ["p1_faint"]}
+        ], battle.output)
 
         # Standard case
         battle = BattleState(battle_state)
         battle.apply_damage(561, battle.player_1)
         self.assertEqual(0, battle.player_1.get_current_pokemon().current_hp)
-        self.assertEqual([{"text": "Snorlax has fainted!", "anim": "p1_faint"}], battle.output)
+        self.assertEqual([
+            {"anim": ["p1_update_hp_0"]},
+            {"text": "Snorlax has fainted!", "anim": ["p1_faint"]}
+        ], battle.output)
 
 
     def test_apply_status(self):
@@ -799,7 +805,7 @@ class TestBattleManager(TestCase):
             )
             if battle.player_2.get_current_pokemon().status == "brn":
                 applied += 1
-        self.assertEqual(11, applied)
+        self.assertEqual(14, applied)
 
         # Confusion
         durations = []
@@ -887,24 +893,28 @@ class TestBattleManager(TestCase):
 
         # Test potions
         battle.player_1.party[0].current_hp = 10
+        battle.player_1.inventory = {"medicine": {"potion": 5}}
         ret = battle.use_item(battle.player_1, "potion", 0)
         self.assertFalse(ret)
         self.assertEqual(30, battle.player_1.party[0].current_hp)
 
         # Test overheal
         battle.player_1.party[0].current_hp = 460
+        battle.player_1.inventory = {"medicine": {"potion": 5}}
         ret = battle.use_item(battle.player_1, "potion", 0)
         self.assertFalse(ret)
         self.assertEqual(461, battle.player_1.party[0].current_hp)
 
         # Test max potions
         battle.player_1.party[0].current_hp = 10
+        battle.player_1.inventory = {"medicine": {"max-potion": 5}}
         ret = battle.use_item(battle.player_1, "max-potion", 0)
         self.assertFalse(ret)
         self.assertEqual(461, battle.player_1.party[0].current_hp)
 
         # Test fainted
         battle.player_1.party[0].current_hp = 0
+        battle.player_1.inventory = {"medicine": {"max-potion": 5}}
         ret = battle.use_item(battle.player_1, "max-potion", 0)
         self.assertFalse(ret)
         self.assertEqual(0, battle.player_1.party[0].current_hp)
@@ -916,39 +926,45 @@ class TestBattleManager(TestCase):
 
         # Test wrong status
         battle.player_1.party[0].status = "par"
+        battle.player_1.inventory = {"medicine": {"antidote": 5}}
         ret = battle.use_item(battle.player_1, "antidote", 0)
         self.assertFalse(ret)
         self.assertEqual("par", battle.player_1.party[0].status)
 
         # Test right status
         battle.player_1.party[0].status = "psn"
+        battle.player_1.inventory = {"medicine": {"antidote": 5}}
         ret = battle.use_item(battle.player_1, "antidote", 0)
         self.assertFalse(ret)
-        self.assertIsNone(battle.player_1.party[0].status)
+        self.assertEqual("", battle.player_1.party[0].status)
 
         # Test right status
         battle.player_1.party[0].status = "txc"
+        battle.player_1.inventory = {"medicine": {"antidote": 5}}
         ret = battle.use_item(battle.player_1, "antidote", 0)
         self.assertFalse(ret)
-        self.assertIsNone(battle.player_1.party[0].status)
+        self.assertEqual("", battle.player_1.party[0].status)
 
         # Test full heal
         battle.player_1.party[0].status = "par"
+        battle.player_1.inventory = {"medicine": {"full-heal": 5}}
         ret = battle.use_item(battle.player_1, "full-heal", 0)
         self.assertFalse(ret)
-        self.assertIsNone(battle.player_1.party[0].status)
+        self.assertEqual("", battle.player_1.party[0].status)
 
         # Test full heal
         battle.player_1.party[0].status = "slp"
+        battle.player_1.inventory = {"medicine": {"full-heal": 5}}
         ret = battle.use_item(battle.player_1, "full-heal", 0)
         self.assertFalse(ret)
-        self.assertIsNone(battle.player_1.party[0].status)
+        self.assertEqual("", battle.player_1.party[0].status)
 
         # Test full heal
         battle.player_1.party[0].status = "txc"
+        battle.player_1.inventory = {"medicine": {"full-heal": 5}}
         ret = battle.use_item(battle.player_1, "full-heal", 0)
         self.assertFalse(ret)
-        self.assertIsNone(battle.player_1.party[0].status)
+        self.assertEqual("", battle.player_1.party[0].status)
 
 
     def test_use_revive(self):
@@ -957,18 +973,21 @@ class TestBattleManager(TestCase):
 
         # Test not dead
         battle.player_1.party[0].current_hp = 30
+        battle.player_1.inventory = {"medicine": {"revive": 5}}
         ret = battle.use_item(battle.player_1, "revive", 0)
         self.assertFalse(ret)
         self.assertEqual(30, battle.player_1.party[0].current_hp)
 
         # Test revive
         battle.player_1.party[0].current_hp = 0
+        battle.player_1.inventory = {"medicine": {"revive": 5}}
         ret = battle.use_item(battle.player_1, "revive", 0)
         self.assertFalse(ret)
         self.assertEqual(231, battle.player_1.party[0].current_hp)
 
         # Test max revive
         battle.player_1.party[0].current_hp = 0
+        battle.player_1.inventory = {"medicine": {"max-revive": 5}}
         ret = battle.use_item(battle.player_1, "max-revive", 0)
         self.assertFalse(ret)
         self.assertEqual(461, battle.player_1.party[0].current_hp)
@@ -980,6 +999,7 @@ class TestBattleManager(TestCase):
         battle.type = "npc"
 
         # Test not wild
+        battle.player_1.inventory = {"ball": {"pokeball": 5}}
         ret = battle.use_item(battle.player_1, "pokeball", 0)
         self.assertFalse(ret)
         self.assertEqual([{"text": "You cannot catch Pokémon in a trainer battle!"}], battle.output)
@@ -991,6 +1011,7 @@ class TestBattleManager(TestCase):
         for i in range(1000):
             battle = BattleState(battle_state)
             battle.type = "wild"
+            battle.player_1.inventory = {"ball": {"pokeball": 5}}
             battle.use_item(battle.player_1, "pokeball", 0)
             if battle.outcome == "caught":
                 catches += 1
@@ -1008,6 +1029,7 @@ class TestBattleManager(TestCase):
             battle = BattleState(battle_state)
             battle.type = "wild"
             battle.player_2.party[0].current_hp = 1
+            battle.player_1.inventory = {"ball": {"pokeball": 5}}
             battle.use_item(battle.player_1, "pokeball", 0)
             outputs.append(battle.output)
             if battle.outcome == "caught":
@@ -1026,6 +1048,7 @@ class TestBattleManager(TestCase):
             battle = BattleState(battle_state)
             battle.type = "wild"
             battle.player_2.party[0].status = "slp"
+            battle.player_1.inventory = {"ball": {"pokeball": 5}}
             battle.use_item(battle.player_1, "pokeball", 0)
             outputs.append(battle.output)
             if battle.outcome == "caught":
@@ -1044,6 +1067,7 @@ class TestBattleManager(TestCase):
             battle = BattleState(battle_state)
             battle.type = "wild"
             battle.player_2.party[0].status = "psn"
+            battle.player_1.inventory = {"ball": {"pokeball": 5}}
             battle.use_item(battle.player_1, "pokeball", 0)
             outputs.append(battle.output)
             if battle.outcome == "caught":
@@ -1061,6 +1085,7 @@ class TestBattleManager(TestCase):
         for i in range(1000):
             battle = BattleState(battle_state)
             battle.type = "wild"
+            battle.player_1.inventory = {"ball": {"ultra-ball": 5}}
             battle.use_item(battle.player_1, "ultra-ball", 0)
             outputs.append(battle.output)
             if battle.outcome == "caught":
@@ -1078,6 +1103,7 @@ class TestBattleManager(TestCase):
         for i in range(100):
             battle = BattleState(battle_state)
             battle.type = "wild"
+            battle.player_1.inventory = {"ball": {"master-ball": 5}}
             battle.use_item(battle.player_1, "master-ball", 0)
             outputs.append(battle.output)
             if battle.outcome == "caught":
@@ -1091,6 +1117,7 @@ class TestBattleManager(TestCase):
         battle = BattleState(battle_state)
         battle.type = "wild"
         battle.player_2.party[0].current_hp = 0
+        battle.player_1.inventory = {"ball": {"pokeball": 5}}
         battle.use_item(battle.player_1, "pokeball", 0)
         self.assertEqual([{"text": "You cannot catch a fainted Pokémon!"}], battle.output)
 
@@ -1176,6 +1203,6 @@ class TestBattleManager(TestCase):
                     self.assertEqual([{"text": "Failed to run away!"}], battle.output)
                     self.assertEqual(1, battle.escapes)
                 fails += 1
-        self.assertEqual(17, escapes)
-        self.assertEqual(83, fails)
+        self.assertEqual(40, escapes)
+        self.assertEqual(60, fails)
 

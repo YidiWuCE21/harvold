@@ -342,7 +342,7 @@ class TestPurchaseItem(TestCase):
         self.trainer1.money = 10000
         self.trainer1.bag = models.default_bag()
         ret = self.trainer1.purchase_item("electirizer", 1)
-        exp = "No such category!"
+        exp = "No such item in the shop!"
         self.assertFalse(ret[0])
         self.assertEqual(exp, ret[1])
 

@@ -206,7 +206,8 @@ class TestGetBattleInfo(TestCase):
         ret = self.pkmn.get_battle_info()
         exp = {
             "ability": "Chlorophyll",
-            "status": None,
+            "status": "",
+            "status_turns": 0,
             "current_hp": 19,
             "happiness": 70,
             "held_item": None,
@@ -220,7 +221,8 @@ class TestGetBattleInfo(TestCase):
             "dex_number": "001",
             "level": 5,
             "shiny": False,
-            "id": self.pkmn.pk
+            "id": self.pkmn.pk,
+            "name": "Bulbasaur"
         }
         self.assertDictEqual(exp, ret)
 
@@ -326,13 +328,7 @@ class TestAddXp(TestCase):
 class TestAddEvs(TestCase):
     def test_add_evs_new(self):
         self.pkmn = models.create_pokemon("001", 5, "m")
-        self.pkmn.add_evs({
-            "hp": 200,
-            "atk": 0,
-            "def": 0,
-            "spa": 0,
-            "spd": 0,
-            "spe": 0})
+        self.pkmn.add_evs([200, 0, 0, 0, 0, 0])
         self.assertEqual(200, self.pkmn.hp_ev)
 
 
@@ -340,13 +336,7 @@ class TestAddEvs(TestCase):
         self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
             "hp": 200, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
         })
-        self.pkmn.add_evs({
-            "hp": 10,
-            "atk": 0,
-            "def": 0,
-            "spa": 0,
-            "spd": 0,
-            "spe": 0})
+        self.pkmn.add_evs([10, 0, 0, 0, 0, 0])
         self.assertEqual(210, self.pkmn.hp_ev)
 
 
@@ -354,13 +344,7 @@ class TestAddEvs(TestCase):
         self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
             "hp": 250, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
         })
-        self.pkmn.add_evs({
-            "hp": 10,
-            "atk": 0,
-            "def": 0,
-            "spa": 0,
-            "spd": 0,
-            "spe": 0})
+        self.pkmn.add_evs([10, 0, 0, 0, 0, 0])
         self.assertEqual(252, self.pkmn.hp_ev)
 
 
@@ -368,13 +352,7 @@ class TestAddEvs(TestCase):
         self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
             "hp": 0, "atk": 252, "def": 252, "spa": 0, "spd": 0, "spe": 0
         })
-        self.pkmn.add_evs({
-            "hp": 10,
-            "atk": 0,
-            "def": 0,
-            "spa": 0,
-            "spd": 0,
-            "spe": 0})
+        self.pkmn.add_evs([10, 0, 0, 0, 0, 0])
         self.assertEqual(6, self.pkmn.hp_ev)
 
 
@@ -382,13 +360,7 @@ class TestAddEvs(TestCase):
         self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
             "hp": 5, "atk": 0, "def": 0, "spa": 0, "spd": 0, "spe": 0
         })
-        self.pkmn.add_evs({
-            "hp": -10,
-            "atk": 0,
-            "def": 0,
-            "spa": 0,
-            "spd": 0,
-            "spe": 0})
+        self.pkmn.add_evs([-10, 0, 0, 0, 0, 0])
         self.assertEqual(0, self.pkmn.hp_ev)
 
 
@@ -396,13 +368,7 @@ class TestAddEvs(TestCase):
         self.pkmn = models.create_pokemon("001", 5, "m", ev_override={
             "hp": 250, "atk": 250, "def": 0, "spa": 0, "spd": 0, "spe": 0
         })
-        self.pkmn.add_evs({
-            "hp": 10,
-            "atk": 2,
-            "def": 10,
-            "spa": 10,
-            "spd": 10,
-            "spe": 10})
+        self.pkmn.add_evs([10, 2, 10, 10, 10, 10])
         self.assertEqual(252, self.pkmn.hp_ev)
         self.assertEqual(252, self.pkmn.atk_ev)
         self.assertEqual(6, self.pkmn.def_ev)
@@ -684,7 +650,7 @@ class TestGetValidEvolutions(TestCase):
         ret = self.pkmn.get_valid_evolutions()
         self.assertEqual([], ret)
 
-        self.trainer.bag["evo"] = {
+        self.trainer.bag["general"] = {
             "water-stone": 1
         }
         ret = self.pkmn.get_valid_evolutions()
@@ -699,7 +665,7 @@ class TestGetValidEvolutions(TestCase):
         self.pkmn = models.create_pokemon("133", 50, "m")
         self.pkmn.happiness = 230
         self.pkmn.assign_trainer(self.trainer1)
-        self.trainer1.bag["evo"] = {
+        self.trainer1.bag["general"] = {
             "water-stone": 1,
             "fire-stone": 1,
             "ice-stone": 1,
@@ -718,7 +684,7 @@ class TestGetValidEvolutions(TestCase):
         self.pkmn = models.create_pokemon("281", 50, "m")
         self.pkmn.happiness = 230
         self.pkmn.assign_trainer(self.trainer2)
-        self.trainer2.bag["evo"] = {
+        self.trainer2.bag["general"] = {
             "dawn-stone": 1
         }
         ret = self.pkmn.get_valid_evolutions()
@@ -727,7 +693,7 @@ class TestGetValidEvolutions(TestCase):
         self.pkmn = models.create_pokemon("281", 50, "f")
         self.pkmn.happiness = 230
         self.pkmn.assign_trainer(self.trainer2)
-        self.trainer2.bag["evo"] = {
+        self.trainer2.bag["general"] = {
             "dawn-stone": 1
         }
         ret = self.pkmn.get_valid_evolutions()

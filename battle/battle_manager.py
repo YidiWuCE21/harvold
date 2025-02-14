@@ -149,9 +149,9 @@ class BattleState:
         if self.trick_room is not None:
             if self.trick_room > 0:
                 return p1_speed < p2_speed
+
         # Speed compare
-        else:
-            return p1_speed > p2_speed
+        return p1_speed > p2_speed
 
 
 

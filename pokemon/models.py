@@ -552,7 +552,7 @@ class Pokemon(models.Model):
 
             # Check move requirement
             if requirements["known_move"] != None:
-                if not requirements["known_move"] in self.get_moves().values():
+                if not requirements["known_move"] in self.get_moves(names=True):
                     continue
 
             # Check item requirement
