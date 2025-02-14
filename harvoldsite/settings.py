@@ -29,6 +29,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "False") == "True"
+LOCAL_RUN = os.environ.get("LOCAL", "False") == "True"
 
 ALLOWED_HOSTS = ["*", "https://harvold-fa155374a9eb.herokuapp.com/"]
 
@@ -50,7 +51,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles"
 ]
-if DEBUG:
+if DEBUG and LOCAL_RUN:
     INSTALLED_APPS += ['django_extensions', ]
 
 #AUTH_USER_MODEL = 'accounts.User'
