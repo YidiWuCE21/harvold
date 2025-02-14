@@ -423,7 +423,7 @@ class BattleState:
         return (int(damage), type_effectiveness)
 
 
-    def apply_damage(self, damage, player, survive=False, effect=None, override_text=None):
+    def apply_damage(self, damage, player, survive=False, effect=None, override_text=None, message=None):
         """
         Damage and faint a Pokemon
         """
@@ -742,8 +742,7 @@ class BattleState:
         if pokemon.held_item == "leftovers":
             if pokemon.current_hp < pokemon.hp:
                 heal_amount = int(pokemon.hp / 16)
-                self.output.append({"text": "{} restored HP with leftovers!".format(pokemon.name)})
-                self.apply_damage(-heal_amount, player)
+                self.apply_damage(-heal_amount, player, override_text="{} restored HP with leftovers!".format(pokemon.name))
 
         if pokemon.status == "brn":
             burn_damage = int(pokemon.hp / 16)
