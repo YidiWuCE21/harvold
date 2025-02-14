@@ -67,7 +67,7 @@ Set some environment variables: DEBUG should be True, and SECRET_KEY can be any 
 
 ## Game Guide
 
-The generic gameplay loop is not much different from standard Pokémon games; you explore maps, catch Pokémon, and level them up. The Pokécenter can be used for healing in between battles. Trainers on routes can be fought for money, which can be used to purchase supplies and useful items at the Pokémart. Excess Pokémon are stored in your Box, and can be swapped into your party between battles. Items are stored in the bag, including TMs, HMs, and held items. Held items can be given to Pokémon on your Bag page, and can be taken back on their detaield info pages.
+The generic gameplay loop is not much different from standard Pokémon games; you explore maps, catch ~~Pokémon~~ Pals, and level them up. The Pokécenter can be used for healing in between battles. Trainers on routes can be fought for money, which can be used to purchase supplies and useful items at the Pokémart. Excess Pokémon are stored in your Box, and can be swapped into your party between battles. Items are stored in the bag, including TMs, HMs, and held items. Held items can be given to Pokémon on your Bag page, and can be taken back on their detaield info pages.
 
 The game is not as railroaded as the handheld games in that there is no explicit story that limits map progression. Some regions, however, are gated behind certain HMs, which can be obtained from beating Gym Leaders.
 
