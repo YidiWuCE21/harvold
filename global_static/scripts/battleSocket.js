@@ -228,6 +228,111 @@ function processAnim({animMove}) {
         let newHp = animMove.split("_update_hp_")[1];
         updateCanvas({'forPlayer': false, 'justHp': true, 'usePrevPokemon': true, 'newHp': newHp});
     }
+    // Throw ball
+    if (animMove.startsWith('throw_')) {
+        let ball_type = animMove.split("hrow_")[1];
+        throwBall({ball_type: ball_type});
+    }
+    // Ball shake
+    if (animMove == 'shake') {
+        ballShake();
+    }
+    // Pokemon escape
+    if (animMove == 'escape_ball') {
+        escapeBall();
+    }
+    // Pokemon caught
+    if (animMove == 'caught') {
+        caughtBall();
+    }
+}
+
+function throwBall({ball_type}) {
+    const duration = 0.5 * interval;
+    const ballSprite = document.getElementById('pokeball');
+    const oppSprite = document.getElementById('opp_spr');
+    if (!ballSprite) return;
+    ballSprite.src = itemPath + "/" + ball_type + ".png";
+
+    // Position the sprite
+    ballSprite.style.left = '20px';
+    ballSprite.style.top = '130px';
+    ballSprite.style.display = 'block';
+
+    // Throw at opponent
+
+    let startTime = null;
+
+    function quadraticBezier(t, p0, p1, p2) {
+        return (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
+    }
+
+    function animateSlide(timestamp) {
+        if (!startTime) startTime = timestamp;
+        let elapsed = timestamp - startTime;
+        let progress = Math.min(elapsed / duration, 1);
+
+        let currentY = quadraticBezier(progress, 130, 30, 100);
+        let currentX = quadraticBezier(progress, 20, 200, 330);
+
+        ballSprite.style.left = currentX + 'px';
+        ballSprite.style.top = currentY + 'px';
+
+        if (progress < 1) {
+            requestAnimationFrame(animateSlide);
+        }
+    }
+
+    setTimeout(() => {
+        oppSprite.style.transition = `all ${interval / 1000 * 0.4}s ease-out`;
+        oppSprite.style.opacity = 0;
+    }, 0.5 * interval);
+
+    requestAnimationFrame(animateSlide);
+}
+
+function ballShake() {
+    const ballSprite = document.getElementById('pokeball');
+    ballSprite.style.transition = `all ${interval / 1000 * 0.2}s ease-out`;
+
+    const originalPosition = {
+        x: ballSprite.getAttribute('data-ox'),
+        y: ballSprite.getAttribute('data-oy')
+    };
+
+    ballSprite.style.transform = 'rotate(-40deg)';
+    ballSprite.style.left = `${Number(originalPosition.x) - 10}px`;
+
+    setTimeout(() => {
+        ballSprite.style.transform = 'rotate(40deg)';
+        ballSprite.style.left = `${Number(originalPosition.x) + 10}px`;
+    }, 0.2 * interval);
+
+    setTimeout(() => {
+        ballSprite.style.transform = 'rotate(0deg)';
+        ballSprite.style.left = `${Number(originalPosition.x)}px`;
+    }, 0.4 * interval);
+}
+
+function escapeBall() {
+    const ballSprite = document.getElementById('pokeball');
+    const splat = document.getElementById('player_splat');
+    const oppSprite = document.getElementById('opp_spr');
+    ballSprite.style.display = 'none';
+    oppSprite.style.opacity = 100;
+
+    // Splat
+    splat.style.transition = `all ${interval / 1000 * 0.2}s linear`;
+    splat.style.opacity = 1;
+
+    setTimeout(() => {
+        splat.style.opacity = 0;
+    }, 0.45 * interval);
+}
+
+function caughtBall() {
+    const ballSprite = document.getElementById('pokeball');
+    ballSprite.style.filter = 'brightness(0.6)';
 }
 
 function attack({x, y, div_id, showSplat = true}) {
