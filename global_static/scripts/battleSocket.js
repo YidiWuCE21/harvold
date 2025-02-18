@@ -712,6 +712,7 @@ function updateCanvas({forPlayer, justHp = false, usePrevPokemon = false, usePre
 }
 
 function updateBalls() {
+    // Update the ball counter
     const player = (isPlayerOne) ? 'player_1' : 'player_2';
     const opp = (isPlayerOne) ? 'player_2' : 'player_1';
     const playerBalls = document.getElementById('player_balls');
@@ -799,6 +800,9 @@ if (initialTurn == 1) {
 window.addEventListener('keydown', (e) => {
     const controlTab = document.getElementById('select');
     const attackTab = document.getElementById('attack');
+    const itemTab = document.getElementById('items');
+    const ballTab = document.getElementById('ball');
+    const medicineTab = document.getElementById('medicine');
     const switchTab = document.getElementById('switch');
     const selectTab = document.getElementById('item_target_select');
     let buttonNo;
@@ -809,6 +813,12 @@ window.addEventListener('keydown', (e) => {
                 clickNthButton(controlTab, buttonNo);
             } else if (attackTab.style.display == 'block') {
                 clickNthButton(attackTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
             } else if (selectTab.style.display == 'block') {
@@ -821,6 +831,12 @@ window.addEventListener('keydown', (e) => {
                 clickNthButton(controlTab, buttonNo);
             } else if (attackTab.style.display == 'block') {
                 clickNthButton(attackTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
             } else if (selectTab.style.display == 'block') {
@@ -833,6 +849,12 @@ window.addEventListener('keydown', (e) => {
                 clickNthButton(controlTab, buttonNo);
             } else if (attackTab.style.display == 'block') {
                 clickNthButton(attackTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
             } else if (selectTab.style.display == 'block') {
@@ -845,6 +867,12 @@ window.addEventListener('keydown', (e) => {
                 clickNthButton(controlTab, buttonNo);
             } else if (attackTab.style.display == 'block') {
                 clickNthButton(attackTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
             } else if (selectTab.style.display == 'block') {
@@ -855,6 +883,12 @@ window.addEventListener('keydown', (e) => {
             buttonNo = 5;
             if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (selectTab.style.display == 'block') {
                 clickNthButton(selectTab, buttonNo);
             }
@@ -863,6 +897,12 @@ window.addEventListener('keydown', (e) => {
             buttonNo = 6;
             if (switchTab.style.display == 'block') {
                 clickNthButton(switchTab, buttonNo);
+            } else if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    clickNthButton(ballTab, buttonNo);
+                } else if (medicineTab.style.display == 'block') {
+                    clickNthButton(medicineTab, buttonNo);
+                }
             } else if (selectTab.style.display == 'block') {
                 clickNthButton(selectTab, buttonNo);
             }
@@ -870,5 +910,13 @@ window.addEventListener('keydown', (e) => {
         case 'Escape':
             openTab('control-tab', 'select');
             break
+        case 'Tab':
+            if (itemTab.style.display == 'block') {
+                if (ballTab.style.display == 'block') {
+                    openTab('item-tab', 'medicine');
+                } else if (medicineTab.style.display == 'block') {
+                    openTab('item-tab', 'ball');
+                }
+            }
     }
 })

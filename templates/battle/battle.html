@@ -125,13 +125,12 @@
             <div class="control-tab" id="items" style="display:none">
                 <table class="center">
                     <tr>
-                        <td><button class="button-3" onclick="openTab('item-tab', 'medicine')" {% if not medicines_allowed %}disabled{% endif %}>Medicines</button></td>
                         <td><button class="button-3" onclick="openTab('item-tab', 'ball')" {% if not balls_allowed %}disabled{% endif %}>Pokeballs</button></td>
-
+                        <td><button class="button-3" onclick="openTab('item-tab', 'medicine')" {% if not medicines_allowed %}disabled{% endif %}>Medicines</button></td>
                     </tr>
                 </table>
-                <div class="item-tab" id="medicine" style="display:block;"></div>
-                <div class="item-tab" id="ball" style="display:none;"></div>
+                <div class="item-tab" id="ball" style="{% if type == 'wild' %}display:block;{% else %}display:none;{% endif %}"></div>
+                <div class="item-tab" id="medicine" style="{% if type == 'wild' %}display:none;{% else %}display:block;{% endif %}"></div>
                 <br>
                 <button onclick="openTab('control-tab', 'select')" class="button-3 battler button-back">Back</button>
             </div>

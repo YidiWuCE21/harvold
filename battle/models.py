@@ -47,6 +47,20 @@ def players_battle_eligible(p1_id, p2_id, gauntlet):
     return player_1, player_2
 
 
+def get_battle_inventory(player):
+    """
+    Get the inventory in a safe way; only include items usable in battle
+    """
+    battle_bag = {}
+    for category, item_quantities in player.bag.items():
+        if category not in consts.ITEM_USAGE:
+            continue
+        valid_items = {item: qty for item, qty in item_quantities.items() if item in consts.ITEM_USAGE[category]}
+        if valid_items:
+            battle_bag[category] = valid_items
+    return copy.deepcopy(battle_bag)
+
+
 def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_override=None, no_items=False, gauntlet=None, save_team=True):
     """
     Player 2 should either be a player ID, a Pokemon ID, or an NPC ID (stored in data file)
@@ -70,7 +84,7 @@ def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_over
     party_1 = player_1.get_party()
     battle_state["player_1"]["party"] = [pkmn.get_battle_info() for pkmn in party_1] if team_override is None else team_override
     battle_state["player_1"]["name"] = player_1.user.username
-    battle_state["player_1"]["inventory"] = copy.deepcopy(player_1.bag)
+    battle_state["player_1"]["inventory"] = get_battle_inventory(player_1)
     battle_state["player_2"]["inventory"] = None
 
     # Attempt to find opponent and team data
@@ -186,7 +200,7 @@ def create_live_battle(battle_state, p2_id):
     party_2 = player_2.get_party()
     battle_state["player_2"]["party"] = [pkmn.get_battle_info() for pkmn in party_2]
     battle_state["player_2"]["name"] = player_2.user.username
-    battle_state["player_2"]["inventory"] = copy.deepcopy(player_2.bag)
+    battle_state["player_2"]["inventory"] = get_battle_inventory(player_2)
     return player_2, party_2
 
 
