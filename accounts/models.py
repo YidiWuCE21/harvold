@@ -421,7 +421,7 @@ class Profile(models.Model):
         return trainer in self.trainers_beat
 
 
-    def teach_tm(self, tm, target, slot):
+    def teach_tm(self, tm, target, move_slot):
         if target not in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
             return "Must be a valid slot"
         pokemon = getattr(self, target)
@@ -438,7 +438,7 @@ class Profile(models.Model):
             return "You do not have this move!"
         try:
             with transaction.atomic():
-                ret = pokemon.learn_move(move, slot, tms=True)
+                ret = pokemon.learn_move(move, move_slot, tms=True)
                 if ret is not None:
                     return "Did not learn move"
                 if not "hm" in tm:
@@ -526,6 +526,65 @@ class Profile(models.Model):
             return False
         badge = hm_reqs[move]
         return self.badges[badge] is not None and self.has_move_in_party(move)
+
+
+    def use_bag_item(self, item, target):
+        # Check target valid
+        if target not in ["slot_1", "slot_2", "slot_3", "slot_4", "slot_5", "slot_6"]:
+            return "Must be a valid slot"
+        pokemon = getattr(self, target)
+        if pokemon is None:
+            return "Select a valid Pokémon."
+        if item not in consts.ITEMS:
+            return "Not a valid item!"
+        category = consts.ITEMS[item]["category"]
+
+        if category in ["medicine", "berries"]:
+            # Check if item is combat medicine/berry item
+            if item in consts.ITEM_USAGE[category]:
+                item_data = consts.ITEM_USAGE[category][item]
+                item_effects = item_data["effects"]
+                if item_data["valid_targets"] == "alive":
+                    if pokemon.current_hp < 1:
+                        return "Cannot use that item on a fainted target."
+                elif pokemon.current_hp > 0:
+                    return "Cannot use that item on that target."
+                if "hp" in item_effects:
+                    if item_effects["hp"] == "full":
+                        pokemon.current_hp = pokemon.hp_stat
+                    # Just for revives
+                    elif item_effects["hp"] == "half":
+                        pokemon.current_hp = int((pokemon.hp_stat + 1) / 2)
+                    else:
+                        pokemon.current_hp = min(pokemon.current_hp + item_effects["hp"],
+                                                        pokemon.hp_stat)
+                if "status" in item_effects:
+                    if item_effects["status"] == "any":
+                        pokemon.status = ""
+                    elif item_effects["status"] == pokemon.status:
+                        pokemon.status = ""
+                    elif item_effects["status"] == "psn" and pokemon.status == "txc":
+                        pokemon.status = ""
+                try:
+                    with transaction.atomic():
+                        self.consume_item(item, 1)
+                        pokemon.save()
+                except IntegrityError:
+                    return "Failed to use item."
+            # Check if item is EV reducing berry or medicine
+            elif item in consts.EV_MODIFIERS:
+                item_effect = consts.EV_MODIFIERS[item]
+                try:
+                    with transaction.atomic():
+                        self.consume_item(item, 1)
+                        # If happiness increase, process that
+                        if len(item_effect) > 2:
+                            pokemon.happiness = min(255, pokemon.happiness + item_effect[2])
+                        ev_gain = [item_effect[1] if item_effect[0] == stat else 0 for stat in consts.STATS]
+                        pokemon.add_evs(ev_gain, recalculate=True)
+                        pokemon.save()
+                except IntegrityError:
+                    return "Failed to use item."
 
 
 def send_message(recipient, sender_name, body, title, sender, sender_spr, gift_items=None):

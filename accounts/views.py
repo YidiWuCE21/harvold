@@ -108,7 +108,10 @@ def bag(request):
         "moves": pkmn.get_moves(),
         "held_item": pkmn.held_item,
         "name": pkmn.name,
-        "level": pkmn.level}
+        "level": pkmn.level,
+        "hp_percent": int(pkmn.current_hp / pkmn.hp_stat * 100),
+        "status": pkmn.status
+    }
         for pkmn in request.user.profile.get_party()]
     html_render_variables = {
         "bag": bag_data,
@@ -233,8 +236,17 @@ def teach_tm_ajax(request):
     profile = request.user.profile
     tm = request.GET.get("tm")
     target = request.GET.get("target")
-    slot = request.GET.get("slot")
-    msg = profile.teach_tm(tm, target, slot)
+    move_slot = request.GET.get("slot")
+    msg = profile.teach_tm(tm, target, move_slot)
+    return JsonResponse({"msg": msg})
+
+@login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+def use_bag_item_ajax(request):
+    profile = request.user.profile
+    item = request.GET.get("item")
+    target = request.GET.get("slot")
+    msg = profile.use_bag_item(item, target)
     return JsonResponse({"msg": msg})
 
 @login_required

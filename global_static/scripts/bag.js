@@ -4,6 +4,7 @@ let chosenItem = null;
 let itemPage = null;
 const tmMsg = document.getElementById('tm_msg');
 const heldMsg = document.getElementById('held_msg');
+const useMsg = document.getElementById('use_msg');
 
 function chooseTm({tm}) {
     chosenTm = tm;
@@ -90,9 +91,9 @@ function teachTm({slot}) {
     });
 }
 
-function chooseItem({item}) {
+function chooseItem({item, tab}) {
     chosenItem = item;
-    openTab('bag_tab', 'held_item_manager');
+    openTab('bag_tab', tab);
 }
 
 function giveItem({slot}) {
@@ -119,5 +120,32 @@ function giveItem({slot}) {
         }
     }).fail(function() {
         heldMsg.innerHTML = 'Item equip request failed to send, please contact dev.';
+    });
+}
+
+function useItem({slot}) {
+    $.ajax({
+        type: "GET",
+        url: useItemUrl,
+        data: {
+            "slot": slot,
+            "item": chosenItem
+        }
+    }).done(function( response ) {
+        if (response.msg != null) {
+            useMsg.innerHTML = response.msg;
+            setTimeout(() => {
+                openTab('bag_tab', itemPage);
+                chosenTm = null
+                chosenTarget= null;
+            }, 3000);
+        } else {
+            useMsg.innerHTML = 'Used item.';
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        }
+    }).fail(function() {
+        useMsg.innerHTML = 'Item use request failed to send, please contact dev.';
     });
 }

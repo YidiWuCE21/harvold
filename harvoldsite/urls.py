@@ -44,6 +44,7 @@ urlpatterns = [
     path("remove_party_ajax", account_views.remove_party_ajax, name="remove_party_ajax"),
     path("reorder_party_ajax", account_views.reorder_party_ajax, name="reorder_party_ajax"),
     path("teach_tm_ajax", account_views.teach_tm_ajax, name="teach_tm_ajax"),
+    path("use_bag_item_ajax", account_views.use_bag_item_ajax, name="use_bag_item_ajax"),
     path("take_held_item_ajax", account_views.take_held_item_ajax, name="take_held_item_ajax"),
     path("give_held_item_ajax", account_views.give_held_item_ajax, name="give_held_item_ajax"),
     path("read_message_ajax", account_views.read_message_ajax, name="read_message_ajax")

@@ -1,4 +1,5 @@
 {
+    "berries": {},
     "medicine": {
         "potion": {
             "valid_targets": "alive",

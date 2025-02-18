@@ -389,6 +389,22 @@ PLAYER_STATE = {
     "misc": {}
 }
 
+EV_MODIFIERS = {
+    # Formatted as stat, EV modifier, happiness (optional)
+    "grepa-berry": ("spd", -10, 10),
+    "hondew-berry": ("spa", -10, 10),
+    "kelpsy-berry": ("atk", -10, 10),
+    "pomeg-berry": ("hp", -10, 10),
+    "qualot-berry": ("def", -10, 10),
+    "tamato-berry": ("spe", -10, 10),
+    "protein": ("atk", 10),
+    "zinc": ("spd", 10),
+    "calcium": ("spa", 10),
+    "carbos": ("spe", 10),
+    "hp-up": ("hp", 10),
+    "iron": ("def", 10)
+}
+
 TYPE_EFFECTIVENESS = {
     ("normal", "rock"): 0.5,
     ("normal", "ghost"): 0,
