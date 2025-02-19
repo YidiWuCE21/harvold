@@ -318,6 +318,19 @@ class Profile(models.Model):
         return (True, "")
 
 
+    def update_inventory_values(self, inventory):
+        """
+        Update from battle without erasing items
+        """
+        for category, all_items in inventory.items():
+            if category not in self.bag:
+                continue
+            for item, quantity in all_items.items():
+                if item not in self.bag[category]:
+                    continue
+                self.bag[category][item] = quantity
+
+
     def purchase_item(self, item, quantity):
         """
         Purchase an item from the shop
@@ -550,6 +563,9 @@ class Profile(models.Model):
                 elif pokemon.current_hp > 0:
                     return "Cannot use that item on that target."
                 if "hp" in item_effects:
+                    # If hp is full, ignore
+                    if pokemon.current_hp == pokemon.hp_stat:
+                        return "HP is already full!"
                     if item_effects["hp"] == "full":
                         pokemon.current_hp = pokemon.hp_stat
                     # Just for revives
@@ -559,16 +575,21 @@ class Profile(models.Model):
                         pokemon.current_hp = min(pokemon.current_hp + item_effects["hp"],
                                                         pokemon.hp_stat)
                 if "status" in item_effects:
+                    if pokemon.status == "":
+                        return "No status to cure!"
                     if item_effects["status"] == "any":
                         pokemon.status = ""
                     elif item_effects["status"] == pokemon.status:
                         pokemon.status = ""
                     elif item_effects["status"] == "psn" and pokemon.status == "txc":
                         pokemon.status = ""
+                    else:
+                        return "Cannot cure that status!"
                 try:
                     with transaction.atomic():
                         self.consume_item(item, 1)
                         pokemon.save()
+                    return "Used item."
                 except IntegrityError:
                     return "Failed to use item."
             # Check if item is EV reducing berry or medicine
@@ -583,6 +604,7 @@ class Profile(models.Model):
                         ev_gain = [item_effect[1] if item_effect[0] == stat else 0 for stat in consts.STATS]
                         pokemon.add_evs(ev_gain, recalculate=True)
                         pokemon.save()
+                    return "Used item."
                 except IntegrityError:
                     return "Failed to use item."
 

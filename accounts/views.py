@@ -231,9 +231,10 @@ def reorder_party_ajax(request):
     return render(request, "common/party.html", {"party": [pkmn.get_party_info() if pkmn is not None else None for pkmn in party], "msg": msg})
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def teach_tm_ajax(request):
     profile = request.user.profile
+    if profile.current_battle is not None:
+        return JsonResponse({"msg": "Cannot teach moves in battle!"})
     tm = request.GET.get("tm")
     target = request.GET.get("target")
     move_slot = request.GET.get("slot")
@@ -241,18 +242,20 @@ def teach_tm_ajax(request):
     return JsonResponse({"msg": msg})
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def use_bag_item_ajax(request):
     profile = request.user.profile
+    if profile.current_battle is not None:
+        return JsonResponse({"msg": "Cannot use items in battle!"})
     item = request.GET.get("item")
     target = request.GET.get("slot")
     msg = profile.use_bag_item(item, target)
     return JsonResponse({"msg": msg})
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def take_held_item_ajax(request):
     profile = request.user.profile
+    if profile.current_battle is not None:
+        return JsonResponse({"msg": "Cannot swap items in battle!"})
     pkmn = request.GET.get("slot", None)
     if pkmn is None:
         pkmn = Pokemon.objects.get(pk=request.GET.get("id"))
@@ -260,9 +263,10 @@ def take_held_item_ajax(request):
     return JsonResponse({"msg": msg})
 
 @login_required
-@user_passes_test(consts.user_not_in_battle, login_url="/battle")
 def give_held_item_ajax(request):
     profile = request.user.profile
+    if profile.current_battle is not None:
+        return JsonResponse({"msg": "Cannot swap items in battle!"})
     slot = request.GET.get("slot")
     item = request.GET.get("item")
     msg = profile.give_item(item, slot)

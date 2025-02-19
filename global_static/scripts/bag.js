@@ -140,7 +140,7 @@ function useItem({slot}) {
                 chosenTarget= null;
             }, 3000);
         } else {
-            useMsg.innerHTML = 'Used item.';
+            useMsg.innerHTML = response.msg;
             setTimeout(() => {
                 window.location.reload();
             }, 2000);

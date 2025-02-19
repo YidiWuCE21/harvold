@@ -212,13 +212,13 @@ def handle_outcome(battle_state, battle, output_log, is_p1):
     player_1.current_battle = None
 
     if battle.save_inventory:
-        player_1.bag = battle_state.player_1.inventory
+        player_1.update_inventory_values(battle_state.player_1.inventory)
 
     if battle.type == "live":
         player_2 = battle.player_2
         player_2.current_battle = None
         if battle.save_inventory:
-            player_2.bag = battle_state.player_2.inventory
+            player_1.update_inventory_values(battle_state.player_2.inventory)
 
     # Caught a wild Pokemon
     if battle_state.outcome == "caught" and battle.type == "wild":
