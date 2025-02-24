@@ -125,6 +125,17 @@ def world_map(request):
     }
     return render(request, "map/world_map.html", html_render_variables)
 
+@login_required
+@user_passes_test(consts.user_not_in_battle, login_url="/battle")
+@user_passes_test(consts.user_not_in_gauntlet, login_url="/gauntlet")
+def swarm_map(request):
+    """
+    Function to open the swarm map.
+    """
+    swarm_pokemon, route = swarm(datetime.now())
+    request.session["map"] = route
+    return redirect("map")
+
 
 @login_required
 def map_data(request):

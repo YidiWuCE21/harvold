@@ -30,6 +30,7 @@ function heal() {
         <h5>Swarm Alert</h5>
         <p>A swarm of {{ swarm_name }} has appeared in {{ route }}</p>
         <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ swarm_dex }}.png">
+        <a href="{% url 'swarm_map' %}" class="button-3 button-foward">Go!</a>
 
     </div>
     <div style="grid-column:2;grid-row:1;" class="content-box">

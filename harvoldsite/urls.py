@@ -13,6 +13,7 @@ urlpatterns = [
     path("credits", TemplateView.as_view(template_name="common/credits.html"), name="credits"),
     #path("map/", include("map.urls")),
     path("map", map_views.map, name="map"),
+    path("swarm_map", map_views.swarm_map, name="swarm_map"),
     path("world_map", map_views.world_map, name="world_map"),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     # Account related views
