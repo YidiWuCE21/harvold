@@ -75,7 +75,7 @@ let grass = false;
 let currentArea = null;
 
 // Wild Pokemon generators
-let steps = 10;
+let steps = 20;
 let wildShow = null;
 let wildHide = null;
 let wildArea = null;

@@ -50,11 +50,21 @@
         {% endfor %}
         {% endif %}
     </div>
+
     <div style="grid-column:1;grid-row:2;" class="content-box">
         <h4>Locations</h4>
+        <form method="POST" id="mapForm" action="{% url 'world_map' %}">
+            {% csrf_token %}
+            <input type="hidden" name="map" id="mapInput" value="">
+        </form>
         {% if maps %}
         {% for evo, map in maps %}
-        <p>{{ evo }}: {{ map|field_name_to_label }}</p>
+        <p>{{ evo }}:
+            <button class="button-3"
+                onclick="submitForm({val: '{{map}}', input: 'mapInput', form: 'mapForm'})"
+                data-toggle="tooltip"
+                title="{{ data.name }}">{{ map|field_name_to_label }}</button>
+        </p>
         {% endfor %}
         {% else %}
         Not obtainable on maps

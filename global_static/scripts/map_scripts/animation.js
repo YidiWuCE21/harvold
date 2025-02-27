@@ -440,8 +440,8 @@ function animate(looped = true) {
                     wildHide -= 1;
                 }
                 if (steps < 0) {
-                    steps = 10;
-                    if (Math.random() < 0.15) {
+                    steps = 20;
+                    if (Math.random() < 0.4) {
                         wildArea = (grass) ? 'grass' : 'water';
                         $.ajax(
                         {
@@ -485,7 +485,6 @@ function animate(looped = true) {
         }
     }
 
-    //applyFilter();
 }
 
 function writeDialogue(text) {

@@ -182,7 +182,7 @@ def wild_battle(request):
 
         # Check if swarming, append swarm to list
         swarm_pokemon, route = swarm(datetime.now())
-        if route == map:
+        if route == map and area != "water":
             wild_choices.append(consts.POKEMON[swarm_pokemon]["name"])
             # 1/5a chance of swarm appearing
             weights.append(sum(weights) / 4)
