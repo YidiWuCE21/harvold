@@ -88,7 +88,7 @@ The current "end-game" is the Battle Mansion, a Pokémon Omega inspired Battle F
 - [ ] Settings and tutorial
 - [ ] Trading feature
 - [ ] Item improvements
-    - [ ] EV reducing berries
+    - [x] EV reducing berries
     - [ ] Separate in battle medicine from supplements
     - [ ] Better held item management
 - [ ] Additional box functionality
