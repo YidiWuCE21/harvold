@@ -212,3 +212,25 @@ def wild_battle(request):
         "shiny": shiny
     }
     return JsonResponse(pokeinfo)
+
+
+@login_required
+def map_editor_select(request):
+    if os.environ.get("DEBUG") != "True":
+        return HttpResponseNotFound("Enable debug mode to access this.")
+    html_render_variables = {
+        "maps": consts.MAPS
+    }
+    return render(request, "map/editor_select.html", html_render_variables)
+
+
+@login_required
+def map_editor(request):
+    if os.environ.get("DEBUG") != "True":
+        return HttpResponseNotFound("Enable debug mode to access this.")
+    html_render_variables = {
+        "map": request.GET.get("map"),
+        "trainers": [[f[:-4], f[:-4]] for f in os.listdir(os.path.join("global_static", consts.ASSET_PATHS["trainer_ow"])) if f.endswith('.png')],
+        "pokemon": [[dex, data["name"]] for dex, data in consts.POKEMON.items()]
+    }
+    return render(request, "map/editor.html", html_render_variables)

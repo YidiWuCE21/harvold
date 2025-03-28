@@ -61,7 +61,7 @@ def get_battle_inventory(player):
     return copy.deepcopy(battle_bag)
 
 
-def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_override=None, no_items=False, gauntlet=None, save_team=True):
+def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_override=None, no_items=False, gauntlet=None, save_team=True, map=None):
     """
     Player 2 should either be a player ID, a Pokemon ID, or an NPC ID (stored in data file)
 
@@ -94,7 +94,7 @@ def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_over
     if type == "wild":
         wild_opponent = create_wild_battle(p2_id, battle_state)
     elif type == "npc":
-        npc_opponent, reward = create_npc_battle(p2_id, battle_state, opp_override, player_1)
+        npc_opponent, reward = create_npc_battle(p2_id, battle_state, opp_override, player_1, map)
     elif type == "live":
         player_2, party_2 = create_live_battle(battle_state, p2_id)
     else:
@@ -166,7 +166,7 @@ def create_wild_battle(p2_id, battle_state):
     return wild_opponent
 
 
-def create_npc_battle(p2_id, battle_state, opp_override, player_1):
+def create_npc_battle(p2_id, battle_state, opp_override, player_1, map=None):
     npc_opponent = p2_id
     reward = None
     if opp_override:
@@ -176,7 +176,10 @@ def create_npc_battle(p2_id, battle_state, opp_override, player_1):
             reward = opp_override["reward"]
     else:
         trainer_data = "{}.json".format(p2_id)
-        trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+        if map:
+            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", map, trainer_data)
+        else:
+            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
         if not os.path.isfile(trainer_path):
             raise KeyError("{} not recognized as a trainer".format(p2_id))
         with open(trainer_path) as trainer_file:

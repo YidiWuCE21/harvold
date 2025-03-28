@@ -48,6 +48,15 @@
             </form>
         </div>
     </div>
+    {% if devtools %}
+    <div class="dropdown">
+        <button class="dropbtn">Devtools</button>
+        <div class="dropdown-content">
+            <a href="{% url 'make' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\gym.png">Make</a>
+            <a href="{% url 'map_editor_select' %}" class="dropelem"><img class="icon" src="{% get_static_prefix %}{{ asset_paths.menu }}\mansion.png">Map Editor</a>
+        </div>
+    </div>
+    {% endif %}
 
 
     {% if message_flash %}

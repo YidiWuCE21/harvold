@@ -83,7 +83,8 @@ TEMPLATES = [
                 'pokemon.template_consts.asset_paths',
                 'pokemon.template_consts.party',
                 'pokemon.template_consts.uid',
-                'pokemon.template_consts.inbox'
+                'pokemon.template_consts.inbox',
+                'pokemon.template_consts.devtools'
             ],
         },
     },

@@ -1,0 +1,37 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load stat_tags %}
+
+{% block title %}Edit Map{% endblock %}
+
+{% block content %}
+<style>
+    .char_class input {
+        padding: 1px;
+        font-size:8px;
+    }
+</style>
+<div id="editor">
+    <h4>Editing {{ map|field_name_to_label }}</h4>
+    <div id="map" class="left" style="display:inline-block;overflow-x:scroll;overflow-y:scroll;width:600px;height:300px;position:relative;">
+        <img id="mapImg" src="{% get_static_prefix %}assets/maps/{{ map }}/background.png" style="position:absolute;">
+        <div id="highlight" style="display:none;width:16px;height:16px;background:rgba(255, 255, 255, 0.3);position:absolute;"></div>
+    </div>
+
+    <div id="sidebar" class="right" style="display:inline-block">
+        <h4>NPCs</h4>
+        <button id="add_npc">Add NPC</button>
+        <div id="npcs"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const mapImg = "{% get_static_prefix %}assets/maps/{{ map }}/background.png";
+const mapName = '{{ map }}';
+const pokemon = {{ pokemon|safe }};
+const trainers = {{ trainers|safe }};
+</script>
+<script src="{% static 'scripts/editor.js' %}"></script>
+{% endblock %}

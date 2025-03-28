@@ -1,0 +1,16 @@
+{% extends "base_layout.html" %}
+{% load static %}
+
+{% block title %}Select Map{% endblock %}
+
+{% block content %}
+<form method="GET" action="{% url 'map_editor' %}">
+    {% csrf_token %}
+    <select name="map">
+        {% for map in maps %}
+        <option value="{{map}}">{{map}}</option>
+        {% endfor %}
+    </select>
+    <button>Go</button>
+</form>
+{% endblock %}

@@ -1,3 +1,4 @@
+import os
 from harvoldsite import consts
 from django.conf import settings
 
@@ -36,3 +37,7 @@ def inbox(request):
         return {"message_flash": request.user.profile.inbox_flag}
     except AttributeError:
         return {"message_flash": False}
+
+
+def devtools(request):
+    return {"devtools": os.environ.get("DEBUG")}

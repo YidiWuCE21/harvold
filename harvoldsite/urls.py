@@ -26,7 +26,6 @@ urlpatterns = [
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
     path("pokedex", pokemon_views.pokedex, name="pokedex"),
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
-    path("make", pokemon_views.make, name="make"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
     path("ev_dojo", battle_views.ev_dojo, name="ev_dojo"),
@@ -35,6 +34,10 @@ urlpatterns = [
     path("battle_create", battle_views.battle_create, name="battle_create"),
     path("battle_mansion_start", battle_views.battle_mansion_start, name="battle_mansion_start"),
     path("battle_mansion", battle_views.battle_mansion_page, name="battle_mansion"),
+    # Devtools
+    path("make", pokemon_views.make, name="make"),
+    path("map_editor_select", map_views.map_editor_select, name="map_editor_select"),
+    path("map_editor", map_views.map_editor, name="map_editor"),
     #path('', include('users.urls'))
     # AJAX/fetch requests
     path("map_data/", map_views.map_data, name="map_data"),
