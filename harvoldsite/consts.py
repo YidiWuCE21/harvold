@@ -528,6 +528,107 @@ TYPE_EFFECTIVENESS = {
     ("fairy", "steel"): 0.5
 }
 
+PAYOUTS = {
+    "default": 16,
+    "aroma_lady": 32,
+    "artist": 48,
+    "ace_trainer_m": 60,
+    "ace_trainer_f": 60,
+    "backpacker_m": 24,
+    "backpacker_f": 24,
+    "baker": 40,
+    "battlegirl": 16,
+    "beauty": 56,
+    "biker": 16,
+    "bird_keeper": 32,
+    "blackbelt": 24,
+    "boarder": 32,
+    "bounty_hunter_f": 60,
+    "bounty_hunter_m": 60,
+    "breeder_f": 40,
+    "breeder_m": 40,
+    "bug_catcher": 16,
+    "cameraman": 32,
+    "clerk_m": 40,
+    "clerk_f": 40,
+    "clerk_b": 80,
+    "clown": 24,
+    "collector": 48,
+    "cool_trainer_m": 60,
+    "cool_trainer_f": 60,
+    "cowgirl": 16,
+    "cyclist_f": 32,
+    "cyclist_m": 32,
+    "dancer": 32,
+    "detective": 72,
+    "doctor": 60,
+    "dragon_tamer": 48,
+    "elite_trainer_f": 60,
+    "elite_trainer_m": 60,
+    "firebreather": 32,
+    "fisher": 32,
+    "fisher_2": 32,
+    "gentleman": 200,
+    "harlequin": 32,
+    "hiker": 32,
+    "hoopster": 100,
+    "idol": 72,
+    "infielder": 100,
+    "janitor": 40,
+    "kimono_girl": 120,
+    "lady": 160,
+    "lass": 16,
+    "lass_2": 16,
+    "linebacker": 100,
+    "maid": 40,
+    "medium": 40,
+    "musician": 32,
+    "ninja_boy": 16,
+    "nurse": 40,
+    "nurse_joy": 40,
+    "nursery_aide": 40,
+    "parasol_lady": 24,
+    "picnicker_m": 16,
+    "picnicker_f": 16,
+    "pilot": 60,
+    "pokefan_f": 64,
+    "pokefan_m": 64,
+    "pokekid": 16,
+    "policeman": 40,
+    "preschooler_f": 4,
+    "preschooler_m": 4,
+    "psychic_f": 32,
+    "psychic_m": 32,
+    "ranger_f": 60,
+    "ranger_m": 60,
+    "rich_boy": 200,
+    "roughneck": 24,
+    "roughneck_2": 24,
+    "sage": 32,
+    "sailor": 40,
+    "school_kid_m": 20,
+    "school_kid_f": 20,
+    "scientist_m": 24,
+    "scientist_f": 24,
+    "skier_f": 32,
+    "skier_m": 32,
+    "smasher": 100,
+    "socialite": 200,
+    "striker": 100,
+    "swimmer_f": 16,
+    "swimmer_m": 16,
+    "tuber_f": 4,
+    "tuber_m": 4,
+    "veteran_f": 60,
+    "veteran_m": 60,
+    "waiter": 40,
+    "waitress": 40,
+    "worker": 40,
+    "youngster": 16,
+    "youngster_2": 16
+
+}
+
 # Functions for checking that the user passes some test
 def user_not_in_battle(user):
     if user.profile.current_battle is not None:
@@ -539,3 +640,18 @@ def user_not_in_gauntlet(user):
     if user.profile.current_gauntlet is not None:
         return False
     return True
+
+
+def find_trainer_file(trainer):
+    # Check if it is in base dir
+    trainer_path = os.path.join(STATIC_PATH, "data", "trainers")
+    naive_case = os.path.join(trainer_path, "{}.json".format(trainer))
+    if os.path.isfile(naive_case):
+        return naive_case
+    # Check for partial match with directories
+    for subdir in os.listdir(trainer_path):
+        if os.path.isdir(os.path.join(trainer_path, subdir)):
+            if subdir in trainer:
+                potential = os.path.join(trainer_path, subdir, "{}.json".format(trainer))
+                if os.path.isfile(potential):
+                    return potential

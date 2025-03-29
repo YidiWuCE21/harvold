@@ -1,0 +1,190 @@
+{
+    "name": "Veteran Verzik",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 178,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "imprison",
+                    "pp": 10
+                }, {
+                    "move": "futuresight",
+                    "pp": 10
+                }, {
+                    "move": "captivate",
+                    "pp": 20
+                }, {
+                    "move": "hypnosis",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Synchronize",
+            "dex_number": "282",
+            "level": 67,
+            "shiny": false,
+            "stats": {
+                "hp": 178,
+                "atk": 84,
+                "def": 99,
+                "spa": 177,
+                "spd": 179,
+                "spe": 116
+            },
+            "id": null,
+            "name": "Gardevoir"
+        }, {
+            "current_hp": 289,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "bellydrum",
+                    "pp": 10
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }, {
+                    "move": "heavyslam",
+                    "pp": 10
+                }, {
+                    "move": "gigaimpact",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Gluttony",
+            "dex_number": "143",
+            "level": 63,
+            "shiny": false,
+            "stats": {
+                "hp": 289,
+                "atk": 148,
+                "def": 96,
+                "spa": 103,
+                "spd": 154,
+                "spe": 59
+            },
+            "id": null,
+            "name": "Snorlax"
+        }, {
+            "current_hp": 155,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "growth",
+                    "pp": 20
+                }, {
+                    "move": "gigadrain",
+                    "pp": 10
+                }, {
+                    "move": "aromatherapy",
+                    "pp": 5
+                }, {
+                    "move": "ragepowder",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Dry Skin",
+            "dex_number": "047",
+            "level": 64,
+            "shiny": false,
+            "stats": {
+                "hp": 155,
+                "atk": 128,
+                "def": 110,
+                "spa": 94,
+                "spd": 108,
+                "spe": 56
+            },
+            "id": null,
+            "name": "Parasect"
+        }, {
+            "current_hp": 197,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "flamethrower",
+                    "pp": 15
+                }, {
+                    "move": "crunch",
+                    "pp": 15
+                }, {
+                    "move": "nastyplot",
+                    "pp": 20
+                }, {
+                    "move": "inferno",
+                    "pp": 5
+                }
+            ],
+            "held_item": null,
+            "happiness": 35,
+            "ability": "Unnerve",
+            "dex_number": "229",
+            "level": 70,
+            "shiny": false,
+            "stats": {
+                "hp": 197,
+                "atk": 138,
+                "def": 82,
+                "spa": 180,
+                "spd": 120,
+                "spe": 156
+            },
+            "id": null,
+            "name": "Houndoom"
+        }, {
+            "current_hp": 206,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "meanlook",
+                    "pp": 5
+                }, {
+                    "move": "poisonfang",
+                    "pp": 15
+                }, {
+                    "move": "haze",
+                    "pp": 30
+                }, {
+                    "move": "airslash",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Inner Focus",
+            "dex_number": "169",
+            "level": 71,
+            "shiny": false,
+            "stats": {
+                "hp": 206,
+                "atk": 133,
+                "def": 122,
+                "spa": 115,
+                "spd": 144,
+                "spe": 189
+            },
+            "id": null,
+            "name": "Crobat"
+        }
+    ],
+    "reward": {
+        "base_payout": 60
+    },
+    "map": "vitur_forest",
+    "sprite": "veteran_f",
+    "lines": {
+        "lose": "It's not over until the fat lady sings."
+    }
+}

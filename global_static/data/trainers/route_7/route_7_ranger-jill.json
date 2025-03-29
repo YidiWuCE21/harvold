@@ -1,0 +1,155 @@
+{
+    "name": "Ranger Jill",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 21,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "assist",
+                    "pp": 20
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Unburden",
+            "dex_number": "509",
+            "level": 6,
+            "shiny": false,
+            "stats": {
+                "hp": 21,
+                "atk": 9,
+                "def": 10,
+                "spa": 12,
+                "spd": 11,
+                "spe": 13
+            },
+            "id": null,
+            "name": "Purrloin"
+        }, {
+            "current_hp": 26,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "assist",
+                    "pp": 20
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Prankster",
+            "dex_number": "509",
+            "level": 8,
+            "shiny": false,
+            "stats": {
+                "hp": 26,
+                "atk": 14,
+                "def": 13,
+                "spa": 13,
+                "spd": 9,
+                "spe": 16
+            },
+            "id": null,
+            "name": "Purrloin"
+        }, {
+            "current_hp": 24,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "assist",
+                    "pp": 20
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Limber",
+            "dex_number": "509",
+            "level": 7,
+            "shiny": false,
+            "stats": {
+                "hp": 24,
+                "atk": 13,
+                "def": 12,
+                "spa": 12,
+                "spd": 11,
+                "spe": 13
+            },
+            "id": null,
+            "name": "Purrloin"
+        }, {
+            "current_hp": 26,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "scratch",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "assist",
+                    "pp": 20
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Unburden",
+            "dex_number": "509",
+            "level": 8,
+            "shiny": false,
+            "stats": {
+                "hp": 26,
+                "atk": 13,
+                "def": 11,
+                "spa": 13,
+                "spd": 11,
+                "spe": 15
+            },
+            "id": null,
+            "name": "Purrloin"
+        }
+    ],
+    "reward": {
+        "base_payout": 60
+    },
+    "map": "route_7",
+    "sprite": "ranger_f",
+    "lines": {
+        "lose": "Thanks for your help!"
+    }
+}

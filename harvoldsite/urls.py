@@ -38,6 +38,7 @@ urlpatterns = [
     path("make", pokemon_views.make, name="make"),
     path("map_editor_select", map_views.map_editor_select, name="map_editor_select"),
     path("map_editor", map_views.map_editor, name="map_editor"),
+    path("submit_edit", map_views.submit_edit, name="submit_edit"),
     #path('', include('users.urls'))
     # AJAX/fetch requests
     path("map_data/", map_views.map_data, name="map_data"),

@@ -315,6 +315,7 @@ function animate(looped = true) {
                         const url = trainerUrl;
                         const form = $('<form action="' + url + '" method="post" style="display:none;">' +
                           '<input type="text" name="trainer" value="' + trainer.battle + '" />' +
+                          '<input type="text" name="map" value="' + currentMap + '" />' +
                           '</form>');
                         $('body').append(form);
                         const csrfElem = document.createElement('input');

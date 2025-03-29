@@ -1,0 +1,120 @@
+{
+    "name": "Ranger Jack",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 52,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "sandattack",
+                    "pp": 15
+                }, {
+                    "move": "gust",
+                    "pp": 35
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }, {
+                    "move": "whirlwind",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Tangled Feet",
+            "dex_number": "017",
+            "level": 18,
+            "shiny": false,
+            "stats": {
+                "hp": 52,
+                "atk": 31,
+                "def": 27,
+                "spa": 20,
+                "spd": 27,
+                "spe": 31
+            },
+            "id": null,
+            "name": "Pidgeotto"
+        }, {
+            "current_hp": 43,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "confusion",
+                    "pp": 25
+                }, {
+                    "move": "poisonpowder",
+                    "pp": 35
+                }, {
+                    "move": "sleeppowder",
+                    "pp": 15
+                }, {
+                    "move": "stunspore",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Tinted Lens",
+            "dex_number": "012",
+            "level": 15,
+            "shiny": false,
+            "stats": {
+                "hp": 43,
+                "atk": 19,
+                "def": 24,
+                "spa": 36,
+                "spd": 30,
+                "spe": 30
+            },
+            "id": null,
+            "name": "Butterfree"
+        }, {
+            "current_hp": 41,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "playnice",
+                    "pp": 20
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }, {
+                    "move": "thunderwave",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Lightningrod",
+            "dex_number": "025",
+            "level": 16,
+            "shiny": false,
+            "stats": {
+                "hp": 41,
+                "atk": 28,
+                "def": 22,
+                "spa": 21,
+                "spd": 22,
+                "spe": 32
+            },
+            "id": null,
+            "name": "Pikachu"
+        }
+    ],
+    "reward": {
+        "base_payout": 60
+    },
+    "map": "route_3",
+    "sprite": "ranger_m",
+    "lines": {
+        "lose": "You're ready, kid."
+    }
+}

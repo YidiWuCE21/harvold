@@ -11,19 +11,32 @@
         font-size:8px;
     }
 </style>
+<div>
+    Avg level: {{ level }}
+    Pokemon: {{ wild }}
+</div>
 <div id="editor">
     <h4>Editing {{ map|field_name_to_label }}</h4>
     <div id="map" class="left" style="display:inline-block;overflow-x:scroll;overflow-y:scroll;width:600px;height:300px;position:relative;">
         <img id="mapImg" src="{% get_static_prefix %}assets/maps/{{ map }}/background.png" style="position:absolute;">
-        <div id="highlight" style="display:none;width:16px;height:16px;background:rgba(255, 255, 255, 0.3);position:absolute;"></div>
+        <img id="highlight" src="{% get_static_prefix %}assets/npc/overworld/picnicker_m.png" style="display:none;position:absolute;"></img>
     </div>
 
-    <div id="sidebar" class="right" style="display:inline-block">
         <h4>NPCs</h4>
+        <button onclick="exportJsons()">Export</button>
         <button id="add_npc">Add NPC</button>
+    <div id="sidebar" class="right" style="display:inline-block;overflow-y:scroll;height:400px;width:800px" class="content-box">
         <div id="npcs"></div>
     </div>
 </div>
+<form method="POST" class="content-box" action="{% url 'submit_edit' %}">
+    {% csrf_token %}
+    <input type="hidden" name="map" value="{{ map }}">
+    <input type="hidden" name="npc_data" id="npc_data">
+    <h4>Preview</h4>
+    <div id="preview"></div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
 {% endblock %}
 
 {% block scripts %}

@@ -5,12 +5,13 @@ class NPC {
         this.name = 'NPC';               // Name of the NPC
         this.dialogue = 'Battle start dialogue';       // Dialogue text of the NPC
         this.loss = 'Battle loss dialogue';
-        this.trainer_sprite = 'artist';           // The sprite of the NPC
+        this.trainer_sprite = 'picnicker_m';           // The sprite of the NPC
         this.pokemon_sprite = '001';
         this.isPokemon = false;     // Boolean indicating if the NPC is a Pokemon
-        this.wanderPoints = [{"x": position.x, "y": position.y, "dir": "right"}]; // List of wander points (array of {x, y, direction})
+        this.wanderPoints = [{"x": position.x, "y": position.y, "dir": "down"}]; // List of wander points (array of {x, y, direction})
         this.team = [];               // List of team members (Pokémon or NPC objects)
         this.mapSprite = []; // pointer to sprite
+        this.bg = null;
 
         this.fast = false;
         this.alwaysMoving = false;
@@ -27,20 +28,28 @@ class NPC {
                 "name": this.name,
                 "sprite": whichSprite,
                 "dialogue": this.dialogue,
-                "type": this.isPokemon,
                 "wander_points": this.wanderPoints
             }
         }
-        if (this.alwaysMoving) res["alwaysMoving"] = true;
-        if (this.fast) res["fast"] = true;
+        let new_points = [];
+        this.wanderPoints.forEach((point) => {
+            new_points.push({'x': point.x - 1, 'y': point.y - 1, 'dir': point.dir})
+        })
+        res["map"]["wander_points"] = new_points;
+        if (this.isPokemon) {
+            res["map"]["type"] = "pokemon";
+        }
         if (this.team.length > 0) {
-            let battle_name = `${mapName}_${this.name}`
+            let battle_name = `${mapName}_${this.name.replace(/\s+/g, '-').toLowerCase()}`
             let battle_info = {
                 "name": this.name,
                 "file": battle_name,
                 "team": this.team,
                 "sprite": whichSprite,
                 "lose": this.loss
+            }
+            if (this.bg) {
+                battle_info["bg"] = this.bg;
             }
             res["gen"] = battle_info
             res["map"]["battle"] = battle_name
@@ -66,11 +75,28 @@ class NPC {
             mapSprite.src = fullPath;
             mapSprite.style.position = 'absolute';
             mapSprite.style.opacity = '0.6';
-            mapSprite.style.left = `${point.x * 16 - 8}px`;
-            mapSprite.style.top = `${point.y * 16 - 12}px`;
             mapSprite.style.objectFit = "none";  // Prevent scaling
-            mapSprite.style.objectPosition = "0% 0%"; // Show top-left
-            mapSprite.style.clipPath = "inset(0 75% 75% 0)";
+            mapSprite.style.objectPosition = "0% 0%";
+            let yOffset = 0;
+            switch (point.dir) {
+                case 'left':
+                    mapSprite.style.clipPath = "inset(25% 75% 50% 0)";
+                    yOffset = 32 * 1;
+                    break;
+                case 'right':
+                    mapSprite.style.clipPath = "inset(50% 75% 25% 0)";
+                    yOffset = 32 * 2;
+                    break;
+                case 'up':
+                    mapSprite.style.clipPath = "inset(75% 75% 0 0)";
+                    yOffset = 32 * 3;
+                    break;
+                case 'down':
+                    mapSprite.style.clipPath = "inset(0 75% 75% 0)";
+                    break;
+            }
+            mapSprite.style.left = `${point.x * 16 - 8}px`;
+            mapSprite.style.top = `${point.y * 16 - 12 - yOffset}px`;
             this.mapSprite.push(mapSprite);
             parent.append(mapSprite)
         })
@@ -81,6 +107,7 @@ class NPC {
 
     // Method to check if the wander points are valid
     isValidWanderPoints() {
+        if (this.wanderPoints.length == 1) return true;
         for (let i = 0; i < this.wanderPoints.length; i++) {
             const current = this.wanderPoints[i];
             const next = this.wanderPoints[(i + 1) % this.wanderPoints.length]; // Wrap around to the first point
@@ -145,8 +172,11 @@ map.addEventListener("mousemove", (e) => {
     const x = Math.floor((e.clientX - rect.left + map.scrollLeft) / 16);
     const y = Math.floor((e.clientY - rect.top + map.scrollTop) / 16);
 
-    highlight.style.left = `${x * 16}px`;
-    highlight.style.top = `${y * 16}px`;
+    highlight.style.left = `${x * 16 - 8}px`;
+    highlight.style.top = `${y * 16 - 12}px`;
+    highlight.style.objectFit = "none";  // Prevent scaling
+    highlight.style.objectPosition = "0% 0%"; // Show top-left
+    highlight.style.clipPath = "inset(0 75% 75% 0)";
     highlight.style.display = "block";
 });
 
@@ -164,7 +194,7 @@ map.addEventListener("click", (e) => {
     //const character = { x, y };
     if (addingPoint && charIdx != null) {
         // TODO sanity check; only allow push on same axis
-        npcs[charIdx].wanderPoints.push({x: x, y: y, dir: "right"})
+        npcs[charIdx].wanderPoints.push({x: x, y: y, dir: "down"})
         addingPoint = false;
         charIdx = null;
     } else {
@@ -199,16 +229,17 @@ function bindInput(inputId, instance, property) {
 function createSelect(optionsList, selectId, selected = null) {
     const select = document.createElement("select");
     if (selectId) select.id = selectId; // Optional ID
-
+    let to_select = null;
     optionsList.forEach((optionValue) => {
         const option = document.createElement("option");
         option.value = optionValue[0];
         option.textContent = optionValue[1];
-        select.appendChild(option);
         if (option.value == selected) {
-            option.selected = true;
+            to_select = option.value;
         }
+        select.appendChild(option);
     });
+    if (to_select) select.value = to_select;
 
     return select;
 }
@@ -259,7 +290,22 @@ function renderSidebar() {
         isPokemonInput.value = character.isPokemon;
         isPokemonInput.id = `${i}_pkmn`;
         isPokemonInput.addEventListener("change", renderMap);
+        charTab.append(document.createTextNode("Pokemon?"));
         charTab.append(isPokemonInput);
+        const isFast = document.createElement('input')
+        isFast.type = "checkbox";
+        isFast.value = character.fast;
+        isFast.id = `${i}_pkmn`;
+        isFast.addEventListener("change", renderMap);
+        charTab.append(document.createTextNode("Fast?"));
+        charTab.append(isFast);
+        const isMoving = document.createElement('input');
+        isMoving.type = "checkbox";
+        isMoving.value = character.alwaysMoving;
+        isMoving.id = `${i}_pkmn`;
+        isMoving.addEventListener("change", renderMap);
+        charTab.append(document.createTextNode("Moving?"));
+        charTab.append(isMoving);
 
         // Field to select sprite
         const trainerSprites = createSelect(trainers, `${i}_trainersprites`)
@@ -268,6 +314,16 @@ function renderSidebar() {
         pokemonSprites.addEventListener("change", renderMap);
         charTab.append(trainerSprites);
         charTab.append(pokemonSprites);
+        // BG select
+        const bgs = [
+            ["beach", "beach"], ["brown_cave", "brown_cave"],
+            ["default", "default"], ["desert", "desert"],
+            ["grass", "grass"], ["gray_cave", "gray_cave"],
+            ["pond", "pond"], ["snow", "snow"],
+            ["volcano", "volcano"], ["water", "water"]];
+        const bgSelect = createSelect(bgs, `${i}_bgselect`, "grass");
+        isMoving.value = "grass"
+        charTab.append(bgSelect);
 
         // Field to add wander points
         const wanderSection = document.createElement('div');
@@ -289,11 +345,13 @@ function renderSidebar() {
                 renderMap();
             });
 
-            const directionInput = document.createElement('input');
-            directionInput.value = point.dir;
-            directionInput.id = `${i}_wander_${idx}_dir`;
+            const directionInput = createSelect([["right", "right"], ["left", "left"], ["up", "up"], ["down", "down"]], `${i}_wander_${idx}_dir`, point.dir);
+            //document.createElement('input');
+            //directionInput.value = point.dir;
+            //directionInput.id = `${i}_wander_${idx}_dir`;
             directionInput.addEventListener("change", () => {
                 point.dir = directionInput.value;
+                renderMap();
             });
 
             wanderPointTab.append(xInput);
@@ -332,6 +390,7 @@ function renderSidebar() {
                 console.log("Not valid")
             }
         });
+        charTab.appendChild(document.createElement('br'))
         charTab.appendChild(document.createTextNode("wander"));
         wanderSection.appendChild(addWanderButton);
         wanderSection.appendChild(addWanderCheck);
@@ -374,6 +433,7 @@ function renderSidebar() {
             character.team.push({ dex: '001', level: 5 });  // Add new member with default values
             renderSidebar();  // Re-render the sidebar to reflect the update
         });
+        charTab.appendChild(document.createElement('br'))
         charTab.appendChild(document.createTextNode("team"));
         teamSection.appendChild(addTeamButton);
         charTab.appendChild(teamSection);
@@ -396,8 +456,11 @@ function renderSidebar() {
         bindInput(dialogueInput.id, character, 'dialogue');
         bindInput(lossInput.id, character, 'loss');
         bindInput(isPokemonInput.id, character, 'isPokemon');
+        bindInput(isFast.id, character, 'fast');
+        bindInput(isMoving.id, character, 'alwaysMoving');
         bindInput(trainerSprites.id, character, 'trainer_sprite');
         bindInput(pokemonSprites.id, character, 'pokemon_sprite');
+        bindInput(bgSelect.id, character, 'bg');
     })
 }
 
@@ -417,4 +480,26 @@ function removeHighlight() {
             spr.style.filter = "brightness(1)";
         })
     });
+}
+
+function hasDuplicateNames(instances) {
+    const seenNames = new Set();
+    for (const instance of instances) {
+        if (seenNames.has(instance.name)) {
+            return true; // Duplicate found
+        }
+        seenNames.add(instance.name);
+    }
+    return false; // No duplicates
+}
+
+function exportJsons() {
+
+    if (hasDuplicateNames(npcs)) {
+        alert("Duplicate names found. Please fix before exporting.");
+        return;
+    }
+    let res = JSON.stringify(npcs.map((x) => x.exportJson()));
+    document.getElementById("npc_data").value = res;
+    document.getElementById("preview").innerHTML = res;
 }

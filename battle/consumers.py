@@ -280,7 +280,7 @@ def handle_npc_battle(battle_state, battle, output_log, player_1, prompt):
 
 def load_trainer_data(npc_opponent):
     trainer_data = "{}.json".format(npc_opponent)
-    trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+    trainer_path = consts.find_trainer_file(npc_opponent)
     try:
         with open(trainer_path, encoding="utf-8") as trainer_file:
             return json.load(trainer_file)

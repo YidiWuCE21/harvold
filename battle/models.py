@@ -94,7 +94,9 @@ def create_battle(p1_id, p2_id, type, bg="default", opp_override=None, team_over
     if type == "wild":
         wild_opponent = create_wild_battle(p2_id, battle_state)
     elif type == "npc":
-        npc_opponent, reward = create_npc_battle(p2_id, battle_state, opp_override, player_1, map)
+        npc_opponent, reward, new_bg = create_npc_battle(p2_id, battle_state, opp_override, player_1, map)
+        if new_bg:
+            bg = new_bg
     elif type == "live":
         player_2, party_2 = create_live_battle(battle_state, p2_id)
     else:
@@ -169,21 +171,21 @@ def create_wild_battle(p2_id, battle_state):
 def create_npc_battle(p2_id, battle_state, opp_override, player_1, map=None):
     npc_opponent = p2_id
     reward = None
+    bg = None
     if opp_override:
         battle_state["player_2"]["party"] = opp_override["party"]
         battle_state["player_2"]["name"] = opp_override["name"]
         if "reward" in opp_override:
             reward = opp_override["reward"]
     else:
-        trainer_data = "{}.json".format(p2_id)
-        if map:
-            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", map, trainer_data)
-        else:
-            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+        trainer_path = consts.find_trainer_file(p2_id)
+
         if not os.path.isfile(trainer_path):
             raise KeyError("{} not recognized as a trainer".format(p2_id))
         with open(trainer_path) as trainer_file:
             trainer_json = json.load(trainer_file)
+            if "bg" in trainer_json:
+                bg = trainer_json["bg"]
             battle_state["player_2"]["party"] = trainer_json["team"]
             battle_state["player_2"]["name"] = trainer_json["name"]
             reward = trainer_json["reward"]
@@ -191,7 +193,7 @@ def create_npc_battle(p2_id, battle_state, opp_override, player_1, map=None):
             if "map" in trainer_json:
                 if trainer_json["map"] != player_1.current_map:
                     raise ValueError("Trainer is not on the right map!")
-    return npc_opponent, reward
+    return npc_opponent, reward, bg
 
 
 def create_live_battle(battle_state, p2_id):

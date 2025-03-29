@@ -1,0 +1,85 @@
+{
+    "name": "School Kid Jack",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 33,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "poisonsting",
+                    "pp": 35
+                }, {
+                    "move": "rollout",
+                    "pp": 20
+                }, {
+                    "move": "rapidspin",
+                    "pp": 40
+                }, {
+                    "move": "swift",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Sand Veil",
+            "dex_number": "027",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 33,
+                "atk": 26,
+                "def": 26,
+                "spa": 8,
+                "spd": 12,
+                "spe": 15
+            },
+            "id": null,
+            "name": "Sandshrew"
+        }, {
+            "current_hp": 31,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "tailwhip",
+                    "pp": 30
+                }, {
+                    "move": "headbutt",
+                    "pp": 15
+                }, {
+                    "move": "babydolleyes",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Quick Feet",
+            "dex_number": "263",
+            "level": 12,
+            "shiny": false,
+            "stats": {
+                "hp": 31,
+                "atk": 12,
+                "def": 16,
+                "spa": 13,
+                "spd": 18,
+                "spe": 20
+            },
+            "id": null,
+            "name": "Zigzagoon"
+        }
+    ],
+    "reward": {
+        "base_payout": 20
+    },
+    "map": "route_6",
+    "sprite": "school_kid_m",
+    "lines": {
+        "lose": "You're not Jill!"
+    }
+}

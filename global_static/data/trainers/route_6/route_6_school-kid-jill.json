@@ -1,0 +1,85 @@
+{
+    "name": "School Kid Jill",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 35,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "peck",
+                    "pp": 35
+                }, {
+                    "move": "nightshade",
+                    "pp": 15
+                }, {
+                    "move": "teleport",
+                    "pp": 20
+                }, {
+                    "move": "luckychant",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Early Bird",
+            "dex_number": "177",
+            "level": 12,
+            "shiny": false,
+            "stats": {
+                "hp": 35,
+                "atk": 17,
+                "def": 20,
+                "spa": 21,
+                "spd": 17,
+                "spe": 24
+            },
+            "id": null,
+            "name": "Natu"
+        }, {
+            "current_hp": 36,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "pound",
+                    "pp": 35
+                }, {
+                    "move": "uproar",
+                    "pp": 10
+                }, {
+                    "move": "astonish",
+                    "pp": 15
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Rattled",
+            "dex_number": "293",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 36,
+                "atk": 17,
+                "def": 9,
+                "spa": 18,
+                "spd": 13,
+                "spe": 12
+            },
+            "id": null,
+            "name": "Whismur"
+        }
+    ],
+    "reward": {
+        "base_payout": 20
+    },
+    "map": "route_6",
+    "sprite": "school_kid_f",
+    "lines": {
+        "lose": "I'm hiding! Don't give away my spot!"
+    }
+}

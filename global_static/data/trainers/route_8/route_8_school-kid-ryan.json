@@ -1,0 +1,85 @@
+{
+    "name": "School Kid Ryan",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 40,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "gust",
+                    "pp": 35
+                }, {
+                    "move": "growl",
+                    "pp": 40
+                }, {
+                    "move": "leer",
+                    "pp": 30
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Big Pecks",
+            "dex_number": "519",
+            "level": 13,
+            "shiny": false,
+            "stats": {
+                "hp": 40,
+                "atk": 19,
+                "def": 23,
+                "spa": 14,
+                "spd": 14,
+                "spe": 18
+            },
+            "id": null,
+            "name": "Pidove"
+        }, {
+            "current_hp": 38,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "quickattack",
+                    "pp": 30
+                }, {
+                    "move": "tailwhip",
+                    "pp": 30
+                }, {
+                    "move": "charge",
+                    "pp": 20
+                }, {
+                    "move": "shockwave",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Lightningrod",
+            "dex_number": "522",
+            "level": 14,
+            "shiny": false,
+            "stats": {
+                "hp": 38,
+                "atk": 23,
+                "def": 15,
+                "spa": 22,
+                "spd": 16,
+                "spe": 27
+            },
+            "id": null,
+            "name": "Blitzle"
+        }
+    ],
+    "reward": {
+        "base_payout": 20
+    },
+    "map": "route_8",
+    "sprite": "school_kid_m",
+    "lines": {
+        "lose": "You're so mean! My brother will beat you up!"
+    }
+}

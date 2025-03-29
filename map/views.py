@@ -228,9 +228,62 @@ def map_editor_select(request):
 def map_editor(request):
     if os.environ.get("DEBUG") != "True":
         return HttpResponseNotFound("Enable debug mode to access this.")
+    wild_info = consts.WILD[request.GET.get("map")]
     html_render_variables = {
         "map": request.GET.get("map"),
         "trainers": [[f[:-4], f[:-4]] for f in os.listdir(os.path.join("global_static", consts.ASSET_PATHS["trainer_ow"])) if f.endswith('.png')],
-        "pokemon": [[dex, data["name"]] for dex, data in consts.POKEMON.items()]
+        "pokemon": [[dex, data["name"]] for dex, data in consts.POKEMON.items()],
+        "level": wild_info["levels"],
+        "wild": [pkmn["pokemon"] for area, pkmn in wild_info.items() if area != "levels"]
     }
     return render(request, "map/editor.html", html_render_variables)
+
+
+@login_required
+def submit_edit(request):
+    if os.environ.get("DEBUG") != "True":
+        return HttpResponseNotFound("Enable debug mode to access this.")
+
+    map = request.POST.get("map")
+    npc_data = json.loads(request.POST.get("npc_data"))
+    battlers = []
+    npc_list = []
+    # Extract data
+    for npc in npc_data:
+        npc_list.append(npc["map"])
+        if "gen" in npc:
+            battlers.append(npc["gen"])
+
+    # Edit the map file with trainers
+    map_file = os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))
+    with open(map_file, "r", encoding='utf-8') as f:
+        map_data = json.load(f)
+        map_data["trainers"] = npc_list
+    with open(map_file, "w+", encoding='utf-8') as f:
+        json.dump(map_data, f)
+
+    # For each trainer with battles, create a battle file
+    battle_dir = os.path.join(consts.STATIC_PATH, "data", "trainers", map)
+    os.makedirs(battle_dir, exist_ok=True)
+    for battler in battlers:
+        if not battler["team"]:
+            continue
+        team = []
+        for pkmn in battler["team"]:
+            team.append(create_pokemon(pkmn["dex"], level=pkmn["level"], sex="g", skip_save=True))
+        battler_data = {
+            "name": battler["name"],
+            "bg": battler["bg"],
+            "team": team,
+            "reward": {"base_payout": consts.PAYOUTS.get(battler["sprite"], 16)},
+            "map": map,
+            "sprite": battler["sprite"],
+            "lines": {
+                "lose": battler["lose"]
+            }
+        }
+        with open(os.path.join(battle_dir, "{}.json".format(battler["file"])), "w+", encoding='utf-8') as f:
+            json.dump(battler_data, f)
+
+    request.session["map"] = map
+    return redirect("map")

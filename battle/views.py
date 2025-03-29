@@ -88,9 +88,10 @@ def create_trainer_battle(request):
     tries = 0
     retries = 3
     trainer = request.POST.get("trainer")
+    map = request.POST.get("map", None)
     while tries < retries:
         try:
-            models.create_battle(request.user.profile.pk, trainer, "npc")
+            models.create_battle(request.user.profile.pk, trainer, "npc", map=map)
             return redirect("battle")
         except BaseException as e:
             tries += 1
@@ -136,9 +137,8 @@ def battle(request):
     rebattle = None
     if battle.type == "npc":
         music = "trainer"
-        trainer_data = "{}.json".format(battle.npc_opponent)
         try:
-            trainer_path = os.path.join(consts.STATIC_PATH, "data", "trainers", trainer_data)
+            trainer_path = consts.find_trainer_file(battle.npc_opponent)
             with open(trainer_path, encoding="utf-8") as trainer_file:
                 trainer_json = json.load(trainer_file)
                 opp_sprite = trainer_json["sprite"]
