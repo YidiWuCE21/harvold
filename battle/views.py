@@ -96,7 +96,7 @@ def create_trainer_battle(request):
         except BaseException as e:
             tries += 1
             time.sleep(0.2)
-    return HttpResponseBadRequest("Failed to make battle.")
+    return HttpResponseBadRequest("Failed to make battle: {}.".format(e))
 
 
 def create_wild_battle(request):
