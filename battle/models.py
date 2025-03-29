@@ -242,7 +242,7 @@ class Battle(models.Model):
         on_delete=models.CASCADE,
         related_name="p2"
     )
-    npc_opponent = models.CharField(max_length=20, blank=True, null=True)
+    npc_opponent = models.CharField(max_length=50, blank=True, null=True)
     wild_opponent = models.ForeignKey(
         Pokemon,
         blank=True,
@@ -271,7 +271,7 @@ class Battle(models.Model):
     battle_prize = models.JSONField(blank=True, null=True, default=None)
 
     # Background
-    background = models.CharField(max_length=20, blank=True, null=True, default=None)
+    background = models.CharField(max_length=50, blank=True, null=True, default=None)
 
     # Flags to sasve
     save_team = models.BooleanField(default=True)
