@@ -228,13 +228,23 @@ def map_editor_select(request):
 def map_editor(request):
     if os.environ.get("DEBUG") != "True":
         return HttpResponseNotFound("Enable debug mode to access this.")
-    wild_info = consts.WILD[request.GET.get("map")]
+    wild_info = consts.WILD.get(request.GET.get("map"), {"levels": "None"})
+    map = request.GET.get("map")
+
+    # Get the existing data
+    """map_file = os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))
+    with open(map_file, "r", encoding='utf-8') as f:
+        map_data = json.load(f)
+        trainers = map_data["trainers"]"""
+
+
     html_render_variables = {
         "map": request.GET.get("map"),
         "trainers": [[f[:-4], f[:-4]] for f in os.listdir(os.path.join("global_static", consts.ASSET_PATHS["trainer_ow"])) if f.endswith('.png')],
         "pokemon": [[dex, data["name"]] for dex, data in consts.POKEMON.items()],
         "level": wild_info["levels"],
-        "wild": [pkmn["pokemon"] for area, pkmn in wild_info.items() if area != "levels"]
+        "wild": [pkmn["pokemon"] for area, pkmn in wild_info.items() if area != "levels"],
+        "prevData": json.dumps(trainers)
     }
     return render(request, "map/editor.html", html_render_variables)
 
@@ -245,6 +255,7 @@ def submit_edit(request):
         return HttpResponseNotFound("Enable debug mode to access this.")
 
     map = request.POST.get("map")
+    INSERT_MODE = True
     npc_data = json.loads(request.POST.get("npc_data"))
     battlers = []
     npc_list = []
@@ -258,7 +269,10 @@ def submit_edit(request):
     map_file = os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))
     with open(map_file, "r", encoding='utf-8') as f:
         map_data = json.load(f)
-        map_data["trainers"] = npc_list
+        if INSERT_MODE:
+            map_data["trainers"] += npc_list
+        else:
+            map_data["trainers"] = npc_list
     with open(map_file, "w+", encoding='utf-8') as f:
         json.dump(map_data, f)
 

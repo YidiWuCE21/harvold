@@ -176,6 +176,7 @@
             "type": "pokemon",
             "fast": true,
             "alwaysMoving": true,
+            "flying": true,
             "wander_points": [
                 {
                     "x": 43,
@@ -195,6 +196,7 @@
             "type": "pokemon",
             "fast": true,
             "alwaysMoving": true,
+            "flying": true,
             "wander_points": [
                 {
                     "x": 35,

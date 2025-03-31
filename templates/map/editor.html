@@ -45,6 +45,7 @@ const mapImg = "{% get_static_prefix %}assets/maps/{{ map }}/background.png";
 const mapName = '{{ map }}';
 const pokemon = {{ pokemon|safe }};
 const trainers = {{ trainers|safe }};
+const prevData = JSON.parse('{{ prevData|escapejs }}');
 </script>
 <script src="{% static 'scripts/editor.js' %}"></script>
 {% endblock %}

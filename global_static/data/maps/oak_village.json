@@ -136,8 +136,7 @@
                     "dir": "left"
                 }
             ]
-        },
-        {
+        }, {
             "name": "Fountain", "sprite": "fountain", "rows": 1, "frameTick": 10,
             "wander_points": [{"x": 9.4375, "y": 16.875, "dir": "right"}], "alwaysMoving": true
         }

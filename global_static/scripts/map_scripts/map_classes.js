@@ -47,7 +47,7 @@ class Boundary {
 
 // Animated sprites
 class Sprite {
-    constructor({ position, velocity, image, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, offset = {x: 0, y: 0}}) {
+    constructor({ position, velocity, image, crop = {x: 0, y: 0}, flying = false, frames = {max: 1}, rows = {max: 1}, hitbox = 0, offset = {x: 0, y: 0}}) {
         this.position = position;
         this.image = image;
         this.frames = {...frames, val: 0, elapsed: 0};
@@ -60,6 +60,7 @@ class Sprite {
         this.offset = offset;
         this.crop = crop;
         this.moving = false;
+        this.flying = flying;
     }
 
     draw(cameraPosition) {
@@ -92,7 +93,7 @@ class Sprite {
 class Trainer extends Sprite {
     constructor({
         position, velocity, image, wanderPoints, delay, battle = null, dialogue = null, name = null, frameTick = 10,
-        speed = 1, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, alwaysMoving = false, fast = false,
+        speed = 1, crop = {x: 0, y: 0}, frames = {max: 1}, rows = {max: 1}, hitbox = 0, alwaysMoving = false, fast = false, flying = false,
         offset = {x: 0, y: 0}}) {
         super({
             position: position,
@@ -102,7 +103,8 @@ class Trainer extends Sprite {
             frames: frames,
             rows: rows,
             hitbox: hitbox,
-            offset: offset
+            offset: offset,
+            flying: flying
         });
         this.wanderPoints = wanderPoints;
         this.currentPoint = 0;

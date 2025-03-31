@@ -14,7 +14,24 @@ class NPC {
         this.bg = null;
 
         this.fast = false;
+        this.flying = false;
         this.alwaysMoving = false;
+    }
+
+    fromJson(data) {
+        this.name = data["name"]
+        this.dialogue = data["dialogue"]
+        if ("type" in data) {
+            this.isPokemon = true;
+            this.pokemon_sprite = data["sprite"];
+        } else {
+            this.trainer_sprite = data["sprite"];
+        }
+        let new_points = [];
+        data["wander_points"].forEach((point) => {
+            new_points.push({'x': point.x + 1, 'y': point.y + 1, 'dir': point.dir})
+        })
+        this.wanderPoints = new_points;
     }
 
     exportJson() {
@@ -38,6 +55,15 @@ class NPC {
         res["map"]["wander_points"] = new_points;
         if (this.isPokemon) {
             res["map"]["type"] = "pokemon";
+        }
+        if (this.flying) {
+            res["map"]["flying"] = true;
+        }
+        if (this.alwaysMoving) {
+            res["map"]["alwaysMoving"] = true;
+        }
+        if (this.fast) {
+            res["map"]["fast"] = true;
         }
         if (this.team.length > 0) {
             let battle_name = `${mapName}_${this.name.replace(/\s+/g, '-').toLowerCase()}`
@@ -160,6 +186,14 @@ let npcs = [];
 let addMode = false;
 let addingPoint = false;
 let charIdx = null;
+
+prevData.forEach((npc) => {
+    const npc_obj = new NPC({"x": 0, "y": 0});
+    npc_obj.fromJson(npc);
+    npcs.push(npc_obj);
+})
+renderMap();
+renderSidebar();
 
 addCharacterBtn.addEventListener("click", () => {
     addMode = true;
@@ -292,20 +326,30 @@ function renderSidebar() {
         isPokemonInput.addEventListener("change", renderMap);
         charTab.append(document.createTextNode("Pokemon?"));
         charTab.append(isPokemonInput);
+
         const isFast = document.createElement('input')
         isFast.type = "checkbox";
         isFast.value = character.fast;
-        isFast.id = `${i}_pkmn`;
+        isFast.id = `${i}_fast`;
         isFast.addEventListener("change", renderMap);
         charTab.append(document.createTextNode("Fast?"));
         charTab.append(isFast);
+
         const isMoving = document.createElement('input');
         isMoving.type = "checkbox";
         isMoving.value = character.alwaysMoving;
-        isMoving.id = `${i}_pkmn`;
+        isMoving.id = `${i}_moving`;
         isMoving.addEventListener("change", renderMap);
         charTab.append(document.createTextNode("Moving?"));
         charTab.append(isMoving);
+
+        const isFlying = document.createElement('input');
+        isFlying.type = "checkbox";
+        isFlying.value = character.flying;
+        isFlying.id = `${i}_flying`;
+        isFlying.addEventListener("change", renderMap);
+        charTab.append(document.createTextNode("Flying?"));
+        charTab.append(isFlying);
 
         // Field to select sprite
         const trainerSprites = createSelect(trainers, `${i}_trainersprites`)
@@ -458,6 +502,7 @@ function renderSidebar() {
         bindInput(isPokemonInput.id, character, 'isPokemon');
         bindInput(isFast.id, character, 'fast');
         bindInput(isMoving.id, character, 'alwaysMoving');
+        bindInput(isFlying.id, character, 'flying');
         bindInput(trainerSprites.id, character, 'trainer_sprite');
         bindInput(pokemonSprites.id, character, 'pokemon_sprite');
         bindInput(bgSelect.id, character, 'bg');

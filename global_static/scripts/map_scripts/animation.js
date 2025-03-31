@@ -86,6 +86,12 @@ function animate(looped = true) {
             orderedSprites.push(player);
         }
         let zCompare = (a, b) => {
+            if (a.flying && !b.flying) {
+                return 1;
+            }
+            if (!a.flying && b.flying) {
+                return -1;
+            }
             if (a.position.y < b.position.y) {
                 return -1;
             }
@@ -95,6 +101,17 @@ function animate(looped = true) {
             return 0;
         };
         orderedSprites.sort(zCompare);
+        // Split flying and non flying
+        let [flyingSprites, nonFlyingSprites] = orderedSprites.reduce(
+            (acc, creature) => {
+                acc[creature.flying ? 0 : 1].push(creature);
+                return acc;
+            },
+            [[], []] // Initialize with two empty arrays
+        );
+        orderedSprites = nonFlyingSprites;
+
+
         // Flip surf and surfer
         let surfIdx = orderedSprites.indexOf(surf);
         let surferIdx = orderedSprites.indexOf(surfer);
@@ -136,6 +153,12 @@ function animate(looped = true) {
                     break;
             }
             foreground.draw(cappedCamera);
+
+            // Draw flying sprites in order
+            for (let i = 0; i < flyingSprites.length; i++) {
+                const currentSprite = flyingSprites[i];
+                currentSprite.draw(cappedCamera);
+            }
             // applyFilter();
             return;
         }
@@ -176,6 +199,13 @@ function animate(looped = true) {
                     break;
             }
             foreground.draw(cappedCamera);
+
+
+            // Draw flying sprites in order
+            for (let i = 0; i < flyingSprites.length; i++) {
+                const currentSprite = flyingSprites[i];
+                currentSprite.draw(cappedCamera);
+            }
             // applyFilter();
             ledgeFrames -= 1;
             if (ledgeFrames == 0) {
@@ -249,6 +279,12 @@ function animate(looped = true) {
             currentSprite.draw(cappedCamera);
         }
         foreground.draw(cappedCamera);
+
+        // Draw flying sprites in order
+        for (let i = 0; i < flyingSprites.length; i++) {
+            const currentSprite = flyingSprites[i];
+            currentSprite.draw(cappedCamera);
+        }
         if (!onBridge && bridgeExists)
             bridgeRender.draw(cappedCamera);
         // Draw speech bubbles after

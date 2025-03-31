@@ -137,6 +137,7 @@
             "type": "pokemon",
             "fast": true,
             "alwaysMoving": true,
+            "flying": true,
             "wander_points": [
                 {
                     "x": 12,
@@ -163,6 +164,7 @@
             "sprite": "041",
             "type": "pokemon",
             "fast": true,
+            "flying": true,
             "alwaysMoving": true,
             "wander_points": [
                 {
@@ -182,6 +184,7 @@
             "sprite": "041",
             "type": "pokemon",
             "fast": true,
+            "flying": true,
             "alwaysMoving": true,
             "wander_points": [
                 {

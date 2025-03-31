@@ -108,6 +108,7 @@ function mapSetup({map, mapData, forcedOffset = {}, playerOffset = {}, startingP
             name: trainer.name,
             alwaysMoving: trainer.alwaysMoving || false,
             fast: trainer.fast || false,
+            flying: trainer.flying || false,
             frameTick: trainer.frameTick || 10
         }));
 
