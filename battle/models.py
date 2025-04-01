@@ -179,8 +179,7 @@ def create_npc_battle(p2_id, battle_state, opp_override, player_1, map=None):
             reward = opp_override["reward"]
     else:
         trainer_path = consts.find_trainer_file(p2_id)
-
-        if not os.path.isfile(trainer_path):
+        if trainer_path is None:
             raise KeyError("{} not recognized as a trainer".format(p2_id))
         with open(trainer_path) as trainer_file:
             trainer_json = json.load(trainer_file)

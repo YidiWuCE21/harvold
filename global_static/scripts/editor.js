@@ -187,11 +187,11 @@ let addMode = false;
 let addingPoint = false;
 let charIdx = null;
 
-prevData.forEach((npc) => {
+/*prevData.forEach((npc) => {
     const npc_obj = new NPC({"x": 0, "y": 0});
     npc_obj.fromJson(npc);
     npcs.push(npc_obj);
-})
+})*/
 renderMap();
 renderSidebar();
 
@@ -351,6 +351,14 @@ function renderSidebar() {
         charTab.append(document.createTextNode("Flying?"));
         charTab.append(isFlying);
 
+        const amFast = document.createElement('input');
+        amFast.type = "checkbox";
+        amFast.value = character.fast;
+        amFast.id = `${i}_faster`;
+        amFast.addEventListener("change", renderMap);
+        charTab.append(document.createTextNode("Fasttt?"));
+        charTab.append(amFast);
+
         // Field to select sprite
         const trainerSprites = createSelect(trainers, `${i}_trainersprites`)
         const pokemonSprites = createSelect(pokemon, `${i}_pokesprites`)
@@ -500,8 +508,9 @@ function renderSidebar() {
         bindInput(dialogueInput.id, character, 'dialogue');
         bindInput(lossInput.id, character, 'loss');
         bindInput(isPokemonInput.id, character, 'isPokemon');
-        bindInput(isFast.id, character, 'fast');
+        //bindInput(isFast.id, character, 'fast');
         bindInput(isMoving.id, character, 'alwaysMoving');
+        bindInput(amFast.id, character, 'fast');
         bindInput(isFlying.id, character, 'flying');
         bindInput(trainerSprites.id, character, 'trainer_sprite');
         bindInput(pokemonSprites.id, character, 'pokemon_sprite');

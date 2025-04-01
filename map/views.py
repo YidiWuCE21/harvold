@@ -232,10 +232,10 @@ def map_editor(request):
     map = request.GET.get("map")
 
     # Get the existing data
-    """map_file = os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))
+    map_file = os.path.join(consts.STATIC_PATH, "data", "maps", "{}.json".format(map))
     with open(map_file, "r", encoding='utf-8') as f:
         map_data = json.load(f)
-        trainers = map_data["trainers"]"""
+        trainers = map_data["trainers"]
 
 
     html_render_variables = {
@@ -255,7 +255,7 @@ def submit_edit(request):
         return HttpResponseNotFound("Enable debug mode to access this.")
 
     map = request.POST.get("map")
-    INSERT_MODE = True
+    INSERT_MODE = False
     npc_data = json.loads(request.POST.get("npc_data"))
     battlers = []
     npc_list = []
