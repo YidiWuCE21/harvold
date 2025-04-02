@@ -540,6 +540,116 @@
                 }
             ],
             "type": "pokemon"
+        }, {
+            "name": "Medium Darcy",
+            "sprite": "medium",
+            "dialogue": "I thought there would be spirits in this wood.",
+            "wander_points": [
+                {
+                    "x": 16,
+                    "y": 47,
+                    "dir": "down"
+                }, {
+                    "x": 16,
+                    "y": 52,
+                    "dir": "up"
+                }
+            ],
+            "battle": "blackwood_medium-darcy"
+        }, {
+            "name": "Zoomer Tyler",
+            "sprite": "youngster_3",
+            "dialogue": "Stand and deliver!",
+            "wander_points": [
+                {
+                    "x": 32,
+                    "y": 27,
+                    "dir": "down"
+                }
+            ],
+            "battle": "blackwood_zoomer-tyler"
+        }, {
+            "name": "Backpacker Wyatt",
+            "sprite": "backpacker_m",
+            "dialogue": "My Absol shreds through these cobwebs!",
+            "wander_points": [
+                {
+                    "x": 66,
+                    "y": 31,
+                    "dir": "right"
+                }, {
+                    "x": 71,
+                    "y": 31,
+                    "dir": "left"
+                }
+            ],
+            "battle": "blackwood_backpacker-wyatt"
+        }, {
+            "name": "Bounty Hunter King",
+            "sprite": "bounty_hunter_m",
+            "dialogue": "I'm here in search of a dangerous criminal.",
+            "wander_points": [
+                {
+                    "x": 65,
+                    "y": 58,
+                    "dir": "left"
+                }, {
+                    "x": 60,
+                    "y": 58,
+                    "dir": "right"
+                }
+            ],
+            "battle": "blackwood_bounty-hunter-king"
+        }, {
+            "name": "Roughneck Francis",
+            "sprite": "roughneck_2",
+            "dialogue": "I'm hiding! Go away!",
+            "wander_points": [
+                {
+                    "x": 68,
+                    "y": 17,
+                    "dir": "down"
+                }
+            ],
+            "battle": "blackwood_roughneck-francis"
+        }, {
+            "name": "Staraptor",
+            "sprite": "398",
+            "dialogue": "Battle start dialogue",
+            "wander_points": [
+                {
+                    "x": 3,
+                    "y": 29,
+                    "dir": "down"
+                }, {
+                    "x": 3,
+                    "y": 51,
+                    "dir": "up"
+                }
+            ],
+            "type": "pokemon",
+            "flying": true,
+            "alwaysMoving": true,
+            "fast": true
+        }, {
+            "name": "Fearow",
+            "sprite": "022",
+            "dialogue": "a",
+            "wander_points": [
+                {
+                    "x": 4,
+                    "y": 1,
+                    "dir": "right"
+                }, {
+                    "x": 17,
+                    "y": 1,
+                    "dir": "left"
+                }
+            ],
+            "type": "pokemon",
+            "flying": true,
+            "alwaysMoving": true,
+            "fast": true
         }
     ],
     "collisions": [

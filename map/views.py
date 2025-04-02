@@ -237,6 +237,15 @@ def map_editor(request):
         map_data = json.load(f)
         trainers = map_data["trainers"]
 
+    full_data = []
+    for trainer in trainers:
+        full_trainer = {
+            "map": trainer
+        }
+        # Check for trainer file
+
+
+
 
     html_render_variables = {
         "map": request.GET.get("map"),
@@ -255,7 +264,7 @@ def submit_edit(request):
         return HttpResponseNotFound("Enable debug mode to access this.")
 
     map = request.POST.get("map")
-    INSERT_MODE = False
+    INSERT_MODE = True
     npc_data = json.loads(request.POST.get("npc_data"))
     battlers = []
     npc_list = []

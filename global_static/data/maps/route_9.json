@@ -444,6 +444,147 @@
                 }
             ],
             "type": "pokemon"
+        }, {
+            "name": "Zoomer Larry",
+            "sprite": "youngster_3",
+            "dialogue": "Who names their kid Larry?",
+            "wander_points": [
+                {
+                    "x": 85,
+                    "y": 13,
+                    "dir": "right"
+                }, {
+                    "x": 89,
+                    "y": 13,
+                    "dir": "left"
+                }
+            ],
+            "battle": "route_9_zoomer-larry"
+        }, {
+            "name": "Aroma Lady Jeanette",
+            "sprite": "aroma_lady",
+            "dialogue": "Smell the flowers!",
+            "wander_points": [
+                {
+                    "x": 96,
+                    "y": 21,
+                    "dir": "down"
+                }, {
+                    "x": 96,
+                    "y": 25,
+                    "dir": "up"
+                }
+            ],
+            "battle": "route_9_aroma-lady-jeanette"
+        }, {
+            "name": "t1",
+            "sprite": "277",
+            "dialogue": "Battle start dialogue",
+            "wander_points": [
+                {
+                    "x": 79,
+                    "y": 44,
+                    "dir": "right"
+                }, {
+                    "x": 95,
+                    "y": 44,
+                    "dir": "left"
+                }
+            ],
+            "type": "pokemon",
+            "flying": true,
+            "alwaysMoving": true,
+            "fast": true
+        }, {
+            "name": "Staraptor1",
+            "sprite": "398",
+            "dialogue": "Battle start dialogue",
+            "wander_points": [
+                {
+                    "x": 66,
+                    "y": 40,
+                    "dir": "left"
+                }, {
+                    "x": 52,
+                    "y": 40,
+                    "dir": "up"
+                }, {
+                    "x": 52,
+                    "y": 36,
+                    "dir": "left"
+                }, {
+                    "x": 47,
+                    "y": 36,
+                    "dir": "down"
+                }, {
+                    "x": 47,
+                    "y": 40,
+                    "dir": "right"
+                }
+            ],
+            "type": "pokemon",
+            "flying": true,
+            "alwaysMoving": true,
+            "fast": true
+        }, {
+            "name": "Aroma Lady Jenny",
+            "sprite": "aroma_lady",
+            "dialogue": "The air out here is so refreshing!",
+            "wander_points": [
+                {
+                    "x": 51,
+                    "y": 19,
+                    "dir": "up"
+                }, {
+                    "x": 51,
+                    "y": 15,
+                    "dir": "down"
+                }
+            ],
+            "battle": "route_9_aroma-lady-jenny"
+        }, {
+            "name": "Lass Irene",
+            "sprite": "lass_2",
+            "dialogue": "Sometimes I take my little brother to the forest.",
+            "wander_points": [
+                {
+                    "x": 7,
+                    "y": 21,
+                    "dir": "right"
+                }, {
+                    "x": 10,
+                    "y": 21,
+                    "dir": "left"
+                }
+            ],
+            "battle": "route_9_lass-irene"
+        }, {
+            "name": "f1",
+            "sprite": "022",
+            "dialogue": "Battle start dialogue",
+            "flying": true,
+            "alwaysMoving": true,
+            "fast": true,
+            "wander_points": [
+                {
+                    "x": 12,
+                    "y": 41,
+                    "dir": "right"
+                }, {
+                    "x": 24,
+                    "y": 41,
+                    "dir": "down"
+                }, {
+                    "x": 24,
+                    "y": 55,
+                    "dir": "up"
+                }, {
+                    "x": 24,
+                    "y": 41,
+                    "dir": "left"
+                }
+            ],
+            "type": "pokemon"
         }
     ],
     "collisions": [

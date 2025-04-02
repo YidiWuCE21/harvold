@@ -1,1 +1,120 @@
-{"name": "Bug Catcher Andy", "bg": "grass", "team": [{"current_hp": 37, "status": "", "status_turns": 0, "moves": [{"move": "foresight", "pp": 40}, {"move": "tackle", "pp": 35}, {"move": "quickattack", "pp": 30}, {"move": "doubleteam", "pp": 15}], "held_item": null, "happiness": 70, "ability": "Frisk", "dex_number": "193", "level": 11, "shiny": false, "stats": {"hp": 37, "atk": 22, "def": 18, "spa": 24, "spd": 18, "spe": 26}, "id": null, "name": "Yanma"}, {"current_hp": 35, "status": "", "status_turns": 0, "moves": [{"move": "tackle", "pp": 35}, {"move": "supersonic", "pp": 20}, {"move": "cometpunch", "pp": 15}, {"move": null, "pp": null}], "held_item": null, "happiness": 70, "ability": "Early Bird", "dex_number": "165", "level": 13, "shiny": false, "stats": {"hp": 35, "atk": 10, "def": 15, "spa": 18, "spd": 29, "spe": 17}, "id": null, "name": "Ledyba"}, {"current_hp": 40, "status": "", "status_turns": 0, "moves": [{"move": "playnice", "pp": 20}, {"move": "tackle", "pp": 35}, {"move": "sweetscent", "pp": 20}, {"move": "charm", "pp": 20}], "held_item": null, "happiness": 70, "ability": "Prankster", "dex_number": "314", "level": 12, "shiny": false, "stats": {"hp": 40, "atk": 18, "def": 21, "spa": 23, "spd": 29, "spe": 27}, "id": null, "name": "Illumise"}], "reward": {"base_payout": 16}, "map": "vitur_forest", "sprite": "bug_catcher", "lines": {"lose": "I hate my bugs. I'm going to squish them, and it's your fault."}}
+{
+    "name": "Bug Catcher Andy",
+    "bg": "grass",
+    "team": [
+        {
+            "current_hp": 37,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "foresight",
+                    "pp": 40
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "quickattack",
+                    "pp": 30
+                }, {
+                    "move": "doubleteam",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Frisk",
+            "dex_number": "193",
+            "level": 11,
+            "shiny": false,
+            "stats": {
+                "hp": 37,
+                "atk": 22,
+                "def": 18,
+                "spa": 24,
+                "spd": 18,
+                "spe": 26
+            },
+            "id": null,
+            "name": "Yanma"
+        }, {
+            "current_hp": 35,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "supersonic",
+                    "pp": 20
+                }, {
+                    "move": "cometpunch",
+                    "pp": 15
+                }, {
+                    "move": null,
+                    "pp": null
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Early Bird",
+            "dex_number": "165",
+            "level": 13,
+            "shiny": false,
+            "stats": {
+                "hp": 35,
+                "atk": 10,
+                "def": 15,
+                "spa": 18,
+                "spd": 29,
+                "spe": 17
+            },
+            "id": null,
+            "name": "Ledyba"
+        }, {
+            "current_hp": 40,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "playnice",
+                    "pp": 20
+                }, {
+                    "move": "tackle",
+                    "pp": 35
+                }, {
+                    "move": "sweetscent",
+                    "pp": 20
+                }, {
+                    "move": "charm",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Prankster",
+            "dex_number": "314",
+            "level": 12,
+            "shiny": false,
+            "stats": {
+                "hp": 40,
+                "atk": 18,
+                "def": 21,
+                "spa": 23,
+                "spd": 29,
+                "spe": 27
+            },
+            "id": null,
+            "name": "Illumise"
+        }
+    ],
+    "reward": {
+        "base_payout": 16
+    },
+    "map": "vitur_forest",
+    "sprite": "bug_catcher",
+    "lines": {
+        "lose": "I hate my bugs. I'm going to squish them, and it's your fault."
+    }
+}

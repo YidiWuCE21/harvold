@@ -113,7 +113,7 @@
         "base_payout": 16
     },
     "map": "route_3",
-    "sprite": "girl_1",
+    "sprite": "lass_2",
     "lines": {
         "lose": "Bugs are so awful."
     }
