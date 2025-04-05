@@ -243,7 +243,20 @@ def map_editor(request):
             "map": trainer
         }
         # Check for trainer file
-
+        if "battle" in trainer:
+            trainerpath = consts.find_trainer_file(trainer["battle"])
+            if trainerpath is not None:
+                with open(trainerpath) as f:
+                    tdata = json.load(f)
+                    team = [{"dex": pkmn["dex_number"], "level": pkmn["level"]} for pkmn in tdata["team"]]
+                    bg = tdata.get("bg", "default")
+                    lose = tdata["lines"]["lose"]
+                    full_trainer["gen"] = {
+                        "team": team,
+                        "bg": bg,
+                        "lose": lose
+                    }
+        full_data.append(full_trainer)
 
 
 
@@ -253,7 +266,7 @@ def map_editor(request):
         "pokemon": [[dex, data["name"]] for dex, data in consts.POKEMON.items()],
         "level": wild_info["levels"],
         "wild": [pkmn["pokemon"] for area, pkmn in wild_info.items() if area != "levels"],
-        "prevData": json.dumps(trainers)
+        "prevData": json.dumps(full_data)
     }
     return render(request, "map/editor.html", html_render_variables)
 
@@ -264,7 +277,8 @@ def submit_edit(request):
         return HttpResponseNotFound("Enable debug mode to access this.")
 
     map = request.POST.get("map")
-    INSERT_MODE = True
+    INSERT_MODE = False
+    OVERWRITE_TRAINERS = False
     npc_data = json.loads(request.POST.get("npc_data"))
     battlers = []
     npc_list = []

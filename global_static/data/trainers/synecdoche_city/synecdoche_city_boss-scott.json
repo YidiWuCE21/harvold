@@ -1,0 +1,120 @@
+{
+    "name": "Boss Scott",
+    "bg": "default",
+    "team": [
+        {
+            "current_hp": 146,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "slackoff",
+                    "pp": 5
+                }, {
+                    "move": "feintattack",
+                    "pp": 20
+                }, {
+                    "move": "amnesia",
+                    "pp": 20
+                }, {
+                    "move": "covet",
+                    "pp": 25
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Truant",
+            "dex_number": "289",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 146,
+                "atk": 116,
+                "def": 76,
+                "spa": 65,
+                "spd": 53,
+                "spe": 69
+            },
+            "id": null,
+            "name": "Slaking"
+        }, {
+            "current_hp": 109,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "disable",
+                    "pp": 20
+                }, {
+                    "move": "headbutt",
+                    "pp": 15
+                }, {
+                    "move": "waterpulse",
+                    "pp": 20
+                }, {
+                    "move": "zenheadbutt",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Oblivious",
+            "dex_number": "199",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 109,
+                "atk": 62,
+                "def": 55,
+                "spa": 77,
+                "spd": 77,
+                "spe": 24
+            },
+            "id": null,
+            "name": "Slowking"
+        }, {
+            "current_hp": 150,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "yawn",
+                    "pp": 10
+                }, {
+                    "move": "bodyslam",
+                    "pp": 15
+                }, {
+                    "move": "rest",
+                    "pp": 5
+                }, {
+                    "move": "snore",
+                    "pp": 15
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Gluttony",
+            "dex_number": "143",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 150,
+                "atk": 76,
+                "def": 52,
+                "spa": 55,
+                "spd": 91,
+                "spe": 25
+            },
+            "id": null,
+            "name": "Snorlax"
+        }
+    ],
+    "reward": {
+        "base_payout": 80
+    },
+    "map": "synecdoche_city",
+    "sprite": "clerk_b",
+    "lines": {
+        "lose": "Sorry, we proceeded with another candidate."
+    }
+}

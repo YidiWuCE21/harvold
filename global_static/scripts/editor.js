@@ -2,14 +2,14 @@
 
 class NPC {
     constructor(position) {
-        this.name = 'NPC';               // Name of the NPC
-        this.dialogue = 'Battle start dialogue';       // Dialogue text of the NPC
+        this.name = 'NPC'; // Name of the NPC
+        this.dialogue = 'Battle start dialogue'; // Dialogue text of the NPC
         this.loss = 'Battle loss dialogue';
-        this.trainer_sprite = 'picnicker_m';           // The sprite of the NPC
+        this.trainer_sprite = 'picnicker_m'; // The sprite of the NPC
         this.pokemon_sprite = '001';
-        this.isPokemon = false;     // Boolean indicating if the NPC is a Pokemon
+        this.isPokemon = false; // Boolean indicating if the NPC is a Pokemon
         this.wanderPoints = [{"x": position.x, "y": position.y, "dir": "down"}]; // List of wander points (array of {x, y, direction})
-        this.team = [];               // List of team members (Pokémon or NPC objects)
+        this.team = []; // List of team members (Pokémon or NPC objects)
         this.mapSprite = []; // pointer to sprite
         this.bg = null;
 
@@ -19,19 +19,30 @@ class NPC {
     }
 
     fromJson(data) {
-        this.name = data["name"]
-        this.dialogue = data["dialogue"]
-        if ("type" in data) {
+        this.name = data["map"]["name"]
+        this.dialogue = data["map"]["dialogue"]
+        if ("type" in data["map"]) {
             this.isPokemon = true;
-            this.pokemon_sprite = data["sprite"];
+            this.pokemon_sprite = data["map"]["sprite"];
         } else {
-            this.trainer_sprite = data["sprite"];
+            this.trainer_sprite = data["map"]["sprite"];
         }
+
+        if ("alwaysMoving" in data["map"]) this.alwaysMoving = true;
+        if ("fast" in data["map"]) this.fast = true;
+        if ("flying" in data["map"]) this.flying = true;
         let new_points = [];
-        data["wander_points"].forEach((point) => {
+        data["map"]["wander_points"].forEach((point) => {
             new_points.push({'x': point.x + 1, 'y': point.y + 1, 'dir': point.dir})
         })
         this.wanderPoints = new_points;
+
+        // Check if there is a gen
+        if ("gen" in data) {
+            this.team = data["gen"]["team"]
+            this.loss = data["gen"]["lose"]
+            this.bg = data["gen"]["bg"]
+        }
     }
 
     exportJson() {
@@ -187,11 +198,11 @@ let addMode = false;
 let addingPoint = false;
 let charIdx = null;
 
-/*prevData.forEach((npc) => {
+prevData.forEach((npc) => {
     const npc_obj = new NPC({"x": 0, "y": 0});
     npc_obj.fromJson(npc);
     npcs.push(npc_obj);
-})*/
+})
 renderMap();
 renderSidebar();
 
@@ -549,10 +560,7 @@ function hasDuplicateNames(instances) {
 
 function exportJsons() {
 
-    if (hasDuplicateNames(npcs)) {
-        alert("Duplicate names found. Please fix before exporting.");
-        return;
-    }
+
     let res = JSON.stringify(npcs.map((x) => x.exportJson()));
     document.getElementById("npc_data").value = res;
     document.getElementById("preview").innerHTML = res;

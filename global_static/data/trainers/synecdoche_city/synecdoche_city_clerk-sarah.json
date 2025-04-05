@@ -1,0 +1,85 @@
+{
+    "name": "Clerk Sarah",
+    "bg": "default",
+    "team": [
+        {
+            "current_hp": 86,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "confuseray",
+                    "pp": 10
+                }, {
+                    "move": "ominouswind",
+                    "pp": 5
+                }, {
+                    "move": "wakeupslap",
+                    "pp": 10
+                }, {
+                    "move": "captivate",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Snow Cloak",
+            "dex_number": "478",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 86,
+                "atk": 62,
+                "def": 59,
+                "spa": 58,
+                "spd": 53,
+                "spe": 81
+            },
+            "id": null,
+            "name": "Froslass"
+        }, {
+            "current_hp": 90,
+            "status": "",
+            "status_turns": 0,
+            "moves": [
+                {
+                    "move": "feintattack",
+                    "pp": 20
+                }, {
+                    "move": "taunt",
+                    "pp": 20
+                }, {
+                    "move": "swift",
+                    "pp": 20
+                }, {
+                    "move": "powergem",
+                    "pp": 20
+                }
+            ],
+            "held_item": null,
+            "happiness": 70,
+            "ability": "Technician",
+            "dex_number": "053",
+            "level": 32,
+            "shiny": false,
+            "stats": {
+                "hp": 90,
+                "atk": 50,
+                "def": 48,
+                "spa": 45,
+                "spd": 55,
+                "spe": 82
+            },
+            "id": null,
+            "name": "Persian"
+        }
+    ],
+    "reward": {
+        "base_payout": 40
+    },
+    "map": "synecdoche_city",
+    "sprite": "clerk_f",
+    "lines": {
+        "lose": "I'm late for my meeting!"
+    }
+}
