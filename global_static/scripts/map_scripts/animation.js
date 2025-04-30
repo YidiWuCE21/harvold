@@ -130,10 +130,10 @@ function animate(looped = true) {
             }
             switch(travelDir) {
                 case "in":
-                    statics.forEach(movable => {movable.rows.val = 2});
+                    nonCameraStatics.forEach(movable => {movable.rows.val = 2});
                     break;
                 case "out":
-                    statics.forEach(movable => {movable.rows.val = 0});
+                    nonCameraStatics.forEach(movable => {movable.rows.val = 0});
                     break;
                 case "north":
                     statics.forEach(movable => {movable.position.y -= movespeed});

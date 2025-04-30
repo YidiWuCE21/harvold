@@ -379,7 +379,7 @@ function renderSidebar() {
         charTab.append(pokemonSprites);
         // BG select
         const bgs = [
-            ["beach", "beach"], ["brown_cave", "brown_cave"],
+            ["beach", "beach"], ["brown_cave", "brown_cave"], ["mountain", "mountain"],
             ["default", "default"], ["desert", "desert"],
             ["grass", "grass"], ["gray_cave", "gray_cave"],
             ["pond", "pond"], ["snow", "snow"],

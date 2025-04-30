@@ -94,7 +94,7 @@
             "weights": [25, 25, 25, 25],
             "bg": "cave_pond"
         },
-        "levels": [27, 31]
+        "levels": [32, 36]
     },
     "oshi_tunnel": {
         "grass1": {
@@ -452,7 +452,7 @@
             "pokemon": ["Magikarp", "Goldeen", "Dratini", "Tynamo"],
             "weights": [25, 25, 2, 5]
         },
-        "levels": [32, 35]
+        "levels": [36, 41]
     },
     "vitur_forest": {
         "grass1": {
