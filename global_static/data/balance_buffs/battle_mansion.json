@@ -1,0 +1,2319 @@
+{
+    "003": {
+        "name": "Venusaur",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "006": {
+        "name": "Charizard",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "009": {
+        "name": "Blastoise",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "012": {
+        "name": "Butterfree",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "015": {
+        "name": "Beedrill",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "018": {
+        "name": "Pidgeot",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "020": {
+        "name": "Raticate",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "022": {
+        "name": "Fearow",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "024": {
+        "name": "Arbok",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "026": {
+        "name": "Raichu",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "028": {
+        "name": "Sandslash",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "031": {
+        "name": "Nidoqueen",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "034": {
+        "name": "Nidoking",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "036": {
+        "name": "Clefable",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "038": {
+        "name": "Ninetales",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "040": {
+        "name": "Wigglytuff",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "169": {
+        "name": "Crobat",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "182": {
+        "name": "Bellossom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "047": {
+        "name": "Parasect",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "049": {
+        "name": "Venomoth",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "051": {
+        "name": "Dugtrio",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "053": {
+        "name": "Persian",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "055": {
+        "name": "Golduck",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "057": {
+        "name": "Primeape",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "059": {
+        "name": "Arcanine",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "186": {
+        "name": "Politoed",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "065": {
+        "name": "Alakazam",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "068": {
+        "name": "Machamp",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "071": {
+        "name": "Victreebel",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "073": {
+        "name": "Tentacruel",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "076": {
+        "name": "Golem",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "078": {
+        "name": "Rapidash",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "080": {
+        "name": "Slowbro",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "462": {
+        "name": "Magnezone",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "083": {
+        "name": "Farfetch'd",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "085": {
+        "name": "Dodrio",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "087": {
+        "name": "Dewgong",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "089": {
+        "name": "Muk",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "091": {
+        "name": "Cloyster",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "094": {
+        "name": "Gengar",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "208": {
+        "name": "Steelix",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "097": {
+        "name": "Hypno",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "099": {
+        "name": "Kingler",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "101": {
+        "name": "Electrode",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "103": {
+        "name": "Exeggutor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "105": {
+        "name": "Marowak",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "237": {
+        "name": "Hitmontop",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "463": {
+        "name": "Lickilicky",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "110": {
+        "name": "Weezing",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "464": {
+        "name": "Rhyperior",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "242": {
+        "name": "Blissey",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "465": {
+        "name": "Tangrowth",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "115": {
+        "name": "Kangaskhan",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "230": {
+        "name": "Kingdra",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "119": {
+        "name": "Seaking",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "121": {
+        "name": "Starmie",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "122": {
+        "name": "Mr. Mime",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "212": {
+        "name": "Scizor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "124": {
+        "name": "Jynx",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "466": {
+        "name": "Electivire",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "467": {
+        "name": "Magmortar",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "127": {
+        "name": "Pinsir",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "128": {
+        "name": "Tauros",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "130": {
+        "name": "Gyarados",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "131": {
+        "name": "Lapras",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "132": {
+        "name": "Ditto",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "471": {
+        "name": "Glaceon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "474": {
+        "name": "Porygon-Z",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "139": {
+        "name": "Omastar",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "141": {
+        "name": "Kabutops",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "142": {
+        "name": "Aerodactyl",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "143": {
+        "name": "Snorlax",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "144": {
+        "name": "Articuno",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "145": {
+        "name": "Zapdos",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "146": {
+        "name": "Moltres",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "149": {
+        "name": "Dragonite",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "150": {
+        "name": "Mewtwo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "151": {
+        "name": "Mew",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "154": {
+        "name": "Meganium",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "157": {
+        "name": "Typhlosion",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "160": {
+        "name": "Feraligatr",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "162": {
+        "name": "Furret",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "164": {
+        "name": "Noctowl",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "166": {
+        "name": "Ledian",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "168": {
+        "name": "Ariados",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "171": {
+        "name": "Lanturn",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "468": {
+        "name": "Togekiss",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "178": {
+        "name": "Xatu",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "181": {
+        "name": "Ampharos",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "184": {
+        "name": "Azumarill",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "185": {
+        "name": "Sudowoodo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "189": {
+        "name": "Jumpluff",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "424": {
+        "name": "Ambipom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "192": {
+        "name": "Sunflora",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "469": {
+        "name": "Yanmega",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "195": {
+        "name": "Quagsire",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "430": {
+        "name": "Honchkrow",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "199": {
+        "name": "Slowking",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "429": {
+        "name": "Mismagius",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "201": {
+        "name": "Unown",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "202": {
+        "name": "Wobbuffet",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "203": {
+        "name": "Girafarig",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "205": {
+        "name": "Forretress",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "206": {
+        "name": "Dunsparce",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "472": {
+        "name": "Gliscor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "210": {
+        "name": "Granbull",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "211": {
+        "name": "Qwilfish",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "213": {
+        "name": "Shuckle",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "214": {
+        "name": "Heracross",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "461": {
+        "name": "Weavile",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "217": {
+        "name": "Ursaring",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "219": {
+        "name": "Magcargo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "473": {
+        "name": "Mamoswine",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "222": {
+        "name": "Corsola",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "224": {
+        "name": "Octillery",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "225": {
+        "name": "Delibird",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "226": {
+        "name": "Mantine",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "227": {
+        "name": "Skarmory",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "229": {
+        "name": "Houndoom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "232": {
+        "name": "Donphan",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "234": {
+        "name": "Stantler",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "235": {
+        "name": "Smeargle",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "241": {
+        "name": "Miltank",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "243": {
+        "name": "Raikou",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "244": {
+        "name": "Entei",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "245": {
+        "name": "Suicune",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "248": {
+        "name": "Tyranitar",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "249": {
+        "name": "Lugia",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "250": {
+        "name": "Ho-Oh",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "251": {
+        "name": "Celebi",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "254": {
+        "name": "Sceptile",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "257": {
+        "name": "Blaziken",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "260": {
+        "name": "Swampert",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "262": {
+        "name": "Mightyena",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "264": {
+        "name": "Linoone",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "269": {
+        "name": "Dustox",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "272": {
+        "name": "Ludicolo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "275": {
+        "name": "Shiftry",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "277": {
+        "name": "Swellow",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "279": {
+        "name": "Pelipper",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "475": {
+        "name": "Gallade",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "284": {
+        "name": "Masquerain",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "286": {
+        "name": "Breloom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "289": {
+        "name": "Slaking",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "291": {
+        "name": "Ninjask",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "292": {
+        "name": "Shedinja",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "295": {
+        "name": "Exploud",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "297": {
+        "name": "Hariyama",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "476": {
+        "name": "Probopass",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "301": {
+        "name": "Delcatty",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "302": {
+        "name": "Sableye",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "303": {
+        "name": "Mawile",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "306": {
+        "name": "Aggron",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "308": {
+        "name": "Medicham",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "310": {
+        "name": "Manectric",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "311": {
+        "name": "Plusle",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "312": {
+        "name": "Minun",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "313": {
+        "name": "Volbeat",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "314": {
+        "name": "Illumise",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "407": {
+        "name": "Roserade",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "317": {
+        "name": "Swalot",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "319": {
+        "name": "Sharpedo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "321": {
+        "name": "Wailord",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "323": {
+        "name": "Camerupt",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "324": {
+        "name": "Torkoal",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "326": {
+        "name": "Grumpig",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "327": {
+        "name": "Spinda",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "330": {
+        "name": "Flygon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "332": {
+        "name": "Cacturne",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "334": {
+        "name": "Altaria",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "335": {
+        "name": "Zangoose",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "336": {
+        "name": "Seviper",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "337": {
+        "name": "Lunatone",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "338": {
+        "name": "Solrock",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "340": {
+        "name": "Whiscash",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "342": {
+        "name": "Crawdaunt",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "344": {
+        "name": "Claydol",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "346": {
+        "name": "Cradily",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "348": {
+        "name": "Armaldo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "350": {
+        "name": "Milotic",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "351": {
+        "name": "Castform",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "352": {
+        "name": "Kecleon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "354": {
+        "name": "Banette",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "477": {
+        "name": "Dusknoir",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "357": {
+        "name": "Tropius",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "358": {
+        "name": "Chimecho",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "359": {
+        "name": "Absol",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "478": {
+        "name": "Froslass",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "365": {
+        "name": "Walrein",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "368": {
+        "name": "Gorebyss",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "369": {
+        "name": "Relicanth",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "370": {
+        "name": "Luvdisc",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "373": {
+        "name": "Salamence",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "376": {
+        "name": "Metagross",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "377": {
+        "name": "Regirock",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "378": {
+        "name": "Regice",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "379": {
+        "name": "Registeel",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "380": {
+        "name": "Latias",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "381": {
+        "name": "Latios",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "382": {
+        "name": "Kyogre",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "383": {
+        "name": "Groudon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "384": {
+        "name": "Rayquaza",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "385": {
+        "name": "Jirachi",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "386": {
+        "name": "Deoxys",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "389": {
+        "name": "Torterra",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "392": {
+        "name": "Infernape",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "395": {
+        "name": "Empoleon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "398": {
+        "name": "Staraptor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "400": {
+        "name": "Bibarel",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "402": {
+        "name": "Kricketune",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "405": {
+        "name": "Luxray",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "409": {
+        "name": "Rampardos",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "411": {
+        "name": "Bastiodon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "414": {
+        "name": "Mothim",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "416": {
+        "name": "Vespiquen",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "417": {
+        "name": "Pachirisu",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "419": {
+        "name": "Floatzel",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "421": {
+        "name": "Cherrim",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "423": {
+        "name": "Gastrodon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "426": {
+        "name": "Drifblim",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "428": {
+        "name": "Lopunny",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "432": {
+        "name": "Purugly",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "435": {
+        "name": "Skuntank",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "437": {
+        "name": "Bronzong",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "441": {
+        "name": "Chatot",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "442": {
+        "name": "Spiritomb",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "445": {
+        "name": "Garchomp",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "448": {
+        "name": "Lucario",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "450": {
+        "name": "Hippowdon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "452": {
+        "name": "Drapion",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "454": {
+        "name": "Toxicroak",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "455": {
+        "name": "Carnivine",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "457": {
+        "name": "Lumineon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "460": {
+        "name": "Abomasnow",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "479": {
+        "name": "Rotom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "480": {
+        "name": "Uxie",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "481": {
+        "name": "Mesprit",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "482": {
+        "name": "Azelf",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "483": {
+        "name": "Dialga",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "484": {
+        "name": "Palkia",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "485": {
+        "name": "Heatran",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "486": {
+        "name": "Regigigas",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "487": {
+        "name": "Giratina",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "488": {
+        "name": "Cresselia",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "489": {
+        "name": "Phione",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "490": {
+        "name": "Manaphy",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "491": {
+        "name": "Darkrai",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "492": {
+        "name": "Shaymin",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "493": {
+        "name": "Arceus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "494": {
+        "name": "Victini",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "497": {
+        "name": "Serperior",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "500": {
+        "name": "Emboar",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "503": {
+        "name": "Samurott",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "505": {
+        "name": "Watchog",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "508": {
+        "name": "Stoutland",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "510": {
+        "name": "Liepard",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "512": {
+        "name": "Simisage",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "514": {
+        "name": "Simisear",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "516": {
+        "name": "Simipour",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "518": {
+        "name": "Musharna",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "521": {
+        "name": "Unfezant",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "523": {
+        "name": "Zebstrika",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "526": {
+        "name": "Gigalith",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "528": {
+        "name": "Swoobat",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "530": {
+        "name": "Excadrill",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "531": {
+        "name": "Audino",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "534": {
+        "name": "Conkeldurr",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "537": {
+        "name": "Seismitoad",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "538": {
+        "name": "Throh",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "539": {
+        "name": "Sawk",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "542": {
+        "name": "Leavanny",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "545": {
+        "name": "Scolipede",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "547": {
+        "name": "Whimsicott",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "549": {
+        "name": "Lilligant",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "550": {
+        "name": "Basculin",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "553": {
+        "name": "Krookodile",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "555": {
+        "name": "Darmanitan",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "556": {
+        "name": "Maractus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "558": {
+        "name": "Crustle",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "560": {
+        "name": "Scrafty",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "561": {
+        "name": "Sigilyph",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "563": {
+        "name": "Cofagrigus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "565": {
+        "name": "Carracosta",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "567": {
+        "name": "Archeops",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "569": {
+        "name": "Garbodor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "571": {
+        "name": "Zoroark",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "573": {
+        "name": "Cinccino",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "576": {
+        "name": "Gothitelle",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "579": {
+        "name": "Reuniclus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "581": {
+        "name": "Swanna",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "584": {
+        "name": "Vanilluxe",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "586": {
+        "name": "Sawsbuck",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "587": {
+        "name": "Emolga",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "589": {
+        "name": "Escavalier",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "591": {
+        "name": "Amoonguss",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "593": {
+        "name": "Jellicent",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "594": {
+        "name": "Alomomola",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "596": {
+        "name": "Galvantula",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "598": {
+        "name": "Ferrothorn",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "601": {
+        "name": "Klinklang",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "604": {
+        "name": "Eelektross",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "606": {
+        "name": "Beheeyem",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "609": {
+        "name": "Chandelure",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "612": {
+        "name": "Haxorus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "614": {
+        "name": "Beartic",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "615": {
+        "name": "Cryogonal",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "617": {
+        "name": "Accelgor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "618": {
+        "name": "Stunfisk",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "620": {
+        "name": "Mienshao",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "621": {
+        "name": "Druddigon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "623": {
+        "name": "Golurk",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "625": {
+        "name": "Bisharp",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "626": {
+        "name": "Bouffalant",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "628": {
+        "name": "Braviary",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "630": {
+        "name": "Mandibuzz",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "631": {
+        "name": "Heatmor",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "632": {
+        "name": "Durant",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "635": {
+        "name": "Hydreigon",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "637": {
+        "name": "Volcarona",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": true
+    },
+    "638": {
+        "name": "Cobalion",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "639": {
+        "name": "Terrakion",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "640": {
+        "name": "Virizion",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "641": {
+        "name": "Tornadus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "642": {
+        "name": "Thundurus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "643": {
+        "name": "Reshiram",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "644": {
+        "name": "Zekrom",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "645": {
+        "name": "Landorus",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "646": {
+        "name": "Kyurem",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "647": {
+        "name": "Keldeo",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "648": {
+        "name": "Meloetta",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    },
+    "649": {
+        "name": "Genesect",
+        "last_update": 20250505,
+        "uses": 0,
+        "usage_factor": 1,
+        "eligible": false
+    }
+}
