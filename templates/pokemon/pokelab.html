@@ -1,0 +1,59 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load stat_tags %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block title %}Pokémon Lab{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+<div class="content-box" style="margin-bottom:5px;">
+    {% if message is not None %}<p>{{ message }}</p>{% endif %}
+    <h5>Pokémon Lab</h5>
+    <p>
+        <button type="button" class="button-3" onclick="openTab('labs', 'fossil_tab');">Fossil Restoration</button>
+        <button type="button" class="button-3" onclick="openTab('labs', 'nature_tab');">Nature Changing</button>
+        <button type="button" class="button-3" onclick="openTab('labs', 'gene_tab');">Genetic Enhancement</button>
+        <button type="button" class="button-3" onclick="openTab('labs', 'mewtwo_tab');">Mewtwo Research</button>
+    </p>
+</div>
+<div class="labs content-box content-text" id="fossil_tab">
+    <img src="{% get_static_prefix %}{{ asset_paths.front }}\567.png">
+    <img src="{% get_static_prefix %}{{ asset_paths.trainer_sprite }}\scientist_f.png">
+    <img src="{% get_static_prefix %}{{ asset_paths.front }}\139.png">
+    <p>Welcome to the Fossil Lab! We study Pokémon that lived in ancient times. If you bring a fossil to us, we can revive it for you. We also offer high quality revivals for trainers interested in strong Pokémon; for a fee, of course.</p>
+    <br>
+    <p>Choose a fossil:</p>
+    <form method="POST" action="{% url 'revive_fossil' %}">
+        {% csrf_token %}
+        {% for fossil, owned in fossils.items %}
+        <label for="{{ fossil }}" class="move-box{% if not owned %} unclickable{% endif %}" style="position:relative">
+            <input style="position:absolute;left:3px;top:3px" type="radio" id="{{ fossil }}" name="fossil" value="{{ fossil }}" style="width:140px" {% if not owned %}disabled{% endif %}>
+            <img src="{% get_static_prefix %}{{ asset_paths.item }}\{{ fossil }}.png"> {{ fossil|field_name_to_label}}
+        </label>
+        {% endfor %}
+        <br>
+        <p>Restoration quality:</p>
+        <select name="quality">
+            <option selected value="normal">Normal (5000)</option>
+            <option value="high">High (100000)</option>
+        </select>
+        <button class="button-3">Confirm</button>
+    </form>
+</div>
+<div style="display:none;" class="labs" id="nature_tab">
+
+</div>
+<div style="display:none;" class="labs" id="gene_tab">
+
+</div>
+<div style="display:none;" class="labs" id="mewtwo_tab">
+
+</div>
+{% endblock %}

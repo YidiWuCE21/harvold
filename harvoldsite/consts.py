@@ -629,6 +629,18 @@ PAYOUTS = {
 
 }
 
+FOSSILS = {
+    "helix-fossil": "138",
+    "dome-fossil": "140",
+    "old-amber": "142",
+    "root-fossil": "345",
+    "claw-fossil": "347",
+    "skull-fossil": "408",
+    "armor-fossil": "410",
+    "cover-fossil": "564",
+    "plume-fossil": "566"
+}
+
 # Functions for checking that the user passes some test
 def user_not_in_battle(user):
     if user.profile.current_battle is not None:

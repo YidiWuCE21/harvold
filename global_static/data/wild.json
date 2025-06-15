@@ -57,6 +57,15 @@
         },
         "levels": [34, 38]
     },
+    "grenoble_city": {
+        "water": {
+            "pokemon": ["Goldeen", "Magikarp", "Carvanha", "Barboach"],
+            "weights": [25, 25, 25, 25],
+            "bg": "pond"
+
+        },
+        "levels": [36, 40]
+    },
     "drilbur_cave_1f": {
         "grass1": {
             "pokemon": ["Zubat", "Geodude", "Sandshrew", "Diglett", "Phanpy", "Graveler", "Drilbur"],

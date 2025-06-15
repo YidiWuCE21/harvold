@@ -1,0 +1,23 @@
+{% extends "base_layout.html" %}
+{% load static %}
+{% load stat_tags %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'stylesheets/radio_cards.css' %}">
+{% endblock %}
+
+{% block title %}Pokémon Lab{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
+
+{% block content %}
+<div class="content-box" style="margin-bottom:5px;">
+    <p>You revived a healthy {{ fossil_name }}!</p>
+    <img src="{% get_static_prefix %}{{ asset_paths.front }}\{{ fossil }}.png">
+    <br>
+    <a class="button-3" href="{% url 'pokemon' %}?id={{ fossil_id }}">View Details</a>
+    <a class="button-3" href="{% url 'pokelab' %}">Return to Lab</a>
+</div>
+{% endblock %}

@@ -111,7 +111,7 @@ def create_pokemon(dex_number, level, sex, shiny=False, iv_advantage=1, traded=F
     nature = nature_override if nature_override is not None else \
         random.choice(list(consts.NATURES.keys()))
     ivs = iv_override if iv_override is not None else \
-        {stat: max([random.randint(0, 31)] * iv_advantage) for stat in consts.STATS}
+        {stat: max([random.randint(0, 31) for i in range(iv_advantage)]) for stat in consts.STATS}
     evs = ev_override if ev_override is not None else \
         {stat: 0 for stat in consts.STATS}
     abilities = consts.POKEMON[dex_number]["abilities"]

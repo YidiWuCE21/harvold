@@ -26,6 +26,8 @@ urlpatterns = [
     path("pokemon", pokemon_views.pokemon, name="pokemon"),
     path("pokedex", pokemon_views.pokedex, name="pokedex"),
     path("pokecenter", pokemon_views.pokecenter, name="pokecenter"),
+    path("pokelab", pokemon_views.pokelab, name="pokelab"),
+    path("revive_fossil", pokemon_views.revive_fossil, name="revive_fossil"),
     # Battle related views
     path("gyms", battle_views.gyms, name="gyms"),
     path("ev_dojo", battle_views.ev_dojo, name="ev_dojo"),

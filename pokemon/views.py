@@ -2,11 +2,14 @@ import json
 from datetime import datetime
 import pandas as pd
 import os
+import random
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import JsonResponse, HttpResponseNotFound
-
+from django.urls import reverse
+from urllib.parse import urlencode
+from django.db import IntegrityError, transaction
 # Create your views here.
 
 from harvoldsite import consts
@@ -185,3 +188,59 @@ def pokedex_detailed(request):
         "description": consts.DESCRIPTIONS[dex]
     }
     return render(request, "pokemon/pokedex_detailed.html", html_render_variables)
+
+
+@login_required
+def pokelab(request):
+    # Get list of fossils
+    profile = request.user.profile
+    fossils = {fossil: profile.has_item(fossil) for fossil in consts.FOSSILS.keys()}
+    message = request.GET.get("message", None)
+    html_render_variables = {
+        "fossils": fossils,
+        "message": message
+    }
+    return render(request, "pokemon/pokelab.html", html_render_variables)
+
+
+@login_required
+def revive_fossil(request):
+
+    fossil = request.POST.get("fossil", None)
+    quality = request.POST.get("quality")
+    profile = request.user.profile
+    # Check user has fossil
+    error_message = None
+    if fossil is None:
+        error_message = "Select a fossil!"
+    elif not profile.has_item(fossil):
+        error_message = "You don't own that fossil!"
+    # Check user has funds
+    cost = 100000 if quality == "high" else 5000
+    if profile.money < cost:
+        error_message = "Insufficient funds!"
+
+    if not error_message:
+        try:
+            with transaction.atomic():
+                profile.consume_item(fossil)
+                profile.money -= cost
+                advantage = 2 if quality == "high" else 1
+                fossil_dex = consts.FOSSILS[fossil]
+                fossil_pokemon = create_pokemon(dex_number=fossil_dex, level=5, sex=random.choice(["m", "f"]),
+                                                iv_advantage=advantage)
+                fossil_pokemon.assign_trainer(profile)
+                fossil_pokemon.save()
+
+                html_render_variables = {
+                    "fossil": fossil_dex,
+                    "fossil_name": consts.POKEMON[fossil_dex]["name"],
+                    "fossil_id": fossil_pokemon.pk
+                }
+                return render(request, "pokemon/fossil_revive.html", html_render_variables)
+        except IntegrityError:
+            error_message = "Failed to revive fossil!"
+    pokelab_url = reverse("pokelab")
+    query_str = urlencode({"message": error_message})
+    url = "{}?{}".format(pokelab_url, query_str)
+    return redirect(url)

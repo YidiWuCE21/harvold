@@ -62,7 +62,17 @@
         "cool_trainer_m": ["Cofagrigus", "Wobbuffet", "Staraptor", "Tangrowth", "Huntail"],
         "cool_trainer_f": ["Bouffalant", "Froslass", "Hypno", "Mantine", "Mightyena"],
         "ace_trainer_m": ["Qwilfish", "Exeggutor", "Yanmega", "Hippowdon", "Musharna"],
-        "ace_trainer_f": ["Galvantula", "Marowak", "Lilligant", "Jellicent", "Primeape"],
+        "ace_trainer_f": ["Galvantula", "Marowak", "Lilligant", "Samurott", "Primeape"],
+
+        "challenger_m": ["Fearow", "Blaziken", "Jellicent", "Haxorus", "Krokorok"],
+        "challenger_f": ["Rapidash", "Swampert", "Darmanitan", "Gengar", "Cinccino"],
+        "pro_trainer_m": ["Cloyster", "Ludicolo", "Simisage", "Aggron", "Donphan"],
+        "pro_trainer_f": ["Snorlax", "Ampharos", "Gothitelle", "Mismagius", "Milotic"],
+        "prime_trainer_m": ["Typhlosion", "Slaking", "Stunfisk", "Glalie", "Octillery"],
+        "prime_trainer_f": ["Meganium", "Wailord", "Camerupt", "Toxicroak", "Swalot"],
+        "expert_trainer_m": ["Feraligatr", "Luxray", "Heracross", "Swoobat", "Parasect"],
+        "expert_trainer_f": ["Slowking", "Rampardos", "Ambipom", "Granbull", "Sceptile"],
+
         "dragon_tamer": ["Flygon", "Kingdra", "Altaria", "Druddigon", "Haxorus"],
         "falkner": ["Noctowl", "Swellow", "Pidgeot", "Staraptor", "Honchkrow"],
         "misty": ["Lapras", "Floatzel", "Lanturn", "Starmie", "Golduck"],

@@ -39,4 +39,5 @@ def field_name_to_label(value):
     Use `{{ "aaa"|replace:"a|b" }}`
     """
     value = value.replace('_', ' ')
+    value = value.replace('-', ' ')
     return value.title()
